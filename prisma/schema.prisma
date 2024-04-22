@@ -1,0 +1,140 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Book {
+  Id                         Int                @default(autoincrement())@unique
+  user_id                    Int  @unique
+  title                      String
+  description                String
+  status                     String
+  picture                    String[]
+  in_libary                  Boolean
+  pickup                     String
+  want_category              String?
+  datetime                   DateTime           @db.Date
+  User                       User               @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "book_user_id")
+  Category_in_Book           Category_in_Book[]
+  Review_Book                Review_Book[]
+  Trade_Trade_book_idToBook  Trade[]            @relation("Trade_book_idToBook")
+  Trade_Trade_owner_idToBook Trade[]            @relation("Trade_owner_idToBook")
+  Wishlist                   Wishlist[]
+
+  @@id([Id, user_id])
+}
+
+model Review_Book {
+  id       Int     @default(autoincrement())
+  book_id  Int
+  user_id  Int
+  score    Decimal @db.Decimal(1, 0)
+  describe String?
+  Book     Book    @relation(fields: [book_id], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "review_book-book_id")
+  User     User    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "review_book-user_id")
+
+  @@id([id, book_id, user_id])
+}
+
+model Trade {
+  id                        Int      @default(autoincrement())
+  book_id                   Int
+  owner_id                  Int
+  req_user_id               Int
+  datetime                  DateTime @db.Date
+  return_date               String
+  status                    String
+  pickup_req                String?
+  Book_Trade_book_idToBook  Book     @relation("Trade_book_idToBook", fields: [book_id], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "trade-book_id")
+  Book_Trade_owner_idToBook Book     @relation("Trade_owner_idToBook", fields: [owner_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "trade-owner_id")
+  User                      User     @relation(fields: [req_user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "trade-req_user_id")
+
+  @@id([id, book_id, owner_id, req_user_id])
+}
+
+model User {
+  id                                        Int           @id @default(autoincrement())
+  username                                  String
+  password                                  String
+  email                                     String
+  first_name                                String
+  last_name                                 String
+  date_of_birth                             DateTime      @db.Date
+  profile_picture                           String?
+  phone_number                              String[]      @db.VarChar(10)
+  card_id                                   String[]      @db.VarChar(13)
+  instagram                                 String?
+  facebook                                  String?
+  line                                      String?
+  follower                                  Int?
+  Address                                   Address[]
+  Book                                      Book?
+  Follow_Follow_follow_idToUser             Follow[]      @relation("Follow_follow_idToUser")
+  Follow_Follow_follower_idToUser           Follow[]      @relation("Follow_follower_idToUser")
+  Review_Book                               Review_Book[]
+  Review_User_Review_User_reviewer_idToUser Review_User[] @relation("Review_User_reviewer_idToUser")
+  Review_User_Review_User_user_idToUser     Review_User[] @relation("Review_User_user_idToUser")
+  Trade                                     Trade[]
+  Wishlist                                  Wishlist[]
+}
+
+model Address {
+  id      Int    @default(autoincrement())
+  user_id Int
+  address String
+  User    User   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "address-user_id")
+
+  @@id([id, user_id])
+}
+
+model Category {
+  id               Int                @id @default(autoincrement())
+  name             String
+  Category_in_Book Category_in_Book[]
+}
+
+model Category_in_Book {
+  id          Int      @default(autoincrement())
+  book_id     Int
+  category_id Int
+  Book        Book     @relation(fields: [book_id], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "cat_in_book-book_id")
+  Category    Category @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "cat_in_book-category_id")
+
+  @@id([id, book_id, category_id])
+}
+
+model Follow {
+  id                            Int  @default(autoincrement())
+  follow_id                     Int
+  follower_id                   Int
+  User_Follow_follow_idToUser   User @relation("Follow_follow_idToUser", fields: [follow_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "follow-follow_id")
+  User_Follow_follower_idToUser User @relation("Follow_follower_idToUser", fields: [follower_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "follow_follower_id")
+
+  @@id([id, follow_id, follower_id])
+}
+
+model Review_User {
+  id                                 Int     @default(autoincrement())
+  user_id                            Int
+  reviewer_id                        Int
+  score                              Decimal @db.Decimal(1, 0)
+  describe                           String?
+  User_Review_User_reviewer_idToUser User    @relation("Review_User_reviewer_idToUser", fields: [reviewer_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "review_user-reviewer_id")
+  User_Review_User_user_idToUser     User    @relation("Review_User_user_idToUser", fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "review_user-user_id")
+
+  @@id([id, user_id, reviewer_id])
+}
+
+model Wishlist {
+  id      Int  @default(autoincrement())
+  user_id Int
+  book_id Int
+  Book    Book @relation(fields: [book_id], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "wishlist-book_id")
+  User    User @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "wishlist-user_id")
+
+  @@id([id, user_id, book_id])
+}
