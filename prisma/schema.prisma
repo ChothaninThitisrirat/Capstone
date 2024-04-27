@@ -8,11 +8,11 @@ datasource db {
 }
 
 model Book {
-  Id                         Int                @default(autoincrement())@unique
-  user_id                    Int  @unique
+  Id                         Int                @unique @default(autoincrement())
+  user_id                    Int                @unique
   title                      String
   description                String
-  status                     String
+  status                     String             @db.VarChar(10)
   picture                    String[]
   in_libary                  Boolean
   pickup                     String
@@ -46,8 +46,8 @@ model Trade {
   owner_id                  Int
   req_user_id               Int
   datetime                  DateTime @db.Date
-  return_date               String
-  status                    String
+  return_date               String   @db.VarChar(6)
+  status                    String   @db.VarChar(10)
   pickup_req                String?
   Book_Trade_book_idToBook  Book     @relation("Trade_book_idToBook", fields: [book_id], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "trade-book_id")
   Book_Trade_owner_idToBook Book     @relation("Trade_owner_idToBook", fields: [owner_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "trade-owner_id")
@@ -58,20 +58,20 @@ model Trade {
 
 model User {
   id                                        Int           @id @default(autoincrement())
-  username                                  String
-  password                                  String
-  email                                     String
-  first_name                                String
-  last_name                                 String
+  username                                  String        @db.VarChar(20)
+  password                                  String        @db.VarChar(20)
+  email                                     String        @db.VarChar(40)
+  first_name                                String        @db.VarChar(20)
+  last_name                                 String        @db.VarChar(20)
   date_of_birth                             DateTime      @db.Date
   profile_picture                           String?
   phone_number                              String[]      @db.VarChar(10)
   card_id                                   String[]      @db.VarChar(13)
-  instagram                                 String?
+  instagram                                 String?       @db.VarChar(20)
   facebook                                  String?
-  line                                      String?
+  line                                      String?       @db.VarChar(20)
   follower                                  Int?
-  Address                                   Address[]
+  address                                   String[]
   Book                                      Book?
   Follow_Follow_follow_idToUser             Follow[]      @relation("Follow_follow_idToUser")
   Follow_Follow_follower_idToUser           Follow[]      @relation("Follow_follower_idToUser")
@@ -82,18 +82,9 @@ model User {
   Wishlist                                  Wishlist[]
 }
 
-model Address {
-  id      Int    @default(autoincrement())
-  user_id Int
-  address String
-  User    User   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "address-user_id")
-
-  @@id([id, user_id])
-}
-
 model Category {
   id               Int                @id @default(autoincrement())
-  name             String
+  name             String             @db.VarChar(20)
   Category_in_Book Category_in_Book[]
 }
 
