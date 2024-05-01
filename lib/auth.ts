@@ -5,7 +5,7 @@ import { compare } from "bcrypt";
 
 export const authOptions: NextAuthOptions = {
     pages: {
-        signIn: '/signin'
+        signIn: '/login'
     },
     secret: process.env.NEXTAUTH_SECRET,
     session: {

@@ -12,12 +12,10 @@ export default function Profile() {
   
   useEffect(() => {
     if (status === 'unauthenticated') {
-      router.push('/signin')
+      router.push('/login')
     }
   }, [status, router])
-  
-    
-  // When after loading success and have session, show profile
+
   return (
     status === 'authenticated' &&
     session.user && (
