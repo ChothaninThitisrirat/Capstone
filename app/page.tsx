@@ -1,7 +1,8 @@
+import Link from 'next/link';
 export default function Home() {
   return (
     <>
-      Hi
+      <Link href='Components/loginsignup'>login</Link>
     </>
   );
 }
