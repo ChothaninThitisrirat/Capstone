@@ -7,7 +7,10 @@ import { useRouter } from 'next/navigation'
 export default function SignIn() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [classCheckEmailin, setClassCheckEmailin] = useState('invisible text-red-500');
+  const [classCheckPassin, setClassCheckPassin] = useState('invisible text-red-500');
   const router = useRouter()
+  
 
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -19,6 +22,11 @@ export default function SignIn() {
       })
 
       if (result.error) {
+        if (result.error === 'Invalid email') {
+          setClassCheckEmailin('visible text-red-500')
+        }else if (result.error === 'Invalid password') {
+          setClassCheckPassin('visible text-red-500')
+        }
         console.error(result.error)
       } else {
         router.push('/profile')
@@ -45,6 +53,7 @@ export default function SignIn() {
             className="w-full border border-gray-300 px-3 py-2 rounded "
           />
         </div>
+        <div className={classCheckEmailin}>Invalid email</div>
         <div className="mb-4">
           <label htmlFor="password">Password</label>
           <input
@@ -56,6 +65,7 @@ export default function SignIn() {
             className="w-full border border-gray-300 px-3 py-2 rounded"
           />
         </div>
+        <div className={classCheckPassin}>Invalid password</div>
         <button
           type="submit"
           className="w-full bg-blue-500 text-white py-2 rounded mb-4"

@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import { Icon } from '@iconify/react';
 
 export default function SignIn() {
     const [username, setUsername] = useState('')
@@ -15,10 +16,40 @@ export default function SignIn() {
     const [address, setAddress] = useState('')
     const [telNumber, setTelNumber] = useState('')
     const [infoPage, setInfoPage] = useState(true)
-    const [classLeastCharacters, setClassLeastCharacters] = useState('')
-    const [hasSpecialChar, setHasSpecialChar] = useState('');
+    const [classLeastCharacters, setClassLeastCharacters] = useState('text-red-500')
+    const [classSpecialChar, setClassSpecialChar] = useState('text-red-500');
+    const [classCheckPersonalId, setClassCheckPersonalId] = useState('text-red-500');
+    const [classCheckUsername, setClassCheckUsername] = useState('invisible text-red-500');
+    const [classCheckEmail, setClassCheckEmail] = useState('invisible text-red-500');
+    const [notMachPassword, setNotMachPassword] = useState(false);
     const router = useRouter()
 
+// api เช็ค Username และ Email ซ้ำ
+    // const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
+    //     e.preventDefault()
+    //     try {
+    //     const result:any = await signIn('credentials', {
+    //         redirect: false,
+    //         username,
+            // email,
+    //     })
+
+    //     if (result.error) {
+    //         if (result.error === 'Username already exist.') {
+    //             setClassCheckUsername('visible text-red-500')
+    //         }
+    //         if (result.error === 'Email already exist.') {
+    //             setClassCheckEmail('visible text-red-500')
+    //         }
+
+    //     } else {
+    //         router.push('/profile')
+    //     }
+    //     } catch (error) {
+    //     console.log('error', error)
+    //     }
+    // }
+// api Sign Up
     // const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     //     e.preventDefault()
     //     try {
@@ -43,32 +74,55 @@ export default function SignIn() {
     //     console.log('error', error)
     //     }
     // }
+
     const handleSubmitInfoPage1 = async(e: React.SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault()
-        setInfoPage(false)
-    }
-    const log = async(e: React.SyntheticEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        console.log(username,email,password,confirmPassword,firstName,lastName,personalId,address,telNumber)
-    }
+        if(password === confirmPassword && password.length >= 8 && classSpecialChar === 'text-green-500'){
+            setNotMachPassword(false)
+            setInfoPage(false)
+        }else{
+            setNotMachPassword(true)
+            if(password === confirmPassword){
+                setNotMachPassword(false)
+            }
+        }
 
-    
+    }
 
     const handlePasswordChange = (e: React.SyntheticEvent<HTMLFormElement>) => {
-    const inputValue = e.target.value;
-    setPassword(inputValue);
-    const passwordLength = inputValue.length;
-    if (passwordLength < 8) {
-        setClassLeastCharacters('text-red-500');
-    } else {
-        setClassLeastCharacters('text-green-500');
-    }
-    const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
-    setHasSpecialChar(specialCharRegex.test(inputValue));
+        const inputValue = e.target.value;
+        setPassword(inputValue);
+        const passwordLength = inputValue.length;
+        if (passwordLength < 8) {
+            setClassLeastCharacters('text-red-500');
+        } else {
+            setClassLeastCharacters('text-green-500');
+        }
+
+        const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
+
+        if(specialCharRegex.test(inputValue)){
+            setClassSpecialChar('text-green-500');
+        }else{
+            setClassSpecialChar('text-red-500');
+        }
     };
+
+    const handlePersonalIdChange = (e: React.SyntheticEvent<HTMLFormElement>) => {
+        const inputValue = e.target.value;
+        setPersonalId(inputValue);
+        if (inputValue.length === 13) {
+            setClassCheckPersonalId("text-green-500")
+        }
+    };
+
+
+
+
+
     return (
-        <div className="flex h-screen items-center justify-center">
         
+        <div className="flex h-screen items-center justify-center">
             {infoPage
             ?<>
             <form
@@ -87,6 +141,7 @@ export default function SignIn() {
                 className="w-full border border-gray-300 px-3 py-2 rounded "
             />
             </div>
+            <div className={classCheckUsername}>Username already exist.</div>
 
             <div className="mb-4">
             <input
@@ -100,6 +155,7 @@ export default function SignIn() {
                 className="w-full border border-gray-300 px-3 py-2 rounded "
             />
             </div>
+            <div className={classCheckEmail}>Email already exist.</div>
 
             <div className="mb-4">
             <input
@@ -113,12 +169,8 @@ export default function SignIn() {
                 className="w-full border border-gray-300 px-3 py-2 rounded"
             />
             </div>
-            {hasSpecialChar ? (
-            <span style={{ color: 'green' }}>รหัสผ่านมีตัวอักษรพิเศษ</span>
-            ) : (
-            <span style={{ color: 'red' }}>รหัสผ่านไม่มีตัวอักษรพิเศษ</span>
-            )}
-            <div className={classLeastCharacters}>Least 8 Characters</div>
+            <span className={classSpecialChar}>-รหัสผ่านต้องมีตัวอักษรพิเศษ</span>
+            <div className={classLeastCharacters}>-Least 8 Characters</div>
             <div className="mb-4">
             <input
                 id="confirmPassword"
@@ -131,6 +183,7 @@ export default function SignIn() {
                 className="w-full border border-gray-300 px-3 py-2 rounded"
             />
             </div>
+            {notMachPassword && <span className='text-red-500'>รหัสผ่านไม่ตรงกัน</span>}
             <button
             type="submit"
             className="w-full bg-blue-500 text-white py-2 rounded mb-4"
@@ -176,12 +229,13 @@ export default function SignIn() {
                 type="personalId"
                 value={personalId}
                 placeholder='PersonalId'
-                onChange={(e) => setPersonalId(e.target.value)}
+                onChange={(e)=>handlePersonalIdChange(e)}
                 maxLength={13}
                 required
                 className="w-full border border-gray-300 px-3 py-2 rounded"
             />
             </div>
+            <div className={classCheckPersonalId}>#</div>
 
             <div className="mb-4">
             <input
