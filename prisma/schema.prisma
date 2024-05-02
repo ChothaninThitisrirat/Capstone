@@ -8,21 +8,21 @@ datasource db {
 }
 
 model Book {
-  Id                         Int                @unique @default(autoincrement())
-  user_id                    Int                @unique
+  Id                         Int                       @unique @default(autoincrement())
+  user_id                    Int                       @unique
   title                      String
   description                String
-  status                     String             @db.VarChar(10)
+  status                     String                    @db.VarChar(10)
   picture                    String[]
   in_libary                  Boolean
   pickup                     String
-  want_category              String?
-  datetime                   DateTime           @db.Date
-  User                       User               @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "book_user_id")
+  datetime                   DateTime                  @db.Date
+  User                       User                      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "book_user_id")
   Category_in_Book           Category_in_Book[]
   Review_Book                Review_Book[]
-  Trade_Trade_book_idToBook  Trade[]            @relation("Trade_book_idToBook")
-  Trade_Trade_owner_idToBook Trade[]            @relation("Trade_owner_idToBook")
+  Trade_Trade_book_idToBook  Trade[]                   @relation("Trade_book_idToBook")
+  Trade_Trade_owner_idToBook Trade[]                   @relation("Trade_owner_idToBook")
+  Tradebook_want_Category    Tradebook_want_Category[]
   Wishlist                   Wishlist[]
 
   @@id([Id, user_id])
@@ -59,18 +59,19 @@ model Trade {
 model User {
   id                                        Int           @id @default(autoincrement())
   username                                  String        @unique @db.VarChar(20)
-  password                                  String        
+  password                                  String
   email                                     String        @unique @db.VarChar(40)
   first_name                                String        @db.VarChar(20)
   last_name                                 String        @db.VarChar(20)
   profile_picture                           String?
-  phone_number                              String      @unique @db.VarChar(10)
-  card_id                                   String      @unique @db.VarChar(13)
+  phone_number                              String        @unique @db.VarChar(10)
+  card_id                                   String        @unique @db.VarChar(13)
   instagram                                 String?       @db.VarChar(20)
   facebook                                  String?
   line                                      String?       @db.VarChar(20)
   address                                   String[]
-  Book                                      Book? 
+  isAdmin                                   Boolean       @default(false)
+  Book                                      Book?
   Review_Book                               Review_Book[]
   Review_User_Review_User_reviewer_idToUser Review_User[] @relation("Review_User_reviewer_idToUser")
   Review_User_Review_User_user_idToUser     Review_User[] @relation("Review_User_user_idToUser")
@@ -79,9 +80,10 @@ model User {
 }
 
 model Category {
-  id               Int                @id @default(autoincrement())
-  name             String             @db.VarChar(20)
-  Category_in_Book Category_in_Book[]
+  id                      Int                       @id @default(autoincrement())
+  name                    String                    @db.VarChar(20)
+  Category_in_Book        Category_in_Book[]
+  Tradebook_want_Category Tradebook_want_Category[]
 }
 
 model Category_in_Book {
@@ -93,7 +95,6 @@ model Category_in_Book {
 
   @@id([id, book_id, category_id])
 }
-
 
 model Review_User {
   id                                 Int     @default(autoincrement())
@@ -115,4 +116,14 @@ model Wishlist {
   User    User @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "wishlist-user_id")
 
   @@id([id, user_id, book_id])
+}
+
+model Tradebook_want_Category {
+  id               Int      @default(autoincrement())
+  book_id          Int
+  want_category_id Int
+  Book             Book     @relation(fields: [book_id], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "Tradebook_want_Category-book_id")
+  Category         Category @relation(fields: [want_category_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Tradebook_want_Category-want_category")
+
+  @@id([id, want_category_id, book_id])
 }

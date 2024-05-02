@@ -37,7 +37,8 @@ export const authOptions: NextAuthOptions = {
               return {
                 id: `${user.id}`,
                 username: user.username,
-                email: user.email
+                email: user.email,
+                isAdmin: user.isAdmin
               }
             } else {
               throw new Error('Invalid password')
@@ -52,6 +53,7 @@ export const authOptions: NextAuthOptions = {
             return {
               username: user.username,
               id: user.id,
+              isAdmin: user.isAdmin,
               ...token
             }
           }
@@ -64,6 +66,7 @@ export const authOptions: NextAuthOptions = {
               ...session.user,
               id: token.id,
               username: token.username,
+              isAdmin: token.isAdmin
             }
           }
         },

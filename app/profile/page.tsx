@@ -9,6 +9,14 @@ export default function Profile() {
 
   const router = useRouter()
 
+  function IsAdmin() {
+    if (session?.user.isAdmin === true) {
+      return "Admin"
+    } else {
+      return "User"
+    }
+  }
+
   
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -26,6 +34,7 @@ export default function Profile() {
           </p>
           <p>Email: {session.user.email}</p>
           <p>ID: {session.user.id}</p>
+          <p>Role: <IsAdmin /> </p>
           <button
             onClick={() => signOut({ callbackUrl: '/' })}
             className="w-full bg-blue-500 text-white py-2 rounded"
