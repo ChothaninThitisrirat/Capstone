@@ -2,12 +2,15 @@ import { NextResponse } from "next/server"
 import { hash } from 'bcrypt';
 import { prisma } from "@/lib/db";
 
-export async function POST(req: Request) {
+export async function Get(req: Request) {
     try {
-        const { username , email , password , card_id , phone_number , first_name , last_name , address } = await req.json()
+        const { username , email} = await req.json()
         
-        if (!username || !email || !password || !card_id || !phone_number || !first_name || !last_name || !address) {
-            return NextResponse.json({ user:null, message: 'Must fill all input.'},{status:409})
+        const usernameexist = await prisma.user.findUnique({
+            where: { username:username}
+        })
+        if (usernameexist) {
+            return NextResponse.json({ user:null, message: "Username already exist."},{status: 409})
         }
 
         const emailexist = await prisma.user.findUnique({
@@ -17,11 +20,26 @@ export async function POST(req: Request) {
             return NextResponse.json({ user:null, message: "Email already exist."},{status: 409})
         }
 
-        const usernameexist = await prisma.user.findUnique({
-            where: { username:username}
+        return NextResponse.json({
+            user:null
         })
-        if (usernameexist) {
-            return NextResponse.json({ user:null, message: "Username already exist."},{status: 409})
+    } catch (error) {
+        
+        console.log(error);
+        
+        return NextResponse.json({
+            message: "Error",
+            error
+        },{status: 409})
+    }
+}
+
+export async function POST(req: Request) {
+    try {
+        const { username , email , password , card_id , phone_number , first_name , last_name , address } = await req.json()
+        
+        if (!username || !email || !password || !card_id || !phone_number || !first_name || !last_name || !address) {
+            return NextResponse.json({ user:null, message: 'Must fill all input.'},{status:409})
         }
 
         const card_idexist = await prisma.user.findUnique({
