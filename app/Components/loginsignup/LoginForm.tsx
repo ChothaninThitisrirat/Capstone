@@ -3,12 +3,13 @@
 import { useState } from 'react'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import { Icon } from '@iconify/react';
 
-export default function SignIn() {
+export default function SignIn({setStylesingup, setStylelogin}) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [classCheckEmailin, setClassCheckEmailin] = useState('invisible text-red-500');
-  const [classCheckPassin, setClassCheckPassin] = useState('invisible text-red-500');
+  const [classCheckEmailin, setClassCheckEmailin] = useState('invisible text-red-500 text-xs text-right');
+  const [classCheckPassin, setClassCheckPassin] = useState('invisible text-red-500 text-xs text-right');
   const router = useRouter()
   
 
@@ -23,56 +24,81 @@ export default function SignIn() {
 
       if (result.error) {
         if (result.error === 'Invalid email') {
-          setClassCheckEmailin('visible text-red-500')
+          setClassCheckEmailin('visible text-red-500 text-xs text-right')
         }else if (result.error === 'Invalid password') {
-          setClassCheckPassin('visible text-red-500')
+          setClassCheckPassin('visible text-red-500 text-xs text-right')
         }
         console.error(result.error)
       } else {
-        router.push('/profile')
+        // router.push('/profile')
+        alert('Login success')
       }
     } catch (error) {
       console.log('error', error)
     }
   }
 
+  const handleStyle = () => {
+    setStylesingup(true);
+    setStylelogin(false);
+  }
+
+
+
   return (
-    <div className="flex h-screen items-center justify-center">
       <form
         onSubmit={handleSubmit}
-        className="p-6 rounded-md shadow-md"
+        className="w-auto px-10 pt-10 pb-5 rounded-3xl shadow-md bg-white border border-gray-300 flex-col duration-300"
       >
-        <div className="mb-4">
-          <label htmlFor="email">Email</label>
+        <div className="max-w-96 w-screen text-4xl font-bold">Login</div>
+        <div className=" text-gray-400 mt-3 ml-2">เข้าสู่ระบบ</div>
+
+        <div className="flex relative mb-4">
+          <Icon icon="carbon:email" width="30" height="30"  style={{color:'#A7A7A7'}}
+          className=" absolute bottom-2 left-1" />
           <input
-            id="email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="w-full border border-gray-300 px-3 py-2 rounded "
+              id="email"
+              type="email"
+              value={email}
+              placeholder="Email"
+              onChange={(e) => setEmail(e.target.value)}
+              maxLength={40}
+              required
+              className="w-full border-b border-gray-400 pl-12 py-2 mt-8"
           />
-        </div>
+        </div>  
+
         <div className={classCheckEmailin}>Invalid email</div>
-        <div className="mb-4">
-          <label htmlFor="password">Password</label>
+
+        <div className="flex relative mb-4">
+          <Icon icon="ph:lock" width="28" height="28"  style={{color:'#A7A7A7'}} 
+          className=" absolute bottom-2 left-1"/>
           <input
             id="password"
             type="password"
             value={password}
+            placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
+            maxLength={20}
             required
-            className="w-full border border-gray-300 px-3 py-2 rounded"
+            className="w-full border-b border-gray-400 pl-12 py-2 mt-2"
           />
         </div>
         <div className={classCheckPassin}>Invalid password</div>
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded mb-4"
-        >
-          Sign In
-        </button>{' '}
+        <div className="flex items-center mt-10 mb-5 justify-between">
+          <span 
+          onClick={handleStyle}
+          className="text-blue-400 text-xs cursor-pointer hover:underline">
+            Don’t Have an account?</span>
+            <button
+              type="submit"
+              className="flex text-white p-1.5 rounded-full w-36 justify-end items-center gap-5 "
+              style={{ backgroundColor: "#435585" }}
+            >
+              LOG IN
+              <Icon icon="formkit:arrowright" width="25" height="25" />
+            </button>{' '}
+        </div>
       </form>
-    </div>
   )
 }
