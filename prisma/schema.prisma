@@ -8,22 +8,21 @@ datasource db {
 }
 
 model Book {
-  Id                         Int                       @unique @default(autoincrement())
-  user_id                    Int                       @unique
-  title                      String
-  description                String
-  status                     String                    @db.VarChar(10)
-  picture                    String[]
-  in_libary                  Boolean
-  pickup                     String
-  datetime                   DateTime                  @db.Date
-  User                       User                      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "book_user_id")
-  Category_in_Book           Category_in_Book[]
-  Review_Book                Review_Book[]
-  Trade_Trade_book_idToBook  Trade[]                   @relation("Trade_book_idToBook")
-  Trade_Trade_owner_idToBook Trade[]                   @relation("Trade_owner_idToBook")
-  Tradebook_want_Category    Tradebook_want_Category[]
-  Wishlist                   Wishlist[]
+  Id                        Int                       @unique @default(autoincrement())
+  user_id                   Int
+  title                     String
+  description               String
+  status                    String?                   @db.VarChar(10)
+  picture                   String[]
+  in_libary                 Boolean                   @default(false)
+  pickup                    String
+  datetime                  DateTime                  @db.Date
+  User                      User                      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "book_user_id")
+  Category_in_Book          Category_in_Book[]
+  Review_Book               Review_Book[]
+  Trade_Trade_book_idToBook Trade[]                   @relation("Trade_book_idToBook")
+  Tradebook_want_Category   Tradebook_want_Category[]
+  Wishlist                  Wishlist[]
 
   @@id([Id, user_id])
 }
@@ -50,7 +49,7 @@ model Trade {
   status                    String   @db.VarChar(10)
   pickup_req                String?
   Book_Trade_book_idToBook  Book     @relation("Trade_book_idToBook", fields: [book_id], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "trade-book_id")
-  Book_Trade_owner_idToBook Book     @relation("Trade_owner_idToBook", fields: [owner_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "trade-owner_id")
+  User_Trade_owner_idToUser User     @relation("Trade_owner_idToUser", fields: [owner_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "trade-owner_id")
   User                      User     @relation(fields: [req_user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "trade-req_user_id")
 
   @@id([id, book_id, owner_id, req_user_id])
@@ -71,10 +70,11 @@ model User {
   line                                      String?       @db.VarChar(20)
   address                                   String[]
   isAdmin                                   Boolean       @default(false)
-  Book                                      Book?
+  Book                                      Book[]
   Review_Book                               Review_Book[]
   Review_User_Review_User_reviewer_idToUser Review_User[] @relation("Review_User_reviewer_idToUser")
   Review_User_Review_User_user_idToUser     Review_User[] @relation("Review_User_user_idToUser")
+  Trade_Trade_owner_idToUser                Trade[]       @relation("Trade_owner_idToUser")
   Trade                                     Trade[]
   Wishlist                                  Wishlist[]
 }

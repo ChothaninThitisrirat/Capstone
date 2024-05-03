@@ -50,11 +50,11 @@ export async function POST(req: Request) {
             message: "Signup successfully"
         },{ status: 201 })
 
-
     } catch (error) {
         console.log(error);
         
         return NextResponse.json({
+            user: null,
             message: "Error",
             error
         },{status: 409})
