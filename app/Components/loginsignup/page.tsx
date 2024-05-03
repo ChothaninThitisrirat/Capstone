@@ -15,13 +15,13 @@ import logologinsignup from '../../../public/images/logologinsignup.png'
 
 function LoginSignup() {
 
-  const [stylesingup, setStylesingup] = useState(true)
+  const [stylesingup, setStylesingup] = useState(false)
   const [stylesingupOn, setStylesingupOn] = useState({
       transform:'translateX(30%)',
       transitionDuration: '3s',
   });
 
-  const [stylelogin, setStylelogin] = useState(false)
+  const [stylelogin, setStylelogin] = useState(true)
   const [styleloginOn, setStyleloginOn] = useState({
     transform:'translateX(200%)',
     transitionDuration: '3s'

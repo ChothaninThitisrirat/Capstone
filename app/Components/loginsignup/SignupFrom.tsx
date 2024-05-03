@@ -18,6 +18,8 @@ export default function SignIn({setStylesingup, setStylelogin}) {
     const [infoPage, setInfoPage] = useState(true);
     const [checkSpecialChar, setCheckSpecialChar] = useState(false)
     const [classCheckPersonalId, setClassCheckPersonalId] =useState(false);
+    const [checkCardIdUse, setCheckCardIdUse] =useState(false);
+    const [checkTelUse, setCheckTelUse] =useState(false);
     const [classLeastCharacters, setClassLeastCharacters] =useState(
         "flex gap-1 text-gray-500 text-xs ml-5 mt-2"
     );
@@ -31,42 +33,49 @@ export default function SignIn({setStylesingup, setStylelogin}) {
         "invisible text-red-500 text-xs text-right"
     );
     const [notMachPassword, setNotMachPassword] = useState(false);
+    const [typePassword, setTypePassword] = useState("password");
+    const [typeConfirmPassword, setTypeConfirmPassword] = useState("password");
+    
     const router = useRouter();
 
   // api เช็ค Username และ Email ซ้ำ
 
-// const CheckUsenameEmail = async (e: React.SyntheticEvent<HTMLFormElement>) => {
-//     e.preventDefault()
-//     try {
+const CheckUsenameEmail = async (e: React.SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    try {
 
-//         const response:any = await fetch('/api/signup/1', {
-//             method: 'POST',
-//             headers: {
-//             'Content-Type': 'application/json',
-//             },
-//             body: JSON.stringify({
-//                         redirect: false,
-//                         username,
-//                         email
-//                             }),
-//             });
-//         if (response.message === "Username and Email already exist.") {
-//             setClassCheckUsername("visible text-red-500 text-xs text-right");
-//             setClassCheckEmail("visible text-red-500 text-xs text-right");
-
-//         } else if (response.message === "Username already exist.") {
-//             setClassCheckUsername("visible text-red-500 text-xs text-right");
-//             setClassCheckEmail("invisible text-red-500 text-xs text-right");
-//         }else if (response.message === "Email already exist.") {
-//             setClassCheckUsername("invisible text-red-500 text-xs text-right");
-//             setClassCheckEmail("visible text-red-500 text-xs text-right");
-//         } else {
-//             alert('Register Successfully.')
-//         }
-//     } catch (error) {
-//     console.log('error', error)
-//     }
-// }
+        const response:any = await fetch('/api/auth/signup/1', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                        redirect: false,
+                        username,
+                        email
+                            }),
+            });
+        const responseData = await response.json();
+        if (responseData.message === "Username and Email already exist.") {
+            setClassCheckUsername("visible text-red-500 text-xs text-right");
+            setClassCheckEmail("visible text-red-500 text-xs text-right");
+        } else if (responseData.message === "Username already exist.") {
+            setClassCheckUsername("visible text-red-500 text-xs text-right");
+            setClassCheckEmail("invisible text-red-500 text-xs text-right");
+        }else if (responseData.message === "Email already exist."){
+            setClassCheckUsername("invisible text-red-500 text-xs text-right");
+            setClassCheckEmail("visible text-red-500 text-xs text-right");
+        } else {
+            setInfoPage(false);
+            setTypePassword("password");
+            setTypeConfirmPassword("password");
+            setClassCheckUsername("invisible text-red-500 text-xs text-right");
+            setClassCheckEmail("invisible text-red-500 text-xs text-right");
+        }
+    } catch (error) {
+    console.log('error', error)
+    }
+}
 
 
 
@@ -79,10 +88,9 @@ export default function SignIn({setStylesingup, setStylelogin}) {
         password.length >= 8 &&
         checkSpecialChar
         ) {
-            setInfoPage(false);
         setNotMachPassword(false);
         console.log("infoPage1",infoPage);
-        // CheckUsenameEmail(e);
+        CheckUsenameEmail(e);
         } else {
         setNotMachPassword(true);
         if (password === confirmPassword) {
@@ -122,35 +130,52 @@ export default function SignIn({setStylesingup, setStylelogin}) {
             setClassCheckPersonalId(false);
         }
     };
-//     const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
-//         if(classCheckPersonalId){
-//             e.preventDefault();
-//             try {
-//                 const response = await fetch("/api/signup", {
-//                     method: "POST",
-//                     headers: {
-//                         "Content-Type": "application/json",
-//                     },
-//                     body: JSON.stringify({
-//                         redirect: false,
-//                         username,
-//                         email,
-//                         password,
-//                         first_name:firstName,
-//                         last_name:lastName,
-//                         card_id:personalId,
-//                         address,
-//                         phone_number:telNumber,
-//                     }),
-//                 });
-//                 const responseData = await response.json();
-//                 console.log(responseData.message);
-//             } catch (error) {
-//                 console.log("error", error);
-//         }
-//     }
-// };
+    const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
+        if(classCheckPersonalId){
+            e.preventDefault();
+            try {
+                const response = await fetch("/api/auth/signup/2", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        redirect: false,
+                        username,
+                        email,
+                        password,
+                        first_name:firstName,
+                        last_name:lastName,
+                        card_id:personalId,
+                        address:[address],
+                        phone_number:telNumber,
+                    }),
+                });
+                const responseData = await response.json();
+                console.log(responseData.message);
+                if (responseData.message === "Signup successfully") {
+                    setCheckCardIdUse(false);
+                    setCheckTelUse(true);
+                    alert("Sign up success");
+                }else if (responseData.message === "ID Card and Phone number already exist.") {
+                    setCheckCardIdUse(true);
+                    setCheckTelUse(true);
+                }else if (responseData.message === "ID Card already exist.") {
+                    setCheckCardIdUse(true);
+                    setCheckTelUse(false);
+                }else if (responseData.message === "Phone number already exist.") {
+                    setCheckCardIdUse(false);
+                    setCheckTelUse(true);
+                };
+            } catch (error) {
+                console.log("error", error);
+        }
+    }
+};
+
     const handleStyle = () => {
+        setTypePassword("password");
+        setTypeConfirmPassword("password");
         setStylesingup(false);
         setStylelogin(true);
     }
@@ -169,7 +194,7 @@ export default function SignIn({setStylesingup, setStylelogin}) {
                 className="w-auto px-10 pt-10 pb-5 rounded-3xl shadow-md bg-white border border-gray-300 flex-col"
             >
                 <div className="max-w-96 w-screen text-4xl font-bold">Sign up</div>
-                <div className=" text-gray-400 mt-2 ml-4">สร้างบัญชีผู้ใช้</div>
+                <div className=" text-gray-400 mt-4 ml-4">สร้างบัญชีผู้ใช้</div>
 
                 <div className="flex relative mb-4">
                     <Icon icon="ph:user" width="30" height="30"  style={{color: '#A7A7A7'}} 
@@ -210,7 +235,7 @@ export default function SignIn({setStylesingup, setStylelogin}) {
                 className=" absolute bottom-2 left-1"/>
                 <input
                     id="passwordSignup"
-                    type="password"
+                    type={typePassword}
                     value={password}
                     placeholder="Password"
                     onChange={(e) => handlePasswordChange(e)}
@@ -218,6 +243,15 @@ export default function SignIn({setStylesingup, setStylelogin}) {
                     required
                     className="w-full border-b border-gray-400 pl-12 py-2 "
                 />
+                {typePassword === "password" 
+                ? <Icon 
+                    onClick={() => setTypePassword("text")}
+                    icon="majesticons:eye-line" width="25" height="25" 
+                    className=" absolute bottom-1 right-1 text-gray-400"/>
+                :<Icon 
+                    onClick={() => setTypePassword("password")}
+                    icon="iconamoon:eye-off" width="25" height="25" 
+                    className=" absolute bottom-1 right-1 text-gray-400"/>}
                 </div>
                 <span className={classSpecialChar}>
                     {classSpecialChar === "flex gap-1 text-gray-500 text-xs ml-5"
@@ -234,22 +268,31 @@ export default function SignIn({setStylesingup, setStylelogin}) {
                     :<><Icon icon="fluent:checkmark-16-filled" width="15" height="15" /></>} 
                     Least 8 Characters.</div>
                 <div className="flex relative mb-4">
-                <Icon icon="ph:lock" width="28" height="28"  style={{color:'#A7A7A7'}} 
-                className=" absolute bottom-2 left-1"/>
-                <input
-                    id="confirmPassword"
-                    type="Password"
-                    value={confirmPassword}
-                    placeholder="Confirm Password"
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    maxLength={20}
-                    required
-                    className="w-full border-b border-gray-400 pl-12 py-2 mt-2"
-                />
+                    <Icon icon="ph:lock" width="28" height="28"  style={{color:'#A7A7A7'}} 
+                    className=" absolute bottom-2 left-1"/>
+                    <input
+                        id="confirmPassword"
+                        type={typeConfirmPassword}
+                        value={confirmPassword}
+                        placeholder="Confirm Password"
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        maxLength={20}
+                        required
+                        className="w-full border-b border-gray-400 pl-12 py-2 mt-2"
+                    />
+
+                    {typeConfirmPassword === "password" 
+                    ? <Icon 
+                        onClick={() => setTypeConfirmPassword("text")}
+                        icon="majesticons:eye-line" width="25" height="25" 
+                        className=" absolute bottom-1 right-1 text-gray-400"/>
+                    :<Icon 
+                        onClick={() => setTypeConfirmPassword("password")}
+                        icon="iconamoon:eye-off" width="25" height="25" 
+                        className=" absolute bottom-1 right-1 text-gray-400"/>}
                 </div>
                 {notMachPassword ?<div className=" text-red-500 text-xs text-right">Passwords don't match.</div>
                 : <div></div>
-                
                 }
                 <div className="flex items-center mt-10 justify-between">
                     <span 
@@ -264,7 +307,7 @@ export default function SignIn({setStylesingup, setStylelogin}) {
                     NEXT<Icon icon="carbon:next-outline" width="24" height="24" />
                     </button>
                 </div>
-                <div className="flex gap-4 justify-center mt-12">
+                <div className="flex gap-4 justify-center mt-16">
                     <div className=" w-3 h-3 rounded-full "
                     style={{ backgroundColor: "#363062" }}>
                     </div>
@@ -276,11 +319,12 @@ export default function SignIn({setStylesingup, setStylelogin}) {
         ) : (
             <>
             <form
-                // onSubmit={handleSubmit}
+                onSubmit={handleSubmit}
+                style={{width:'500px'}}
                 className="w-auto px-10 pt-10 pb-5 rounded-3xl shadow-md bg-white border border-gray-300 flex-col duration-300"
             >
                 <div className="max-w-96 w-screen text-4xl font-bold mt-2">Sign up</div>
-                <div className=" text-gray-400 mt-2 ml-2">กรอกข้อมูลส่วนตัว</div>
+                <div className=" text-gray-400 mt-4 ml-2">กรอกข้อมูลส่วนตัว</div>
                 <div className="flex justify-between">
                     <div className="flex relative mb-4 w-44">
                         <Icon icon="mingcute:user-3-fill" width="30" height="30"  style={{color: '#A7A7A7'}} 
@@ -334,7 +378,10 @@ export default function SignIn({setStylesingup, setStylelogin}) {
                     }
                     
                 </div>
-                
+                {checkCardIdUse ?<div className=" text-red-500 text-xs text-right">ID Card already exist.</div>
+                : <div></div>
+                }
+
                 <div className="flex relative mb-4">
                     <Icon icon="prime:map-marker" width="30" height="30"  style={{color: '#A7A7A7'}} 
                     className=" absolute bottom-2 left-1"/>
@@ -362,6 +409,10 @@ export default function SignIn({setStylesingup, setStylelogin}) {
                     className="w-full border-b border-gray-400 pl-12 py-2 mt-5 "
                 />
                 </div>
+                {checkTelUse ?<div className=" text-red-500 text-xs text-right">Phone number already exist.</div>
+                : <div></div>
+                }
+
                 <div className="flex  mt-14 justify-between">
                     <button
                     onClick={() => setInfoPage(true)}
@@ -376,7 +427,7 @@ export default function SignIn({setStylesingup, setStylelogin}) {
                     SIGN UP
                     </button>
                 </div>
-                <div className="flex gap-4 justify-center mt-10">
+                <div className="flex gap-4 justify-center mt-14">
                     <div className=" w-3 h-3 rounded-full bg-gray-300"></div>
                     <div className=" w-3 h-3 rounded-full "
                     style={{ backgroundColor: "#363062" }}>

@@ -10,6 +10,7 @@ export default function SignIn({setStylesingup, setStylelogin}) {
   const [password, setPassword] = useState('')
   const [classCheckEmailin, setClassCheckEmailin] = useState('invisible text-red-500 text-xs text-right');
   const [classCheckPassin, setClassCheckPassin] = useState('invisible text-red-500 text-xs text-right');
+  const [typePasswordlog, setTypePasswordlog] = useState('password');
   const router = useRouter()
   
 
@@ -31,6 +32,7 @@ export default function SignIn({setStylesingup, setStylelogin}) {
         console.error(result.error)
       } else {
         // router.push('/profile')
+        setTypePasswordlog('password')
         alert('Login success')
       }
     } catch (error) {
@@ -39,6 +41,7 @@ export default function SignIn({setStylesingup, setStylelogin}) {
   }
 
   const handleStyle = () => {
+    setTypePasswordlog("password")
     setStylesingup(true);
     setStylelogin(false);
   }
@@ -51,7 +54,7 @@ export default function SignIn({setStylesingup, setStylelogin}) {
         className="w-auto px-10 pt-10 pb-5 rounded-3xl shadow-md bg-white border border-gray-300 flex-col duration-300"
       >
         <div className="max-w-96 w-screen text-4xl font-bold">Login</div>
-        <div className=" text-gray-400 mt-3 ml-2">เข้าสู่ระบบ</div>
+        <div className=" text-gray-400 mt-5 ml-2">เข้าสู่ระบบ</div>
 
         <div className="flex relative mb-4">
           <Icon icon="carbon:email" width="30" height="30"  style={{color:'#A7A7A7'}}
@@ -75,7 +78,7 @@ export default function SignIn({setStylesingup, setStylelogin}) {
           className=" absolute bottom-2 left-1"/>
           <input
             id="password"
-            type="password"
+            type={typePasswordlog}
             value={password}
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
@@ -83,6 +86,15 @@ export default function SignIn({setStylesingup, setStylelogin}) {
             required
             className="w-full border-b border-gray-400 pl-12 py-2 mt-2"
           />
+          {typePasswordlog === "password" 
+            ? <Icon 
+                onClick={() => setTypePasswordlog("text")}
+                icon="majesticons:eye-line" width="25" height="25" 
+                className=" absolute bottom-1 right-1 text-gray-400"/>
+            :<Icon 
+                onClick={() => setTypePasswordlog("password")}
+                icon="iconamoon:eye-off" width="25" height="25" 
+                className=" absolute bottom-1 right-1 text-gray-400"/>}
         </div>
         <div className={classCheckPassin}>Invalid password</div>
         <div className="flex items-center mt-10 mb-5 justify-between">
