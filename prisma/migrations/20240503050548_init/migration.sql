@@ -1,0 +1,2 @@
+-- AddForeignKey
+ALTER TABLE "Trade" ADD CONSTRAINT "trade-owner_id" FOREIGN KEY ("owner_id") REFERENCES "User"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
