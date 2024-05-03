@@ -1,14 +1,14 @@
 import { NextResponse    } from "next/server";
-import { prisma } from "@/lib/db";
+import { prismadb } from "@/lib/db";
 
 export async function POST(req: Request) {
     try {
         const { username , email} = await req.json()
         
-        const usernameexist = await prisma.user.findUnique({
+        const usernameexist = await prismadb.user.findUnique({
             where: { username:username}
         })
-        const emailexist = await prisma.user.findUnique({
+        const emailexist = await prismadb.user.findUnique({
             where: { email:email}
         })
 

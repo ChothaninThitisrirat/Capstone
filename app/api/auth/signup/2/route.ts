@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { hash } from 'bcrypt';
-import { prisma } from "@/lib/db";
+import { prismadb } from "@/lib/db";
 
 export async function POST(req: Request) {
     try {
@@ -10,10 +10,10 @@ export async function POST(req: Request) {
             return NextResponse.json({ user:null, message: 'Must fill all input.'},{status:409})
         }
 
-        const card_idexist = await prisma.user.findUnique({
+        const card_idexist = await prismadb.user.findUnique({
             where: { card_id:card_id}
         })
-        const phone_numberexist = await prisma.user.findUnique({
+        const phone_numberexist = await prismadb.user.findUnique({
             where: { phone_number:phone_number}
         })
 
@@ -32,7 +32,7 @@ export async function POST(req: Request) {
         }
         
         const hashpassword = await hash(password , 5)
-        const newUser = await prisma.user.create({
+        const newUser = await prismadb.user.create({
             data: {
                 username,
                 email,

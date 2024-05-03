@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/db";
+import { prismadb } from "@/lib/db";
 
 export async function POST(req: Request) {
     try {
@@ -7,7 +7,7 @@ export async function POST(req: Request) {
 
         const date = new Date()
 
-        const newBook = await prisma.book.create({
+        const newBook = await prismadb.book.create({
             data: {
                 user_id,
                 title,
@@ -18,7 +18,7 @@ export async function POST(req: Request) {
                 status:"Post trade"
             }
         })
-        
+
         return NextResponse.json({
             book: newBook,
             message: "Post book successfully"
