@@ -3,7 +3,7 @@ import { prismadb } from "@/lib/db";
 
 export async function POST(req: Request) {
     try {
-        const { user_id , title , description , picture , pickup } = await req.json()
+        const { user_id , title , description , picture , pickup , category } = await req.json()
 
         const date = new Date()
 
@@ -15,7 +15,10 @@ export async function POST(req: Request) {
                 picture,
                 pickup,
                 datetime:date.toISOString(),
-                status:"Post trade"
+                status:"Post trade",
+                category:{
+                    connect:category    
+                }
             }
         })
 

@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Book {
-  Id                        Int                       @unique @default(autoincrement())
+  Id                        Int                       @id @unique @default(autoincrement())
   user_id                   Int
   title                     String
   description               String
@@ -18,13 +18,10 @@ model Book {
   pickup                    String
   datetime                  DateTime                  @db.Date
   User                      User                      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "book_user_id")
-  Category_in_Book          Category_in_Book[]
+  category                  Category[]
   Review_Book               Review_Book[]
   Trade_Trade_book_idToBook Trade[]                   @relation("Trade_book_idToBook")
-  Tradebook_want_Category   Tradebook_want_Category[]
   Wishlist                  Wishlist[]
-
-  @@id([Id, user_id])
 }
 
 model Review_Book {
@@ -82,19 +79,9 @@ model User {
 model Category {
   id                      Int                       @id @default(autoincrement())
   name                    String                    @db.VarChar(20)
-  Category_in_Book        Category_in_Book[]
-  Tradebook_want_Category Tradebook_want_Category[]
+  book                    Book[]
 }
 
-model Category_in_Book {
-  id          Int      @default(autoincrement())
-  book_id     Int
-  category_id Int
-  Book        Book     @relation(fields: [book_id], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "cat_in_book-book_id")
-  Category    Category @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "cat_in_book-category_id")
-
-  @@id([id, book_id, category_id])
-}
 
 model Review_User {
   id                                 Int     @default(autoincrement())
@@ -118,12 +105,4 @@ model Wishlist {
   @@id([id, user_id, book_id])
 }
 
-model Tradebook_want_Category {
-  id               Int      @default(autoincrement())
-  book_id          Int
-  want_category_id Int
-  Book             Book     @relation(fields: [book_id], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "Tradebook_want_Category-book_id")
-  Category         Category @relation(fields: [want_category_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Tradebook_want_Category-want_category")
 
-  @@id([id, want_category_id, book_id])
-}
