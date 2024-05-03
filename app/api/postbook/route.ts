@@ -16,6 +16,7 @@ export async function POST(req: Request) {
                 pickup,
                 datetime:date.toISOString(),
                 status:"Post trade",
+                req_count:0,
                 category:{
                     connect:category    
                 }

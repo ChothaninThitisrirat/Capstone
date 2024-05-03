@@ -7,8 +7,10 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
             where: { id: parseInt(params.id) },
         })
 
-        return NextResponse.json( 
-            getAllbook 
+        return NextResponse.json({
+            getAllbook,
+            message: "All book in this category have been sent successfully."
+        } 
     )
 
     } catch (error) {
