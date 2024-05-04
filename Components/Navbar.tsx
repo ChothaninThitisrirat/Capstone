@@ -19,7 +19,7 @@ function Navbar() {
                     <Image
                     src={logoWhite}
                     alt="Logo"
-                    className='w-36 h-20 object-contain '
+                    className='w-32 h-12 object-contain ml-5'
                     />
                     <div className="flex gap-14 ml-5">
                         <div className="flex text-center items-center text-white text-base">หน้าแรก</div>
@@ -47,8 +47,6 @@ function Navbar() {
                         :<Icon icon="mdi:chevron-down" width="20" height="20"
                         className="text-white"/>}
                     </div>
-                            
-
                 </div>
             </div>
             <div className={showDropDown
