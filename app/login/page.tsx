@@ -1,68 +1,188 @@
 'use client'
 
-import { useState } from 'react'
-import { signIn } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
+import React, { useState, useEffect } from 'react'
+import LoginFrom from './LoginForm'
+import SignupFrom from './SignupFrom'
+import { Icon } from '@iconify/react';
+import Image from 'next/image';
+import bgPropBook from '../../public/images/bgPropBook.png'
+import bgPropBlue1 from '../../public/images/bgPropBlue1.png'
+import bgPropBlue2 from '../../public/images/bgPropBlue2.png'
+import logologinsignup from '../../public/images/logologinsignup.png'
 
-export default function SignIn() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const router = useRouter()
 
-  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    try {
-      const result:any = await signIn('credentials', {
-        redirect: false,
-        email,
-        password,
+
+function LoginSignup() {
+
+  const [stylesingup, setStylesingup] = useState(false)
+  const [stylesingupOn, setStylesingupOn] = useState({
+      transform:'translateX(30%)',
+      transitionDuration: '3s',
+  });
+
+  const [stylelogin, setStylelogin] = useState(true)
+  const [styleloginOn, setStyleloginOn] = useState({
+    transform:'translateX(200%)',
+    transitionDuration: '3s'
+    
+  })
+
+
+  const [stylebgPropBook, setStylebgPropBook] =useState ({
+    width:'1400px',
+    transform:'translateX(0%) translateY(-35%)',
+    transitionDuration: '4s'
+  })
+  const [stylebgPropBlue1, setStylebgPropBlue1] =useState ({
+    width:'2000px',
+    transform:'translateX(-70%) translateY(55%)',
+    transitionDuration: '4.5s'
+  })
+  const [stylebgPropBlue2, setStylebgPropBlue2] =useState ({
+    width:'2000px',
+    transform:'translateX(-35%) translateY(80%)',
+    transitionDuration: '3s'
+  })
+  const [stylelogologinsignup, setStylelogologinsignup] =useState ({
+    width:'40%',
+    transform:'translateX(25%) translateY(10%)',
+    transitionDuration: '3s'
+  })
+
+  const [registerSccuess, setRegisterSccuess] = useState("fixed z-20 w-64 h-12 text-white text-center flex items-center justify-center top-0 left-0 right-0 mx-auto mt-5 rounded-lg drop-shadow-lg duration-500 -translate-y-20 invisible")
+  useEffect(() => {
+    if (stylelogin) {//Login
+      setStyleloginOn({
+        transform:'translateX(-40%)',
+        transitionDuration: '3s'
       })
-
-      if (result.error) {
-        console.error(result.error)
-      } else {
-        router.push('/profile')
-      }
-    } catch (error) {
-      console.log('error', error)
+      setStylesingupOn({
+        transform:'translateX(-200%)',
+        transitionDuration: '3s'
+      })
+      setStylebgPropBook({
+        width:'1400px',
+        transform:'translateX(0%) translateY(-35%)',
+        transitionDuration: '4s'
+      })
+      setStylebgPropBlue1({
+        width:'2000px',
+        transform:'translateX(-70%) translateY(55%)',
+        transitionDuration: '4.5s'
+      })
+      setStylebgPropBlue2({
+        width:'2000px',
+        transform:'translateX(-35%) translateY(80%)',
+        transitionDuration: '3s'
+      })
+      setStylelogologinsignup({
+        width:'40%',
+        transform:'translateX(25%) translateY(10%)',
+        transitionDuration: '3s'
+      })
+    } else { //Singup
+      setStyleloginOn({
+        transform:'translateX(200%)',
+        transitionDuration: '3s'
+      })
+      setStylesingupOn({
+        transform:'translateX(30%)',
+        transitionDuration: '3s'
+      }) 
+      setStylebgPropBook({
+        width:'1400px',
+        transform:'translateX(55%) translateY(-35%)',
+        transitionDuration: '4s'
+      })
+      setStylebgPropBlue1({
+        width:'2000px',
+        transform:'translateX(50%) translateY(60%)',
+        transitionDuration: '4.5s'
+      })
+      setStylebgPropBlue2({
+        width:'2000px',
+        transform:'translateX(20%) translateY(75%)',
+        transitionDuration: '3s'
+      })
+      setStylelogologinsignup({
+        width:'40%',
+        transform:'translateX(110%) translateY(10%)',
+        transitionDuration: '3s'
+      })
     }
-  }
+  }, [stylelogin])
+  
 
   return (
-    <div className="flex h-screen items-center justify-center">
-      <form
-        onSubmit={handleSubmit}
-        className="p-6 rounded-md shadow-md"
-      >
-        <div className="mb-4">
-          <label htmlFor="email">Email</label>
-          <input
-            id="email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="w-full border border-gray-300 px-3 py-2 rounded "  // Added border
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="w-full border border-gray-300 px-3 py-2 rounded" // Added border
-          />
-        </div>
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded mb-4"
-        >
-          Sign In
-        </button>{' '}
-      </form>
-    </div>
+    <>
+    <style>
+      {`
+      * {
+        overflow: hidden;
+      }
+      `}
+    </style>
+    <div 
+    style={{ backgroundColor: "#363062f2" }}
+    className={registerSccuess}
+    >Register successfully.</div>
+    <div className="h-screen bg-gradient-to-tr from-yellow-100 to-blue-100">
+    <Image
+      src={bgPropBook}
+      alt="Picture bg"
+      style={stylebgPropBook}
+      className='object-contain z-10 absolute top-0 left-0'
+    />
+    <Image
+      src={bgPropBlue1}
+      alt="Picture bg"
+      style={stylebgPropBlue1}
+      className='object-contain z-10 absolute bottom-0 left-0'
+    />
+    <Image
+      src={bgPropBlue2}
+      alt="Picture bg"
+      style={stylebgPropBlue2}
+      className='object-contain z-10 absolute bottom-0 left-0'
+    />
+    <Image
+      src={logologinsignup}
+      alt="Picture bg"
+      style={stylelogologinsignup}
+      className='object-contain z-10 absolute top-0 left-0'
+    /></div>
+    
+
+
+
+
+
+    <div 
+    style={stylelogin ? {visibility:'visible'} : {visibility:'hidden'}}
+    className="flex items-center justify-end absolute top-0 left-0 h-screen w-screen z-20"
+    >
+      <div 
+      style={styleloginOn}
+      className="w-auto" >
+        <LoginFrom setStylesingup={setStylesingup} setStylelogin={setStylelogin}/>
+      </div>
+    </div >
+    <div 
+    style={stylesingup ? {visibility:'visible'} : {visibility:'hidden'}}
+    className="flex items-center justify-start absolute top-0 left-0 h-screen w-screen z-20">
+      <div 
+      style={stylesingupOn}
+      className="w-auto" >
+        <SignupFrom setStylesingup={setStylesingup} setStylelogin={setStylelogin} setRegisterSccuess={setRegisterSccuess}/>
+      </div>
+    </div >
+
+      
+
+      
+    
+    </>
   )
 }
+
+export default LoginSignup
