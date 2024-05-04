@@ -4,7 +4,14 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Icon } from "@iconify/react";
 
-export default function SignIn({setStylesingup, setStylelogin}) {
+
+interface LoginProps {
+    setStylesingup: (style: boolean) => void;
+    setStylelogin: (style: boolean) => void;
+    setRegisterSccuess: (style: string) => void;
+}
+
+const Login: React.FC<LoginProps> = ({ setStylesingup, setStylelogin, setRegisterSccuess }) => {
 
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
@@ -100,7 +107,7 @@ const CheckUsenameEmail = async (e: React.SyntheticEvent<HTMLFormElement>) => {
         }
     };
 
-    const handlePasswordChange = (e: React.SyntheticEvent<HTMLFormElement>) => {
+    const handlePasswordChange = (e:any) => {
         const inputValue = e.target.value;
         setPassword(inputValue);
         const passwordLength = inputValue.length;
@@ -121,7 +128,7 @@ const CheckUsenameEmail = async (e: React.SyntheticEvent<HTMLFormElement>) => {
         }
     };
 
-    const handlePersonalIdChange = (e: React.SyntheticEvent<HTMLFormElement>) => {
+    const handlePersonalIdChange = (e:any) => {
         const inputValue = e.target.value;
         setPersonalId(inputValue);
         if (inputValue.length === 13) {
@@ -130,7 +137,7 @@ const CheckUsenameEmail = async (e: React.SyntheticEvent<HTMLFormElement>) => {
             setClassCheckPersonalId(false);
         }
     };
-    const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e:any) => {
         if(classCheckPersonalId){
             e.preventDefault();
             try {
@@ -154,9 +161,14 @@ const CheckUsenameEmail = async (e: React.SyntheticEvent<HTMLFormElement>) => {
                 const responseData = await response.json();
                 console.log(responseData.message);
                 if (responseData.message === "Signup successfully") {
+                    setRegisterSccuess("fixed z-20 w-64 h-12 text-white text-center flex items-center justify-center top-0 left-0 right-0 mx-auto mt-5 rounded-lg drop-shadow-lg duration-500 visible")
                     setCheckCardIdUse(false);
                     setCheckTelUse(true);
-                    alert("Sign up success");
+                    handleStyle();
+                    setFormSignup();
+                    setTimeout(() => {
+                        setRegisterSccuess("fixed z-20 w-64 h-12 text-white text-center flex items-center justify-center top-0 left-0 right-0 mx-auto mt-5 rounded-lg drop-shadow-lg duration-500 -translate-y-20 invisible")
+                    }, 4000);
                 }else if (responseData.message === "ID Card and Phone number already exist.") {
                     setCheckCardIdUse(true);
                     setCheckTelUse(true);
@@ -180,6 +192,20 @@ const CheckUsenameEmail = async (e: React.SyntheticEvent<HTMLFormElement>) => {
         setStylelogin(true);
     }
 
+    const setFormSignup = () => {
+        setUsername('')
+        setEmail('')
+        setPassword('')
+        setConfirmPassword('')
+        setFirstName('')
+        setLastName('')
+        setPersonalId('')
+        setAddress('')
+        setTelNumber('')
+        setInfoPage(true)
+        setClassSpecialChar("flex gap-1 text-gray-500 text-xs ml-5");
+        setClassLeastCharacters("flex gap-1 text-gray-500 text-xs ml-5 mt-2");
+    }
 
 
 
@@ -301,7 +327,7 @@ const CheckUsenameEmail = async (e: React.SyntheticEvent<HTMLFormElement>) => {
                         Already Have an Account?</span>
                     <button
                     type="submit"
-                    className="flex text-white p-1.5 rounded-full w-28 justify-center items-center gap-2 "
+                    className="flex text-white p-1.5 rounded-full w-28 justify-center items-center gap-2"
                     style={{ backgroundColor: "#435585" }}
                     >
                     NEXT<Icon icon="carbon:next-outline" width="24" height="24" />
@@ -440,3 +466,5 @@ const CheckUsenameEmail = async (e: React.SyntheticEvent<HTMLFormElement>) => {
         </>
     );
 }
+
+export default Login;

@@ -5,7 +5,12 @@ import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { Icon } from '@iconify/react';
 
-export default function SignIn({setStylesingup, setStylelogin}) {
+interface SignInProps {
+  setStylesingup: (style: boolean) => void;
+  setStylelogin: (style: boolean) => void;
+}
+
+const SignIn: React.FC<SignInProps> = ({ setStylesingup, setStylelogin }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [classCheckEmailin, setClassCheckEmailin] = useState('invisible text-red-500 text-xs text-right');
@@ -31,9 +36,8 @@ export default function SignIn({setStylesingup, setStylelogin}) {
         }
         console.error(result.error)
       } else {
-        // router.push('/profile')
+        router.push('/')
         setTypePasswordlog('password')
-        alert('Login success')
       }
     } catch (error) {
       console.log('error', error)
@@ -114,3 +118,4 @@ export default function SignIn({setStylesingup, setStylelogin}) {
       </form>
   )
 }
+export default SignIn;

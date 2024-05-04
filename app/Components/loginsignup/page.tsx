@@ -1,10 +1,9 @@
 'use client'
 
-import React, { use, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import LoginFrom from './LoginForm'
 import SignupFrom from './SignupFrom'
 import { Icon } from '@iconify/react';
-import { useState } from "react";
 import Image from 'next/image';
 import bgPropBook from '../../../public/images/bgPropBook.png'
 import bgPropBlue1 from '../../../public/images/bgPropBlue1.png'
@@ -49,6 +48,8 @@ function LoginSignup() {
     transform:'translateX(25%) translateY(10%)',
     transitionDuration: '3s'
   })
+
+  const [registerSccuess, setRegisterSccuess] = useState("fixed z-20 w-64 h-12 text-white text-center flex items-center justify-center top-0 left-0 right-0 mx-auto mt-5 rounded-lg drop-shadow-lg duration-500 -translate-y-20 invisible")
   useEffect(() => {
     if (stylelogin) {//Login
       setStyleloginOn({
@@ -111,11 +112,6 @@ function LoginSignup() {
     }
   }, [stylelogin])
   
-  // useEffect(() => {
-    
-  //   console.log('stylesingup', stylesingup)
-  //   console.log('stylelogin', stylelogin)
-  // }, [stylesingup, stylelogin])
 
   return (
     <>
@@ -126,6 +122,10 @@ function LoginSignup() {
       }
       `}
     </style>
+    <div 
+    style={{ backgroundColor: "#363062f2" }}
+    className={registerSccuess}
+    >Register successfully.</div>
     <div className="h-screen bg-gradient-to-tr from-yellow-100 to-blue-100">
     <Image
       src={bgPropBook}
@@ -173,7 +173,7 @@ function LoginSignup() {
       <div 
       style={stylesingupOn}
       className="w-auto" >
-        <SignupFrom setStylesingup={setStylesingup} setStylelogin={setStylelogin}/>
+        <SignupFrom setStylesingup={setStylesingup} setStylelogin={setStylelogin} setRegisterSccuess={setRegisterSccuess}/>
       </div>
     </div >
 
