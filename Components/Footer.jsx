@@ -10,11 +10,11 @@ function Footer() {
     <>
         <footer 
         style={{backgroundColor: '#435585'}}
-        className="flex justify-around items-center w-screen h-56 relative">
+        className="flex justify-around items-center w-screen h-56 relative mt10">
             <Image
                 src={propFooter}
                 alt="Logo"
-                className='absolute top-0 left-40 w-20 -translate-y-3.5'
+                className='absolute top-0 left-40 w-20 -translate-y-3.5 object-contain z-40'
             />
             <div className="col-lg-4 col-md-6 col-sm-6">
             <Link href='/'>
