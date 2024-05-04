@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Icon } from '@iconify/react';
 import logoWhite from '../public/images/logoWhite.png';
 import Image from 'next/image';
-import { useSession } from 'next-auth/react'
+import { useSession, signOut } from 'next-auth/react'
 import Link from "next/link";
 
 function Navbar() {
@@ -106,9 +106,11 @@ function DropDown() {
                     <Link href={item.link} className="flex text-center items-center text-sm ml-3 mr-2">{item.text}</Link>
                 </div>
             ))}
-            <div className="flex items-center justify-center text-sm text-gray-500 py-2 border-t cursor-pointer gap-2">
+            <button
+            onClick={() => signOut({ callbackUrl: '/' })}
+            className="flex items-center justify-center text-sm text-gray-500 py-2 border-t gap-2 w-full">
             <Icon icon="ic:sharp-logout" width="20" height="20" />
-                Logout</div>
+                Logout</button>
             
             
         </div>
