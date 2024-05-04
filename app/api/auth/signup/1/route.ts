@@ -11,8 +11,9 @@ export async function POST(req: Request) {
         const emailexist = await prismadb.user.findUnique({
             where: { email:email}
         })
-
+        
         if (usernameexist && emailexist) {
+            
             return NextResponse.json({ 
                 user: null, message: "Username and Email already exist."},{status: 409}
             )

@@ -9,10 +9,9 @@ export async function POST(req: Request) {
         if (!username || !email || !password || !card_id || !phone_number || !first_name || !last_name || !address) {
             return NextResponse.json({ user:null, message: 'Must fill all input.'},{status:409})
         }
-
         const card_idexist = await prismadb.user.findUnique({
-            where: { card_id:card_id}
-        })
+            where: { card_id: card_id }
+        });
         const phone_numberexist = await prismadb.user.findUnique({
             where: { phone_number:phone_number}
         })
@@ -44,6 +43,7 @@ export async function POST(req: Request) {
                 phone_number
             }
         })
+        
 
         return NextResponse.json({
             user:newUser,
