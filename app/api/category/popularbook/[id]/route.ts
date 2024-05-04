@@ -17,8 +17,8 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
         })
         return NextResponse.json({
             popularbook,
-            message: "Popular book in this category sent successfully."
-        }
+            message: "Popular book in this category have been sent successfully."
+        },{ status: 200 }
     )
 
     } catch (error) {
