@@ -3,23 +3,24 @@ import { prismadb } from "@/lib/db";
 
 export async function GET(req: Request,{ params }: { params: { id: string }}) {
     try {
-        const getAllbook = await prismadb.category.findUnique({
-            where: { id: parseInt(params.id) },
-            include: {
-                book:true
+        const wishlist = await prismadb.wishlist.findMany({
+            where: { user_id: parseInt(params.id) },
+            select: {
+                book_id:true,
+                Book:true
             }
         })
 
         return NextResponse.json({
-            getAllbook,
-            message: "All book in this category have been sent successfully."
-        },{ status: 200 }
+            wishlist:wishlist,
+            message: "Book in wishlist have been sent sucessfully."
+        },{ status: 201 }
     )
 
     } catch (error) {
         
         console.log(error);
         return NextResponse.json({error})
-
+        
     }
 }

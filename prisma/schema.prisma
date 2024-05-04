@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Book {
-  Id                        Int                       @id @unique @default(autoincrement())
+  id                        Int                       @id @unique @default(autoincrement())
   user_id                   Int
   title                     String
   description               String
@@ -31,7 +31,7 @@ model Review_Book {
   user_id  Int
   score    Decimal @db.Decimal(1, 0)
   describe String?
-  Book     Book    @relation(fields: [book_id], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "review_book-book_id")
+  Book     Book    @relation(fields: [book_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "review_book-book_id")
   User     User    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "review_book-user_id")
 
   @@id([id, book_id, user_id])
@@ -46,7 +46,7 @@ model Trade {
   return_date               String   @db.VarChar(6)
   status                    String   @db.VarChar(10)
   pickup_req                String?
-  Book_Trade_book_idToBook  Book     @relation("Trade_book_idToBook", fields: [book_id], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "trade-book_id")
+  Book_Trade_book_idToBook  Book     @relation("Trade_book_idToBook", fields: [book_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "trade-book_id")
   User_Trade_owner_idToUser User     @relation("Trade_owner_idToUser", fields: [owner_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "trade-owner_id")
   User                      User     @relation(fields: [req_user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "trade-req_user_id")
 
@@ -100,7 +100,7 @@ model Wishlist {
   id      Int  @default(autoincrement())
   user_id Int
   book_id Int
-  Book    Book @relation(fields: [book_id], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "wishlist-book_id")
+  Book    Book @relation(fields: [book_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "wishlist-book_id")
   User    User @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "wishlist-user_id")
 
   @@id([id, user_id, book_id])
