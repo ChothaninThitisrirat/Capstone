@@ -197,6 +197,7 @@ const Login: React.FC<LoginProps> = ({
         setTypeConfirmPassword("password");
         setStylesingup(false);
         setStylelogin(true);
+        setClassCheckPersonalId(false);
         setTimeout(() => {
             setFormSignup();
         }, 2000);

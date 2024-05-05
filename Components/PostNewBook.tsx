@@ -64,6 +64,19 @@ const PostNewBook: React.FC<PostNewBookProp> = ({setStateAddBook, classAddBook})
     }])
 
 
+const reSetInfo = () => {
+    setStateAddBook(false)
+    setBookTitle('')
+    setBookDetail('')
+    setDataCatin([])
+    setDataPicture([{
+        img:null
+    },{
+        img:null
+    },{
+        img:null
+    }])
+}
 
     return (
         <>
@@ -92,7 +105,7 @@ const PostNewBook: React.FC<PostNewBookProp> = ({setStateAddBook, classAddBook})
                     className="flex flex-col w-auto h-auto bg-white p-10 border border-gray-300 items-center justify-center relative">
                         <div className="absolute top-0 right-0 translate-x-2 -translate-y-2 rounded-full bg-white w-9 h-9"></div>
                         <Icon icon="carbon:close-filled" width="45" height="45"
-                        onClick={() => setStateAddBook(false)}
+                        onClick={() => reSetInfo()}
                         className=' absolute top-0 right-0 translate-x-3 -translate-y-3 text-gray-300 cursor-pointer hover:text-red-500'/>
                         <div className="text-4xl font-bold w-full flex items-center justify-center">เพิ่มหนังสือใหม่</div>
                         <div className="flex relative w-full px-5">
@@ -159,7 +172,6 @@ const PostNewBook: React.FC<PostNewBookProp> = ({setStateAddBook, classAddBook})
                                         }
                                         setCategory(ClassCatin)
                                         setDataCatin(newCatin)
-                                        console.log(dataCatin)
                                     }}
                                     key={index} className={classCategory+' '+ (cate.defaultClass?"bg-gray-300":cate.color )}
                                     >{cate.name}</div>

@@ -15,11 +15,13 @@ function Navbar() {
             <div 
             className="flex w-screen h-16 rounded-b-3xl fixed cursor-pointer justify-between z-20 bg-dark1" >
                 <div className="flex gap-10 ml-10 items-center">
+                <Link href='/' >
                     <Image
                     src={logoWhite}
                     alt="Logo"
                     className='w-32 h-12 object-contain ml-5'
                     />
+                </Link>
                     <div className="flex gap-14 ml-5">
                         <Link href='/' className="flex text-center items-center text-white text-base">หน้าแรก</Link>
                         <div className="flex text-center items-center text-white text-base">หมวดหมู่</div>
