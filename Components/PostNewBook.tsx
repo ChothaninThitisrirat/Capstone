@@ -1,10 +1,13 @@
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 import { Icon } from '@iconify/react';
 import Image from 'next/image';     
 
 function PostNewBook() {
     const [bookTitle, setBookTitle] = useState('')
     const [bookDetail, setBookDetail] = useState('')
+    const [classCategory, setClassCategory] = useState(
+        "flex items-center justify-center rounded-lg w-auto text-sm cursor-pointer py-0.5 px-3 flex-grow-4 duration-1000")
+    const [dataCatin, setDataCatin] = useState([])
     const [dataPicture, setDataPicture] = useState([{
         img:null
     },{
@@ -14,39 +17,68 @@ function PostNewBook() {
     }])
     const [category, setCategory] = useState([{
         name: "นวนิยาย",
-        color: ""
+        defaultClass: true,
+        color: "bg-gradient-to-tr from-novel to-white"
     },{
         name: "สยองขวัญ",
-        color: ""
+        defaultClass: true,
+        color: "bg-gradient-to-tr from-horror1 to-horror2 text-white"
     },{
         name: "การ์ตูน",
-        color: ""
+        defaultClass: true,
+        color: "bg-gradient-to-tr from-cartoon to-white"
     },{
         name: "โรแมนติก",
-        color: ""
+        defaultClass: true,
+        color: "bg-gradient-to-tr from-romantic to-white"
     },{
-        name: "ไลท์โนเวล",
-        color: ""
+        name: "วิทยาศาสตร์",
+        defaultClass: true,
+        color: "bg-gradient-to-tr from-science to-white"
     },{
         name: "การเงิน-ลงทุน",
-        color: ""
+        defaultClass: true,
+        color: "bg-gradient-to-tr from-business to-white"
     },{
         name: "การศึกษา",
-        color: ""
+        defaultClass: true,
+        color: "bg-gradient-to-tr from-education to-white"
     },{
         name: "ท่องเที่ยว",
-        color: ""
+        defaultClass: true,
+        color: "bg-gradient-to-tr from-travel to-white"
     },{
         name: "พัฒนาตนเอง",
-        color: ""
+        defaultClass: true,
+        color: "bg-gradient-to-tr from-develop to-white"
+    },{
+        name: "สุขภาพ",
+        defaultClass: true,
+        color: "bg-gradient-to-tr from-health to-white"
     }])
+
+
 
     return (
         <>
-        <div className="flex">
-            fuirehghseruighjrhgfesoijfiehjsgihasieugheisgfiesgfiysregiu
+        <style>
+            {`
+            .book-detail::-webkit-scrollbar {
+                background: none;
+                border-radius: 10px;
+                width: 6px;
+                height: 10px;
+            }
+            
+            .book-detail::-webkit-scrollbar-thumb {
+                background-color: #BDCAED;
+                border-radius: 2px;
+            
+            }
+            `}
+        </style>
             <div 
-            className=" fixed h-screen w-screen bg-slate-200 top-0 left-0 z-50 opacity-30 backdrop-blur-2xl"></div>
+            className=" fixed h-screen w-screen bg-slate-200 top-0 left-0 z-50 opacity-30 backdrop-blur-2xl "></div>
                 <div 
                 onClick={(innerClickEvent) => {
                     innerClickEvent.stopPropagation();
@@ -54,7 +86,7 @@ function PostNewBook() {
                 className="fixed flex top-0 left-0 z-50 h-screen w-screen items-center justify-center">
                     <form 
                     // onSubmit={}
-                    style={{width: "500px",borderRadius: "30px"}}
+                    style={{width: "600px",borderRadius: "30px"}}
                     className="flex flex-col w-auto h-auto bg-white p-10 border border-gray-300 items-center justify-center">
 
                         <div className="text-4xl font-bold w-full flex items-center justify-center">เพิ่มหนังสือใหม่</div>
@@ -90,22 +122,62 @@ function PostNewBook() {
                                 placeholder="Book Detail"
                                 onChange={(e) => setBookDetail(e.target.value)}
                                 required
-                                className="w-full border-l-2 border-gray-300 ml-10 pl-2 pt-1 pb2 mt-8 faw resize-none bg-gray-50 rounded-sm"
+                                className="book-detail w-full border-l-2 border-gray-300 ml-10 pl-2 pt-1 pb2 mt-8 faw resize-none bg-gray-50 rounded-sm h-32"
                             />
                         </div>
                         <div className="flex items-center justify-center flex-col w-full px-5">
-                            <div className="flex text-gray-400 w-full mt-5 mb-3">Category</div>
-                            <div className="flex flex-wrap items-center justify-center gap-x-1 gap-y-3">
+                            <div className={dataCatin.length > 0
+                            ?"flex w-full mt-5 mb-3 duration-300"
+                            :"flex text-gray-400 w-full mt-5 mb-3 duration-300"
+                            }>Category</div>
+                            <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-3">
                                 {category.map((cate, index) => (
-                                    <div key={index} className="flex items-center justify-center rounded-lg w-auto border text-xs cursor-pointer py-0.5 px-3">{cate.name}</div>
+                                    <div 
+                                    onClick={() => {
+                                        
+                                        const newCatin:any = [...dataCatin]
+                                        const ClassCatin:any = [...category]
+                                        if(newCatin.includes(cate.name)){
+                                            ClassCatin.forEach((cat:any) => {
+                                                if (cat.name === cate.name) {
+                                                    cat.defaultClass = true;
+                                                }
+                                            });
+                                            newCatin.splice(newCatin.indexOf(cate.name),1)
+                                        }else{
+                                            ClassCatin.forEach((cat:any) => {
+                                                if (cat.name === cate.name) {
+                                                    cat.defaultClass = false;
+                                                }
+                                            });
+                                            newCatin.push(cate.name)
+                                        }
+                                        setCategory(ClassCatin)
+                                        setDataCatin(newCatin)
+                                        console.log(dataCatin)
+                                    }}
+                                    key={index} className={classCategory+' '+ (cate.defaultClass?"bg-gray-300":cate.color )}
+                                    >{cate.name}</div>
                                 ))}
                             </div>
                         </div>
                         <div className="flex border-t border-gray-400 w-full mt-10 pt-6">
-                            <div className="flex items-center justify-center rounded-lg bg-gray-200 w-16 h-16 cursor-pointer hover:bg-gray-300">
+                            <button className="flex items-center justify-center rounded-lg bg-gray-200 w-16 h-16 cursor-pointer hover:bg-gray-300">
+                                <input 
+                                className='bg-none border-none absolute w-16 h-16 cursor-pointer opacity-0'
+                                type="file" accept="image/*" onChange={(e:any) => {
+                                    const file = e.target.files[0]
+                                    const reader = new FileReader()
+                                    reader.onloadend = () => {
+                                        const newPicture:any = [...dataPicture]
+                                        newPicture[0].img = reader.result
+                                        setDataPicture(newPicture)
+                                    }
+                                    reader.readAsDataURL(file)
+                                }}/>
                                 <Icon icon="ic:baseline-plus" width="30" height="30"
                                 className='text-gray-500'/>
-                            </div>
+                            </button>
                             <div className="w-0.5 h-16 bg-gray-300 mx-3"></div>
 
                             {dataPicture.map((picture, index) => (
@@ -124,17 +196,24 @@ function PostNewBook() {
 
                         </div>
                         <div className="flex items-center justify-center mt-10">
-                            <button
+                            {bookTitle && bookDetail && dataCatin.length > 0
+                            // && dataPicture[0].img !== null
+                            ?<button
+                            type="submit"
+                            className="w-40 h-9 bg-dark2 text-white rounded-full cursor-pointer "
+                            >
+                                เพิ่มหนังสือลงคลัง
+                            </button>
+                            :<button
                                 type="submit"
                                 className="w-40 h-9 bg-gray-300 text-white rounded-full cursor-pointer "
                             >
                                 เพิ่มหนังสือลงคลัง
-                            </button>
+                            </button>}
+                            
                         </div>
                     </form>
                 </div>
-            
-            </div>
         </>
     )
 }

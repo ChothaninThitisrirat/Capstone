@@ -17,31 +17,31 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-.libraly-container{
+.library-container{
   max-width: 1680px;
 }
 @media screen and (max-width: 1700px) {
-  .libraly-container{
+  .library-container{
     max-width: 1345px;
   }
 }
 @media screen and (max-width: 1370px) {
-  .libraly-container{
+  .library-container{
     max-width: 1010px;
   }
 }
 @media screen and (max-width: 1370px) {
-  .libraly-container{
+  .library-container{
     max-width: 1010px;
   }
 }
 @media screen and (max-width: 1032px) {
-  .libraly-container{
+  .library-container{
     max-width: 675px;
   }
 }
 @media screen and (max-width: 700px) {
-  .libraly-container{
+  .library-container{
     justify-content: center;
   }
 }

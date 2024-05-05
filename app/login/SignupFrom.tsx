@@ -197,6 +197,9 @@ const Login: React.FC<LoginProps> = ({
         setTypeConfirmPassword("password");
         setStylesingup(false);
         setStylelogin(true);
+        setTimeout(() => {
+            setFormSignup();
+        }, 2000);
     };
 
     const setFormSignup = () => {
@@ -402,8 +405,7 @@ const Login: React.FC<LoginProps> = ({
                 </span>
                 <button
                     type="submit"
-                    className="flex text-white p-1.5 rounded-full w-28 justify-center items-center gap-2"
-                    style={{ backgroundColor: "#435585" }}
+                    className="flex text-white p-1.5 rounded-full w-28 justify-center items-center gap-2 bg-dark2"
                 >
                     NEXT
                     <Icon icon="carbon:next-outline" width="24" height="24" />
@@ -411,8 +413,7 @@ const Login: React.FC<LoginProps> = ({
                 </div>
                 <div className="flex gap-4 justify-center mt-16">
                 <div
-                    className=" w-3 h-3 rounded-full "
-                    style={{ backgroundColor: "#363062" }}
+                    className=" w-3 h-3 rounded-full bg-dark1"
                 ></div>
                 <div className=" w-3 h-3 rounded-full bg-gray-300"></div>
                 </div>
@@ -559,13 +560,12 @@ const Login: React.FC<LoginProps> = ({
                     icon="fluent-mdl2:navigate-back"
                     width="40"
                     height="40"
-                    style={{ color: "#435585" }}
+                    className="text-dark2"
                     />
                 </button>
                 <button
                     type="submit"
-                    className="flex text-white p-1.5 rounded-full w-24 justify-center items-center gap-2 "
-                    style={{ backgroundColor: "#435585" }}
+                    className="flex text-white p-1.5 rounded-full w-24 justify-center items-center gap-2 bg-dark2"
                 >
                     SIGN UP
                 </button>
@@ -573,8 +573,7 @@ const Login: React.FC<LoginProps> = ({
                 <div className="flex gap-4 justify-center mt-14">
                 <div className=" w-3 h-3 rounded-full bg-gray-300"></div>
                 <div
-                    className=" w-3 h-3 rounded-full "
-                    style={{ backgroundColor: "#363062" }}
+                    className=" w-3 h-3 rounded-full bg-dark1"
                 ></div>
                 </div>{" "}
             </form>

@@ -48,8 +48,15 @@ const SignIn: React.FC<SignInProps> = ({ setStylesingup, setStylelogin }) => {
     setTypePasswordlog("password")
     setStylesingup(true);
     setStylelogin(false);
+    setTimeout(() => {
+      setFormSignup();
+    }, 2000);
   }
 
+  const setFormSignup = () => {
+    setEmail("");
+    setPassword("");
+  };
 
 
   return (
@@ -108,8 +115,7 @@ const SignIn: React.FC<SignInProps> = ({ setStylesingup, setStylelogin }) => {
             Don’t Have an account?</span>
             <button
               type="submit"
-              className="flex text-white p-1.5 rounded-full w-36 justify-end items-center gap-5 "
-              style={{ backgroundColor: "#435585" }}
+              className="flex text-white p-1.5 rounded-full w-36 justify-end items-center gap-5 bg-dark2"
             >
               LOG IN
               <Icon icon="formkit:arrowright" width="25" height="25" />

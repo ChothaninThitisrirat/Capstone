@@ -13,8 +13,7 @@ function Navbar() {
     const [showDropDown, setShowDropDown] = useState(false)
     return (<>
             <div 
-            style={{backgroundColor: "#435585"}}
-            className="flex w-screen h-16 rounded-b-3xl fixed cursor-pointer justify-between z-20 " >
+            className="flex w-screen h-16 rounded-b-3xl fixed cursor-pointer justify-between z-20 bg-dark1" >
                 <div className="flex gap-10 ml-10 items-center">
                     <Image
                     src={logoWhite}
