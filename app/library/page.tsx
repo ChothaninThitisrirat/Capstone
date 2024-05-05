@@ -1,7 +1,7 @@
 'use client'
 
 import { Icon } from '@iconify/react';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from '@/Components/Navbar';
 import TitleBar from '@/Components/TitleBar';
 import Footer from '@/Components/Footer';
@@ -12,6 +12,14 @@ import Image from 'next/image';
 
 function Library() {
     const classBook = "flex items-center justify-center rounded-sm border w-64 h-96 cursor-pointer"
+    const [stateAddBook, setStateAddBook] = useState(false)
+    const [classAddBookbg, setClassAddBookbg] = useState('fixed h-screen w-screen bg-slate-200 top-0 left-0 z-50 opacity-30 backdrop-blur-2xl visible')
+    const [classAddBook, setClassAddBook] = useState({
+        transform:'translateY(100%)',
+        visibility: "hidden",
+        transitionDuration: '0.3s'
+    })
+
     const [book, setBook] = useState([]);
     const booktest = [{
         id: "book1",
@@ -45,13 +53,33 @@ function Library() {
         img: "https://picsum.photos/200/300",
     }]
 
+
+    useEffect(() => {
+        if (stateAddBook) {
+            setClassAddBookbg('fixed h-screen w-screen bg-slate-200 top-0 left-0 z-50 opacity-30 backdrop-blur-2xl visible')
+            setClassAddBook({
+                transform:'translateY(0%)',
+                visibility: "visible",
+                transitionDuration: '0.3s'
+            })
+        } else {
+            setClassAddBookbg('fixed h-screen w-screen bg-slate-200 top-0 left-0 z-50 opacity-30 backdrop-blur-2xl invisible')
+            setClassAddBook({
+                transform:'translateY(100%)',
+                visibility: "hidden",
+                transitionDuration: '0.3s'
+            })
+        }   
+    }, [stateAddBook])
     return (<>
         <style>
-            {`
-            body {
+            {stateAddBook
+            ?`body {
+                overflow: hidden;
+            }`
+            :`body {
                 overflow-x: hidden;
-            }
-            `}
+            }`}
         </style>
             <Navbar />
             <TitleBar textTitle='คลังหนังสือของฉัน'/>
@@ -60,7 +88,9 @@ function Library() {
             className="flex justify-center h-auto w-sceen z-10 bg-none">
                 <div
                 className="flex w-full h-auto p-10 flex-wrap gap-20 mb-10 mt-5 library-container">
-                    <div className="flex items-center justify-center rounded-sm border w-64 h-96 bg-slate-200 cursor-pointer hover:bg-slate-300">
+                    <div 
+                    onClick={() => setStateAddBook(true)}
+                    className="flex items-center justify-center rounded-sm border w-64 h-96 bg-slate-200 cursor-pointer hover:bg-slate-300">
                         <Icon icon="ic:baseline-plus" width="50" height="50"
                         className='text-gray-500'/>
                     </div>
@@ -80,8 +110,10 @@ function Library() {
                 </div>
             </div>
             <Footer/>
-
-            <PostNewBook/>
+            <div className={classAddBookbg}></div>
+            <PostNewBook setStateAddBook={setStateAddBook} classAddBook={classAddBook}/>
+                
+            
 
             
         </>

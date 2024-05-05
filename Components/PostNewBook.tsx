@@ -2,7 +2,13 @@ import {useState,useEffect} from 'react'
 import { Icon } from '@iconify/react';
 import Image from 'next/image';     
 
-function PostNewBook() {
+
+interface PostNewBookProp {
+    setStateAddBook: (style: boolean) => void;
+    classAddBook: any;
+}
+
+const PostNewBook: React.FC<PostNewBookProp> = ({setStateAddBook, classAddBook}) =>{
     const [bookTitle, setBookTitle] = useState('')
     const [bookDetail, setBookDetail] = useState('')
     const [classCategory, setClassCategory] = useState(
@@ -77,18 +83,17 @@ function PostNewBook() {
             }
             `}
         </style>
-            <div 
-            className=" fixed h-screen w-screen bg-slate-200 top-0 left-0 z-50 opacity-30 backdrop-blur-2xl "></div>
-                <div 
-                onClick={(innerClickEvent) => {
-                    innerClickEvent.stopPropagation();
-                }}
+                <div
+                style={classAddBook}
                 className="fixed flex top-0 left-0 z-50 h-screen w-screen items-center justify-center">
                     <form 
                     // onSubmit={}
                     style={{width: "600px",borderRadius: "30px"}}
-                    className="flex flex-col w-auto h-auto bg-white p-10 border border-gray-300 items-center justify-center">
-
+                    className="flex flex-col w-auto h-auto bg-white p-10 border border-gray-300 items-center justify-center relative">
+                        <div className="absolute top-0 right-0 translate-x-2 -translate-y-2 rounded-full bg-white w-9 h-9"></div>
+                        <Icon icon="carbon:close-filled" width="45" height="45"
+                        onClick={() => setStateAddBook(false)}
+                        className=' absolute top-0 right-0 translate-x-3 -translate-y-3 text-gray-300 cursor-pointer hover:text-red-500'/>
                         <div className="text-4xl font-bold w-full flex items-center justify-center">เพิ่มหนังสือใหม่</div>
                         <div className="flex relative w-full px-5">
                             <Icon
