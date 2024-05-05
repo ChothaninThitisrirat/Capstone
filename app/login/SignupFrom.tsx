@@ -236,7 +236,7 @@ const Login: React.FC<LoginProps> = ({
                 />
                 <input
                     id="username"
-                    type="username"
+                    type="text"
                     value={username}
                     placeholder="username"
                     onChange={(e) => setUsername(e.target.value)}
@@ -440,7 +440,7 @@ const Login: React.FC<LoginProps> = ({
                     />
                     <input
                     id="firstName"
-                    type="firstName"
+                    type="text"
                     value={firstName}
                     placeholder="FirstName"
                     onChange={(e) => setFirstName(e.target.value)}
@@ -459,7 +459,7 @@ const Login: React.FC<LoginProps> = ({
                     />
                     <input
                     id="lastName"
-                    type="lastName"
+                    type="text"
                     value={lastName}
                     placeholder="LastName"
                     onChange={(e) => setLastName(e.target.value)}
@@ -519,7 +519,7 @@ const Login: React.FC<LoginProps> = ({
                 />
                 <input
                     id="address"
-                    type="address"
+                    type="text"
                     value={address}
                     placeholder="Address"
                     onChange={(e) => setAddress(e.target.value)}
@@ -537,7 +537,7 @@ const Login: React.FC<LoginProps> = ({
                 />
                 <input
                     id="telNumber"
-                    type="telNumber"
+                    type="number"
                     value={telNumber}
                     placeholder="Telephone Number"
                     onChange={(e) => setTelNumber(e.target.value)}

@@ -80,8 +80,8 @@ function Libraly() {
                 </div>
             </div>
             <Footer/>
-{/* 
-            <PostNewBook/> */}
+
+            <PostNewBook/>
 
             
         </>
