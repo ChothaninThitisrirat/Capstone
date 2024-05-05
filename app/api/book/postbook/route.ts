@@ -26,7 +26,8 @@ export async function POST(req: Request) {
         return NextResponse.json({
             book: newBook,
             message: "Post book successfully"
-        },{status:201})
+        },{ status:201 }
+    )
 
     } catch (error) {
         console.log(error);

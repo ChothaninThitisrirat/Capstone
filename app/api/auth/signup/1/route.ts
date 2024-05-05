@@ -37,6 +37,7 @@ export async function POST(req: Request) {
         return NextResponse.json({
             message: "Error",
             error
-        },{status: 409})
+        }, { status: 409 }
+    )
     }
 }

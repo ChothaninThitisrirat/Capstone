@@ -48,7 +48,8 @@ export async function POST(req: Request) {
         return NextResponse.json({
             user:newUser,
             message: "Signup successfully"
-        },{ status: 201 })
+        },{ status: 201 }
+    )
 
     } catch (error) {
         console.log(error);
