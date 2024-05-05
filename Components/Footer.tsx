@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { Icon } from '@iconify/react';
 
 function Footer() {
-  return (
+    return (
     <>
         <footer 
         style={{backgroundColor: '#435585'}}
@@ -58,7 +58,7 @@ function Footer() {
             </div>
         </footer>
     </>
-  )
+    )
 }
 
 export default Footer
