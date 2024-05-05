@@ -14,7 +14,7 @@ function Navbar() {
     return (<>
             <div 
             style={{backgroundColor: "#435585"}}
-            className="flex w-screen h-16 rounded-b-3xl fixed cursor-pointer justify-between z-20" >
+            className="flex w-screen h-16 rounded-b-3xl fixed cursor-pointer justify-between z-20 " >
                 <div className="flex gap-10 ml-10 items-center">
                     <Image
                     src={logoWhite}
@@ -22,14 +22,14 @@ function Navbar() {
                     className='w-32 h-12 object-contain ml-5'
                     />
                     <div className="flex gap-14 ml-5">
-                        <div className="flex text-center items-center text-white text-base">หน้าแรก</div>
+                        <Link href='/' className="flex text-center items-center text-white text-base">หน้าแรก</Link>
                         <div className="flex text-center items-center text-white text-base">หมวดหมู่</div>
                         <div className="flex text-center items-center text-white text-base">ยอดนิยม</div>
                     </div>
                 </div>
                 <div className="flex gap-14 mr-20 items-center">
                     <div className="flex text-center items-center text-white text-base">โพสต์หนังสือ</div>
-                    <Link href='/libraly' className="flex text-center items-center text-white text-base">คลังหนังสือ</Link>
+                    <Link href='/library' className="flex text-center items-center text-white text-base">คลังหนังสือ</Link>
                     <div 
                     onClick={() => setShowDropDown(!showDropDown)}
                     className="flex gap-2 items-center">

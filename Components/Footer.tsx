@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import logoLite from '../public/images/logoLite.png';
 import propFooter from '../public/images/propFooter.png';
