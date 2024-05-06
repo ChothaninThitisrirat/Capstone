@@ -1,16 +1,23 @@
 'use client'
 
-import { Icon } from '@iconify/react';
+import React from 'react'
 import { useState, useEffect } from "react";
-import Navbar from '@/Components/Navbar';
-import TitleBar from '@/Components/TitleBar';
-import Footer from '@/Components/Footer';
-import PostNewBook from '@/Components/PostNewBook';
-import propFooter from '../../public/images/propFooter.png';
 import Image from 'next/image';
+import { Icon } from '@iconify/react';
+import PostNewBook from '@/Components/PostNewBook';
+import { useRouter } from 'next/navigation'
+import bgExchangebook from '../../public/images/bgExchangebook.png';
+import propFooter from '../../public/images/propFooter.png';
 
-function Library() {
-    const classBook = "flex items-center justify-center rounded-sm border w-64 h-96 cursor-pointer shadow-sm hover:scale-105 duration-300"
+
+interface PostBook1Props {
+    setStatePage: (style: number) => void;
+    setBookSelect: (style: string) => void;
+    bookSelect: string;
+}
+
+const PostBook1: React.FC<PostBook1Props> = ({setStatePage, setBookSelect, bookSelect}) =>{
+    const classBook = "flex items-center justify-center rounded-sm border w-64 h-96 cursor-pointer shadow-sm duration-300 relative bg-dark3"
     const [stateAddBook, setStateAddBook] = useState(false)
     const [classAddBookbg, setClassAddBookbg] = useState('fixed h-screen w-screen bg-slate-200 top-0 left-0 z-50 opacity-30 backdrop-blur-2xl hidden')
     const [classAddBook, setClassAddBook] = useState({
@@ -71,23 +78,36 @@ function Library() {
         }   
     }, [stateAddBook])
 
-    return (<>
-        <style>
-            {stateAddBook
-            ?`body {
-                overflow: hidden;
-            }`
-            :`body {
-                overflow-x: hidden;
-            }`}
-        </style>
-            <Navbar backGroundOn={true}/>
-            <TitleBar textTitle='คลังหนังสือของฉัน'/>
+    const router = useRouter();
+
+    const handleCancel = () => {
+        router.back();
+    };
+
+    const handlesetBookSelect = (itemId:string) => {
+        if (bookSelect === itemId) {
+            setBookSelect('');
+            return;
+        }else{
+            setBookSelect(itemId);
+        }
+    };
+
+    const handleChangeState = ()=>{
+        if (bookSelect !== '') {
+            setStatePage(1);
+        }
+    }
+
+
+    return (
+        <>
+
             <div
             style={{minHeight: "800px"}}
             className="flex justify-center h-auto w-sceen z-10 bg-none">
                 <div
-                className="flex w-full h-auto p-10 flex-wrap gap-20 mb-10 mt-5 library-container">
+                className="flex w-full h-screen p-10 flex-wrap gap-20 gap-y-14 mb-10 overflow-y-auto post-container z-10">
                     <div 
                     onClick={() => setStateAddBook(true)}
                     className="flex items-center justify-center rounded-sm border w-64 h-96 bg-slate-200 cursor-pointer shadow-sm hover:bg-slate-300  hover:scale-105 duration-300">
@@ -96,30 +116,34 @@ function Library() {
                     </div>
 
                     {booktest.map((item, index) => (
-                        <div key={index} 
-                        className={classBook}>
-                            {item.id}
+                        <div 
+                        key={index} 
+                        onClick={()=>handlesetBookSelect(item.id)}
+                        className={bookSelect === item.id ? classBook+' '+' scale-105 border-4 border-dark2' : classBook}>
+                            <div className=' absolute'>{item.id}</div>
+                            
                             <Image
-                            src={propFooter}
+                            src={bgExchangebook}
                             alt="Profile picture"
-                            className='w-9 h-9 object-cover rounded-full cursor-pointer bg-white'
+                            className='w-64 h-96 object-cover cursor-pointer'
                             />
                         </div>
                     ))}
-
-
                 </div>
             </div>
-            <Footer/>
             <div className={classAddBookbg}></div>
             <PostNewBook setStateAddBook={setStateAddBook} classAddBook={classAddBook}/>
-                
-            
-
-            
+            <div className='fixed bottom-0 left-0 w-screen h-24 z-20 flex justify-between'>
+                    <button onClick={handleCancel} className='w-20 h-10 border-2 border-red-500 rounded-full ml-20 mt-2 hover:bg-red-100'>ยกเลิก</button>
+                    <button onClick={handleChangeState} 
+                    className={bookSelect === '' 
+                    ?'w-40 h-10 border-2 border-gray-500 text-gray-500 rounded-full mr-16 mt-2 flex justify-center items-center gap-2'
+                    :'w-40 h-10 bg-dark1 text-white rounded-full mr-16 mt-2 flex justify-center items-center gap-2'}>
+                        ดำเนินการต่อ<Icon icon="icons8:right-round" width="30" height="30" />
+                    </button>
+            </div>
         </>
-        
     )
 }
 
-export default Library
+export default PostBook1

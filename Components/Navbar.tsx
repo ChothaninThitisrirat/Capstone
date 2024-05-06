@@ -20,47 +20,52 @@ const Navbar: React.FC<NavbarProps> = ({backGroundOn}) =>{
     return (<>
             <div 
             className={backGroundOn
-                ?"flex w-screen h-16 rounded-b-3xl fixed cursor-pointer justify-between z-20 bg-dark1"
-                :"flex w-screen h-16 rounded-b-3xl fixed cursor-pointer justify-between z-20"} >
-                <div className="flex gap-10 ml-10 items-center">
-                <Link href='/' >
-                    <Image
-                    src={logoWhite}
-                    alt="Logo"
-                    className='w-32 h-12 object-contain ml-5'
-                    />
-                </Link>
-                    <div className="flex gap-14 ml-5">
-                        <Link href='/' className="flex text-center items-center text-white text-base">หน้าแรก</Link>
-                        <div className="flex text-center items-center text-white text-base">หมวดหมู่</div>
-                        <div className="flex text-center items-center text-white text-base">ยอดนิยม</div>
-                    </div>
-                </div>
-                <div className="flex gap-14 mr-20 items-center">
-                    <div className="flex text-center items-center text-white text-base">โพสต์หนังสือ</div>
-                    <Link href='/library' className="flex text-center items-center text-white text-base">คลังหนังสือ</Link>
-                    <div 
-                    onClick={() => setShowDropDown(!showDropDown)}
-                    className="flex gap-2 items-center">
+            ?"flex w-screen h-16 rounded-b-3xl fixed cursor-pointer justify-center z-30 bg-dark1"
+            :"flex w-screen h-16 rounded-b-3xl fixed cursor-pointer justify-center z-30"} >
+                <div 
+                style={{maxWidth: '2200px'}}
+                className="flex w-screen h-16 justify-between relative z-30">
+                    <div className="flex gap-10 ml-10 items-center">
+                    <Link href='/' >
                         <Image
                         src={logoWhite}
-                        alt="Profile picture"
-                        className='w-9 h-9 object-cover rounded-full cursor-pointer bg-white'
+                        alt="Logo"
+                        className='w-32 h-12 object-contain ml-5'
                         />
-                        {session && session.user ?(
-                            <div className="flex text-center items-center justify-center text-white text-lg w-auto">{session.user.username}</div>
-                        ):<div className="flex w-20"></div>}
-                        {showDropDown
-                        ?<Icon icon="mdi:chevron-up" width="20" height="20"
-                        className="text-white"/>
-                        :<Icon icon="mdi:chevron-down" width="20" height="20"
-                        className="text-white"/>}
+                    </Link>
+                        <div className="flex gap-14 ml-5">
+                            <Link href='/' className="flex text-center items-center text-white text-base">หน้าแรก</Link>
+                            <div className="flex text-center items-center text-white text-base">หมวดหมู่</div>
+                            <div className="flex text-center items-center text-white text-base">ยอดนิยม</div>
+                        </div>
                     </div>
+                    <div className="flex gap-14 mr-20 items-center">
+                        <Link href='/postbook' className="flex text-center items-center text-white text-base">โพสต์หนังสือ</Link>
+                        <Link href='/library' className="flex text-center items-center text-white text-base">คลังหนังสือ</Link>
+                        <div 
+                        onClick={() => setShowDropDown(!showDropDown)}
+                        className="flex gap-2 items-center">
+                            <Image
+                            src={logoWhite}
+                            alt="Profile picture"
+                            className='w-9 h-9 object-cover rounded-full cursor-pointer bg-white'
+                            />
+                            {session && session.user ?(
+                                <div className="flex text-center items-center justify-center text-white text-lg w-auto">{session.user.username}</div>
+                            ):<div className="flex w-20"></div>}
+                            {showDropDown
+                            ?<Icon icon="mdi:chevron-up" width="20" height="20"
+                            className="text-white"/>
+                            :<Icon icon="mdi:chevron-down" width="20" height="20"
+                            className="text-white"/>}
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
             <div className={showDropDown
-                            ?"fixed top-16 right-14 duration-500"
-                            :"fixed top-16 right-14 -translate-y-96 duration-500"}>
+                    ?"absolute top-16 right-14 duration-500 z-10"
+                    :"absolute top-16 right-14 -translate-y-96 duration-500 z-10"}>
                 <DropDown/>
             </div>
             
@@ -102,9 +107,9 @@ function DropDown() {
     }
 ]
     return (
-        <div className=" flex-col w-auto bg-white border rounded-b-2xl shadow pl-2 pt-3 pr-2">
+        <div className=" flex-col w-auto bg-white border rounded-b-2xl shadow z-10">
             {data.map((item) => (
-                <div key={item.id} className="flex ml-2 mb-3">
+                <div key={item.id} className="flex pl-4 h-12 pr-2 cursor-pointer hover:bg-slate-200 w-full items-center justify-start">
                     <div
                     className="w-9 h-9 rounded-full bg-zinc-300 flex items-center justify-center">
                         <Icon icon={item.icon} width={item.size} height={item.size} 

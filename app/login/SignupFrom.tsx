@@ -139,8 +139,9 @@ const Login: React.FC<LoginProps> = ({
         }
     };
     const handleSubmit = async (e: any) => {
-        if (classCheckPersonalId) {
         e.preventDefault();
+        if (classCheckPersonalId) {
+        
         try {
             const response = await fetch("/api/auth/signup/2", {
             method: "POST",
@@ -189,6 +190,8 @@ const Login: React.FC<LoginProps> = ({
         } catch (error) {
             console.log("error", error);
         }
+        }else{
+            console.log('false-------------')
         }
     };
 
