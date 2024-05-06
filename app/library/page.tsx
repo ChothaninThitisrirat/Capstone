@@ -82,7 +82,7 @@ function Library() {
                 overflow-x: hidden;
             }`}
         </style>
-            <Navbar />
+            <Navbar backGroundOn={true}/>
             <TitleBar textTitle='คลังหนังสือของฉัน'/>
             <div
             style={{minHeight: "800px"}}

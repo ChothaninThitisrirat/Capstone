@@ -7,13 +7,21 @@ import Image from 'next/image';
 import { useSession, signOut } from 'next-auth/react'
 import Link from "next/link";
 
-function Navbar() {
+
+interface NavbarProps {
+    backGroundOn: boolean;
+}
+
+
+const Navbar: React.FC<NavbarProps> = ({backGroundOn}) =>{
     const { data: session, status } = useSession()
 
     const [showDropDown, setShowDropDown] = useState(false)
     return (<>
             <div 
-            className="flex w-screen h-16 rounded-b-3xl fixed cursor-pointer justify-between z-20 bg-dark1" >
+            className={backGroundOn
+                ?"flex w-screen h-16 rounded-b-3xl fixed cursor-pointer justify-between z-20 bg-dark1"
+                :"flex w-screen h-16 rounded-b-3xl fixed cursor-pointer justify-between z-20"} >
                 <div className="flex gap-10 ml-10 items-center">
                 <Link href='/' >
                     <Image
