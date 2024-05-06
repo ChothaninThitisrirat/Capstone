@@ -17,6 +17,34 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
+.library-container{
+  max-width: 1680px;
+}
+@media screen and (max-width: 1700px) {
+  .library-container{
+    max-width: 1345px;
+  }
+}
+@media screen and (max-width: 1370px) {
+  .library-container{
+    max-width: 1010px;
+  }
+}
+@media screen and (max-width: 1370px) {
+  .library-container{
+    max-width: 1010px;
+  }
+}
+@media screen and (max-width: 1032px) {
+  .library-container{
+    max-width: 675px;
+  }
+}
+@media screen and (max-width: 700px) {
+  .library-container{
+    justify-content: center;
+  }
+}
 /* 
 :root {
   --foreground-rgb: 0, 0, 0;

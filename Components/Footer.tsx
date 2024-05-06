@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import logoLite from '../public/images/logoLite.png';
 import propFooter from '../public/images/propFooter.png';
@@ -6,7 +8,14 @@ import Link from 'next/link';
 import { Icon } from '@iconify/react';
 
 function Footer() {
-  return (
+
+    const handleScrollTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    };
+    return (
     <>
         <footer 
         style={{backgroundColor: '#435585'}}
@@ -56,9 +65,15 @@ function Footer() {
                 </div>
                 
             </div>
+            <button 
+            onClick={handleScrollTop} 
+            className="flex items-center justify-center absolute w-12 h-12 bg-slate-200 rounded-full top-0 right-40 -translate-y-5 cursor-pointer hover:bg-slate-300">
+                <Icon icon="mingcute:up-line" width="50" height="50" 
+                className='text-black'/>
+            </button>
         </footer>
     </>
-  )
+    )
 }
 
 export default Footer

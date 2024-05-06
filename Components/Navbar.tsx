@@ -7,29 +7,38 @@ import Image from 'next/image';
 import { useSession, signOut } from 'next-auth/react'
 import Link from "next/link";
 
-function Navbar() {
+
+interface NavbarProps {
+    backGroundOn: boolean;
+}
+
+
+const Navbar: React.FC<NavbarProps> = ({backGroundOn}) =>{
     const { data: session, status } = useSession()
 
     const [showDropDown, setShowDropDown] = useState(false)
     return (<>
             <div 
-            style={{backgroundColor: "#435585"}}
-            className="flex w-screen h-16 rounded-b-3xl fixed cursor-pointer justify-between z-20" >
+            className={backGroundOn
+                ?"flex w-screen h-16 rounded-b-3xl fixed cursor-pointer justify-between z-20 bg-dark1"
+                :"flex w-screen h-16 rounded-b-3xl fixed cursor-pointer justify-between z-20"} >
                 <div className="flex gap-10 ml-10 items-center">
+                <Link href='/' >
                     <Image
                     src={logoWhite}
                     alt="Logo"
                     className='w-32 h-12 object-contain ml-5'
                     />
+                </Link>
                     <div className="flex gap-14 ml-5">
-                        <div className="flex text-center items-center text-white text-base">หน้าแรก</div>
+                        <Link href='/' className="flex text-center items-center text-white text-base">หน้าแรก</Link>
                         <div className="flex text-center items-center text-white text-base">หมวดหมู่</div>
                         <div className="flex text-center items-center text-white text-base">ยอดนิยม</div>
                     </div>
                 </div>
                 <div className="flex gap-14 mr-20 items-center">
                     <div className="flex text-center items-center text-white text-base">โพสต์หนังสือ</div>
-                    <Link href='/libraly' className="flex text-center items-center text-white text-base">คลังหนังสือ</Link>
+                    <Link href='/library' className="flex text-center items-center text-white text-base">คลังหนังสือ</Link>
                     <div 
                     onClick={() => setShowDropDown(!showDropDown)}
                     className="flex gap-2 items-center">
