@@ -3,10 +3,11 @@ import { prismadb } from "@/lib/db";
 
 export async function GET(req: Request,{ params }: { params: { title: string }}) {
     try {
-        const findbook = await prismadb.book.findMany({
+        const searchbook = await prismadb.book.findMany({
             where: {
                 title: {
-                    startsWith:params.title
+                    startsWith:params.title,
+                    mode: "insensitive"
                 }
             },
             select: {
@@ -17,7 +18,7 @@ export async function GET(req: Request,{ params }: { params: { title: string }})
         })
 
         return NextResponse.json({
-            book:findbook
+            book:searchbook
         },{ status: 201 }
     )
 
