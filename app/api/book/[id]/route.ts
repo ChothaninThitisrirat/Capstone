@@ -88,6 +88,7 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
             select: {
                 title:true,
                 describe:true,
+                score:true,
                 User: {
                     select: {
                         username:true
