@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Icon } from "@iconify/react";
+import HashLoader from "react-spinners/HashLoader";
 
 interface LoginProps {
     setStylesingup: (style: boolean) => void;
@@ -15,6 +16,10 @@ const Login: React.FC<LoginProps> = ({
     setStylelogin,
     setRegisterSccuess,
     }) => {
+    const [loadingInfo, setLoadingInfo] = useState(false);
+    const [loadingInfo2, setLoadingInfo2] = useState(false);
+    const [loadingInfo2Bg, setLoadingInfo2Bg] = useState(false);
+
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -69,18 +74,30 @@ const Login: React.FC<LoginProps> = ({
         if (responseData.message === "Username and Email already exist.") {
             setClassCheckUsername("visible text-red-500 text-xs text-right");
             setClassCheckEmail("visible text-red-500 text-xs text-right");
+            setTimeout(() => {
+                setLoadingInfo(false);
+            }, 2000);
         } else if (responseData.message === "Username already exist.") {
             setClassCheckUsername("visible text-red-500 text-xs text-right");
             setClassCheckEmail("invisible text-red-500 text-xs text-right");
+            setTimeout(() => {
+                setLoadingInfo(false);
+            }, 1000);
         } else if (responseData.message === "Email already exist.") {
             setClassCheckUsername("invisible text-red-500 text-xs text-right");
             setClassCheckEmail("visible text-red-500 text-xs text-right");
+            setTimeout(() => {
+                setLoadingInfo(false);
+            }, 1000);
         } else {
             setInfoPage(false);
             setTypePassword("password");
             setTypeConfirmPassword("password");
             setClassCheckUsername("invisible text-red-500 text-xs text-right");
             setClassCheckEmail("invisible text-red-500 text-xs text-right");
+            setTimeout(() => {
+                setLoadingInfo(false);
+            }, 2000);
         }
         } catch (error) {
         console.log("error", error);
@@ -90,6 +107,7 @@ const Login: React.FC<LoginProps> = ({
     const handleSubmitInfoPage1 = async (
         e: React.SyntheticEvent<HTMLFormElement>
     ) => {
+        setLoadingInfo(true);
         e.preventDefault();
         if (
         password === confirmPassword &&
@@ -101,10 +119,13 @@ const Login: React.FC<LoginProps> = ({
         CheckUsenameEmail(e);
         } else {
         setNotMachPassword(true);
-        if (password === confirmPassword) {
-            setNotMachPassword(false);
-            console.log("password === confirmP", infoPage);
-        }
+            if (password === confirmPassword) {
+                setNotMachPassword(false);
+            }
+            setTimeout(() => {
+                setLoadingInfo(false);
+            }, 2000);
+            
         }
     };
 
@@ -139,6 +160,11 @@ const Login: React.FC<LoginProps> = ({
         }
     };
     const handleSubmit = async (e: any) => {
+        setLoadingInfo2Bg(true);
+        setTimeout(() => {
+            setLoadingInfo2(true);
+        }, 100);
+        
         e.preventDefault();
         if (classCheckPersonalId) {
         
@@ -164,15 +190,17 @@ const Login: React.FC<LoginProps> = ({
             console.log(responseData.message);
             if (responseData.message === "Signup successfully") {
             setRegisterSccuess(
-                "fixed z-20 w-64 h-12 text-white text-center flex items-center justify-center top-0 left-0 right-0 mx-auto mt-5 rounded-lg drop-shadow-lg duration-500 visible"
+                "fixed z-20 w-64 h-12 text-white text-center flex items-center justify-center top-0 left-0 right-0 mx-auto mt-5 rounded-lg drop-shadow-lg duration-500 visible bg-dark1"
             );
             setCheckCardIdUse(false);
             setCheckTelUse(true);
             handleStyle();
             setFormSignup();
+            setLoadingInfo2(false);
+            setLoadingInfo2Bg(false);
             setTimeout(() => {
                 setRegisterSccuess(
-                "fixed z-20 w-64 h-12 text-white text-center flex items-center justify-center top-0 left-0 right-0 mx-auto mt-5 rounded-lg drop-shadow-lg duration-500 -translate-y-20 invisible"
+                "fixed z-20 w-64 h-12 text-white text-center flex items-center justify-center top-0 left-0 right-0 mx-auto mt-5 rounded-lg drop-shadow-lg duration-500 -translate-y-20 invisible bg-dark1"
                 );
             }, 4000);
             } else if (
@@ -180,18 +208,33 @@ const Login: React.FC<LoginProps> = ({
             ) {
             setCheckCardIdUse(true);
             setCheckTelUse(true);
+            setTimeout(() => {
+                setLoadingInfo2(false);
+                setLoadingInfo2Bg(false);
+            }, 1000);
             } else if (responseData.message === "ID Card already exist.") {
             setCheckCardIdUse(true);
             setCheckTelUse(false);
+            setTimeout(() => {
+                setLoadingInfo2(false);
+                setLoadingInfo2Bg(false);
+            }, 1000);
             } else if (responseData.message === "Phone number already exist.") {
             setCheckCardIdUse(false);
             setCheckTelUse(true);
+            setTimeout(() => {
+                setLoadingInfo2(false);
+                setLoadingInfo2Bg(false);
+            }, 1000);
             }
         } catch (error) {
             console.log("error", error);
+            setLoadingInfo2(false);
+            setLoadingInfo2Bg(false);
         }
         }else{
-            console.log('false-------------')
+            setLoadingInfo2(true);
+            setLoadingInfo2Bg(false);
         }
     };
 
@@ -412,7 +455,12 @@ const Login: React.FC<LoginProps> = ({
                     className="flex text-white p-1.5 rounded-full w-28 justify-center items-center gap-2 bg-dark2"
                 >
                     NEXT
-                    <Icon icon="carbon:next-outline" width="24" height="24" />
+                    {loadingInfo 
+                    ? <HashLoader
+                    className="ml-1"
+                    color='#fff' loading={loadingInfo} size={20} aria-label="Loading Spinner" data-testid="loader"/>
+                    :<Icon icon="carbon:next-outline" width="24" height="24" />}
+                    
                 </button>
                 </div>
                 <div className="flex gap-4 justify-center mt-16">
@@ -567,12 +615,26 @@ const Login: React.FC<LoginProps> = ({
                     className="text-dark2"
                     />
                 </button>
+                
                 <button
                     type="submit"
-                    className="flex text-white p-1.5 rounded-full w-24 justify-center items-center gap-2 bg-dark2"
+                    className={loadingInfo2Bg ?"flex text-white p-1.5 rounded-full w-32 justify-start items-center bg-dark2 duration-300 relative pl-4":"flex text-white p-1.5 rounded-full w-24 justify-start items-center bg-dark2 duration-300 pl-3.5 relative"}
                 >
                     SIGN UP
+                    
                 </button>
+                {loadingInfo2 ? (
+                        <div className=" absolute right-14 bottom-24 -translate-y-1">
+                            <HashLoader
+                                className="ml-2"
+                                color='#fff'
+                                loading={loadingInfo2}
+                                size={20}
+                                aria-label="Loading Spinner"
+                                data-testid="loader"
+                            />
+                        </div>
+                    ) : null}
                 </div>
                 <div className="flex gap-4 justify-center mt-14">
                 <div className=" w-3 h-3 rounded-full bg-gray-300"></div>

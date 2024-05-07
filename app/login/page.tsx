@@ -9,10 +9,12 @@ import bgPropBook from '../../public/images/bgPropBook.png'
 import bgPropBlue1 from '../../public/images/bgPropBlue1.png'
 import bgPropBlue2 from '../../public/images/bgPropBlue2.png'
 import logologinsignup from '../../public/images/logologinsignup.png'
-
+import HashLoader from "react-spinners/HashLoader";
 
 
 function LoginSignup() {
+  const [loading, setLoading] = useState(true);
+  
 
   const [stylesingup, setStylesingup] = useState(false)
   const [stylesingupOn, setStylesingupOn] = useState({
@@ -49,7 +51,7 @@ function LoginSignup() {
     transitionDuration: '3s'
   })
 
-  const [registerSccuess, setRegisterSccuess] = useState("fixed z-20 w-64 h-12 text-white text-center flex items-center justify-center top-0 left-0 right-0 mx-auto mt-5 rounded-lg drop-shadow-lg duration-500 -translate-y-20 invisible")
+  const [registerSccuess, setRegisterSccuess] = useState("fixed z-20 w-64 h-12 text-white text-center flex items-center justify-center top-0 left-0 right-0 mx-auto mt-5 rounded-lg drop-shadow-lg duration-500 -translate-y-20 invisible bg-dark1")
   useEffect(() => {
     if (stylelogin) {//Login
       setStyleloginOn({
@@ -111,6 +113,12 @@ function LoginSignup() {
       })
     }
   }, [stylelogin])
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false)
+    }, 2000);
+  }, [])
   
 
   return (
@@ -122,8 +130,15 @@ function LoginSignup() {
       }
       `}
     </style>
+    {loading 
+    ? 
+    <div className='w-screen h-screen flex items-center justify-center opacity-95 bg-gradient-to-tr from-yellow-100 to-blue-100'>
+      <HashLoader
+      color='#435585' loading={loading} size={50} aria-label="Loading Spinner" data-testid="loader"/>
+    </div>
+    :
+    <>
     <div 
-    style={{ backgroundColor: "#363062f2" }}
     className={registerSccuess}
     >Register successfully.</div>
     <div className="h-screen bg-gradient-to-tr from-yellow-100 to-blue-100">
@@ -152,11 +167,6 @@ function LoginSignup() {
       className='object-contain z-10 absolute top-0 left-0'
     /></div>
     
-
-
-
-
-
     <div 
     style={stylelogin ? {visibility:'visible'} : {visibility:'hidden'}}
     className="flex items-center justify-end absolute top-0 left-0 h-screen w-screen z-20"
@@ -176,10 +186,8 @@ function LoginSignup() {
         <SignupFrom setStylesingup={setStylesingup} setStylelogin={setStylelogin} setRegisterSccuess={setRegisterSccuess}/>
       </div>
     </div >
-
-      
-
-      
+    </>
+    }
     
     </>
   )
