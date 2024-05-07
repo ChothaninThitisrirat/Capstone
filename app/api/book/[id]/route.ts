@@ -35,9 +35,7 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
             where: { id: user_id?.user_id},
             select: {
                 id:true,
-                username:true,
-                first_name:true,
-                last_name:true,
+                username:true
             },
         })
 
