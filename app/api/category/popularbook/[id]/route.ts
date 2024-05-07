@@ -6,15 +6,26 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
         const popularbook = await prismadb.category.findMany({
             where: { id: parseInt(params.id)},
             select: {
-                name:true,
                 book: {
-                    take: 5,
+                    where: {status: "Post trade"},
+                    select: {
+                        id:true,
+                        title:true,
+                        description:true,
+                        picture:true,
+                        User: {
+                            select:{
+                                username:true
+                            }
+                        }
+                    },take:5,
                     orderBy: {
-                        req_count: 'desc'
+                        req_count: "desc"
                     }
                 }
             }
         })
+
         return NextResponse.json({
             popularbook,
             message: "Popular book in this category have been sent successfully."

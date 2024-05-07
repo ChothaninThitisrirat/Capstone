@@ -4,6 +4,16 @@ import { prismadb } from "@/lib/db";
 export async function GET(req: Request) {
     try {
         const popularbook = await prismadb.book.findMany({
+            select: {
+                id:true,
+                title:true,
+                picture:true,
+                User: {
+                    select:{
+                        username:true
+                    }
+                }
+            },
             take: 5,
             orderBy: {
                 req_count: 'desc'
