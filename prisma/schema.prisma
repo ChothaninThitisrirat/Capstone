@@ -29,7 +29,7 @@ model Review_Book {
   id       Int     @default(autoincrement())
   book_id  Int
   user_id  Int
-  title    String
+  title    String  @db.VarChar(20)
   score    Decimal @db.Decimal(1, 0)
   describe String?
   Book     Book    @relation(fields: [book_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "review_book-book_id")

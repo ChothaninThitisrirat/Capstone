@@ -30,7 +30,6 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
 
         const allBooks = await Promise.all(book_id);
 
-
         return NextResponse.json({
                 wishlist:allBooks,
                 message: "Book in wishlist have been sent sucessfully."

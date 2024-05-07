@@ -14,7 +14,6 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
             where: { id: parseInt(params.id) },
             select: {
                 id:true,
-                user_id:true,
                 title:true,
                 description:true,
                 picture:true,
@@ -22,7 +21,7 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
             }
         })
 
-        const book_review = await prismadb.review_Book.aggregate({
+        const review_book_agg = await prismadb.review_Book.aggregate({
             _avg: {
                 score:true
             },
@@ -31,9 +30,6 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
             },
             where: { book_id: parseInt(params.id) }
         })
-
-        const avg_book_review = book_review._avg
-        const count_book_review = book_review._count
 
         const user = await prismadb.user.findUnique({
             where: { id: user_id?.user_id},
@@ -45,14 +41,14 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
             },
         })
 
-        const user_book_count = await prismadb.book.aggregate({
+        const user_count_book = await prismadb.book.aggregate({
             _count: {
                 user_id:true
             },
             where: { user_id:user_id?.user_id }
         })
 
-        const review_user = await prismadb.review_User.aggregate({
+        const review_user_agg = await prismadb.review_User.aggregate({
             _avg: {
                 score:true
             },
@@ -61,10 +57,6 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
             },
             where: { user_id:user_id?.user_id }
         })
-
-        const user_count_book = user_book_count._count
-        const avg_user = review_user._avg
-        const count_user_review = review_user._count
 
         const otherbook = await prismadb.book.findMany({
             where: { 
@@ -83,7 +75,7 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
 
         })
 
-        const reviewbook = await prismadb.review_Book.findMany({
+        const review_book = await prismadb.review_Book.findMany({
             where: { book_id: parseInt(params.id) },
             select: {
                 title:true,
@@ -99,15 +91,14 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
 
         return NextResponse.json({
             bookinfo,
-            count_book_review,
-            avg_book_review,
+            count_review_book_agg:review_book_agg._count,
+            avg_review_book_agg:review_book_agg._avg,
             user,
-            user_count_book,
-            avg_user,
-            count_user_review,
-            reviewbook,
+            count_user_book:user_count_book._count,
+            avg_user_score:review_user_agg._avg,
+            count_user_review:review_user_agg._count,
+            review_book,
             otherbook,
-            
             message: "All about this book infomation have been sent successfully."
         },{ status: 200 }
     )
