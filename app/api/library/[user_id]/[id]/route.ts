@@ -20,6 +20,15 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
             }
         })
 
+        if (getbook_info_inlibrary.length === 0) {
+            return NextResponse.json({
+                book:null,
+                message: "Invaild user_id or book_id."
+            },{ 
+                status:404 
+            })
+        }
+
         return NextResponse.json({
             book:getbook_info_inlibrary,
             message: "Book in library have been sent successfully"
