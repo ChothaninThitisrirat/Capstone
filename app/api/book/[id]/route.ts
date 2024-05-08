@@ -3,10 +3,11 @@ import { prismadb } from "@/lib/db";
 
 export async function GET(req: Request,{ params }: { params: { id: string }}) {
     try {
-        const user_id = await prismadb.book.findUnique({
+        const findbook = await prismadb.book.findUnique({
             where: { id: parseInt(params.id)},
             select: {
-                user_id:true
+                user_id:true,
+                category:true
             }   
         })
 
@@ -21,6 +22,7 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
             }
         })
 
+
         const review_book_agg = await prismadb.review_Book.aggregate({
             _avg: {
                 score:true
@@ -32,7 +34,7 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
         })
 
         const user = await prismadb.user.findUnique({
-            where: { id: user_id?.user_id},
+            where: { id: findbook?.user_id},
             select: {
                 id:true,
                 username:true
@@ -43,7 +45,7 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
             _count: {
                 user_id:true
             },
-            where: { user_id:user_id?.user_id }
+            where: { user_id:findbook?.user_id }
         })
 
         const review_user_agg = await prismadb.review_User.aggregate({
@@ -53,12 +55,12 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
             _count: {
                 user_id:true
             },
-            where: { user_id:user_id?.user_id }
+            where: { user_id:findbook?.user_id }
         })
 
         const otherbook = await prismadb.book.findMany({
             where: { 
-                user_id: user_id?.user_id,
+                user_id: findbook?.user_id,
                 AND: {
                     NOT: {
                         id: parseInt(params.id)
@@ -91,6 +93,7 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
             bookinfo,
             count_review_book_agg:review_book_agg._count,
             avg_review_book_agg:review_book_agg._avg,
+            category:findbook?.category.map(book => book.name),
             user,
             count_user_book:user_count_book._count,
             avg_user_score:review_user_agg._avg,
