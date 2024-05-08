@@ -15,8 +15,8 @@ model Book {
   status                    String?                   @db.VarChar(10)
   picture                   String[]
   in_libary                 Boolean                   @default(false)
-  pickup                    String
-  datetime                  DateTime                  @db.Date
+  pickup                    String?
+  datetime                  DateTime?                  @db.Date
   req_count                 Int?                       
   User                      User                      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "book_user_id")
   category                  Category[]
