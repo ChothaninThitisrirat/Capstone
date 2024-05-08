@@ -1,11 +1,9 @@
 import { NextResponse } from "next/server";
 import { prismadb } from "@/lib/db";
 import { upLoadIMG } from "@/utils/supabase";
-import { json } from "stream/consumers";
 
 export async function POST(req: Request) {
     try {
-                description,
             const formData = await req.formData();
 
             const date = new Date()
@@ -36,7 +34,7 @@ export async function POST(req: Request) {
                 title: formData.get('title') as string,
                 picture: image,
                 description: formData.get('description') as string,
-                status:'Post trade',
+                isPost_trade:true,
                 pickup: formData.get('pickup') as string,
                 datetime: date.toISOString(),
                 req_count:0,
