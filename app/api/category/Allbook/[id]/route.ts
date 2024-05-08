@@ -16,7 +16,6 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
             }
         })
 
-
         return NextResponse.json({
             allbook: allbook?.book,
             message: "All book in this category have been sent successfully."
