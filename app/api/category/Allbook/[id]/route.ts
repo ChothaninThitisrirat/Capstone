@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { prismadb } from "@/lib/db";
-import { title } from "process";
 
 export async function GET(req: Request,{ params }: { params: { id: string }}) {
     try {
@@ -19,7 +18,7 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
 
 
         return NextResponse.json({
-            allbook,
+            allbook: allbook?.book,
             message: "All book in this category have been sent successfully."
         },{ status: 200 }
     )
