@@ -32,7 +32,6 @@ export async function POST(req: Request) {
                     title: formData.get('title') as string,
                     picture: image,
                     description: formData.get('description') as string,
-                    in_libary:true,
                     category: {
                         connect: categoryIds.map(id => ({ id }))
                     }
