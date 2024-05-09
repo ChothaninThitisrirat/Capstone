@@ -4,14 +4,7 @@ import { prismadb } from "@/lib/db";
 export async function GET(req: Request,{ params }: { params: { id: string }}) {
     try {
         const getbook_info_inlibrary = await prismadb.book.findMany({
-            where: {
-                AND:[{
-                    id: parseInt(params.id)
-                },
-                {
-                    in_libary:true
-                }
-            ]},
+            where: { id: parseInt(params.id) },
             select: {
                 id:true,
                 title:true,

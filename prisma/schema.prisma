@@ -13,7 +13,6 @@ model Book {
   description                   String
   status                        String?       @db.VarChar(10)
   picture                       String[]
-  in_libary                     Boolean       @default(false)
   pickup                        String?
   datetime                      DateTime?     @db.Date
   req_count                     Int?
