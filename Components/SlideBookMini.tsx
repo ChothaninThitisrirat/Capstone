@@ -13,7 +13,8 @@ const SlideBookMini: React.FC<SlideBookMiniProps> = ({data}) =>{
 
     return (
         <>
-            <div className="flex gap-10 justify-start items-center px-3 relative">
+            <div 
+            className="flex gap-10 justify-center items-center px-3 relative pl-20 shrink-0">
             {moreFrom === 0 
             ? <div 
             style={{width: '70px'}}
@@ -24,7 +25,7 @@ const SlideBookMini: React.FC<SlideBookMiniProps> = ({data}) =>{
             icon="icon-park-solid:left-c" width="50" height="50" />}
 
                 <div 
-                style={{maxWidth: '1450px', WebkitOverflowScrolling: 'touch'}}
+                style={{width: '1350px', WebkitOverflowScrolling: 'touch'}}
                 className="flex gap-10 justify-start items-center overflow-x-auto h-auto p-2 close-scrollbar">
                 {data.map((item, index) => (
                     <div 
@@ -41,10 +42,15 @@ const SlideBookMini: React.FC<SlideBookMiniProps> = ({data}) =>{
 
             
             {moreFrom < (data.length/3)-2
-            ?<Icon 
-            onClick={() => setMoreFrom(  prev => prev+1)}
-            className='ml-5 text-dark3 cursor-pointer z-10 shrink-0'
-            icon="icon-park-solid:right-c" width="50" height="50" />
+            ?<div 
+            className=' shrink-0 relative'
+            style={{width: '70px'}}>
+                <Icon 
+                onClick={() => setMoreFrom(  prev => prev+1)}
+                className=' text-dark3 cursor-pointer z-10 shrink-0 absolute right-0 top-0 -translate-y-1/2 -translate-x-16'
+                icon="icon-park-solid:right-c" width="50" height="50" />
+            </div>
+            
             :<div 
             className=' shrink-0'
             style={{width: '70px'}}></div>}

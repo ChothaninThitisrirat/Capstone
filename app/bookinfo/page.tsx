@@ -274,7 +274,10 @@ function BookInfo() {
 
 
 
-      <div className="flex text-4xl font-bold ml-36 mb-10">Review The Book</div>
+      <div className="flex px-36 mb-10 w-full justify-between">
+        <div className="flex text-4xl font-bold">Review The Book</div>
+        <button className="flex">เพิ่มความคิดเห็น</button>
+      </div>
       
       <div className="flex gap-10 justify-center items-center px-3">
 
