@@ -10,9 +10,20 @@ import propFooter from '../../public/images/propFooter.png';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import axios from 'axios';
+import HashLoader from "react-spinners/HashLoader";
+
+interface Book {
+    id: number;
+    title: string;
+    picture: string;
+}
 
 function Library() {
+    const [loading, setLoading] = useState(true)
+    const [ loadcompo, setLoadcompo] = useState(false)
     const { data: session, status } = useSession()
+    const userId  = session?.user.id;
     const router = useRouter()
     useEffect(() => {
         if (status === 'unauthenticated') {
@@ -20,7 +31,6 @@ function Library() {
         }
     }, [status, router])
 
-    const classBook = "flex items-center justify-center rounded-sm border w-64 h-96 cursor-pointer shadow-sm hover:scale-105 duration-300"
     const [stateAddBook, setStateAddBook] = useState(false)
     const [classAddBookbg, setClassAddBookbg] = useState('fixed h-screen w-screen bg-slate-200 top-0 left-0 z-50 opacity-30 backdrop-blur-2xl hidden')
     const [classAddBook, setClassAddBook] = useState({
@@ -29,38 +39,8 @@ function Library() {
         transitionDuration: '0.3s'
     })
 
-    const [book, setBook] = useState([]);
-    const booktest = [{
-        id: "book1",
-        img: "https://picsum.photos/200/300",
-    }, {
-        id: "book2",
-        img: "https://picsum.photos/200/300",
-    }, {
-        id: "book3",
-        img: "https://picsum.photos/200/300",
-    }, {
-        id: "book4",
-        img: "https://picsum.photos/200/300",
-    }, {
-        id: "book5",
-        img: "https://picsum.photos/200/300",
-    }, {
-        id: "book6",
-        img: "https://picsum.photos/200/300",
-    }, {
-        id: "book7",
-        img: "https://picsum.photos/200/300",
-    }, {
-        id: "book8",
-        img: "https://picsum.photos/200/300",
-    }, {
-        id: "book9",
-        img: "https://picsum.photos/200/300",
-    }, {
-        id: "book10",
-        img: "https://picsum.photos/200/300",
-    }]
+    const [book, setBook] = useState<Book[]>([]);
+
 
 
     useEffect(() => {
@@ -81,6 +61,29 @@ function Library() {
         }   
     }, [stateAddBook])
 
+    useEffect(() => {
+        console.log('userId', userId);
+        setLoadcompo(false);
+    
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`/api/library/${userId}`);
+                setBook(response.data.library);
+                setLoading(false);
+            } catch (error) {
+                console.error('Error:', error);
+                setLoading(false);
+            }
+        };
+        if (userId !== undefined) {
+        fetchData(); 
+        }
+    }, [userId, loadcompo]);
+    
+    console.log('book', book);
+
+
+
     return (<>
         <style>
             {stateAddBook
@@ -93,7 +96,12 @@ function Library() {
         </style>
             <Navbar backGroundOn={true}/>
             <TitleBar textTitle='คลังหนังสือของฉัน'/>
-            <div
+            {loading ?<div className="flex justify-center h-screen mt-52">
+                        <HashLoader
+                            className="ml-1 duration-300 "
+                            color='#435585' loading={loading} size={50} aria-label="Loading Spinner" data-testid="loader"/>
+                    </div>
+            :<div
             style={{minHeight: "800px"}}
             className="flex justify-center h-auto w-sceen z-10 bg-none">
                 <div
@@ -104,25 +112,24 @@ function Library() {
                         <Icon icon="ic:baseline-plus" width="50" height="50"
                         className='text-gray-500'/>
                     </div>
-
-                    {booktest.map((item, index) => (
+                    {book.map((item, index) => (
                         <div key={index} 
-                        className={classBook}>
-                            {item.id}
-                            <Image
-                            src={propFooter}
+                        className='flex items-center justify-center rounded-sm border w-64 h-96 cursor-pointer shadow-sm hover:scale-105 duration-300 relative'>
+                            <div className="flex absolute bottom-0 translate-y-10 text-base">{item.title}</div>
+                            <img
+                            src={item.picture[0]}
                             alt="Profile picture"
-                            className='w-9 h-9 object-cover rounded-full cursor-pointer bg-white'
+                            className='w-full h-full object-cover cursor-pointer bg-white'
                             />
                         </div>
                     ))}
 
 
                 </div>
-            </div>
+            </div>}
             <Footer/>
             <div className={classAddBookbg}></div>
-            <PostNewBook setStateAddBook={setStateAddBook} classAddBook={classAddBook}/>
+            <PostNewBook setStateAddBook={setStateAddBook} classAddBook={classAddBook} setLoadcompo={setLoadcompo} />
                 
             
 

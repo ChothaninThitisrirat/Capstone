@@ -3,6 +3,7 @@ import { prismadb } from "@/lib/db";
 
 export async function GET(req: Request,{ params }: { params: { id: string }}) {
     try {
+        
         const getbook_info_inlibrary = await prismadb.book.findMany({
             where: {
                 AND:[{
@@ -19,7 +20,6 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
                 category:true
             }
         })
-
         if (getbook_info_inlibrary.length === 0) {
             return NextResponse.json({
                 book:null,

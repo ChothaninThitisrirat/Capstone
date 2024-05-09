@@ -1,10 +1,17 @@
 'use client'
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Icon } from "@iconify/react";
 import HashLoader from "react-spinners/HashLoader";
+import axios from "axios";
 
+interface Category {
+    id: string | number | null;
+    name: string;
+    defaultClass: boolean;
+    color: string;
+}
 interface LoginProps {
     setStylesingup: (style: boolean) => void;
     setStylelogin: (style: boolean) => void;
@@ -30,6 +37,7 @@ const Login: React.FC<LoginProps> = ({
     const [address, setAddress] = useState("");
     const [telNumber, setTelNumber] = useState("");
     const [infoPage, setInfoPage] = useState(true);
+    const [categoryLike, setCategoryLike] = useState(true);
     const [checkSpecialChar, setCheckSpecialChar] = useState(false);
     const [classCheckPersonalId, setClassCheckPersonalId] = useState(false);
     const [checkCardIdUse, setCheckCardIdUse] = useState(false);
@@ -265,9 +273,84 @@ const Login: React.FC<LoginProps> = ({
         setClassLeastCharacters("flex gap-1 text-gray-500 text-xs ml-5 mt-2");
     };
 
+    const [dataCatin, setDataCatin] = useState([])
+    const [classCategory, setClassCategory] = useState("flex items-center justify-center rounded-lg w-32 h-8 text cursor-pointer py-0.5 px-3 flex-grow-4 duration-1000")
+    const [category, setCategory] = useState<Category[]>([{
+        id:null,
+        name: "",
+        defaultClass: true,
+        color: "bg-gradient-to-tr from-novel to-white"
+    },{
+        id:null,
+        name: "",
+        defaultClass: true,
+        color: "bg-gradient-to-tr from-horror1 to-horror2 text-white"
+    },{
+        id:null,
+        name: "",
+        defaultClass: true,
+        color: "bg-gradient-to-tr from-cartoon to-white"
+    },{
+        id:null,
+        name: "",
+        defaultClass: true,
+        color: "bg-gradient-to-tr from-romantic to-white"
+    },{
+        id:null,
+        name: "",
+        defaultClass: true,
+        color: "bg-gradient-to-tr from-science to-white"
+    },{
+        id:null,
+        name: "",
+        defaultClass: true,
+        color: "bg-gradient-to-tr from-business to-white"
+    },{
+        id:null,
+        name: "",
+        defaultClass: true,
+        color: "bg-gradient-to-tr from-education to-white"
+    },{
+        id:null,
+        name: "",
+        defaultClass: true,
+        color: "bg-gradient-to-tr from-travel to-white"
+    },{
+        id:null,
+        name: "",
+        defaultClass: true,
+        color: "bg-gradient-to-tr from-develop to-white"
+    },{
+        id: null,
+        name: "",
+        defaultClass: true,
+        color: "bg-gradient-to-tr from-health to-white"
+    }])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get<{ category: Category[] }>('/api/category');
+                    const updatedCategories = response.data.category.map((item, index) => ({
+                        id: item.id !== null ? item.id.toString() : null,
+                        name: item.name,
+                        defaultClass: category[index].defaultClass,
+                        color:category[index].color 
+                    }));
+                    
+                    setCategory(updatedCategories);
+                
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
     return (
         <>
-        {infoPage ? (
+        {infoPage ?(
             <>
             <form
                 onSubmit={(e) => handleSubmitInfoPage1(e)}
@@ -453,7 +536,7 @@ const Login: React.FC<LoginProps> = ({
                 </span>
                 <button
                     type="submit"
-                    className="flex text-white p-1.5 rounded-full w-28 justify-center items-center gap-2 bg-dark2"
+                    className="flex text-white p-1.5 rounded-full w-28 justify-center items-center gap-2 bg-dark2 mt-1"
                 >
                     NEXT
                     {loadingInfo 
@@ -464,15 +547,85 @@ const Login: React.FC<LoginProps> = ({
                     
                 </button>
                 </div>
-                <div className="flex gap-4 justify-center mt-16">
-                <div
-                    className=" w-3 h-3 rounded-full bg-dark1"
-                ></div>
+                <div className="flex gap-4 justify-center mt-14 mb-1 translate-y-1">
+                <div className=" w-3 h-3 rounded-full bg-dark1"></div>
+                <div className=" w-3 h-3 rounded-full bg-gray-300"></div>
                 <div className=" w-3 h-3 rounded-full bg-gray-300"></div>
                 </div>
             </form>
             </>
-        ) : (
+        )  
+        :(categoryLike 
+            ? <>
+            <div
+            style={{ width: "500px" }}
+            className="w-auto px-10 pt-10 pb-5 rounded-3xl shadow-md bg-white border border-gray-300 flex-col">
+                <div className="max-w-96 w-screen text-4xl font-bold">Sign up</div>
+                <div className=" text-gray-400 mt-4 ml-4">เลือกประเภทหนังที่คุณชื่นชอบ</div>
+
+                <div 
+                style={{ height: "332px" }}
+                className="flex justify-center flex-col">
+                    <div className="flex items-center gap-3 mt-10">
+                        <Icon icon="iconamoon:category-light" width="40" height="40" />
+                        <div className="flex w-0.5 h-9 bg-gray-400"></div>
+                        <div className="flex text-gray-500">Category</div>
+                    </div>
+                    <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-3 mt-8">
+                        {category.map((cate, index) => (
+                            <div 
+                            onClick={() => {
+                                
+                                const newCatin:any = [...dataCatin]
+                                const ClassCatin:any = [...category]
+                                if(newCatin.includes(cate.id)){
+                                    ClassCatin.forEach((cat:any) => {
+                                        if (cat.id === cate.id) {
+                                            cat.defaultClass = true;
+                                        }
+                                    });
+                                    newCatin.splice(newCatin.indexOf(cate.id),1)
+                                }else{
+                                    ClassCatin.forEach((cat:any) => {
+                                        if (cat.id === cate.id) {
+                                            cat.defaultClass = false;
+                                        }
+                                    });
+                                    newCatin.push(cate.id)
+                                }
+                                setCategory(ClassCatin)
+                                setDataCatin(newCatin)
+                            }}
+                            key={index} className={classCategory+' '+ (cate.defaultClass?"bg-gray-300":cate.color )}
+                            >{cate.name}</div>
+                        ))}
+                    </div>
+                </div>
+                <div className="flex items-center mt-10 justify-between">
+                <button onClick={() => setInfoPage(true)}>
+                    <Icon
+                    icon="fluent-mdl2:navigate-back"
+                    width="40"
+                    height="40"
+                    className="text-dark2"
+                    />
+                </button>
+                <button 
+                onClick={() => setCategoryLike(false)}
+                className="flex text-white p-1.5 rounded-full w-28 justify-center items-center gap-2 bg-dark2">
+                    NEXT
+                    <Icon icon="carbon:next-outline" width="24" height="24" />
+                    
+                </button>
+                </div>
+                <div className="flex gap-4 justify-center mt-14">
+                    <div className=" w-3 h-3 rounded-full bg-gray-300"></div>
+                    <div className=" w-3 h-3 rounded-full bg-dark1"></div>
+                    <div className=" w-3 h-3 rounded-full bg-gray-300"></div>
+                </div>{" "}
+            </div>
+            </>
+            :(
             <>
             <form
                 onSubmit={handleSubmit}
@@ -608,7 +761,7 @@ const Login: React.FC<LoginProps> = ({
                 <div></div>
                 )}
                 <div className="flex  mt-14 justify-between">
-                <button onClick={() => setInfoPage(true)}>
+                <button onClick={() => setCategoryLike(true)}>
                     <Icon
                     icon="fluent-mdl2:navigate-back"
                     width="40"
@@ -639,13 +792,12 @@ const Login: React.FC<LoginProps> = ({
                 </div>
                 <div className="flex gap-4 justify-center mt-14">
                 <div className=" w-3 h-3 rounded-full bg-gray-300"></div>
-                <div
-                    className=" w-3 h-3 rounded-full bg-dark1"
-                ></div>
+                <div className=" w-3 h-3 rounded-full bg-gray-300"></div>
+                <div className=" w-3 h-3 rounded-full bg-dark1"></div>
                 </div>{" "}
             </form>
             </>
-        )}
+        ))}
         </>
     );
 };

@@ -8,6 +8,8 @@ import PostNewBook from '@/Components/PostNewBook';
 import { useRouter } from 'next/navigation'
 import bgExchangebook from '../../public/images/bgExchangebook.png';
 import propFooter from '../../public/images/propFooter.png';
+import axios from 'axios';
+import { useSession } from 'next-auth/react'
 
 
 interface PostBook1Props {
@@ -19,6 +21,7 @@ interface PostBook1Props {
 const PostBook1: React.FC<PostBook1Props> = ({setStatePage, setBookSelect, bookSelect}) =>{
     const classBook = "flex items-center justify-center rounded-sm border w-64 h-96 cursor-pointer shadow-sm duration-300 relative bg-dark3"
     const [stateAddBook, setStateAddBook] = useState(false)
+    const [ loadcompo, setLoadcompo] = useState(false)
     const [classAddBookbg, setClassAddBookbg] = useState('fixed h-screen w-screen bg-slate-200 top-0 left-0 z-50 opacity-30 backdrop-blur-2xl hidden')
     const [classAddBook, setClassAddBook] = useState({
         transform:'translateY(100%)',
@@ -78,6 +81,8 @@ const PostBook1: React.FC<PostBook1Props> = ({setStatePage, setBookSelect, bookS
         }   
     }, [stateAddBook])
 
+    const { data: session, status } = useSession()
+    const userId: number | undefined = session?.user.id
     const router = useRouter();
 
     const handleCancel = () => {
@@ -99,15 +104,28 @@ const PostBook1: React.FC<PostBook1Props> = ({setStatePage, setBookSelect, bookS
         }
     }
 
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             const response = await axios.get(`/api/library/${userId}`);
+    //             console.log('response.data = ', response.data);
+                
+    //         } catch (error) {
+    //             console.error('Error:', error);
+    //         }
+    //     };
+    //     fetchData();
+    // }, []);
+
+
 
     return (
         <>
-
             <div
             style={{minHeight: "800px"}}
             className="flex justify-center h-auto w-sceen z-10 bg-none">
                 <div
-                className="flex w-full h-screen p-10 flex-wrap gap-20 gap-y-14 mb-10 overflow-y-auto close-scrollbar z-10">
+                className="flex w-full h-screen p-10 flex-wrap gap-20 gap-y-14 mb-10 overflow-y-auto close-scrollbar z-10 library-container">
                     <div 
                     onClick={() => setStateAddBook(true)}
                     className="flex items-center justify-center rounded-sm border w-64 h-96 bg-slate-200 cursor-pointer shadow-sm hover:bg-slate-300  hover:scale-105 duration-300">
@@ -132,7 +150,7 @@ const PostBook1: React.FC<PostBook1Props> = ({setStatePage, setBookSelect, bookS
                 </div>
             </div>
             <div className={classAddBookbg}></div>
-            <PostNewBook setStateAddBook={setStateAddBook} classAddBook={classAddBook}/>
+            <PostNewBook setStateAddBook={setStateAddBook} classAddBook={classAddBook} setLoadcompo={setLoadcompo}/>
             <div className='fixed bottom-0 left-0 w-screen h-24 z-20 flex justify-between'>
                     <button onClick={handleCancel} className='w-20 h-10 border-2 border-red-500 rounded-full ml-20 mt-2 hover:bg-red-100'>ยกเลิก</button>
                     <button onClick={handleChangeState} 

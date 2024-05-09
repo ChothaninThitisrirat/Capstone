@@ -3,10 +3,13 @@ import { Icon } from '@iconify/react';
 import Image from 'next/image';     
 import { useSession } from 'next-auth/react'
 import axios from "axios";
+import HashLoader from "react-spinners/HashLoader";
+import Loadable from 'next/dist/shared/lib/loadable.shared-runtime';
 
 interface PostNewBookProp {
     setStateAddBook: (style: boolean) => void;
     classAddBook: any;
+    setLoadcompo: (style: boolean) => void;
 }
 interface Category {
     id: string | number | null;
@@ -15,7 +18,8 @@ interface Category {
     color: string;
 }
 
-const PostNewBook: React.FC<PostNewBookProp> = ({setStateAddBook, classAddBook}) =>{
+const PostNewBook: React.FC<PostNewBookProp> = ({setStateAddBook, classAddBook, setLoadcompo}) =>{
+    const [loading, setLoading] = useState(false);
     
     const { data: session, status } = useSession()
 
@@ -25,6 +29,7 @@ const PostNewBook: React.FC<PostNewBookProp> = ({setStateAddBook, classAddBook})
 
     const [uploadPictureNum, setUploadPictureNum] = useState(0)
     const [dataPicture, setDataPicture] = useState<any[]>([]);
+    const [dataImg, setDataImg] = useState<any[]>([]);
 
     const [classCategory, setClassCategory] = useState("flex items-center justify-center rounded-lg w-auto text-sm cursor-pointer py-0.5 px-3 flex-grow-4 duration-1000")
     const [category, setCategory] = useState<Category[]>([{
@@ -78,7 +83,7 @@ const PostNewBook: React.FC<PostNewBookProp> = ({setStateAddBook, classAddBook})
         defaultClass: true,
         color: "bg-gradient-to-tr from-health to-white"
     }])
-
+    const formData = new FormData();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -116,46 +121,47 @@ const PostNewBook: React.FC<PostNewBookProp> = ({setStateAddBook, classAddBook})
             const reader = new FileReader();
             reader.onloadend = () => {
                 const newPicture = [...dataPicture];
-                newPicture.push(reader.result);
+                const newImg = [...dataImg];
+                newPicture.push(file);
+                newImg.push(reader.result);
                 setUploadPictureNum(prev => prev + 1);
                 setDataPicture(newPicture);
+                setDataImg(newImg)
             };
             reader.readAsDataURL(file);
-            console.log('sccuess',dataPicture, uploadPictureNum)
         }
     };
 
-
     const DeletePicture = (index:any) => {
         const updatedDataPicture = [...dataPicture.slice(0, index), ...dataPicture.slice(index + 1)];
+        const updatedDataImg = [...dataImg.slice(0, index), ...dataImg.slice(index + 1)];
         setUploadPictureNum(prev => prev - 1);
         setDataPicture(updatedDataPicture);
+        setDataImg(updatedDataImg)
     };
 
-
-
     const handlePostBook = async (e: React.SyntheticEvent<HTMLFormElement>) => {
+        setLoading(true);
         e.preventDefault();
-        const formData = new FormData();
+        
         formData.append('user_id', session?.user.id as any);
         formData.append('title', bookTitle);
         formData.append('description', bookDetail);
         dataCatin.forEach((cat) => {
             formData.append('category', cat);
         });
-        dataPicture.forEach((picture) => {
-            formData.append('image', picture);
+        dataPicture.forEach((pic) => {
+            formData.append('image', pic);
         });
-        console.log(formData.get('user_id'),formData.get('title'),formData.get('description'),formData.get('category'),formData.get('image'))
-
         try{
-            const response = await axios.post('/api/book/postbook', formData);
-            // const response = await fetch('/api/book/postbook', {
-            //     method: 'POST',
-            //     body: formData,
-            // });
-            console.log(response.data);
+            const response = await axios.post('/api/library/postbook', formData);
+            setLoading(false);
+            if (response.status === 201) {
+                setLoadcompo(true)
+                reSetInfo();
+            }
         }catch (error) {
+            setLoading(false);
             console.error('Error:', error);
         }
         
@@ -277,7 +283,7 @@ const PostNewBook: React.FC<PostNewBookProp> = ({setStateAddBook, classAddBook})
                             </div>}
                             <div className="w-0.5 h-16 bg-gray-300 mx-3"></div>
 
-                            {dataPicture.map((picture, index) => (
+                            {dataImg.map((picture, index) => (
                                 <div key={index} className="flex items-center justify-center rounded-lg bg-gray-200 w-16 h-16 mr-4 relative">
                                     <Icon 
                                     onClick={() => DeletePicture(index)}
@@ -290,8 +296,6 @@ const PostNewBook: React.FC<PostNewBookProp> = ({setStateAddBook, classAddBook})
                                     />
                                 </div>
                             ))}
-
-
                             {uploadPictureNum < 5 &&<div  className="flex items-center justify-center rounded-lg bg-gray-200 w-16 h-16 mr-3">
                                 <Icon icon="fe:picture" width="50" height="50" 
                                 className='text-gray-400'/>
@@ -300,13 +304,22 @@ const PostNewBook: React.FC<PostNewBookProp> = ({setStateAddBook, classAddBook})
 
 
                         </div>
-                        <div className="flex items-center justify-center mt-10">
+                        <div className="flex items-center justify-center mt-10 relative ">
                             {bookTitle && bookDetail && dataCatin.length > 0 && dataPicture.length > 0
                             ?<button
                             type="submit"
-                            className="w-40 h-9 bg-dark2 text-white rounded-full cursor-pointer "
+                            className={loading?"w-52 h-9 bg-dark2 text-white rounded-full cursor-pointer flex items-center justify-center gap-1 duration-300"
+                            :"w-40 h-9 bg-dark2 text-white rounded-full cursor-pointer flex items-center justify-center gap-1 duration-300"}
                             >
-                                เพิ่มหนังสือลงคลัง
+                                <div 
+                                className={loading?"flex mr-5 duration-300"
+                                :"flex duration-300"}>
+                                    เพิ่มหนังสือลงคลัง
+                                    </div>
+                                <div className="flex absolute top-1/2 right-5 -translate-y-1/2">
+                                <HashLoader
+                                className="ml-1 duration-300 "
+                                color='#fff' loading={loading} size={20} aria-label="Loading Spinner" data-testid="loader"/></div>
                             </button>
                             :<div
                                 className="w-40 h-9 bg-gray-300 text-white rounded-full cursor-pointer flex items-center justify-center"
@@ -317,6 +330,7 @@ const PostNewBook: React.FC<PostNewBookProp> = ({setStateAddBook, classAddBook})
                         </div>
                     </form>
                 </div>
+                
         </>
     )
 }

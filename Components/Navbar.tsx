@@ -20,8 +20,8 @@ const Navbar: React.FC<NavbarProps> = ({backGroundOn}) =>{
     return (<>
             <div 
             className={backGroundOn
-            ?"flex w-screen h-16 rounded-b-3xl fixed cursor-pointer justify-center z-30 bg-dark2"
-            :"flex w-screen h-16 rounded-b-3xl fixed cursor-pointer justify-center z-30"} >
+            ?"flex w-screen h-16  relative cursor-pointer justify-center z-30 bg-dark2"
+            :"flex w-screen h-16 rounded-b-3xl relative cursor-pointer justify-center z-30"} >
                 <div 
                 style={{maxWidth: '2200px'}}
                 className="flex w-screen h-16 justify-between relative z-30">
@@ -62,12 +62,14 @@ const Navbar: React.FC<NavbarProps> = ({backGroundOn}) =>{
                     </div>
                     
                 </div>
-            </div>
-            <div className={showDropDown
+                
+                </div>
+                <div className={showDropDown
                     ?"absolute top-16 right-14 duration-500 z-10"
                     :"absolute top-16 right-14 -translate-y-96 duration-500 z-10"}>
                 <DropDown/>
             </div>
+            
             
         </>
     )
