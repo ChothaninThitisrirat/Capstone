@@ -20,7 +20,7 @@ const Navbar: React.FC<NavbarProps> = ({backGroundOn}) =>{
     return (<>
             <div 
             className={backGroundOn
-            ?"flex w-screen h-16 rounded-b-3xl fixed cursor-pointer justify-center z-30 bg-dark1"
+            ?"flex w-screen h-16 rounded-b-3xl fixed cursor-pointer justify-center z-30 bg-dark2"
             :"flex w-screen h-16 rounded-b-3xl fixed cursor-pointer justify-center z-30"} >
                 <div 
                 style={{maxWidth: '2200px'}}
@@ -101,7 +101,7 @@ function DropDown() {
     {
         id: 4,
         icon: "cil:list",
-        link: "",
+        link: "/wishlist",
         text: "Wish List",
         size: "22"
     }

@@ -250,6 +250,7 @@ const Login: React.FC<LoginProps> = ({
     };
 
     const setFormSignup = () => {
+        setLoadingInfo(false)
         setUsername("");
         setEmail("");
         setPassword("");

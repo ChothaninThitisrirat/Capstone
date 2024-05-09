@@ -140,7 +140,7 @@ const reSetInfo = () => {
                                 placeholder="Book Detail"
                                 onChange={(e) => setBookDetail(e.target.value)}
                                 required
-                                className="book-detail w-full border-l-2 border-gray-300 ml-10 pl-2 pt-1 pb2 mt-8 faw resize-none bg-gray-50 rounded-sm h-32"
+                                className="book-detail w-full border-l-2 border-gray-300 ml-10 pl-2 pt-1 pb2 mt-8 resize-none bg-gray-50 rounded-sm h-32"
                             />
                         </div>
                         <div className="flex items-center justify-center flex-col w-full px-5">

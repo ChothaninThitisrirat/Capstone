@@ -183,12 +183,12 @@ const DropDownAddress: React.FC<DropDownAddressProps> = ({setAddressPost, setSta
     }]);
     return (
         <>
-            <div className="absolute top-0 left-7 w-80 h-60 bg-white rounded-b-xl shadow-lg z-0 overflow-y-auto overflow-x-hidden address-container text-black pt-2 duration-500 animetion-addressOn cursor-pointer">
+            <div className="absolute top-0 left-7 w-80 h-60 bg-white rounded-b-xl shadow-lg z-0 overflow-y-auto overflow-x-hidden close-scrollbar text-black pt-2 duration-500 animetion-addressOn cursor-pointer">
                     {dataAddress.map((item,index)=>(
                         <div 
                         key={index}
                         onClick={() => setAddressPost(item.address)}
-                        className="flex items-center justify-between w-11/12 h-auto min-h-10 pl-5 pr-5 break-all border-b  p-2 mx-auto">{item.address}</div>
+                        className="flex items-center justify-between w-11/12 h-auto min-h-10 pl-5 pr-5 break-words border-b  p-2 mx-auto">{item.address}</div>
                     
                     ))}
 

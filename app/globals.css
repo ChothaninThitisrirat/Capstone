@@ -16,21 +16,10 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-.post-container::-webkit-scrollbar {
-  width: 0px;
-} 
-.post-container::-webkit-scrollbar-thumb {
-  background: none;
-  border-radius: 10px;
-}
-.address-container::-webkit-scrollbar {
-  width: 0px;
-  visibility: hidden;
-} 
-.address-container::-webkit-scrollbar-thumb {
-  background: none;
-  visibility: hidden;
-  border-radius: 10px;
+
+
+.close-scrollbar::-webkit-scrollbar {
+  display: none; /* ซ่อนแถบเลื่อน */
 }
 .library-container{
   max-width: 1680px;
