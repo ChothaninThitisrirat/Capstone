@@ -8,9 +8,18 @@ import PostBook1 from './PostBook1';
 import PostBook2 from './PostBook2';
 import PostBook3 from './PostBook3';
 import bgExchangebook from '../../public/images/bgExchangebook.png';
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 
 function PostBook() {
+    const { data: session, status } = useSession()
+    const router = useRouter()
+    useEffect(() => {
+        if (status === 'unauthenticated') {
+            router.push('/login')
+        }
+    }, [status, router])
     const [statePage, setStatePage] = useState(0)
     const [showExchangeInfo1, setShowExchangeInfo1] = useState(false);
     const [showExchangeInfo2, setShowExchangeInfo2] = useState(false);

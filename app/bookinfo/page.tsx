@@ -303,7 +303,7 @@ function BookInfo() {
             </div>
           ))}
         </div>
-        {reviewComment < comment.length -3 ?<Icon 
+        {reviewComment < comment.length -2 ?<Icon 
         onClick={() => setReviewComment(  prev => prev+1)}
         className='ml-5 text-dark3 cursor-pointer shrink-0'
         icon="icon-park-solid:right-c" width="50" height="50" />

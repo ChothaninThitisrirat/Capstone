@@ -8,8 +8,18 @@ import Footer from '@/Components/Footer';
 import PostNewBook from '@/Components/PostNewBook';
 import propFooter from '../../public/images/propFooter.png';
 import Image from 'next/image';
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 function Library() {
+    const { data: session, status } = useSession()
+    const router = useRouter()
+    useEffect(() => {
+        if (status === 'unauthenticated') {
+            router.push('/login')
+        }
+    }, [status, router])
+
     const classBook = "flex items-center justify-center rounded-sm border w-64 h-96 cursor-pointer shadow-sm hover:scale-105 duration-300"
     const [stateAddBook, setStateAddBook] = useState(false)
     const [classAddBookbg, setClassAddBookbg] = useState('fixed h-screen w-screen bg-slate-200 top-0 left-0 z-50 opacity-30 backdrop-blur-2xl hidden')

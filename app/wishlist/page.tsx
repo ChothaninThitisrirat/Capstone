@@ -12,13 +12,21 @@ import { useRouter } from 'next/navigation'
 import propFooter from '../../public/images/propFooter.png';
 import ClipLoader from "react-spinners/ClipLoader";
 
+
 function WishList() {
     const [wishlist, setWishlist] = useState([{ book_id:'', img: ''}]);
     const [loading, setLoading] = useState(true);
     const { data: session, status } = useSession()
+    
+    const router = useRouter()
+    useEffect(() => {
+        if (status === 'unauthenticated') {
+            router.push('/login')
+        }
+    }, [status, router])
 
-const userId: number | undefined =session?.user.id
-console.log('userId',userId);
+    const userId: number | undefined =session?.user.id
+    console.log('userId',userId);
 
     useEffect(() => {
         const fetchData = async () => {
