@@ -6,8 +6,6 @@ export async function POST(req: Request) {
     try {
             const formData = await req.formData();
 
-            const date = new Date()
-
             const categoryIds: number[] = []
             
             const categoryFormData = formData.getAll('category');
@@ -28,24 +26,21 @@ export async function POST(req: Request) {
                 }
             }
 
-        const newbook = await prismadb.book.create({
-            data : {
-                user_id: parseInt(formData.get('user_id') as string),
-                title: formData.get('title') as string,
-                picture: image,
-                description: formData.get('description') as string,
-                isPost_trade:true,
-                pickup: formData.get('pickup') as string,
-                datetime: date.toISOString(),
-                req_count:0,
-                category: {
-                    connect: categoryIds.map(id => ({ id }))
+            const newlibrarybook = await prismadb.book.create({
+                data : {
+                    user_id: parseInt(formData.get('user_id') as string),
+                    title: formData.get('title') as string,
+                    picture: image,
+                    description: formData.get('description') as string,
+                    in_libary:true,
+                    category: {
+                        connect: categoryIds.map(id => ({ id }))
+                    }
                 }
-            }
-        })
+            })
 
         return NextResponse.json({
-            book: newbook,
+            book: newlibrarybook,
             message: "Post book successfully"
         },{ status:201 }
     )

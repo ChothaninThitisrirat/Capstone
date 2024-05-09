@@ -3,27 +3,30 @@ import { prismadb } from "@/lib/db";
 
 export async function GET(req: Request,{ params }: { params: { id: string }}) {
     try {
-        const popularbook = await prismadb.category.findMany({
-            where: { id: parseInt(params.id)},
+        const popularbook = await prismadb.book.findMany({
             select: {
-                book: {
-                    where: {status: "Post trade"},
-                    select: {
-                        id:true,
-                        title:true,
-                        description:true,
-                        picture:true,
-                        User: {
-                            select:{
-                                username:true
-                            }
-                        }
-                    },take:5,
-                    orderBy: {
-                        req_count: "desc"
+                id:true,
+                title:true,
+                description:true,
+                picture:true,
+                User: {
+                    select:{
+                        username:true
                     }
-                }
-            }
+                },
+                category: {
+                    select:{
+                        name:true
+                    },
+                    where: {
+                        id: parseInt(params.id)
+                    }
+                },
+            },
+            orderBy: {
+                req_count: 'desc'
+            },
+            take: 5,
         })
 
         return NextResponse.json({
