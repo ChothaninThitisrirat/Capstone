@@ -24,17 +24,12 @@ input::-webkit-inner-spin-button {
 .library-container{
   max-width: 1680px;
 }
-.post-container{
+.post-container, .trade-container{
   max-width: 1345px;
 }
 @media screen and (max-width: 1700px) {
   .library-container{
     max-width: 1345px;
-  }
-}
-@media screen and (max-width: 1370px) {
-  .library-container, .post-container{
-    max-width: 1010px;
   }
 }
 @media screen and (max-width: 1370px) {
@@ -52,6 +47,24 @@ input::-webkit-inner-spin-button {
     justify-content: center;
   }
 }
+/*                                     */
+@media screen and (max-width: 1800px) {
+  .trade-container{
+    max-width: 1010px;
+  }
+}
+@media screen and (max-width: 1460px) {
+  .trade-container{
+    max-width: 675px;
+  }
+}
+@media screen and (max-width: 1125px) {
+  .trade-container{
+    justify-content: center;
+  }
+}
+/*                                     */
+
 
 .animetion-addressOn{
   animation: address 0.5s ease-in-out;
@@ -70,38 +83,66 @@ input::-webkit-inner-spin-button {
 
 
 
-
-
-
-
-
-/* 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+.pickUpSelectAnimation{
+  animation: pickUpSelect 2s ease-in-out forwards;
+}
+@keyframes pickUpSelect {
+  0% {
+    
+  }50%{
+    transform: translateX(93px) translateY(-130px);
+  }100%{
+    transform: translateX(93px) translateY(-230px);
+    z-index: 0;
+  }
+}
+.pickUpNonSelectAnimation{
+  animation: pickUpNonSelect 2s ease-in-out forwards;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+@keyframes pickUpNonSelect {
+  0% {
+    
+  }50%{
+    transform: translateX(93px) translateY(-130px);
+    opacity: 1;
+  }100%{
+    transform: translateX(93px) translateY(-230px);
+    opacity: 0;
+    z-index: 0;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.sendSelectAnimation{
+  animation: SendSelect 2s ease-in-out forwards;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@keyframes SendSelect {
+  0% {
+    
+  }50%{
+    transform: translateX(-93px) translateY(-130px);
+  }100%{
+    transform: translateX(-93px) translateY(-230px);
+    z-index: 0;
+
   }
-} */
+}
+
+.sendNonSelectAnimation{
+  animation: SendNonSelect 2s ease-in-out forwards;
+}
+
+@keyframes SendNonSelect {
+  0% {
+    
+  }50%{
+    transform: translateX(-93px) translateY(-130px);
+    opacity: 1;
+  }100%{
+    transform: translateX(-93px) translateY(-230px);
+    opacity: 0;
+    z-index: 0;
+
+  }
+}

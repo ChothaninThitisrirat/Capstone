@@ -104,18 +104,18 @@ const PostBook1: React.FC<PostBook1Props> = ({setStatePage, setBookSelect, bookS
         }
     }
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             const response = await axios.get(`/api/library/${userId}`);
-    //             console.log('response.data = ', response.data);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`/api/library/${userId}`);
+                console.log('response.data = ', response.data);
                 
-    //         } catch (error) {
-    //             console.error('Error:', error);
-    //         }
-    //     };
-    //     fetchData();
-    // }, []);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        };
+        fetchData();
+    }, []);
 
 
 
@@ -144,6 +144,7 @@ const PostBook1: React.FC<PostBook1Props> = ({setStatePage, setBookSelect, bookS
                             src={bgExchangebook}
                             alt="Profile picture"
                             className='w-64 h-96 object-cover cursor-pointer'
+                            
                             />
                         </div>
                     ))}

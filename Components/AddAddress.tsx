@@ -26,6 +26,7 @@ const AddAddress: React.FC<AddressProps> = ({setStatusAddress}) =>{
 
     return (
         <>
+        <div className='fixed h-screen w-screen bg-slate-200 top-0 left-0 z-50 opacity-30 backdrop-blur-2xl'></div>
         <div className="fixed flex top-0 left-0 z-50 h-screen w-screen items-center justify-center">
         <form 
             onSubmit={handleAddAddress}

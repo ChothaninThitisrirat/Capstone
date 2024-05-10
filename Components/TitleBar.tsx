@@ -8,7 +8,7 @@ const TitleBar: React.FC<TitleProps> = ({textTitle}) =>{
     return (
         <>
             <div 
-            className="flex justify-center items-center h-52 text-6xl pt-16 text-white shadow-lg w-screen z-10 bg-dark3">
+            className="flex justify-center items-center h-52 text-6xl text-white shadow-lg w-screen z-10 bg-dark3">
                 {textTitle}
             </div>
         </>

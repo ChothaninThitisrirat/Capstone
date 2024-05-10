@@ -111,14 +111,14 @@ function DropDown() {
     return (
         <div className=" flex-col w-auto bg-white border rounded-b-2xl shadow z-10">
             {data.map((item) => (
-                <div key={item.id} className="flex pl-4 h-12 pr-2 cursor-pointer hover:bg-slate-200 w-full items-center justify-start">
+                <Link key={item.id} href={item.link} className="flex pl-4 h-12 pr-2 cursor-pointer hover:bg-slate-200 w-full items-center justify-start">
                     <div
                     className="w-9 h-9 rounded-full bg-zinc-300 flex items-center justify-center">
                         <Icon icon={item.icon} width={item.size} height={item.size} 
-                        style={{color:'363062'}}/>
+                        style={{color:'#363062'}}/>
                     </div>
-                    <Link href={item.link} className="flex text-center items-center text-sm ml-3 mr-2">{item.text}</Link>
-                </div>
+                    <div  className="flex text-center items-center text-sm ml-3 mr-2">{item.text}</div>
+                </Link>
             ))}
             <button
             onClick={() => signOut({ callbackUrl: '/' })}

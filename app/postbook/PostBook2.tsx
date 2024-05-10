@@ -12,9 +12,10 @@ import './checkbox.css';
 
 interface PostBook2Props {
     setStatePage: (style: number) => void;
+    bookSelect: string;
 }
 
-const PostBook2: React.FC<PostBook2Props> = ({setStatePage}) =>{
+const PostBook2: React.FC<PostBook2Props> = ({setStatePage, bookSelect}) =>{
     const [isChecked, setIsChecked] = useState(false);
     const [makeAppointment , setMakeAppointment] = useState('') // ส่งไปbackend
     const [isChecked2, setIsChecked2] = useState(false);
@@ -76,6 +77,7 @@ const PostBook2: React.FC<PostBook2Props> = ({setStatePage}) =>{
             <div className="flex flex-col h-screen w-2/3 pl-40 z-20 justify-center">
                 <div className="flex text-2xl font-bold">วิธีการแลกเปลี่ยน</div>
                 <div className="flex w-auto items-end ml-20 mt-10">
+                    {/* check box */}
                     <div className="flex flex-col items-center h-36"> 
                         <div className="checkbox-wrapper-19">
                             <input 
@@ -95,6 +97,7 @@ const PostBook2: React.FC<PostBook2Props> = ({setStatePage}) =>{
                             className='scale-x-[-1] absolute top-16 right-2' />
                         </div>
                     </div>
+                    {/* input นัดรับ */}
                     <input
                         id="makeAppointment"
                         type="text"
@@ -105,6 +108,7 @@ const PostBook2: React.FC<PostBook2Props> = ({setStatePage}) =>{
                         className={!isChecked ? "w-96 border-b border-gray-300 pl-5 py-1 mt-5 ml-10 mb-8":"w-96 border-b border-black pl-5 py-1 mt-5 ml-10 mb-8" }
                     />
                 </div>
+                {/* check address */}
                 <div className="flex w-auto items-end ml-20 mb-40 mt-10">
                     <div 
                     onClick={() => setIsChecked2(!isChecked2)}
@@ -137,10 +141,6 @@ const PostBook2: React.FC<PostBook2Props> = ({setStatePage}) =>{
                         {addressPost !== '' ? addressPost : 'โปรดเลือกที่อยู่จัดส่ง'}
                         <Icon icon="mingcute:down-line" width="30" height="30" className='mr-2 text-dark1'/>{ dropDownAddress && <DropDownAddress setAddressPost={setAddressPost} setStatusAddress={setStatusAddress} /> }
                     </div>}
-                    
-                        
-                    
-                    
                 </div>
             </div>
         </div>
@@ -152,8 +152,6 @@ const PostBook2: React.FC<PostBook2Props> = ({setStatePage}) =>{
                     :'w-36 h-10 border-2 border-gray-500 text-gray-500 rounded-full mr-16 mt-2 flex justify-end items-center gap-2 pr-1 fixed bottom-6 right-6 z-50'}>
                         โพสต์หนังสือ<Icon icon="icons8:right-round" width="30" height="30" /></button>
 
-                    {statusAddress ?<div className='fixed h-screen w-screen bg-slate-200 top-0 left-0 z-50 opacity-30 backdrop-blur-2xl'></div>
-                    :<div className='fixed h-screen w-screen bg-slate-200 top-0 left-0 z-50 opacity-30 backdrop-blur-2xl hidden'></div>}
                     {statusAddress && <AddAddress setStatusAddress={setStatusAddress}/>}
 
 
@@ -182,13 +180,13 @@ const DropDownAddress: React.FC<DropDownAddressProps> = ({setAddressPost, setSta
         address:'4-เลขที่ 37/5 ม.3 ต.วังตะกู อ.เมื่อง จ.นครปฐม 73000'
     }]);
     return (
-        <>
             <div className="absolute top-0 left-7 w-80 h-60 bg-white rounded-b-xl shadow-lg z-0 overflow-y-auto overflow-x-hidden close-scrollbar text-black pt-2 duration-500 animetion-addressOn cursor-pointer">
                     {dataAddress.map((item,index)=>(
                         <div 
                         key={index}
                         onClick={() => setAddressPost(item.address)}
-                        className="flex items-center justify-between w-11/12 h-auto min-h-10 pl-5 pr-5 break-words border-b  p-2 mx-auto">{item.address}</div>
+                        className="flex items-center justify-between w-11/12 h-auto min-h-10 pl-5 pr-5 break-words border-b  p-2 mx-auto">
+                            {item.address}</div>
                     
                     ))}
 
@@ -199,10 +197,8 @@ const DropDownAddress: React.FC<DropDownAddressProps> = ({setAddressPost, setSta
                     className='text-black'/>
                     </div>
             </div>
-        </>
     )
 }
-
 
 
 export default PostBook2

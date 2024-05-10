@@ -90,7 +90,7 @@ function PostBook() {
             className='fixed z-0 opacity-30 w-screen h-screen object-cover left-0'
             />
             {statePage === 0 && <PostBook1 setStatePage={setStatePage} setBookSelect={setBookSelect} bookSelect={bookSelect}/>}
-            {statePage === 1 && <PostBook2 setStatePage={setStatePage}/>}
+            {statePage === 1 && <PostBook2 setStatePage={setStatePage} bookSelect={bookSelect}/>}
             {statePage === 2 && <PostBook3 bookSelect={bookSelect}/>}
             
 
