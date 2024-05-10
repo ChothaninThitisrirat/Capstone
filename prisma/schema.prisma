@@ -14,6 +14,7 @@ model Book {
   status                        String?       @db.VarChar(10)
   picture                       String[]
   pickup                        String?
+  address                       String?
   datetime                      DateTime?     @db.Date
   req_count                     Int?
   id                            Int           @id @unique @default(autoincrement())
@@ -48,6 +49,7 @@ model Trade {
   datetime                     DateTime @db.Date
   status                       String   @db.VarChar(10)
   pickup_req                   String?
+  req_address                  String?
   Book_Trade_book_idToBook     Book     @relation("Trade_book_idToBook", fields: [book_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "trade-book_id")
   User_Trade_owner_idToUser    User     @relation("Trade_owner_idToUser", fields: [owner_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "trade-owner_id")
   Book_Trade_req_book_idToBook Book?    @relation("Trade_req_book_idToBook", fields: [req_book_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "trade-req_book_id")

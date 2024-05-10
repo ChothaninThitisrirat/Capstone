@@ -3,27 +3,22 @@ import { prismadb } from "@/lib/db";
 
 export async function GET(req: Request,{ params }: { params: { id: string }}) {
     try {
-        const getbook_info_inlibrary = await prismadb.book.findMany({
-            where: { 
-                AND:[{
-                        id: parseInt(params.id) 
-                    },{
-                        status:{
-                            not: 'trading'
-                        }   
-                    },{
-                        isPost_trade:false
-                    }
-                ]
-            },
-            select: {
-                id:true,
-                title:true,
-                picture:true,
-                category:true
-            },
-            
-        })
+            const getbook_info_inlibrary = await prismadb.book.findMany({
+                where: {
+                    id: parseInt(params.id),
+                    status: 'available',
+                    isPost_trade:false
+                },
+                select: {
+                    id:true,
+                    title:true,
+                    picture:true,
+                    category:true
+                }  
+            })
+
+        console.log(getbook_info_inlibrary);
+        
 
         if (getbook_info_inlibrary.length === 0) {
             return NextResponse.json({

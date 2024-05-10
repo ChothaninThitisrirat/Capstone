@@ -25,7 +25,8 @@ export async function GET(req: Request,{ params }: { params: { user_id: string ,
                             select:{
                                 id:true,
                                 title:true,
-                                picture:true
+                                picture:true,
+                                status:true
                             }
                         }
                     },

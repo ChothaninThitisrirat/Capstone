@@ -3,7 +3,7 @@ import { prismadb } from "@/lib/db";
 
 export async function POST(req: Request) {
     try {
-        const { book_id, pickup} = await req.json()
+        const { book_id, pickup, address} = await req.json()
 
         const date = new Date()
 
@@ -11,7 +11,8 @@ export async function POST(req: Request) {
             where: { id:book_id },
             data : {
                 isPost_trade:true,
-                pickup ,
+                pickup,
+                address,
                 datetime: date.toISOString(),
                 req_count:0,  
             }
