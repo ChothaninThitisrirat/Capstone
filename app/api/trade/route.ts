@@ -42,7 +42,14 @@ export async function POST(req: Request) {
                 pickup_req,
                 req_address
             }
-        })        
+        })      
+        
+        if (!newtrade_req) {
+            return NextResponse.json({
+                trade:null,
+                message: "Fail to request trade."
+            })
+        }
 
         return NextResponse.json({
             trade: newtrade_req,
@@ -55,5 +62,23 @@ export async function POST(req: Request) {
         console.log(error);
         return NextResponse.json({error})
 
+    }
+}
+
+export async function GET(req: Request) {
+    try {
+        const mybookrequest = await prismadb.trade.findMany({})
+
+        return NextResponse.json({
+            mybookrequest:mybookrequest,
+            message: "All trade information have been sent successfully"
+        },{ status: 200 }
+    )
+
+    } catch (error) {
+        
+        console.log(error);
+        return NextResponse.json({error})
+        
     }
 }

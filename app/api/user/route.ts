@@ -17,3 +17,4 @@ export async function GET(req: Request,{ params }: { params: { title: string }})
         
     }
 }
+
