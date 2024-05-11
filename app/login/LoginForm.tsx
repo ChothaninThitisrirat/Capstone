@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { Icon } from '@iconify/react';
+import HashLoader from "react-spinners/HashLoader";
+
 
 interface SignInProps {
   setStylesingup: (style: boolean) => void;
@@ -11,6 +13,7 @@ interface SignInProps {
 }
 
 const SignIn: React.FC<SignInProps> = ({ setStylesingup, setStylelogin }) => {
+  const [loadingInfo, setLoadingInfo] = useState(false);
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [classCheckEmailin, setClassCheckEmailin] = useState('invisible text-red-500 text-xs text-right');
@@ -20,6 +23,7 @@ const SignIn: React.FC<SignInProps> = ({ setStylesingup, setStylelogin }) => {
   
 
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
+    setLoadingInfo(true)
     e.preventDefault()
     try {
       const result:any = await signIn('credentials', {
@@ -31,13 +35,22 @@ const SignIn: React.FC<SignInProps> = ({ setStylesingup, setStylelogin }) => {
       if (result.error) {
         if (result.error === 'Invalid email') {
           setClassCheckEmailin('visible text-red-500 text-xs text-right')
+          setTimeout(() => {
+            setLoadingInfo(false)
+          }, 1500);
         }else if (result.error === 'Invalid password') {
           setClassCheckPassin('visible text-red-500 text-xs text-right')
+          setTimeout(() => {
+            setLoadingInfo(false)
+          }, 1500);
         }
         console.error(result.error)
       } else {
-        router.push('/')
-        setTypePasswordlog('password')
+        setTimeout(() => {
+          setLoadingInfo(false)
+          router.push('/')
+          setTypePasswordlog('password')
+        }, 1000);
       }
     } catch (error) {
       console.log('error', error)
@@ -48,8 +61,15 @@ const SignIn: React.FC<SignInProps> = ({ setStylesingup, setStylelogin }) => {
     setTypePasswordlog("password")
     setStylesingup(true);
     setStylelogin(false);
+    setTimeout(() => {
+      setFormSignup();
+    }, 2000);
   }
 
+  const setFormSignup = () => {
+    setEmail("");
+    setPassword("");
+  };
 
 
   return (
@@ -108,11 +128,14 @@ const SignIn: React.FC<SignInProps> = ({ setStylesingup, setStylelogin }) => {
             Don’t Have an account?</span>
             <button
               type="submit"
-              className="flex text-white p-1.5 rounded-full w-36 justify-end items-center gap-5 "
-              style={{ backgroundColor: "#435585" }}
+              className="flex text-white p-1.5 rounded-full w-36 h-9 justify-end items-center gap-5 bg-dark2 duration-200"
             >
               LOG IN
-              <Icon icon="formkit:arrowright" width="25" height="25" />
+              {loadingInfo 
+                ? <HashLoader
+                className="ml-1 mr-2"
+                color='#fff' loading={loadingInfo} size={20} aria-label="Loading Spinner" data-testid="loader"/>
+                :<Icon icon="formkit:arrowright" width="25" height="25" />}
             </button>{' '}
         </div>
       </form>

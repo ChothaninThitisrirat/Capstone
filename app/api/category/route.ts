@@ -7,15 +7,15 @@ export async function GET(req: Request) {
 
         return NextResponse.json({
             category: getCategoryName,
-            message: "Category name sent."},
-        {
-            status:200
-        }
+            message: "Category name have been sent successfully."
+        },{ status:200 }
     )
 
     } catch (error) {
         
         console.log(error);
+        return NextResponse.json({error})
         
     }
 }
+

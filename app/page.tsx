@@ -14,7 +14,7 @@ export default function Home() {
     <>
     
       <div className='flex flex-col w-screen h-full '>
-        <Navbar />
+        <Navbar backGroundOn/>
         
         {/* แถบบน and Search bar */}
         <div className='flex justify-center flex-col w-full h-screen'>

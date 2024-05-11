@@ -14,11 +14,14 @@
     "@supabase/ssr": "^0.3.0",
     "@supabase/supabase-js": "^2.43.0",
     "@types/uuid": "^9.0.8",
+    "axios": "^1.6.8",
     "bcrypt": "^5.1.1",
+    "iconify": "^1.4.0",
     "next": "14.2.1",
     "next-auth": "^4.24.7",
     "react": "^18",
     "react-dom": "^18",
+    "react-spinners": "^0.13.8",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
