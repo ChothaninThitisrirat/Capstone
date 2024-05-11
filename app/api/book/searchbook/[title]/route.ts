@@ -14,7 +14,7 @@ export async function GET(req: Request,{ params }: { params: { title: string }})
                 id:true,
                 title:true
             },
-            take:5
+            take:4
         })
 
         return NextResponse.json({
