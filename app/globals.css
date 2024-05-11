@@ -10,11 +10,16 @@
   margin: 0;
   outline: none;
   font-family: "Josefin Sans", sans-serif;
+  -ms-overflow-style: none;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
 
 /* 
