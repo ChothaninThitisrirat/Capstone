@@ -14,6 +14,7 @@ model Book {
   status                        String?       @db.VarChar(10)
   picture                       String[]
   pickup                        String?
+  address                       String?
   datetime                      DateTime?     @db.Date
   req_count                     Int?
   id                            Int           @id @unique @default(autoincrement())
@@ -31,7 +32,7 @@ model Review_Book {
   book_id  Int
   user_id  Int
   score    Decimal @db.Decimal(1, 0)
-  describe String?
+  describe String? @db.VarChar(100)
   title    String  @db.VarChar(20)
   Book     Book    @relation(fields: [book_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "review_book-book_id")
   User     User    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "review_book-user_id")
@@ -42,18 +43,19 @@ model Review_Book {
 model Trade {
   id                           Int      @default(autoincrement())
   book_id                      Int
-  req_book_id                  Int?
+  req_book_id                  Int
   owner_id                     Int
   req_user_id                  Int
   datetime                     DateTime @db.Date
   status                       String   @db.VarChar(10)
   pickup_req                   String?
+  req_address                  String?
   Book_Trade_book_idToBook     Book     @relation("Trade_book_idToBook", fields: [book_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "trade-book_id")
   User_Trade_owner_idToUser    User     @relation("Trade_owner_idToUser", fields: [owner_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "trade-owner_id")
   Book_Trade_req_book_idToBook Book?    @relation("Trade_req_book_idToBook", fields: [req_book_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "trade-req_book_id")
   User                         User     @relation(fields: [req_user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "trade-req_user_id")
 
-  @@id([id, book_id, owner_id, req_user_id])
+  @@id([id, book_id, owner_id, req_user_id, req_book_id])
 }
 
 model User {
