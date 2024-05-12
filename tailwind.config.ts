@@ -37,6 +37,10 @@ const config: Config = {
     minWidth: {
       '128': '40rem',
     },
+    minHeight: {
+      '110': '25rem',
+      '128': '32rem',
+    },
     },
   },
   plugins: [],

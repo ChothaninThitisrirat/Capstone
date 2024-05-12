@@ -1,11 +1,20 @@
 'use client'
 
+import React,{useState} from 'react';
 import { Icon } from '@iconify/react';
-import React from 'react';
 
-function BigPost() {
+
+interface SlideBookBigProps {
+    data: { id: string, img: string }[];
+}
+
+
+const SlideBookBig: React.FC<SlideBookBigProps> = ({data}) =>{
+    const [moreFrom, setMoreFrom] = useState(0)
+
     return (
         <>
+            
             <div className='flex flex-row justify-center w-1/3 h-110 shadow-xl rounded-2xl bg-white min-w-128 '>
 
                 {/* รูปภาพหนังสือ */}
@@ -36,5 +45,5 @@ function BigPost() {
     )
 }
 
-export default BigPost;
+export default SlideBookBig;
 
