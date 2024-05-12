@@ -10,12 +10,22 @@ import SlideBookMini from '@/Components/SlideBookMini';
 import SlideBookBig from '@/Components/BookFeedInfo/SlideBookBig';
 import Searchbar from '@/Components/Searchbar';
 
+interface Props {
+}
 
-
-
-export default function Home() {
-  interface Props {
-  }
+const bookTitle = [
+  { id: '1', title: "Book1" },
+  { id: '2', title: 'Book2' },
+  { id: '3', title: 'Book3' },
+  { id: '4', title: 'Book4' },
+  { id: '5', title: 'Book5' },
+  { id: '6', title: 'Book6' },
+  { id: '7', title: 'Book7' },
+  { id: '8', title: 'Book8' },
+  { id: '9', title: 'Book9' },
+]
+  
+const Page: FC<Props> = (): JSX.Element => {
   const [bookSlide, setBookSlide] = useState([
     { id: '1', img: 'images/books/book1.jpg' },
     { id: '2', img: 'images/books/book2.jpg' },
@@ -63,34 +73,34 @@ export default function Home() {
     { id: '44', img: 'images/books/book44.jpg' },
     { id: '45', img: 'images/books/book45.jpg' },
     { id: '46', img: 'images/books/book45.jpg' },
-  ])
-  
-  const bookTitle = [
-    { id: '1', title: "Book1" },
-    { id: '2', title: 'Book2' },
-    { id: '3', title: 'Book3' },
-    { id: '4', title: 'Book4' },
-    { id: '5', title: 'Book5' },
-    { id: '6', title: 'Book6' },
-    { id: '7', title: 'Book7' },
-    { id: '8', title: 'Book8' },
-    { id: '9', title: 'Book9' },
-  ]
-  
-  const Page: FC<Props> = (props): JSX.Element => {
-    const [results, setResults] = useState<{ id: string; title: string }[]>();
+  ]);
 
-    type changeHandler = React.ChangeEventHandler<HTMLInputElement>;
-    const handleChange: changeHandler = (e) => {
-      const { target } = e;
-      if (!target.value.trim()) return setResults([]);
+  const bookTitle = [
+      { id: '1', title: "Book1" },
+      { id: '2', title: 'Book2' },
+      { id: '3', title: 'Book3' },
+      { id: '4', title: 'Book4' },
+      // { id: '5', title: 'Book5' },
+      // { id: '6', title: 'Book6' },
+      // { id: '7', title: 'Book7' },
+      // { id: '8', title: 'Book8' },
+      // { id: '9', title: 'Book9' },
+  ];
+
+  const [results, setResults] = useState<{ id: string; title: string }[]>([]);
+  
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+      const { value } = e.target;
+      if (!value.trim()) {
+          setResults([]);
+          return;
+      }
 
       const filteredValue = bookTitle.filter((item) =>
-        item.title.toLowerCase().startsWith(target.value)
+          item.title.toLowerCase().startsWith(value.toLowerCase())
       );
       setResults(filteredValue);
-
-    };
+  };
 
   return (
     <>
@@ -114,7 +124,10 @@ export default function Home() {
             เว็บไซต์แลกเปลี่ยนหนังสือที่จะทำให้คุณเพลิดเพลินไปกับหนังสือหลากหลายประเภท
           </h1>
           {/* search bar */}
-          <Searchbar results={bookTitle} renderItem={(item) => (
+          <Searchbar 
+            results={results} 
+            onChange={handleChange}
+            renderItem={(item) => (
             <p>{item.title}</p>
           )} />
 
@@ -167,5 +180,6 @@ export default function Home() {
       <Footer />
     </>
   );
-  }
 }
+
+export default Page;

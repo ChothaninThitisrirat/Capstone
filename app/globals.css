@@ -19,7 +19,9 @@ input::-webkit-inner-spin-button {
 }
 
 
-
+::-webkit-scrollbar {
+  display: none; /* ซ่อนแถบเลื่อน */
+}
 .library-container{
   max-width: 1680px;
 }

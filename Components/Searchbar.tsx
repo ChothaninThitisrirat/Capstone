@@ -12,7 +12,7 @@ const Searchbar = <T extends object>({
    results=[], 
    renderItem,
    onChange
-}: Props<T>): JSX.Element => {
+   }: Props<T>): JSX.Element => {
       const [focusedIndex, setFocusedIndex] = useState(-1);
       const resultContainer = useRef<HTMLDivElement>(null);
 
@@ -47,7 +47,7 @@ const Searchbar = <T extends object>({
       }, [focusedIndex])
 
     return (
-        <div tabIndex={1} onKeyDown={handleKeyDown} className="relative w-5/12 mt-8">
+        <div tabIndex={1} onKeyDown={handleKeyDown} className="relative w-5/12 mt-8 z-40">
             <input 
                onChange={onChange}
                type="search" 
