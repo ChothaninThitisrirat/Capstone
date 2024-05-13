@@ -88,6 +88,7 @@ const Page: FC<Props> = (): JSX.Element => {
   ];
 
   const [results, setResults] = useState<{ id: string; title: string }[]>([]);
+  const [selectedProfile, setSelectedProfile] = useState<{ id: string; title:string}>();
   
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
       const { value } = e.target;
@@ -127,9 +128,10 @@ const Page: FC<Props> = (): JSX.Element => {
           <Searchbar 
             results={results} 
             onChange={handleChange}
-            renderItem={(item) => (
-            <p>{item.title}</p>
-          )} />
+            renderItem={(item) => (<p>{item.title}</p>)} 
+            onSelect={(item) => setSelectedProfile(item)}
+            value={selectedProfile?.title}
+          />
 
         </div>
 
