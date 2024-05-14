@@ -5,19 +5,17 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
     try {
         const getbook_info_inlibrary = await prismadb.book.findMany({
             where: {
-                AND:[{
-                    id: parseInt(params.id)
-                },
-                {
-                    in_libary:true
-                }
-            ]},
+                id:parseInt(params.id),
+                status: 'available'
+            },
             select: {
                 id:true,
                 title:true,
                 picture:true,
-                category:true
-            }
+                category:true,
+                status:true
+            },
+            
         })
 
         if (getbook_info_inlibrary.length === 0) {
@@ -31,7 +29,7 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
 
         return NextResponse.json({
             book:getbook_info_inlibrary,
-            message: "Book in library have been sent successfully"
+            message: "Book in library have been sent to trade successfully"
         },{ status: 200 }
     )
 
