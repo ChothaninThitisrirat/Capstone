@@ -41,6 +41,9 @@ const config: Config = {
       '110': '25rem',
       '128': '32rem',
     },
+    width:{
+      '110': '25rem',
+    },
     },
   },
   plugins: [],
