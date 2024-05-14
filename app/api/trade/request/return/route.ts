@@ -5,6 +5,7 @@ export async function POST(req: Request) {
     try {
         const { book_id, req_book_id, owner_id, req_user_id , id} = await req.json()
  
+        const date = new Date()
 
         const returnbook = await prismadb.trade.update({
             where: { 
@@ -16,7 +17,8 @@ export async function POST(req: Request) {
                 req_user_id,
             }},
             data: {
-                status: 'traded'
+                status: 'traded',
+                datetime: date.toISOString()
             }
         })
 
