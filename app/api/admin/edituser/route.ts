@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { prismadb } from "@/lib/db";
 
-export async function POST(req: Request) {
+export async function PUT(req: Request) {
     try {
         const { user_id, first_name, last_name, card_id, address, phone_number, email } = await req.json()
         

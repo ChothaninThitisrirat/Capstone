@@ -26,7 +26,7 @@ export async function GET(req: Request,{ params }: { params: { user_id: string}}
     }
 }
 
-export async function POST(req: Request) {
+export async function PUT(req: Request) {
     try {
             const formData = await req.formData();
             let image: string | null =  null;
