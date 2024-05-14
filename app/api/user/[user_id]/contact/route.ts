@@ -31,7 +31,7 @@ export async function GET(req: Request,{ params }: { params: { user_id: string}}
 
 export async function POST(req: Request) {
     try {
-        const { user_id, line, instagram, facebook  } = await req.json()
+        const { user_id, line, instagram, facebook } = await req.json()
         
         const updatecontact = await prismadb.user.update({
             where: { id:user_id },

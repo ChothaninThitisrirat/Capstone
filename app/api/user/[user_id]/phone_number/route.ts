@@ -25,7 +25,7 @@ export async function GET(req: Request,{ params }: { params: { user_id: string}}
     }
 }
 
-export async function POST(req: Request) {
+export async function PUT(req: Request) {
     try {
             const { user_id, phone_number } = await req.json()
             
