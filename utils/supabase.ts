@@ -21,3 +21,17 @@ export const upLoadIMG = async (file: any) => {
   return data.publicUrl;
   
 };
+
+
+export const upLoadPROFILE = async (file: any) => {
+  const fileName = "profile/" + uuid() + ".jpg"  ;
+  const { error } = await supabase.storage
+    .from("b-trade")
+    .upload(fileName, file, { cacheControl: "image/jpg"});
+  if (error) {
+    throw error;
+  }
+  const { data } = await supabase.storage.from("b-trade").getPublicUrl(fileName);
+  return data.publicUrl;
+  
+};

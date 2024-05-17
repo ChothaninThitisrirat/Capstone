@@ -16,13 +16,14 @@ export async function GET(req: Request,{ params }: { params: { user_id: string }
             select: {
                 id:true,
                 pickup:true,
+                address:true,
                 picture:true,
                 Trade_Trade_book_idToBook:{
                     select:{
                         req_book_id:true
                     },
-                    where:{
-                        status:'pending'
+                    where: {
+                        status: 'pending'
                     }
                 }
             }

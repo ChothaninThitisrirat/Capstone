@@ -1,52 +1,26 @@
 import { NextResponse } from "next/server";
 import { prismadb } from "@/lib/db";
-import { upLoadIMG } from "@/utils/supabase";
 
-export async function POST(req: Request) {
+export async function PUT(req: Request) {
     try {
-            const formData = await req.formData();
+        const { book_id, pickup, address} = await req.json()
 
-            const date = new Date()
+        const date = new Date()
 
-            const categoryIds: number[] = []
-            
-            const categoryFormData = formData.getAll('category');
-
-            categoryFormData.forEach((id: FormDataEntryValue) => {
-                if (typeof id === 'string') {
-                    categoryIds.push(parseInt(id));
-                }
-            });
-
-            let image: string[] = [];
-            for await (const [name , value] of formData.entries()){
-                if (name === 'image' && value instanceof File) {
-                    const imageUrl = await upLoadIMG(value);
-                    if (imageUrl) {
-                        image.push(imageUrl);
-                    }
-                }
-            }
-
-        const newbook = await prismadb.book.create({
+        const newbook = await prismadb.book.update({
+            where: { id:book_id },
             data : {
-                user_id: parseInt(formData.get('user_id') as string),
-                title: formData.get('title') as string,
-                picture: image,
-                description: formData.get('description') as string,
                 isPost_trade:true,
-                pickup: formData.get('pickup') as string,
+                pickup,
+                address,
                 datetime: date.toISOString(),
-                req_count:0,
-                category: {
-                    connect: categoryIds.map(id => ({ id }))
-                }
+                req_count:0,  
             }
         })
 
         return NextResponse.json({
             book: newbook,
-            message: "Post book successfully"
+            message: "Post book to trade successfully"
         },{ status:201 }
     )
     

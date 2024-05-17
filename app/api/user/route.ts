@@ -3,21 +3,10 @@ import { prismadb } from "@/lib/db";
 
 export async function GET(req: Request,{ params }: { params: { title: string }}) {
     try {
-        const searchbook = await prismadb.book.findMany({
-            where: {
-                title: {
-                    startsWith:params.title,
-                    mode: "insensitive"
-                }
-            },
-            select: {
-                id:true,
-                title:true
-            }
-        })
+        const user = await prismadb.user.findMany({})
 
         return NextResponse.json({
-            book:searchbook
+            user:user
         },{ status: 201 }
     )
 
@@ -28,3 +17,4 @@ export async function GET(req: Request,{ params }: { params: { title: string }})
         
     }
 }
+

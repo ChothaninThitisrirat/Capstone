@@ -13,7 +13,8 @@ export async function GET(req: Request,{ params }: { params: { title: string }})
             select: {
                 id:true,
                 title:true
-            }
+            },
+            take:4
         })
 
         return NextResponse.json({

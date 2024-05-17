@@ -3,26 +3,20 @@ import { prismadb } from "@/lib/db";
 
 export async function GET(req: Request,{ params }: { params: { user_id: string , id : string }}) {
     try {
-        const mybookrequest = await prismadb.book.findUnique({
+        const myrequest = await prismadb.book.findUnique({
             where: { id: parseInt(params.id) },
             select: {
                 id:true,
-                pickup:true,
+                title:true,
                 picture:true,
                 status:true,
-                address:true,
-                Trade_Trade_book_idToBook: {
-                    where: {
-                        NOT: {
-                            status: 'decline'
-                        }
-                    },
+                Trade_Trade_req_book_idToBook: {
                     select: {
-                        req_book_id:true,
+                        id:true,
                         status:true,
-                        pickup_req:true,
                         req_address:true,
-                        Book_Trade_req_book_idToBook: {
+                        pickup_req:true,
+                        Book_Trade_book_idToBook: {
                             select: {
                                 id:true,
                                 title:true,
@@ -31,20 +25,14 @@ export async function GET(req: Request,{ params }: { params: { user_id: string ,
                             }
                         }
                     }
-                },
+                }
             }
         })
 
-        if (!mybookrequest) {
-            return NextResponse.json({
-                myrequest:null,
-                message: 'You have not post any trade yet.'
-            },{ status: 200 })
-        }
 
         return NextResponse.json({
-            mybookrequest:mybookrequest,
-            message: "All book that have request trade have been sent successfully"
+            mybookrequest:myrequest,
+            message: "Request trade information have been sent successfully"
         },{ status: 200 }
     )
 
