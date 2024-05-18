@@ -80,12 +80,14 @@ model User {
   Trade_Trade_owner_idToUser                Trade[]       @relation("Trade_owner_idToUser")
   Trade                                     Trade[]
   Wishlist                                  Wishlist[]
+  Userlike                                  Userlike[]
 }
 
 model Category {
-  id   Int    @id @default(autoincrement())
-  name String @db.VarChar(20)
-  book Book[] @relation("BookToCategory")
+  id            Int               @id @default(autoincrement())
+  name          String            @db.VarChar(20)
+  book          Book[]            @relation("BookToCategory")
+  Userlike      Userlike[]
 }
 
 model Review_User {
@@ -109,4 +111,12 @@ model Wishlist {
   User    User @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "wishlist-user_id")
 
   @@id([id, user_id, book_id])
+}
+
+model Userlike {
+  user_id       Int
+  category_id   Int  
+  User          User        @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Userlike-user_id")
+  Category      Category    @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Userlike-category_id")
+  @@id([user_id,category_id])
 }
