@@ -21,6 +21,9 @@ input::-webkit-inner-spin-button {
 .close-scrollbar::-webkit-scrollbar {
   display: none; /* ซ่อนแถบเลื่อน */
 }
+body::-webkit-scrollbar {
+  display: none; /* ซ่อนแถบเลื่อน */
+}
 .library-container{
   max-width: 1680px;
 }
@@ -86,6 +89,10 @@ input::-webkit-inner-spin-button {
 .pickUpSelectAnimation{
   animation: pickUpSelect 2s ease-in-out forwards;
 }
+.positionFixedpick{
+  transform: translateX(93px) translateY(-230px);
+    z-index: 0;
+}
 @keyframes pickUpSelect {
   0% {
     
@@ -98,6 +105,13 @@ input::-webkit-inner-spin-button {
 }
 .pickUpNonSelectAnimation{
   animation: pickUpNonSelect 2s ease-in-out forwards;
+  opacity: 0;
+  z-index: 0;
+}
+.positionFixedNonpick{
+  transform: translateX(93px) translateY(-230px);
+  opacity: 0;
+  transition-duration: 0s;
 }
 
 @keyframes pickUpNonSelect {
@@ -116,7 +130,10 @@ input::-webkit-inner-spin-button {
 .sendSelectAnimation{
   animation: SendSelect 2s ease-in-out forwards;
 }
-
+.positionFixedsend{
+  transform: translateX(-93px) translateY(-230px);
+  transition-duration: 0s;
+}
 @keyframes SendSelect {
   0% {
     
@@ -132,6 +149,13 @@ input::-webkit-inner-spin-button {
 .sendNonSelectAnimation{
   animation: SendNonSelect 2s ease-in-out forwards;
 }
+
+.positionFixedNonsend{
+  transform: translateX(-93px) translateY(-230px);
+  opacity: 0;
+  z-index: 0;
+}
+
 
 @keyframes SendNonSelect {
   0% {

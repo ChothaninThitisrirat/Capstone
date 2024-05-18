@@ -9,68 +9,34 @@ import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
 import SlideBookMini from '@/Components/SlideBookMini';
 import TradeProcess from './TradeProcess1'
+import axios from 'axios';
 
 import HashLoader from "react-spinners/HashLoader";
 import { on } from 'events';
 
+import { useSession } from 'next-auth/react';
+
 
 interface BookInfoProps {
     setTrade: (state: boolean) => void;
-  }
-  
-  const BookInfo: React.FC<BookInfoProps> = ({ setTrade }) => {
+}
+
+const BookInfo: React.FC<BookInfoProps> = ({ setTrade }) => {
     const [stateComment, setStateComment] = useState(false)
     const [topicReview, setTopicReview] = useState('')
     const [detailReview, setDetailReview] = useState('')
     const [reviewComment, setReviewComment] = useState(0)
     const [moreFrom, setMoreFrom] = useState(0)
+
+
+    
+    
     const [bookSlide, setBookSlide] = useState([
         { id: '1', img: 'images/books/book1.jpg' },
         { id: '2', img: 'images/books/book2.jpg' },
         { id: '3', img: 'images/books/book3.jpg' },
         { id: '4', img: 'images/books/book4.jpg' },
         { id: '5', img: 'images/books/book5.jpg' },
-        { id: '6', img: 'images/books/book6.jpg' },
-        { id: '7', img: 'images/books/book7.jpg' },
-        { id: '8', img: 'images/books/book8.jpg' },
-        { id: '9', img: 'images/books/book9.jpg' },
-        { id: '10', img: 'images/books/book10.jpg' },
-        { id: '11', img: 'images/books/book11.jpg' },
-        { id: '12', img: 'images/books/book12.jpg' },
-        { id: '13', img: 'images/books/book13.jpg' },
-        { id: '14', img: 'images/books/book14.jpg' },
-        { id: '15', img: 'images/books/book15.jpg' },
-        { id: '16', img: 'images/books/book16.jpg' },
-        { id: '17', img: 'images/books/book17.jpg' },
-        { id: '18', img: 'images/books/book18.jpg' },
-        { id: '19', img: 'images/books/book19.jpg' },
-        { id: '20', img: 'images/books/book20.jpg' },
-        { id: '21', img: 'images/books/book21.jpg' },
-        { id: '22', img: 'images/books/book22.jpg' },
-        { id: '23', img: 'images/books/book23.jpg' },
-        { id: '24', img: 'images/books/book24.jpg' },
-        { id: '25', img: 'images/books/book25.jpg' },
-        { id: '26', img: 'images/books/book26.jpg' },
-        { id: '27', img: 'images/books/book27.jpg' },
-        { id: '28', img: 'images/books/book28.jpg' },
-        { id: '29', img: 'images/books/book29.jpg' },
-        { id: '30', img: 'images/books/book30.jpg' },
-        { id: '31', img: 'images/books/book31.jpg' },
-        { id: '32', img: 'images/books/book32.jpg' },
-        { id: '33', img: 'images/books/book33.jpg' },
-        { id: '34', img: 'images/books/book34.jpg' },
-        { id: '35', img: 'images/books/book35.jpg' },
-        { id: '36', img: 'images/books/book36.jpg' },
-        { id: '37', img: 'images/books/book37.jpg' },
-        { id: '38', img: 'images/books/book38.jpg' },
-        { id: '39', img: 'images/books/book39.jpg' },
-        { id: '40', img: 'images/books/book40.jpg' },
-        { id: '41', img: 'images/books/book41.jpg' },
-        { id: '42', img: 'images/books/book42.jpg' },
-        { id: '43', img: 'images/books/book43.jpg' },
-        { id: '44', img: 'images/books/book44.jpg' },
-        { id: '45', img: 'images/books/book45.jpg' },
-        { id: '46', img: 'images/books/book45.jpg' },
     ])
 
 
@@ -94,46 +60,6 @@ interface BookInfoProps {
         id: "5",
         detail: "รีวิวหนังสือ",
         user: "username",
-    }, {
-        id: "6",
-        detail: "รีวิวหนังสือ",
-        user: "username",
-    }, {
-        id: "7",
-        detail: "รีวิวหนังสือ",
-        user: "username",
-    }, {
-        id: "8",
-        detail: "รีวิวหนังสือ",
-        user: "username",
-    }, {
-        id: "9",
-        detail: "รีวิวหนังสือ",
-        user: "username",
-    }, {
-    id: "10",
-    detail: "รีวิวหนังสือ",
-    user: "username",
-    }, {
-    id: "11",
-    detail: "รีวิวหนังสือ",
-    user: "username",
-    }, {
-    id: "12",
-    detail: "รีวิวหนังสือ",
-    user: "username",
-    }, {
-    id: "13",
-    detail: "รีวิวหนังสือ",
-    user: "username",
-    }, {
-    id: "14",
-    detail: "รีวิวหนังสือ",
-    user: "username",
-    }, {
-    id: "15",
-    detail: "รีวิวหนังสือ",
-    user: "username",
     }])
 
 
@@ -155,8 +81,9 @@ interface BookInfoProps {
     }
 
 
-
-
+    useEffect(() => {
+        console.log('reviewComment',reviewComment)
+    }, [reviewComment])
 
 
 

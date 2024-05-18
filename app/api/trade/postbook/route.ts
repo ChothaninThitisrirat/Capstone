@@ -3,10 +3,10 @@ import { prismadb } from "@/lib/db";
 
 export async function PUT(req: Request) {
     try {
-        const { book_id, pickup, address} = await req.json()
+        const { book_id, pickup, address } = await req.json()
 
         const date = new Date()
-
+        console.log(book_id, pickup, address)
         const newbook = await prismadb.book.update({
             where: { id:book_id },
             data : {

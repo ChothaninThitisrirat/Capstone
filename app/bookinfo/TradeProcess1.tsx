@@ -10,7 +10,7 @@ import propFooter from '../../public/images/propFooter.png';
 import bgExchangebook from '../../public/images/bgExchangebook.png';
 
 
-interface TradeProcessProps {
+interface TradeProcess1Props {
     bookId:string
     setStateProcess: (state: number) => void;
     setTrade: (state: boolean) => void;
@@ -18,7 +18,7 @@ interface TradeProcessProps {
     bookSelect: any;
 }
 
-const TradeProcess: React.FC<TradeProcessProps> = ({ bookId, setStateProcess, setTrade, bookSelect, setBookSelect }) => {
+const TradeProcess: React.FC<TradeProcess1Props> = ({ bookId, setStateProcess, setTrade, bookSelect, setBookSelect }) => {
 
 
 
@@ -90,14 +90,24 @@ const TradeProcess: React.FC<TradeProcessProps> = ({ bookId, setStateProcess, se
     const userId: number | undefined = session?.user.id
     const router = useRouter();
 
-
-    const handlesetBookSelect = (itemId: string) => {
-        if (bookSelect.includes(itemId)) {
-            setBookSelect((prevState: string[]) => prevState.filter(item => item !== itemId));
-        } else {
-            setBookSelect((prevState: string[]) => [...prevState, itemId]);
+    // เลือกเล่มเดียว
+    const handlesetBookSelect = (itemId:string) => {
+        if (bookSelect === itemId) {
+            setBookSelect('');
+            return;
+        }else{
+            setBookSelect(itemId);
         }
     };
+
+    // เลือกหลายเล่ม
+    // const handlesetBookSelect = (itemId: string) => {
+    //     if (bookSelect.includes(itemId)) {
+    //         setBookSelect((prevState: string[]) => prevState.filter(item => item !== itemId));
+    //     } else {
+    //         setBookSelect((prevState: string[]) => [...prevState, itemId]);
+    //     }
+    // };
     
     const handleChangeState = ()=>{
         if (bookSelect.length !== 0) {
@@ -117,7 +127,6 @@ return (
 
 
 
-        <div className="fixed left-0 top-0 h-screen w-96 bg-dark1 z-20"></div>
         <div
         style={{minHeight: "800px",marginLeft:'450px'}}
         className="flex justify-center h-auto w-sceen z-10 bg-none">

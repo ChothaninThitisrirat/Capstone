@@ -11,7 +11,7 @@ import { setTimeout } from 'timers';
 import AddAddress from '@/Components/AddAddress';
 
 
-interface TradeProcessProps {
+interface TradeProcess2Props {
     bookId:string
     setStateProcess: (state: number) => void;
     setTrade: (state: boolean) => void;
@@ -20,18 +20,32 @@ interface TradeProcessProps {
     addressPost:string;
     placeToPic:string;
     setPlaceToPic: (state: string) => void;
+    pickOrSend:number;
+    setPickOrSend: (state: number) => void;
+    pickFormOpen: boolean;
+    setPickFormOpen: (state: boolean) => void;
+    sendFormOpen: boolean;
+    setSendFormOpen: (state: boolean) => void;
+    cssSendPickNext: boolean;
+    setCssSendPickNext: (state: boolean) => void;
 
 }
 
-const TradeProcess: React.FC<TradeProcessProps> = ({ bookId, setStateProcess, setStatusAddress, addressPost, setAddressPost, placeToPic, setPlaceToPic }) => {
+const TradeProcess: React.FC<TradeProcess2Props> = ({ 
+    bookId, setStateProcess, setStatusAddress, 
+    addressPost, setAddressPost, 
+    placeToPic, setPlaceToPic, 
+    pickOrSend, setPickOrSend,
+    pickFormOpen, setPickFormOpen,
+    sendFormOpen, setSendFormOpen,
+    cssSendPickNext, setCssSendPickNext}) => {
 
 
     
-    const [ pickOrSend, setPickOrSend] = useState(0)
+    
     
 
-    const [ pickFormOpen, setPickFormOpen] = useState(false)
-    const [ sendFormOpen, setSendFormOpen] = useState(false)
+    
     const [dropDownAddress, setDropDownAddress] = useState(false);
     
     const { data: session, status } = useSession()
@@ -45,6 +59,7 @@ const TradeProcess: React.FC<TradeProcessProps> = ({ bookId, setStateProcess, se
         if (pickOrSend === 0){
             setStateProcess(0)
         }else{
+            setCssSendPickNext(false)
             setDropDownAddress(false)
             setPlaceToPic('')
             setAddressPost('')
@@ -79,8 +94,13 @@ const TradeProcess: React.FC<TradeProcessProps> = ({ bookId, setStateProcess, se
     }, [pickOrSend]);
 
 
-
-
+    const handleNextStep = () => {
+        console.log('placeToPic',placeToPic,'cssSendPickNext',cssSendPickNext)
+        if (placeToPic || addressPost ){
+            setStateProcess(2)
+            setCssSendPickNext(true)
+        }
+    }
 
 
 
@@ -108,7 +128,6 @@ return (
 
 
 
-        <div className="fixed left-0 top-0 h-screen w-96 bg-dark1 z-20"></div>
         <div
         style={{minHeight: "800px",marginLeft:'450px'}}
         className="flex justify-center h-auto w-sceen z-10 bg-none">
@@ -120,7 +139,10 @@ return (
                     <div 
                     onClick={handlePick}
                     className= {pickOrSend === 0 ?"flex flex-col items-center h-40 cursor-pointer"
-                                :(pickOrSend === 1 ?"flex flex-col items-center h-40 pickUpSelectAnimation cursor-pointer z-10":"flex flex-col items-center h-40 pickUpNonSelectAnimation z-0 cursor-pointer")}>
+                                :(pickOrSend === 1 ?(cssSendPickNext ?"flex flex-col items-center h-40 cursor-pointer z-10 positionFixedpick"
+                                    :"flex flex-col items-center h-40 pickUpSelectAnimation cursor-pointer z-10")
+                                :(cssSendPickNext ?"flex flex-col items-center h-40 z-0 cursor-pointer positionFixedNonpick"
+                                :"flex flex-col items-center h-40 pickUpNonSelectAnimation z-0 cursor-pointer"))}>
                         <div className="flex flex-col w-36 h-40 shadow-xl rounded-2xl bg-white relative cursor-pointer">
                             <div className="flex items-center justify-center rounded-t-2xl bg-dark1 w-full h-12 text-white text-xl">นัดรับ</div>
                             <Icon icon="tdesign:undertake-delivery" width="65" height="65" 
@@ -135,7 +157,10 @@ return (
                     <div 
                     onClick={handleSend}
                     className={pickOrSend === 0 ?"flex flex-col items-center h-40"
-                                :(pickOrSend === 2 ?"flex flex-col items-center h-40 sendSelectAnimation z-30":"flex flex-col items-center h-40 sendNonSelectAnimation z-0" )}>
+                                :(pickOrSend === 2 ?(cssSendPickNext ? "flex flex-col items-center h-40 z-30 positionFixedsend"
+                                    :"flex flex-col items-center h-40 sendSelectAnimation z-30")
+                                :(cssSendPickNext ? "flex flex-col items-center h-40  z-0 positionFixedNonsend"
+                                :"flex flex-col items-center h-40 sendNonSelectAnimation z-0" ))}>
                         <div className="flex flex-col w-36 h-40 shadow-xl rounded-2xl bg-white relative cursor-pointer items-center">
                             <div className="flex items-center justify-center rounded-t-2xl bg-dark1 w-full h-12 text-white text-xl">จัดส่ง</div>
                             <Icon icon="iconoir:delivery-truck" width="100" height="100" />
@@ -179,6 +204,7 @@ return (
                             className="absolute bottom-2 left-2"
                         />
                         <input 
+                        value={placeToPic}
                         onChange={(e)=>setPlaceToPic(e.target.value)}
                         type="text" 
                         className='w-full border-b mt-8 border-gray-400 px-12 pl-16 text-lg pb-2'/>
@@ -240,7 +266,7 @@ return (
                     <Icon icon="icons8:left-round" width="30" height="30" />
                         ย้อนกลับ
                 </button>
-                <button onClick={() =>( placeToPic || addressPost ?setStateProcess(2):null)} 
+                <button onClick={handleNextStep} 
                 className={pickOrSend === 0 ? "hidden duration-300" :(placeToPic || addressPost
                 ?'w-40 h-10 bg-dark1 text-white rounded-full mr-16 mt-2 flex justify-center items-center gap-2'
                 :'w-40 h-10 border-2 border-gray-500 text-gray-500 rounded-full mr-16 mt-2 flex justify-center items-center gap-2')}>

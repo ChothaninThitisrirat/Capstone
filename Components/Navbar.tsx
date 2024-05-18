@@ -18,10 +18,11 @@ const Navbar: React.FC<NavbarProps> = ({backGroundOn}) =>{
 
     const [showDropDown, setShowDropDown] = useState(false)
     return (<>
+        <div className="flex  w-screen h-16 cursor-pointer justify-center z-30 bg-dark3">
             <div 
             className={backGroundOn
-            ?"flex w-screen h-16  relative cursor-pointer justify-center z-30 bg-dark2"
-            :"flex w-screen h-16 rounded-b-3xl relative cursor-pointer justify-center z-30"} >
+            ?"flex w-screen h-16  rounded-b-3xl relative cursor-pointer justify-center z-30 bg-dark2"
+            :"flex w-screen h-16 relative cursor-pointer justify-center z-30 bg-dark2"} >
                 <div 
                 style={{maxWidth: '2200px'}}
                 className="flex w-screen h-16 justify-between relative z-30">
@@ -69,6 +70,7 @@ const Navbar: React.FC<NavbarProps> = ({backGroundOn}) =>{
                     :"absolute top-16 right-14 -translate-y-96 duration-500 z-10"}>
                 <DropDown/>
             </div>
+        </div>
             
             
         </>
@@ -88,7 +90,7 @@ function DropDown() {
     {
         id: 2,
         icon: "mdi:list-status",
-        link: "",
+        link: "/statustrade",
         text: "สถานะคำขอแลกเปลี่ยน",
         size: "25"
     },

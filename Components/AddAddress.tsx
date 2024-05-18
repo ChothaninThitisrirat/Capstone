@@ -1,8 +1,10 @@
 'use client'
 
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import { Icon } from '@iconify/react';
-
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
+import axios from 'axios';
 
 
 
@@ -12,15 +14,30 @@ interface AddressProps {
 
 const AddAddress: React.FC<AddressProps> = ({setStatusAddress}) =>{
     const [address, setAddress] = useState('');
+    const { data: session, status } = useSession()
+    const router = useRouter()   
+    const userId: number | undefined = session?.user.id
+
     const reSetInfo = () => {
         setStatusAddress(false);
         setAddress('');
     }
 
-    const handleAddAddress = (e: React.SyntheticEvent<HTMLFormElement>) => {
+    const handleAddAddress = async (e: React.SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(address);
+        console.log(userId,address);
+        try {
+            const response = await axios.post(`/api/user/${userId}/address`,{ 
+                user_id: userId,
+                address: address
+            });
+            reSetInfo();
+            } catch (error) {
+                console.error('Error:', error);
+            }
     }
+
+
 
 
 

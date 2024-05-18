@@ -9,26 +9,35 @@ import AddAddress from '@/Components/AddAddress';
 import bgExchangebook from '../../public/images/bgExchangebook.png';
 import propFooter from '../../public/images/propFooter.png';
 import './checkbox.css';
+import axios from 'axios';
+import HashLoader from "react-spinners/HashLoader";
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 interface PostBook2Props {
     setStatePage: (style: number) => void;
-    bookSelect: string;
+    bookSelect: number | null;
+    book: any;
 }
 
-const PostBook2: React.FC<PostBook2Props> = ({setStatePage, bookSelect}) =>{
+interface BookProp2 {
+    id: number;
+    title: string;
+    picture: string;
+}
+const PostBook2: React.FC<PostBook2Props> = ({setStatePage, bookSelect, book}) =>{
     const [isChecked, setIsChecked] = useState(false);
-    const [makeAppointment , setMakeAppointment] = useState('') // ส่งไปbackend
+    const [makeAppointment , setMakeAppointment] = useState<string|null>('') // ส่งไปbackend
     const [isChecked2, setIsChecked2] = useState(false);
-    const [addressPost , setAddressPost] = useState('') // ส่งไปbackend
+    const [addressPost , setAddressPost] = useState<string|null>('') // ส่งไปbackend
     const [haveData, setHaveData] = useState(false);
     const [dropDownAddress, setDropDownAddress] = useState(false);
     const [statusAddress, setStatusAddress] = useState(false);
+    const [loadingInfo, setLoadingInfo] = useState(false);
+
     const classBook = "flex items-center justify-center rounded-sm border w-64 h-96 shadow-sm duration-300 relative bg-dark3 mb-28 scale-125"
-    const [book, setBook] = useState([]);
-    const booktest = [{
-        id: "book1",
-        img: "https://picsum.photos/200/300",
-    }]
+    
+    const [bookProp2, setBookProp2] = useState<BookProp2[]>([]);
 
     const handleCheckboxChange = (e:any) => {
         setIsChecked(e.target.checked);
@@ -53,9 +62,29 @@ const PostBook2: React.FC<PostBook2Props> = ({setStatePage, bookSelect}) =>{
         
     }, [addressPost, makeAppointment]);
 
-    const handleChangeState = ()=>{
-        if (haveData) {
-            setStatePage(2);
+
+
+    useEffect(() => {
+        const filteredBook = book.filter((book: any) => book.id === bookSelect);
+        setBookProp2(filteredBook)
+    }, [book])
+    const postBookData =async()=>{
+        setLoadingInfo(true)
+        try{
+            const response = await axios.put('/api/trade/postbook',{
+                book_id: bookSelect,
+                pickup: makeAppointment,
+                address: addressPost
+            })
+            console.log('response',response);
+
+            setTimeout(() => {
+                setLoadingInfo(false)
+                setStatePage(2);
+            }, 500);
+
+        }catch(error){
+            console.log('error',error);
         }
     }
 
@@ -66,8 +95,8 @@ const PostBook2: React.FC<PostBook2Props> = ({setStatePage, bookSelect}) =>{
                 <div className="flex flex-col">
                     <div className='flex -translate-y-20 justify-center text-2xl font-bold'>Book Name</div>
                     <div className={classBook}>
-                        <Image
-                        src={bgExchangebook}
+                        <img
+                        src={bookProp2[0]?.picture[0]}
                         alt="Profile picture"
                         className='w-full h-full object-cover'
                         />
@@ -90,7 +119,7 @@ const PostBook2: React.FC<PostBook2Props> = ({setStatePage, bookSelect}) =>{
                         <div 
                         onClick={() => setIsChecked(!isChecked)}
                         className="flex flex-col w-28 h-36 shadow-xl rounded-2xl bg-white relative cursor-pointer">
-                            <div className="flex items-center justify-center rounded-t-2xl bg-dark1 w-full h-10 text-white">นัดรับ</div>
+                        <div className="flex items-center justify-center rounded-t-2xl bg-dark1 w-full h-10 text-white">นัดรับ</div>
                             <Icon icon="tdesign:undertake-delivery" width="50" height="50" 
                             className='ml-2 mt-1'/>
                             <Icon icon="mdi:hand-extended-outline" width="50" height="50"
@@ -101,7 +130,7 @@ const PostBook2: React.FC<PostBook2Props> = ({setStatePage, bookSelect}) =>{
                     <input
                         id="makeAppointment"
                         type="text"
-                        value={makeAppointment}
+                        value={makeAppointment !== null ? makeAppointment : ''}
                         placeholder="สถานที่นัดรับ"
                         onChange={(e) => setMakeAppointment(e.target.value)}
                         readOnly={!isChecked}
@@ -111,7 +140,6 @@ const PostBook2: React.FC<PostBook2Props> = ({setStatePage, bookSelect}) =>{
                 {/* check address */}
                 <div className="flex w-auto items-end ml-20 mb-40 mt-10">
                     <div 
-                    onClick={() => setIsChecked2(!isChecked2)}
                     className="flex flex-col items-center h-36"> 
                         <div className="checkbox-wrapper-19">
                             <input 
@@ -122,7 +150,9 @@ const PostBook2: React.FC<PostBook2Props> = ({setStatePage, bookSelect}) =>{
                             />
                             <label htmlFor="cbtest-19-2" className="check-box"/>
                         </div>
-                        <div className="flex flex-col w-28 h-36 shadow-xl rounded-2xl bg-white items-center relative cursor-pointer">
+                        <div 
+                            onClick={() => setIsChecked2(!isChecked2)}
+                            className="flex flex-col w-28 h-36 shadow-xl rounded-2xl bg-white items-center relative cursor-pointer">
                             <div className="flex items-center justify-center rounded-t-2xl bg-dark1 w-full h-10 text-white">จัดส่ง</div>
                             <Icon icon="iconoir:delivery-truck" width="70" height="70" />
                             <Icon icon="fluent:checkmark-12-filled" width="20" height="20" 
@@ -147,10 +177,22 @@ const PostBook2: React.FC<PostBook2Props> = ({setStatePage, bookSelect}) =>{
                     <button onClick={() => setStatePage(0)} className='w-32 h-10 border-2 border-dark1 rounded-full ml-20 mt-2 flex pl-1 items-center gap-2 hover:bg-indigo-100 fixed bottom-6 left-6 z-50'>
                     <Icon icon="icons8:left-round" width="30" height="30" />
                         ย้อนกลับ</button>
-                    <button onClick={handleChangeState} className={haveData
-                    ?'w-36 h-10 border-2 bg-dark1 text-white rounded-full mr-16 mt-2 flex justify-end items-center gap-2 pr-1 fixed bottom-6 right-6 z-50'
+                    <button onClick={()=> haveData ? postBookData() : null} className={haveData
+                    ?(loadingInfo ?'w-40 h-10 border-2 bg-dark1 text-white rounded-full mr-16 mt-2 flex justify-end items-center gap-2 pr-1 fixed bottom-6 right-6 z-50 duration-300'
+                        :'w-36 h-10 border-2 bg-dark1 text-white rounded-full mr-16 mt-2 flex justify-end items-center gap-2 pr-1 fixed bottom-6 right-6 z-50 duration-100')
                     :'w-36 h-10 border-2 border-gray-500 text-gray-500 rounded-full mr-16 mt-2 flex justify-end items-center gap-2 pr-1 fixed bottom-6 right-6 z-50'}>
-                        โพสต์หนังสือ<Icon icon="icons8:right-round" width="30" height="30" /></button>
+                        โพสต์หนังสือ 
+                        {loadingInfo ?<HashLoader
+                                className="ml-2 mr-3"
+                                color='#fff'
+                                loading={loadingInfo}
+                                size={20}
+                                aria-label="Loading Spinner"
+                                data-testid="loader"
+                            />
+                            :<Icon icon="icons8:right-round" width="30" height="30" /> }
+                        
+                    </button>
 
                     {statusAddress && <AddAddress setStatusAddress={setStatusAddress}/>}
 
@@ -166,27 +208,40 @@ interface DropDownAddressProps {
 }
 
 const DropDownAddress: React.FC<DropDownAddressProps> = ({setAddressPost, setStatusAddress}) =>{
-    const [dataAddress, setDataAddress] = useState([{
-        id:1,
-        address:'1-เลขที่ 37/5 ม.3 ต.วังตะกู อ.เมื่อง จ.นครปฐม 73000'
-    },{
-        id:2,
-        address:'2-เลขที่ 37/5 ม.3 ต.วังตะกู อ.เมื่อง จ.นครปฐม 73000'
-    },{
-        id:3,
-        address:'3-เลขที่ 37/5 ม.3 ต.วังตะกู อ.เมื่อง จ.นครปฐม 73000'
-    },{
-        id:3,
-        address:'4-เลขที่ 37/5 ม.3 ต.วังตะกู อ.เมื่อง จ.นครปฐม 73000'
-    }]);
+
+    const { data: session, status } = useSession()
+    const router = useRouter()   
+    const userId: number | undefined = session?.user.id
+    const [dataAddress, setDataAddress] = useState([]);
+
+    useEffect(() => {
+        console.log('userId', userId);
+    
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`/api/user/${userId}/address`);
+
+                setDataAddress(response.data.address.address);
+                
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        };
+        if (userId !== undefined) {
+        fetchData(); 
+        }
+    }, [userId]);
+    console.log('dataAddress',dataAddress);
+
+    
     return (
             <div className="absolute top-0 left-7 w-80 h-60 bg-white rounded-b-xl shadow-lg z-0 overflow-y-auto overflow-x-hidden close-scrollbar text-black pt-2 duration-500 animetion-addressOn cursor-pointer">
                     {dataAddress.map((item,index)=>(
                         <div 
                         key={index}
-                        onClick={() => setAddressPost(item.address)}
+                        onClick={() => setAddressPost(item)}
                         className="flex items-center justify-between w-11/12 h-auto min-h-10 pl-5 pr-5 break-words border-b  p-2 mx-auto">
-                            {item.address}</div>
+                            {item}</div>
                     
                     ))}
 

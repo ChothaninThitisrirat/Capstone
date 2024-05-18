@@ -10,11 +10,18 @@ import PostBook3 from './PostBook3';
 import bgExchangebook from '../../public/images/bgExchangebook.png';
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import axios from 'axios';
 
+interface Book {
+    id: number;
+    title: string;
+    picture: string;
+}
 
 function PostBook() {
     const { data: session, status } = useSession()
-    const router = useRouter()
+    const router = useRouter()   
+    const userId: number | undefined = session?.user.id
     useEffect(() => {
         if (status === 'unauthenticated') {
             router.push('/login')
@@ -23,9 +30,12 @@ function PostBook() {
     const [statePage, setStatePage] = useState(0)
     const [showExchangeInfo1, setShowExchangeInfo1] = useState(false);
     const [showExchangeInfo2, setShowExchangeInfo2] = useState(false);
-    const [bookSelect, setBookSelect] = useState('');
+    const [bookSelect, setBookSelect] = useState<number | null>(null);
     
-
+    const [ loadcompo, setLoadcompo] = useState(false)
+    const [book, setBook] = useState<Book[]>([]);
+    const [loading, setLoading] = useState(true)
+ 
     useEffect(() => {
         if(statePage === 0 ){
             setShowExchangeInfo2(false);
@@ -44,6 +54,31 @@ function PostBook() {
         console.log(bookSelect)
     }, [statePage]);
 
+
+    
+    useEffect(() => {
+        console.log('userId', userId);
+        setLoadcompo(false);
+    
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`/api/library/${userId}`);
+
+                const filteredBooks = response.data.library.filter((book: any) => !book.isPost_trade);
+                setBook(filteredBooks.reverse());
+                
+                setLoading(false);
+            } catch (error) {
+                console.error('Error:', error);
+                setLoading(false);
+            }
+        };
+        if (userId !== undefined) {
+        fetchData(); 
+        }
+    }, [userId, loadcompo]);
+
+    console.log('book', book);
 
 
     return (
@@ -68,7 +103,7 @@ function PostBook() {
                         เลือกหนังสือของคุณ</div>}
                     <Icon icon="icon-park-outline:right" width="40" height="40" className={statePage === 0 ?'text-white duration-500 ml-44':'text-white duration-500'}/>
                     <div 
-                    onClick={ statePage === 0 && bookSelect !== '' ? () => setStatePage(1): statePage === 2 ? undefined:undefined}
+                    onClick={ statePage === 0 && bookSelect !== null ? () => setStatePage(1): statePage === 2 ? undefined:undefined}
                     className={statePage === 0 ? "flex items-center justify-center bg-gray-200 w-12 h-12 rounded-full duration-1000 cursor-pointer"
                     :statePage === 1 ? "flex items-center justify-center bg-orange-400 w-12 h-12 rounded-full duration-1000 text-white cursor-pointer": "flex items-center justify-center bg-green-400 w-12 h-12 rounded-full duration-1000 text-white"}>
                         <Icon icon="ion:document-text-outline" width="30" height="30" />
@@ -89,9 +124,10 @@ function PostBook() {
             alt="Profile picture"
             className='fixed z-0 opacity-30 w-screen h-screen object-cover left-0'
             />
-            {statePage === 0 && <PostBook1 setStatePage={setStatePage} setBookSelect={setBookSelect} bookSelect={bookSelect}/>}
-            {statePage === 1 && <PostBook2 setStatePage={setStatePage} bookSelect={bookSelect}/>}
-            {statePage === 2 && <PostBook3 bookSelect={bookSelect}/>}
+            {statePage === 0 && <PostBook1 setStatePage={setStatePage} setBookSelect={setBookSelect} bookSelect={bookSelect} 
+            setLoadcompo={setLoadcompo} book={book} loading={loading}/>}
+            {statePage === 1 && <PostBook2 setStatePage={setStatePage} bookSelect={bookSelect} book={book}/>}
+            {statePage === 2 && <PostBook3 bookSelect={bookSelect} book={book}/>}
             
 
 

@@ -18,7 +18,7 @@ export default function Home() {
           }
           `}
       </style>
-      <Navbar backGroundOn={true}/>
+      <Navbar backGroundOn={false}/>
       <div className='flex flex-col w-full h-screen'>
         <div className='flex flex-col justify-center items-center w-full  bg-dark2 h-5/6 rounded-b-3xl'>
           <h1 className='text-7xl font-bold text-white mb-8'>Trade The Book</h1>

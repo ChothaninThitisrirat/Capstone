@@ -11,6 +11,8 @@ import Footer from '@/Components/Footer';
 import SlideBookMini from '@/Components/SlideBookMini';
 import TradeProcess1 from './TradeProcess1'
 import TradeProcess2 from './TradeProcess2'
+import TradeProcess3 from './TradeProcess3'
+import TradeProcess4 from './TradeProcess4'
 import bgExchangebook from '../../public/images/bgExchangebook.png';
 import AddAddress from '@/Components/AddAddress';
 
@@ -20,28 +22,35 @@ interface MainTradeProps {
 }
 
 const MainTrade: React.FC<MainTradeProps> = ({ bookId, setTrade }) => {
-    const [stateProcess, setStateProcess] = useState(1)
+    const [stateProcess, setStateProcess] = useState(0)
     const [showExchangeInfo1, setShowExchangeInfo1] = useState(false);
     const [showExchangeInfo2, setShowExchangeInfo2] = useState(false);
     const [showExchangeInfo3, showShowExchangeInfo3] = useState(false);
     const [addressPost , setAddressPost] = useState('') //data
     const [placeToPic, setPlaceToPic] = useState('') //data
+    const [ pickOrSend, setPickOrSend ] = useState(0) //1 = pick, 2 = send
+    const [ pickFormOpen, setPickFormOpen ] = useState(false) //form pick
+    const [ sendFormOpen, setSendFormOpen ] = useState(false) //form send
+    const [ cssSendPickNext, setCssSendPickNext ] = useState(false); //css fixed send/pick
     const [statusAddress, setStatusAddress] = useState(false);
-    const [bookSelect, setBookSelect] = useState<string[]>([]);
+    const [bookSelect, setBookSelect] = useState<string>('');
     
 
     useEffect(() => {
         if(stateProcess === 0 ){
+            showShowExchangeInfo3(false);
             setShowExchangeInfo2(false);
             setTimeout(() => {
                 setShowExchangeInfo1(true);
             }, 300);
         }else if(stateProcess === 1){
+            showShowExchangeInfo3(false);
             setShowExchangeInfo1(false);
             setTimeout(() => {
                 setShowExchangeInfo2(true);
             }, 300);
         }else if(stateProcess === 2 ){
+            setShowExchangeInfo1(false);
             setShowExchangeInfo2(false);
             setTimeout(() => {
                 showShowExchangeInfo3(true);
@@ -55,7 +64,7 @@ const MainTrade: React.FC<MainTradeProps> = ({ bookId, setTrade }) => {
 
     useEffect(() => {
 
-        console.log( 'stateProcess',stateProcess,'bookSelect', bookSelect)
+        console.log( 'stateProcess',stateProcess,'bookSelect', bookSelect,addressPost,placeToPic)
         
     }, [stateProcess,bookSelect]);
 
@@ -76,8 +85,8 @@ const MainTrade: React.FC<MainTradeProps> = ({ bookId, setTrade }) => {
         className='fixed z-10 opacity-30 w-screen h-screen object-cover left-0'
         />
         <div 
-        style={{width:'450px'}}
-        className="fixed left-0 top-0 h-screen bg-dark1 z-20"></div>
+        style={ stateProcess < 2 ?{width:'450px'}:{width:'250px'}}
+        className="fixed left-0 top-0 h-screen bg-dark1 z-20 duration-500"></div>
 
         {statusAddress && <AddAddress setStatusAddress={setStatusAddress}/>}
 
@@ -85,12 +94,13 @@ const MainTrade: React.FC<MainTradeProps> = ({ bookId, setTrade }) => {
         <div 
         style={{paddingLeft:'500px'}}
         className='flex w-auto h-24 z-30 pt-5'>
-            <div className="flex h-full w-auto items-center ml-20">
+            <div className="flex h-full w-auto items-center ml-20 z-30">
 
                 {/* nav 1 */}
                 <div 
                 onClick={ stateProcess < 3 ?() => setStateProcess(0):undefined}
-                className={stateProcess === 0 ?"flex items-center justify-center bg-orange-400 w-12 h-12 rounded-full duration-1000 cursor-pointer":stateProcess === 2 ? "flex items-center justify-center bg-green-400 w-12 h-12 rounded-full duration-1000":"flex items-center justify-center bg-green-400 w-12 h-12 rounded-full duration-1000 cursor-pointer"}>
+                className={stateProcess === 0 ?"flex items-center justify-center bg-orange-400 w-12 h-12 rounded-full duration-1000 cursor-pointer"
+                :stateProcess === 3 ? "flex items-center justify-center bg-green-400 w-12 h-12 rounded-full duration-1000":"flex items-center justify-center bg-green-400 w-12 h-12 rounded-full duration-1000 cursor-pointer"}>
                     <Icon icon="material-symbols:book-outline" width="30" height="30" className='text-white duration-500' />
                 </div>
                 {stateProcess === 0 && showExchangeInfo1 &&
@@ -102,7 +112,7 @@ const MainTrade: React.FC<MainTradeProps> = ({ bookId, setTrade }) => {
 
                 {/* nav 2 */}
                 <div 
-                onClick={ stateProcess === 0 && bookSelect.length !== 0 ? () => setStateProcess(1): stateProcess === 2 ? undefined:undefined}
+                onClick={ stateProcess === 0 && bookSelect.length !== 0 ? () => setStateProcess(1): stateProcess === 2 && (addressPost !== '' || placeToPic !== '') ? () => setStateProcess(1):undefined}
                 className={stateProcess === 0 ? "flex items-center justify-center bg-gray-200 w-12 h-12 rounded-full duration-1000 cursor-pointer"
                 :stateProcess === 1 ? "flex items-center justify-center bg-orange-400 w-12 h-12 rounded-full duration-1000 text-white cursor-pointer": "flex items-center justify-center bg-green-400 w-12 h-12 rounded-full duration-1000 text-white"}>
                     <Icon icon="carbon:delivery-parcel" width="35" height="35" />
@@ -118,7 +128,7 @@ const MainTrade: React.FC<MainTradeProps> = ({ bookId, setTrade }) => {
 
                 {/* nav 3 */}
                 <div 
-                onClick={ stateProcess === 1 && bookSelect.length !== 0 ? () => setStateProcess(2): stateProcess === 3 ? undefined:undefined}
+                onClick={ stateProcess === 0 && bookSelect.length !== 0 && (addressPost !== '' || placeToPic !== '')? () => setStateProcess(2): stateProcess === 1 && (addressPost !== '' || placeToPic !== '') ? () => setStateProcess(2):undefined}
                 className={stateProcess <= 1 ? "flex items-center justify-center bg-gray-200 w-12 h-12 rounded-full duration-1000 cursor-pointer"
                 :stateProcess === 2 ? "flex items-center justify-center bg-orange-400 w-12 h-12 rounded-full duration-1000 text-white cursor-pointer": "flex items-center justify-center bg-green-400 w-12 h-12 rounded-full duration-1000 text-white"}>
                     <Icon icon="ion:document-text-outline" width="30" height="30" />
@@ -133,7 +143,7 @@ const MainTrade: React.FC<MainTradeProps> = ({ bookId, setTrade }) => {
 
 
                 <div 
-                className={stateProcess < 4 ? "flex items-center justify-center bg-gray-200 w-12 h-12 rounded-full duration-1000" : "flex items-center justify-center bg-green-400 w-12 h-12 rounded-full duration-1000 text-white"}>
+                className={stateProcess < 3 ? "flex items-center justify-center bg-gray-200 w-12 h-12 rounded-full duration-1000" : "flex items-center justify-center bg-green-400 w-12 h-12 rounded-full duration-1000 text-white"}>
                     <Icon icon="carbon:checkmark-outline" width="30" height="30" />
                 </div>
                 {stateProcess === 3 &&<div className="flex items-center justify-center text-lg ml-5 duration-500">ดำเนินการสำเร็จ</div>}
@@ -142,8 +152,23 @@ const MainTrade: React.FC<MainTradeProps> = ({ bookId, setTrade }) => {
 
 
         {stateProcess === 0 && <TradeProcess1  setTrade={setTrade} setStateProcess={setStateProcess} bookId={bookId} bookSelect={bookSelect} setBookSelect={setBookSelect}/>}
-        {stateProcess === 1 && <TradeProcess2  setTrade={setTrade} setStateProcess={setStateProcess} bookId={bookId} setStatusAddress={setStatusAddress} addressPost={addressPost} setAddressPost={setAddressPost} placeToPic={placeToPic} setPlaceToPic={setPlaceToPic}/>}
-    
+        {stateProcess === 1 && <TradeProcess2  setTrade={setTrade} setStateProcess={setStateProcess} 
+                                                bookId={bookId} setStatusAddress={setStatusAddress} 
+                                                addressPost={addressPost} setAddressPost={setAddressPost} 
+                                                placeToPic={placeToPic} setPlaceToPic={setPlaceToPic} 
+                                                pickOrSend={pickOrSend} setPickOrSend={setPickOrSend} 
+                                                pickFormOpen={pickFormOpen} setPickFormOpen={setPickFormOpen}
+                                                sendFormOpen={sendFormOpen} setSendFormOpen={setSendFormOpen}
+                                                cssSendPickNext={cssSendPickNext} setCssSendPickNext={setCssSendPickNext}/>}
+        {stateProcess === 2 && <TradeProcess3  setTrade={setTrade} setStateProcess={setStateProcess} 
+                                                bookId={bookId} setStatusAddress={setStatusAddress} 
+                                                addressPost={addressPost} setAddressPost={setAddressPost} 
+                                                placeToPic={placeToPic} setPlaceToPic={setPlaceToPic} pickOrSend={pickOrSend}/>}
+        {stateProcess === 3 && <TradeProcess4  setTrade={setTrade} setStateProcess={setStateProcess}
+                                                bookId={bookId} setStatusAddress={setStatusAddress} 
+                                                addressPost={addressPost} setAddressPost={setAddressPost} 
+                                                placeToPic={placeToPic} setPlaceToPic={setPlaceToPic} pickOrSend={pickOrSend}/>}
+
         
 
         
