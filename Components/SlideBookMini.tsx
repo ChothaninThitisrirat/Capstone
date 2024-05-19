@@ -65,7 +65,7 @@ const SlideBookMini: React.FC<SlideBookMiniProps> = ({moreFromUserData}) =>{
             style={{width: '70px'}}></div>}
             
             </div>
-            </>
+        </>
     )
 }
 
