@@ -37,19 +37,25 @@ export async function PUT(req: Request) {
                 }
             }
             
-            // const oldpic = await prismadb.user.findUnique({
-            //     where: { id:parseInt(formData.get('id') as string) },
-            //     select: {
-            //         profile_picture:true
-            //     }
-            // })
+            const oldpic = await prismadb.user.findUnique({
+                where: { id:parseInt(formData.get('id') as string) },
+                select: {
+                    profile_picture:true
+                }
+            })
 
-            // if (oldpic?.profile_picture != null) {
-            //     await supabase
-            //     .storage
-            //     .from('b-trade')
-            //     .remove([oldpic.profile_picture])
-            // }
+            const filename = oldpic?.profile_picture ? new URL(oldpic.profile_picture).pathname.split('/').pop() : null;
+
+            const path = `profile/${filename}`
+            
+            if (path && path !== "profile/default-user.jpg") {
+                await supabase
+                .storage
+                .from('b-trade')
+                .remove([path])
+                console.log(path);
+                
+            }
 
             const updatepic = await prismadb.user.update({
                 where: { id:parseInt(formData.get('id') as string) },

@@ -4,12 +4,22 @@ import { prismadb } from "@/lib/db";
 export async function GET(req: Request,{ params }: { params: { id: string }}) {
     try {
         const findbook = await prismadb.book.findUnique({
-            where: { id: parseInt(params.id)},
+            where: { 
+                id: parseInt(params.id),
+                isPost_trade: true
+            },
             select: {
                 user_id:true,
                 category:true
             }   
         })
+
+        if (!findbook) {
+            return NextResponse.json({
+                book:null,
+                message: "Book not post trade yet."
+            }, { status:200 })
+        }
 
         const bookinfo = await prismadb.book.findUnique({
             where: { id: parseInt(params.id) },
@@ -18,7 +28,8 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
                 title:true,
                 description:true,
                 picture:true,
-                pickup:true
+                pickup:true,
+                address:true
             }
         })
 

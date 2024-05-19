@@ -65,7 +65,7 @@ model User {
   email                                     String        @unique @db.VarChar(40)
   first_name                                String        @db.VarChar(20)
   last_name                                 String        @db.VarChar(20)
-  profile_picture                           String?
+  profile_picture                           String?       @default("https://dfmtboqfsygnjttfuvgq.supabase.co/storage/v1/object/public/b-trade/profile/default-user.jpg?t=2024-05-16T10%3A23%3A27.778Z")
   phone_number                              String        @unique @db.VarChar(10)
   card_id                                   String        @unique @db.VarChar(13)
   instagram                                 String?       @db.VarChar(20)
@@ -80,12 +80,14 @@ model User {
   Trade_Trade_owner_idToUser                Trade[]       @relation("Trade_owner_idToUser")
   Trade                                     Trade[]
   Wishlist                                  Wishlist[]
+  Userlike                                  Userlike[]
 }
 
 model Category {
-  id   Int    @id @default(autoincrement())
-  name String @db.VarChar(20)
-  book Book[] @relation("BookToCategory")
+  id            Int               @id @default(autoincrement())
+  name          String            @db.VarChar(20)
+  book          Book[]            @relation("BookToCategory")
+  Userlike      Userlike[]
 }
 
 model Review_User {
@@ -109,4 +111,12 @@ model Wishlist {
   User    User @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "wishlist-user_id")
 
   @@id([id, user_id, book_id])
+}
+
+model Userlike {
+  user_id       Int
+  category_id   Int  
+  User          User        @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Userlike-user_id")
+  Category      Category    @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Userlike-category_id")
+  @@id([user_id,category_id])
 }
