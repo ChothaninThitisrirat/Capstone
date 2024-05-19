@@ -132,6 +132,10 @@ const Page: FC<Props> = (): JSX.Element => {
             onSelect={(item) => setSelectedProfile(item)}
             value={selectedProfile?.title}
           />
+          
+          <div className='relative'>
+          <img src="https://dfmtboqfsygnjttfuvgq.supabase.co/storage/v1/object/public/b-trade/profile/43474571-17aa-4c70-bf6c-960848a25ed4.jpg" alt="" /> 
+          </div>
 
         </div>
 
