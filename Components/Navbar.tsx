@@ -10,15 +10,17 @@ import Link from "next/link";
 
 interface NavbarProps {
     backGroundOn: boolean;
+    withTitle: boolean;
 }
 
 
-const Navbar: React.FC<NavbarProps> = ({backGroundOn}) =>{
+const Navbar: React.FC<NavbarProps> = ({backGroundOn, withTitle}) =>{
     const { data: session, status } = useSession()
 
     const [showDropDown, setShowDropDown] = useState(false)
     return (<>
-        <div className="flex  w-screen h-16 cursor-pointer justify-center z-30 bg-dark3">
+        <div className={withTitle?"flex  w-screen h-16 cursor-pointer justify-center z-30 bg-dark3"
+            :"flex  w-screen h-16 cursor-pointer justify-center z-30"}>
             <div 
             className={backGroundOn
             ?"flex w-screen h-16  rounded-b-3xl relative cursor-pointer justify-center z-30 bg-dark2"

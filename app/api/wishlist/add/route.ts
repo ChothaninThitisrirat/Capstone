@@ -7,7 +7,7 @@ export async function POST(req: Request) {
 
         const addWishlist = await prismadb.wishlist.create({
             data: {
-                        user_id,
+                        user_id:parseInt(user_id),
                         book_id
             }
         })

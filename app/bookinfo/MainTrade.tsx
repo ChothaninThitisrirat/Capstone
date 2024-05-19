@@ -17,7 +17,7 @@ import bgExchangebook from '../../public/images/bgExchangebook.png';
 import AddAddress from '@/Components/AddAddress';
 
 interface MainTradeProps {
-    bookId:string
+    bookId:string;
     setTrade: (state: boolean) => void;
 }
 

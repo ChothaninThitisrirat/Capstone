@@ -103,7 +103,7 @@ function Library() {
                 overflow-x: hidden;
             }`}
         </style>
-            <Navbar backGroundOn={true}/>
+            <Navbar backGroundOn={true} withTitle={true}/>
             <TitleBar textTitle='คลังหนังสือของฉัน'/>
             {loading ?<div className="flex justify-center h-screen mt-52">
                         <HashLoader

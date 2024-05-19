@@ -19,10 +19,23 @@ input::-webkit-inner-spin-button {
 
 
 .close-scrollbar::-webkit-scrollbar {
-  display: none; /* ซ่อนแถบเลื่อน */
+  display: none;
 }
 body::-webkit-scrollbar {
-  display: none; /* ซ่อนแถบเลื่อน */
+  display: none;
+}
+
+.css-scrollbar::-webkit-scrollbar {
+  background:none;
+  width: 5px;
+}
+.css-scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: rgb(255, 255, 255);
+  transition-duration: 0.3s;
+}
+.css-scrollbar:hover::-webkit-scrollbar-thumb {
+  background-color: rgb(214, 214, 214);
 }
 .library-container{
   max-width: 1680px;

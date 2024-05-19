@@ -1,6 +1,6 @@
 'use client'
 
-import React,{ useState, useEffect }  from 'react'
+import React,{ useState, useEffect, use }  from 'react'
 import { Icon } from "@iconify/react";
 import Image from 'next/image';
 import PostNewBook from '@/Components/PostNewBook';
@@ -8,6 +8,7 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import propFooter from '../../public/images/propFooter.png';
 import bgExchangebook from '../../public/images/bgExchangebook.png';
+import axios from 'axios';
 
 
 interface TradeProcess1Props {
@@ -24,6 +25,7 @@ const TradeProcess: React.FC<TradeProcess1Props> = ({ bookId, setStateProcess, s
 
 
     
+    const [loading, setLoading] = useState(true)
     const classBook = "flex items-center justify-center rounded-sm border w-64 h-96 cursor-pointer shadow-sm duration-300 relative bg-dark3"
     const [stateAddBook, setStateAddBook] = useState(false)
     const [ loadcompo, setLoadcompo] = useState(false)
@@ -89,6 +91,11 @@ const TradeProcess: React.FC<TradeProcess1Props> = ({ bookId, setStateProcess, s
     const { data: session, status } = useSession()
     const userId: number | undefined = session?.user.id
     const router = useRouter();
+    useEffect(() => {
+        if (status === 'unauthenticated') {
+            router.push('/login')
+        }
+    }, [status, router])
 
     // เลือกเล่มเดียว
     const handlesetBookSelect = (itemId:string) => {
@@ -114,6 +121,47 @@ const TradeProcess: React.FC<TradeProcess1Props> = ({ bookId, setStateProcess, s
             setStateProcess(1);
         }
     }
+
+    useEffect(() => {
+        console.log('userId', userId);
+        setLoadcompo(false);
+    
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`/api/library/${userId}`);
+                setBook(response.data.library.reverse());
+                setLoading(false);
+            } catch (error) {
+                console.error('Error:', error);
+                setLoading(false);
+            }
+        };
+        if (userId !== undefined) {
+        fetchData(); 
+        }
+    }, [userId, loadcompo]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 return (
     <>
         <style>
@@ -123,10 +171,6 @@ return (
                 }
                 `}
         </style>
-
-
-
-
         <div
         style={{minHeight: "800px",marginLeft:'450px'}}
         className="flex justify-center h-auto w-sceen z-10 bg-none">
