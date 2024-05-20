@@ -22,7 +22,7 @@ export async function POST(req: Request) {
             
             return NextResponse.json({
                 user:deleteWishlist,
-                message: "Delete wishlist"
+                message: "Delete from wishlist"
             }, { status:201 })
         }
 
