@@ -3,19 +3,12 @@ import { prismadb } from "@/lib/db";
 
 export async function PUT(req: Request) {
     try {
-        const { book_id, req_book_id, owner_id, req_user_id , id} = await req.json()
+        const { id } = await req.json()
  
         const date = new Date()
 
         const decline = await prismadb.trade.update({
-            where: { 
-              id_book_id_owner_id_req_user_id_req_book_id: { 
-                id,
-                book_id,
-                req_book_id,
-                owner_id,
-                req_user_id,
-            }},
+            where: { id:id },
             data: {
                 status: 'decline',
                 datetime: date.toISOString()

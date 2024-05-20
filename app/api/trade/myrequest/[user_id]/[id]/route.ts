@@ -3,29 +3,49 @@ import { prismadb } from "@/lib/db";
 
 export async function GET(req: Request,{ params }: { params: { user_id: string , id : string }}) {
     try {
-        const myrequest = await prismadb.book.findUnique({
+        const myrequest = await prismadb.trade.findUnique({
             where: { id: parseInt(params.id) },
             select: {
                 id:true,
-                title:true,
-                picture:true,
                 status:true,
-                Trade_Trade_req_book_idToBook: {
+                pickup_req:true,
+                req_address:true,
+                Book_Trade_book_idToBook:{
                     select: {
                         id:true,
-                        status:true,
-                        req_address:true,
-                        pickup_req:true,
-                        Book_Trade_book_idToBook: {
+                        title:true,
+                        picture:true,
+                        address:true,
+                        User: {
                             select: {
                                 id:true,
-                                title:true,
-                                picture:true,
-                                status:true
+                                profile_picture:true,
+                                username:true,
+                                instagram:true,
+                                facebook:true,
+                                line:true
+                            }
+                        }
+                    }
+                },
+                Book_Trade_req_book_idToBook: {
+                    select: {
+                        id:true,
+                        title:true,
+                        picture:true,
+                        User: {
+                            select: {
+                                id:true,
+                                profile_picture:true,
+                                username:true,
+                                instagram:true,
+                                facebook:true,
+                                line:true
                             }
                         }
                     }
                 }
+                
             }
         })
 

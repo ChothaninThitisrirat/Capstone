@@ -18,6 +18,7 @@ export async function GET(req: Request,{ params }: { params: { user_id: string ,
                         }
                     },
                     select: {
+                        id:true,
                         req_book_id:true,
                         status:true,
                         pickup_req:true,
@@ -27,7 +28,17 @@ export async function GET(req: Request,{ params }: { params: { user_id: string ,
                                 id:true,
                                 title:true,
                                 picture:true,
-                                status:true
+                                status:true,
+                                User: {
+                                    select: {
+                                        id:true,
+                                        username:true,
+                                        profile_picture:true,
+                                        line:true,
+                                        facebook:true,
+                                        instagram:true
+                                    }
+                                }
                             }
                         }
                     }
