@@ -48,7 +48,8 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
             where: { id: findbook?.user_id},
             select: {
                 id:true,
-                username:true
+                username:true,
+                profile_picture:true
             },
         })
 
