@@ -98,8 +98,6 @@ body::-webkit-scrollbar {
 
 
 
-
-
 .pickUpSelectAnimation{
   animation: pickUpSelect 2s ease-in-out forwards;
 }

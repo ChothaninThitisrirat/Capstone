@@ -166,7 +166,7 @@ const Page: FC<Props> = (): JSX.Element => {
           <p className='text-5xl font-bold'>Popular</p>
           <p className='text-xl font-bold mt-5'>หนังสือดี หนังสือเด่น คนนิยมอ่าน</p>
           <div className='flex justify-center mt-10'>
-            <SlideBookBig />
+            <SlideBookBig data={bookSlide}/>
           </div>
         </div>
 
@@ -174,7 +174,7 @@ const Page: FC<Props> = (): JSX.Element => {
           <p className='text-5xl font-bold'>Popular</p>
           <p className='text-xl font-bold mt-5'>หนังสือดี หนังสือเด่น คนนิยมอ่าน</p>
           <div className='flex justify-center mt-10'>
-            <SlideBookBig />
+            <SlideBookBig data={bookSlide}/>
           </div>
         </div>
 
@@ -182,7 +182,7 @@ const Page: FC<Props> = (): JSX.Element => {
           <p className='text-5xl font-bold'>Popular</p>
           <p className='text-xl font-bold mt-5'>หนังสือดี หนังสือเด่น คนนิยมอ่าน</p>
           <div className='flex justify-center mt-10'>
-            <SlideBookMini data={bookSlide}/> 
+            {/* <SlideBookMini data={bookSlide}/>  */}
           </div>
         </div>
       </div>

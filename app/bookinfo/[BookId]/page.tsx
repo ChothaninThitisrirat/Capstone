@@ -49,9 +49,9 @@ const BookInfoMain: React.FC = ( ) => {
               try {
                   
                   const response = await axios.get(`/api/book/${bookId}`);
-                  console.log('response.data.message',response.data.message);
+                  console.log('response.data',response.data.bookinfo.isPost_trade);
                   
-                  if (response.data.book !== null){
+                  if (response.data.bookinfo.isPost_trade){
                     setOnPost(true)
                     setBookInfo(response.data);
                     setLoading(false)
@@ -69,7 +69,6 @@ const BookInfoMain: React.FC = ( ) => {
 
       fetchData();
   }, [bookId]);
-  console.log('bookId', bookId);
   
   return (
     <>
@@ -85,7 +84,7 @@ const BookInfoMain: React.FC = ( ) => {
                             className="ml-1 duration-300 "
                             color='#435585' loading={loading} size={50} aria-label="Loading Spinner" data-testid="loader"/>
                     </div>
-      :(trade ?<MainTrade setTrade={setTrade} bookId={bookId}/>
+      :(trade ?<MainTrade setTrade={setTrade} bookId={bookId} bookInfo={bookInfo}/>
             :(onPost ?<BookInfo setTrade={setTrade} bookInfo={bookInfo}/>
             :<div className="flex justify-center items-center h-screen text-3xl font-bold bg-yellow-50">Not Found !</div>))}
 

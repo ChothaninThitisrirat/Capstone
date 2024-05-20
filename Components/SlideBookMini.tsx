@@ -5,14 +5,14 @@ import { Icon } from '@iconify/react';
 import Image from 'next/image';
 
 interface SlideBookMiniProps {
-    moreFromUserData: any;
+    data: any;
 }
 interface BookItem {
     id: number;
     title: string;
     picture: string[];
 }
-const SlideBookMini: React.FC<SlideBookMiniProps> = ({moreFromUserData}) =>{
+const SlideBookMini: React.FC<SlideBookMiniProps> = ({data}) =>{
     const [moreFrom, setMoreFrom] = useState(0)
 
     return (
@@ -31,7 +31,7 @@ const SlideBookMini: React.FC<SlideBookMiniProps> = ({moreFromUserData}) =>{
                 <div 
                 style={{width: '1350px', WebkitOverflowScrolling: 'touch'}}
                 className="flex gap-10 justify-start items-center overflow-x-auto h-64 p-2 close-scrollbar">
-                {moreFromUserData?.map((item: BookItem, index: number) => (
+                {data?.map((item: BookItem, index: number) => (
                     <div 
                     key={index}
                     style={{transform: `translateX(${moreFrom * -504}px)`, transition: 'transform 0.6s ease-in-out' }}
@@ -50,7 +50,7 @@ const SlideBookMini: React.FC<SlideBookMiniProps> = ({moreFromUserData}) =>{
                 </div>
 
             
-            {moreFrom < (moreFromUserData?.length/3)-2
+            {moreFrom < (data?.length/3)-2
             ?<div 
             className=' shrink-0 relative'
             style={{width: '70px'}}>

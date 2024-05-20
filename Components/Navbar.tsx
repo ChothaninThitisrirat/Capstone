@@ -28,7 +28,7 @@ const Navbar: React.FC<NavbarProps> = ({backGroundOn, withTitle}) =>{
                 <div 
                 style={{maxWidth: '2200px'}}
                 className="flex w-screen h-16 justify-between relative z-30">
-                    <div className="flex gap-10 ml-10 items-center">
+                    <div className="flex gap-5 ml-10 items-center">
                     <Link href='/' >
                         <Image
                         src={logoWhite}

@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation'
 import bgExchangebook from '../../public/images/bgExchangebook.png';
 import { setTimeout } from 'timers';
 import AddAddress from '@/Components/AddAddress';
+import axios from 'axios';
 
 
 interface TradeProcess2Props {
@@ -28,6 +29,7 @@ interface TradeProcess2Props {
     setSendFormOpen: (state: boolean) => void;
     cssSendPickNext: boolean;
     setCssSendPickNext: (state: boolean) => void;
+    bookInfo: any;
 
 }
 
@@ -38,7 +40,9 @@ const TradeProcess: React.FC<TradeProcess2Props> = ({
     pickOrSend, setPickOrSend,
     pickFormOpen, setPickFormOpen,
     sendFormOpen, setSendFormOpen,
-    cssSendPickNext, setCssSendPickNext}) => {
+    cssSendPickNext, setCssSendPickNext,
+    bookInfo
+    }) => {
 
 
     
@@ -53,36 +57,72 @@ const TradeProcess: React.FC<TradeProcess2Props> = ({
     const router = useRouter();
 
 
+    useEffect(() => {
+        if ((bookInfo.bookinfo.pickup !== null && bookInfo.bookinfo.pickup !== undefined && bookInfo.bookinfo.pickup !== '') && (bookInfo.bookinfo.address !== null && bookInfo.bookinfo.address !== undefined && bookInfo.bookinfo.address !== '')){
+            setPickOrSend(0)
+            setPickFormOpen(false)
+            setSendFormOpen(false)
+        }else if (bookInfo.bookinfo.pickup !== null && bookInfo.bookinfo.pickup !== undefined && bookInfo.bookinfo.pickup !== ''){
+            setPickOrSend(1)
+            setSendFormOpen(false)
+            setTimeout(() => {
+                setPickFormOpen(true)
+            }, 1500);
+        }else if (bookInfo.bookinfo.address !== null && bookInfo.bookinfo.address !== undefined && bookInfo.bookinfo.address !== ''){
+            setPickOrSend(2)
+            setPickFormOpen(false)
+            setTimeout(() => {
+                setSendFormOpen(true)
+            }, 1500);
+            }
+    }, [bookInfo]);
 
 
     const handleGoBack=()=>{
-        if (pickOrSend === 0){
-            setStateProcess(0)
-        }else{
-            setCssSendPickNext(false)
-            setDropDownAddress(false)
-            setPlaceToPic('')
-            setAddressPost('')
-            setPickOrSend(0)
+        if((bookInfo.bookinfo.pickup !== null && bookInfo.bookinfo.pickup !== undefined && bookInfo.bookinfo.pickup !== '') && (bookInfo.bookinfo.address !== null && bookInfo.bookinfo.address !== undefined && bookInfo.bookinfo.address !== '')){
+            if (pickOrSend === 0){
+                setStateProcess(0)
+            }else{
+                setCssSendPickNext(false)
+                setDropDownAddress(false)
+                setPlaceToPic('')
+                setAddressPost('')
+                setPickOrSend(0)
+            }
+        }else if(bookInfo.bookinfo.pickup !== null && bookInfo.bookinfo.pickup !== undefined && bookInfo.bookinfo.pickup !== ''){
+            if (pickOrSend === 1){
+                setCssSendPickNext(true)
+                setStateProcess(0)
+            }
+        }else if(bookInfo.bookinfo.address !== null && bookInfo.bookinfo.address !== undefined && bookInfo.bookinfo.address !== ''){
+            if (pickOrSend === 2){
+                setCssSendPickNext(true)
+                setStateProcess(0)
+            }
         }
+        
     }
 
     const handlePick =()=>{
-        setPickOrSend(1)
-        setSendFormOpen(false)
-        setTimeout(() => {
-            setPickFormOpen(true)
-        }, 1500);
+        if (pickOrSend === 0){
+            setPickOrSend(1)
+            setSendFormOpen(false)
+            setTimeout(() => {
+                setPickFormOpen(true)
+            }, 1500);
+        }
+        
         
     }
 
     const handleSend =()=>{
+        if (pickOrSend === 0){
         setPickOrSend(2)
         setPickFormOpen(false)
         setTimeout(() => {
             setSendFormOpen(true)
         }, 1500);
-        
+        }
     }
 
 
@@ -101,6 +141,7 @@ const TradeProcess: React.FC<TradeProcess2Props> = ({
             setCssSendPickNext(true)
         }
     }
+
 
 
 
@@ -178,8 +219,14 @@ return (
                 className={pickFormOpen ?" relative w-9/12 duration-700 z-10 ":" relative w-9/12 invisible translate-y-10 duration-700 z-10"}>
                     <div className="flex items-center">
                         <div className="flex text-3xl font-bold">สถานที่นัดรับของ</div>
-                        <div className="flex w-10 h-10 bg-black rounded-full ml-4"></div>
-                        <div className="flex text-2xl ml-2 text-gray-500">Username</div>
+                        <div className="flex w-10 h-10 rounded-full ml-4">
+                            <img
+                            src={bookInfo.user.profile_picture}
+                            alt="Profile picture"
+                            className=' w-10 h-10 object-cover cursor-pointer bg-dark3 rounded-full shadow-sm duration-300'
+                            />
+                        </div>
+                        <div className="flex text-2xl ml-2 text-gray-500">{bookInfo.user.username}</div>
                     </div>
                     <div className="flex mt-5 w-full">
                         <Icon
@@ -190,9 +237,9 @@ return (
                             className="mb-2"
                         />
                         <textarea 
-                        className="flex text-lg w-full resize-none h-28 close-scrollbar p-2 ">
-                            dawdawdawdawdawddawdawdawdawdawdwdawdawwdaddawdawdawdawdawddawdawdawdawdawdwdawdawwdaddawdawdawdawdawddawdawdawdawdawdwdawdawwdaddawdawdawdawdawddawdawdawdawdawdwdawdawwdaddawdawdawdawdawddawdawdawdawdawdwdawdawwdaddawdawdawdawdawddawdawdawdawdawdwdawdawwdaddawdawdawdawdawddawdawdawdawdawdwdawdawwdaddawdawdawdawdawddawdawdawdawdawdwdawdawwdaddawdawdawdawdawddawdawdawdawdawdwdawdawwdaddawdawdawdawdawddawdawdawdawdawdwdawdawwdaddawdawdawdawdawddawdawdawdawdawdwdawdawwdaddawdawdawdawdawddawdawdawdawdawdwdawdawwdaddawdawdawdawdawddawdawdawdawdawdwdawdawwdaddawdawdawdawdawddawdawdawdawdawdwdawdawwdad
-                        </textarea>
+                        readOnly
+                        value={bookInfo.bookinfo.pickup}
+                        className="flex text-lg w-full resize-none h-28 close-scrollbar p-2 "/>
                     </div>
                     <div className="flex text-3xl font-bold mt-10">สถานที่นัดรับของคุณ</div>
                     <div className="flex relative">
@@ -274,9 +321,7 @@ return (
                 </button>
         </div>
     </>
-
-
-  )
+    )
 }
 
 
@@ -289,19 +334,29 @@ interface DropDownAddressProps {
 }
 
 const DropDownAddress: React.FC<DropDownAddressProps> = ({setAddressPost, setDropDownAddress, dropDownAddress}) =>{
-    const [dataAddress, setDataAddress] = useState([{
-        id:1,
-        address:'1-เลขที่ 37/5 ม.3 ต.วังตะกู อ.เมื่อง จ.นครปฐม 73000'
-    },{
-        id:2,
-        address:'2-เลขที่ 37/5 ม.3 ต.วังตะกู อ.เมื่อง จ.นครปฐม 73000'
-    },{
-        id:3,
-        address:'3-เลขที่ 37/5 ม.3 ต.วังตะกู อ.เมื่อง จ.นครปฐม 73000'
-    },{
-        id:3,
-        address:'4-เลขที่ 37/5 ม.3 ต.วังตะกู อ.เมื่อง จ.นครปฐม 73000'
-    }]);
+    const { data: session, status } = useSession()
+    const router = useRouter()   
+    const userId: number | undefined = session?.user.id
+    const [dataAddress, setDataAddress] = useState([]);
+
+    useEffect(() => {
+        console.log('userId', userId);
+    
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`/api/user/${userId}/address`);
+
+                setDataAddress(response.data.address.address);
+                
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        };
+        if (userId !== undefined) {
+        fetchData(); 
+        }
+    }, [userId]);
+    console.log('dataAddress',dataAddress);
     return (
             <div 
             onClick={() => setDropDownAddress(!dropDownAddress)}
@@ -309,9 +364,9 @@ const DropDownAddress: React.FC<DropDownAddressProps> = ({setAddressPost, setDro
                     {dataAddress.map((item,index)=>(
                         <div 
                         key={index}
-                        onClick={() => setAddressPost(item.address)}
+                        onClick={() => setAddressPost(item)}
                         className="flex items-center justify-between w-11/12 h-20 pl-5 pr-5 break-words border-b  p-2 mx-auto text-lg">
-                            {item.address}
+                            {item}
                         </div>
                     
                     ))}

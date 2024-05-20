@@ -12,12 +12,19 @@ import { useRouter } from 'next/navigation'
 import propFooter from '../../public/images/propFooter.png';
 import HashLoader from "react-spinners/HashLoader";
 
+interface Book {
+    id: number;
+    title: string;
+    picture: string;
+    status: string;
+    isPost_trade: boolean;
+}
 
 function WishList() {
-    const [wishlist, setWishlist] = useState([{ book_id:'', img: ''}]);
+    const [wishlist, setWishlist] = useState<Book[]>([]);
     const [loading, setLoading] = useState(true);
     const { data: session, status } = useSession()
-    
+
     const router = useRouter()
     useEffect(() => {
         if (status === 'unauthenticated') {
@@ -34,7 +41,7 @@ function WishList() {
             const response = await axios.get(`/api/wishlist/${userId}`);
             console.log(userId,'response.data.wishlist = ', response.data);
             if (response.data.wishlist !== undefined && response.data.wishlist.length > 0) {
-            setWishlist(response.data.wishlist.reverse());
+                setWishlist(response.data.wishlist.reverse());
             } else {
                 setWishlist([]);
             }
@@ -50,37 +57,21 @@ function WishList() {
     }, [userId]);
 
     const classBook = "flex items-center justify-center rounded-sm border w-64 h-96 cursor-pointer shadow-sm hover:scale-105 duration-300"
-    const booktest = [{
-        book_id: "book1",
-        img: "https://picsum.photos/200/300",
-    }, {
-        book_id: "book2",
-        img: "https://picsum.photos/200/300",
-    }, {
-        book_id: "book3",
-        img: "https://picsum.photos/200/300",
-    }, {
-        book_id: "book4",
-        img: "https://picsum.photos/200/300",
-    }, {
-        book_id: "book5",
-        img: "https://picsum.photos/200/300",
-    }, {
-        book_id: "book6",
-        img: "https://picsum.photos/200/300",
-    }, {
-        book_id: "book7",
-        img: "https://picsum.photos/200/300",
-    }, {
-        book_id: "book8",
-        img: "https://picsum.photos/200/300",
-    }, {
-        book_id: "book9",
-        img: "https://picsum.photos/200/300",
-    }, {
-        book_id: "book10",
-        img: "https://picsum.photos/200/300",
-    }]
+
+    const handleToBookInfo = (BookId: number | null | undefined) => {
+        if (BookId !== null && BookId !== undefined) {
+
+            router.push(`/bookinfo/${BookId.toString()}`)
+        }
+    }
+
+
+
+
+
+
+
+
 
     return (
         <>
@@ -89,11 +80,11 @@ function WishList() {
                     overflow-x: hidden;
                 }`}
             </style>
-            <Navbar backGroundOn={true}/>
+            <Navbar backGroundOn={true} withTitle={true}/>
             <TitleBar textTitle="หนังสือที่อยากแลก"/>
             <div
                 style={{minHeight: "800px"}}
-                className="flex justify-center h-auto w-sceen z-10 bg-none">
+                className="flex justify-center h-auto w-sceen z-10 bg-none pb-20 pt-50">
                 {loading
                 ?<div className="flex justify-center h-screen mt-52">
                     <HashLoader
@@ -105,18 +96,21 @@ function WishList() {
                     :<div
                     className="flex w-full h-auto p-10 flex-wrap gap-20 mb-10 mt-5 library-container">
                     {wishlist.map((item, index) => (
-                        <div key={index} className={classBook}>
-                            {item.book_id}
-                            <Image
-                                src={propFooter}
+                            <div
+                            onClick={()=>handleToBookInfo(item.id)} // ต้องส่งค่าไปหน้า BookInfo
+                            key={index} 
+                            className='flex items-center justify-center rounded-sm border w-64 h-96 cursor-pointer shadow-sm hover:scale-105 duration-300 relative'>
+                                <div className="flex flex-col absolute bottom-0 translate-y-12 text-base w-full">
+                                    <div className="flex w-full justify-center">{item.title}</div>
+                                </div>
+                                <img
+                                src={item.picture[0]}
                                 alt="Profile picture"
-                                className='w-9 h-9 object-cover rounded-full cursor-pointer bg-white'
-                            />
-                        </div>
-                    ))}
-
-                </div>
-                }
+                                className='w-full h-full object-cover cursor-pointer bg-white'
+                                />
+                            </div>
+                        ))}
+                </div>}
                 
             </div>
 

@@ -100,7 +100,7 @@ const PostBook1: React.FC<PostBook1Props> = ({setStatePage, setBookSelect, bookS
             style={{minHeight: "800px"}}
             className="flex justify-center h-auto w-sceen z-10 bg-none">
                 <div
-                className="flex w-full h-screen p-10 flex-wrap gap-20 gap-y-14 mb-10 overflow-y-auto close-scrollbar z-10 library-container pb-52">
+                className="flex w-full h-screen p-10 flex-wrap gap-20 gap-y-14 mb-10 overflow-y-auto close-scrollbar z-10 library-container pb-52 pt-20">
                     <div 
                     onClick={() => setStateAddBook(true)}
                     className="flex items-center justify-center rounded-sm border w-64 h-96 bg-slate-200 cursor-pointer shadow-sm hover:bg-slate-300  hover:scale-105 duration-300">
@@ -115,20 +115,19 @@ const PostBook1: React.FC<PostBook1Props> = ({setStatePage, setBookSelect, bookS
                             <div 
                             key={index} 
                             onClick={()=>handlesetBookSelect(item.id)}
-                            className={classBook}>
+                            className={classBook+' '+(bookSelect === item.id ?' scale-105' : '')}>
                                 
-                                
+                                <div className="flex absolute top-0 -translate-y-5 text-base w-full">
+                                    <div className="flex w-full justify-start gap-2">
+                                        {item.status === 'trading' && <div className="flex text-xs text-orange-800 font-bold">[ TRADING ]</div>}
+                                    </div>
+                                </div>
                                 <img
                                 src={ item.picture[0] !== '' ? item.picture[0] : 'https://picsum.photos/200/300'}
                                 alt="Profile picture"
-                                className={'w-64 h-96 object-cover cursor-pointer duration-300 border shadow-sm bg-gray-50'+' '+(bookSelect === item.id ?' scale-105 border-4 border-dark2' : '')}
+                                className={'w-64 h-96 object-cover cursor-pointer duration-300 border shadow-sm bg-gray-50'+' '+(bookSelect === item.id ?' border-4 border-dark2' : '')}
                                 />
-                                {item.status === 'trading' && 
-                                <div 
-                                style={{backgroundColor:'#57575780'}}
-                                className={"absolute top-0 left-0 w-64 h-96 flex justify-center items-center font-bold text-2xl duration-300"+' '+(bookSelect === item.id ?' scale-105' : '')}>
-                                TRADING
-                            </div>}
+                                
 
                             </div>
                             <div className='flex mx-auto mt-5'>{item.title}</div>

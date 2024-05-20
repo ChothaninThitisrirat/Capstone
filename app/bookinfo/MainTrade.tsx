@@ -19,9 +19,11 @@ import AddAddress from '@/Components/AddAddress';
 interface MainTradeProps {
     bookId:string;
     setTrade: (state: boolean) => void;
+    bookInfo: any
 }
 
-const MainTrade: React.FC<MainTradeProps> = ({ bookId, setTrade }) => {
+
+const MainTrade: React.FC<MainTradeProps> = ({ bookId, setTrade, bookInfo }) => {
     const [stateProcess, setStateProcess] = useState(0)
     const [showExchangeInfo1, setShowExchangeInfo1] = useState(false);
     const [showExchangeInfo2, setShowExchangeInfo2] = useState(false);
@@ -33,7 +35,8 @@ const MainTrade: React.FC<MainTradeProps> = ({ bookId, setTrade }) => {
     const [ sendFormOpen, setSendFormOpen ] = useState(false) //form send
     const [ cssSendPickNext, setCssSendPickNext ] = useState(false); //css fixed send/pick
     const [statusAddress, setStatusAddress] = useState(false);
-    const [bookSelect, setBookSelect] = useState<string>('');
+    const [idTrade, setIdTrade] = useState<number>(0);
+    const [bookSelect, setBookSelect] = useState<number[]>([]);
     
 
     useEffect(() => {
@@ -62,11 +65,11 @@ const MainTrade: React.FC<MainTradeProps> = ({ bookId, setTrade }) => {
         
     }, [stateProcess]);
 
-    useEffect(() => {
 
-        console.log( 'stateProcess',stateProcess,'bookSelect', bookSelect,addressPost,placeToPic)
-        
-    }, [stateProcess,bookSelect]);
+    console.log('bookInfo', bookInfo.bookinfo.picture[0]);
+
+
+
 
 
     return (
@@ -86,7 +89,32 @@ const MainTrade: React.FC<MainTradeProps> = ({ bookId, setTrade }) => {
         />
         <div 
         style={ stateProcess < 2 ?{width:'450px'}:{width:'250px'}}
-        className="fixed left-0 top-0 h-screen bg-dark1 z-20 duration-500"></div>
+        className="fixed left-0 top-0 h-screen bg-dark1 z-20 duration-500 flex flex-col justify-center items-center">
+            { stateProcess < 2 && 
+            <>
+                <div className="flex">
+                    <img
+                    src={bookInfo.bookinfo.picture[0]}
+                    alt="Profile picture"
+                    className=' w-64 h-96 object-cover cursor-pointer bg-white'
+                    />
+                </div>
+                <div className="flex text-3xl font bold text-white w-72 justify-center h-auto break-words mt-5">
+                    {bookInfo.bookinfo.title}
+                </div>
+                <div className="flex items-center gap-3 mx-auto mt-5">
+                    <div className="flex text-white">Owner</div>
+                    <div className="flex">
+                        <img
+                        src={bookInfo.user.profile_picture}
+                        alt="Profile picture"
+                        className=' w-10 h-10 object-cover cursor-pointer bg-dark3 rounded-full shadow-sm duration-300'
+                        />
+                    </div>
+                    <div className="flex text-white">{bookInfo.user.username}</div>
+                </div>
+            </>}
+        </div>
 
         {statusAddress && <AddAddress setStatusAddress={setStatusAddress}/>}
 
@@ -151,7 +179,9 @@ const MainTrade: React.FC<MainTradeProps> = ({ bookId, setTrade }) => {
         </div>
 
 
-        {stateProcess === 0 && <TradeProcess1  setTrade={setTrade} setStateProcess={setStateProcess} bookId={bookId} bookSelect={bookSelect} setBookSelect={setBookSelect}/>}
+        {stateProcess === 0 && <TradeProcess1  setTrade={setTrade} setStateProcess={setStateProcess} 
+                                                bookId={bookId} bookSelect={bookSelect} 
+                                                setBookSelect={setBookSelect}/>}
         {stateProcess === 1 && <TradeProcess2  setTrade={setTrade} setStateProcess={setStateProcess} 
                                                 bookId={bookId} setStatusAddress={setStatusAddress} 
                                                 addressPost={addressPost} setAddressPost={setAddressPost} 
@@ -159,15 +189,19 @@ const MainTrade: React.FC<MainTradeProps> = ({ bookId, setTrade }) => {
                                                 pickOrSend={pickOrSend} setPickOrSend={setPickOrSend} 
                                                 pickFormOpen={pickFormOpen} setPickFormOpen={setPickFormOpen}
                                                 sendFormOpen={sendFormOpen} setSendFormOpen={setSendFormOpen}
-                                                cssSendPickNext={cssSendPickNext} setCssSendPickNext={setCssSendPickNext}/>}
+                                                cssSendPickNext={cssSendPickNext} setCssSendPickNext={setCssSendPickNext}
+                                                bookInfo={bookInfo}/>}
         {stateProcess === 2 && <TradeProcess3  setTrade={setTrade} setStateProcess={setStateProcess} 
                                                 bookId={bookId} setStatusAddress={setStatusAddress} 
                                                 addressPost={addressPost} setAddressPost={setAddressPost} 
-                                                placeToPic={placeToPic} setPlaceToPic={setPlaceToPic} pickOrSend={pickOrSend}/>}
+                                                placeToPic={placeToPic} setPlaceToPic={setPlaceToPic} 
+                                                pickOrSend={pickOrSend} bookInfo={bookInfo}  bookSelect={bookSelect} 
+                                                setIdTrade={setIdTrade}/>}
         {stateProcess === 3 && <TradeProcess4  setTrade={setTrade} setStateProcess={setStateProcess}
                                                 bookId={bookId} setStatusAddress={setStatusAddress} 
                                                 addressPost={addressPost} setAddressPost={setAddressPost} 
-                                                placeToPic={placeToPic} setPlaceToPic={setPlaceToPic} pickOrSend={pickOrSend}/>}
+                                                placeToPic={placeToPic} setPlaceToPic={setPlaceToPic} pickOrSend={pickOrSend}
+                                                bookInfo={bookInfo}  bookSelect={bookSelect} idTrade={idTrade}/>}
 
         
 

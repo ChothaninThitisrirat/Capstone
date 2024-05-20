@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation'
 import propFooter from '../../public/images/propFooter.png';
 import bgExchangebook from '../../public/images/bgExchangebook.png';
 import axios from 'axios';
-
+import HashLoader from "react-spinners/HashLoader";
 
 interface TradeProcess1Props {
     bookId:string
@@ -18,7 +18,13 @@ interface TradeProcess1Props {
     setBookSelect: (state: any) => void;
     bookSelect: any;
 }
-
+interface Book {
+    id: number;
+    title: string;
+    picture: string;
+    status: string;
+    isPost_trade: boolean;
+}
 const TradeProcess: React.FC<TradeProcess1Props> = ({ bookId, setStateProcess, setTrade, bookSelect, setBookSelect }) => {
 
 
@@ -26,7 +32,7 @@ const TradeProcess: React.FC<TradeProcess1Props> = ({ bookId, setStateProcess, s
 
     
     const [loading, setLoading] = useState(true)
-    const classBook = "flex items-center justify-center rounded-sm border w-64 h-96 cursor-pointer shadow-sm duration-300 relative bg-dark3"
+    const classBook = "flex items-center justify-center rounded-sm border w-64 h-96 cursor-pointer shadow-sm duration-300 relative mb-5"
     const [stateAddBook, setStateAddBook] = useState(false)
     const [ loadcompo, setLoadcompo] = useState(false)
     const [classAddBookbg, setClassAddBookbg] = useState('fixed h-screen w-screen bg-slate-200 top-0 left-0 z-50 opacity-30 backdrop-blur-2xl hidden')
@@ -36,39 +42,7 @@ const TradeProcess: React.FC<TradeProcess1Props> = ({ bookId, setStateProcess, s
         transitionDuration: '0.3s'
     })
 
-    const [book, setBook] = useState([]);
-    const booktest = [{
-        id: "book1",
-        img: "https://picsum.photos/200/300",
-    }, {
-        id: "book2",
-        img: "https://picsum.photos/200/300",
-    }, {
-        id: "book3",
-        img: "https://picsum.photos/200/300",
-    }, {
-        id: "book4",
-        img: "https://picsum.photos/200/300",
-    }, {
-        id: "book5",
-        img: "https://picsum.photos/200/300",
-    }, {
-        id: "book6",
-        img: "https://picsum.photos/200/300",
-    }, {
-        id: "book7",
-        img: "https://picsum.photos/200/300",
-    }, {
-        id: "book8",
-        img: "https://picsum.photos/200/300",
-    }, {
-        id: "book9",
-        img: "https://picsum.photos/200/300",
-    }, {
-        id: "book10",
-        img: "https://picsum.photos/200/300",
-    }]
-
+    const [book, setBook] = useState<Book[]>([]);
 
     useEffect(() => {
         if (stateAddBook) {
@@ -98,12 +72,16 @@ const TradeProcess: React.FC<TradeProcess1Props> = ({ bookId, setStateProcess, s
     }, [status, router])
 
     // เลือกเล่มเดียว
-    const handlesetBookSelect = (itemId:string) => {
-        if (bookSelect === itemId) {
-            setBookSelect('');
+    const handlesetBookSelect = (item: any) => {
+        if(item.status === 'trading'){
             return;
         }else{
-            setBookSelect(itemId);
+            if (bookSelect === item.id) {
+                setBookSelect('');
+                return;
+            }else{
+                setBookSelect(item.id);
+            }
         }
     };
 
@@ -123,7 +101,6 @@ const TradeProcess: React.FC<TradeProcess1Props> = ({ bookId, setStateProcess, s
     }
 
     useEffect(() => {
-        console.log('userId', userId);
         setLoadcompo(false);
     
         const fetchData = async () => {
@@ -160,8 +137,6 @@ const TradeProcess: React.FC<TradeProcess1Props> = ({ bookId, setStateProcess, s
 
 
 
-
-
 return (
     <>
         <style>
@@ -171,7 +146,15 @@ return (
                 }
                 `}
         </style>
-        <div
+        {loading 
+        ?<div 
+            style={{minHeight: "800px",marginLeft:'450px'}}
+            className="flex justify-center h-screen items-center pb-52">
+                <HashLoader
+                    className="ml-1 duration-300 "
+                    color='#435585' loading={loading} size={50} aria-label="Loading Spinner" data-testid="loader"/>
+            </div>
+        :<div
         style={{minHeight: "800px",marginLeft:'450px'}}
         className="flex justify-center h-auto w-sceen z-10 bg-none">
             <div
@@ -183,29 +166,40 @@ return (
                     className='text-gray-500'/>
                 </div>
 
-                {booktest.map((item, index) => (
-                    <div 
-                    key={index} 
-                    onClick={()=>handlesetBookSelect(item.id)}
-                    className={bookSelect.includes(item.id) ? classBook+' '+' scale-105 border-4 border-dark2' : classBook}>
-                        <div className=' absolute'>{item.id}</div>
+                {book.map((item, index) => (
+                        <div
+                        onClick={()=>handlesetBookSelect(item)} // ต้องส่งค่าไปหน้า BookInfo
+                        key={index} 
+                        className={bookSelect === item.id ? classBook+' '+' scale-105 border-4 border-dark2' : classBook}>
+                            <div className="flex absolute top-0 -translate-y-5 text-base w-full">
+                                <div className="flex w-full justify-start gap-2">
+                                    {item.isPost_trade &&<div className="flex text-xs text-green-600 font-bold">[ POST ]</div>}
+                                </div>
+                            </div>
+                            <div className="flex flex-col absolute bottom-0 translate-y-8 text-base w-full">
+                                <div className="flex w-full justify-center">{item.title}</div>
+                            </div>
+                            <img
+                            src={item.picture[0]}
+                            alt="Profile picture"
+                            className='w-full h-full object-cover cursor-pointer bg-white'
+                            />
+                            <Image
+                            src={propFooter}
+                            alt="Profile picture"
+                            className={bookSelect === item.id ?'w-20 h-16 object-contain absolute top-0 right-0 -translate-y-3 drop-shadow-md duration-300'
+                                :'w-20 h-16 object-contain absolute top-0 right-0 -translate-y-8 translate-x-3 drop-shadow-md duration-300 scale-0 '}/>
+                            {item.status === 'trading' && 
+                            <div 
+                                style={{backgroundColor:'#57575780'}}
+                                className={"absolute top-0 left-0 w-64 h-96 flex justify-center items-center font-bold text-2xl duration-300"}>
+                                TRADING
+                            </div>}
+                        </div>
                         
-                        <Image
-                        src={bgExchangebook}
-                        alt="Profile picture"
-                        className='w-64 h-96 object-cover cursor-pointer'
-                        />
-
-                        
-                        <Image
-                        src={propFooter}
-                        alt="Profile picture"
-                        className={bookSelect.includes(item.id) ?'w-20 h-16 object-contain absolute top-0 right-0 -translate-y-3 drop-shadow-md duration-300'
-                            :'w-20 h-16 object-contain absolute top-0 right-0 -translate-y-8 translate-x-3 drop-shadow-md duration-300 scale-0 '}/>
-                    </div>
-                ))}
+                    ))}
             </div>
-        </div>
+        </div>}
 
         <div className={classAddBookbg}></div>
         <PostNewBook setStateAddBook={setStateAddBook} classAddBook={classAddBook} setLoadcompo={setLoadcompo}/>

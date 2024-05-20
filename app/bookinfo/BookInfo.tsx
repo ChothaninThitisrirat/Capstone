@@ -81,9 +81,10 @@ const BookInfo: React.FC<BookInfoProps> = ({ setTrade, bookInfo }) => {
     const [ avgScoreBook, setAvgScoreBook ] = useState(0)
     const [ avgScoreUser, setAvgScoreUser ] = useState(0)
     const [ scoreComment, setScoreComment ] = useState(0)
+    const [ stateWishlist, setStateWishlist ] = useState(false)
 
     const [categoryShow, setCategoryShow] = useState<Category[]>([])
-    const [classCategory, setClassCategory] = useState("flex items-center justify-center rounded-lg w-auto text-sm cursor-pointer py-0.5 px-3 flex-grow-4 duration-1000")
+    const [classCategory, setClassCategory] = useState("flex items-center justify-center rounded-lg w-auto text-sm py-0.5 px-3 flex-grow-4 duration-1000")
 
 
     const [moreFromUserData, setMoreFromUserData] = useState<BookItem[]>([]);
@@ -159,6 +160,8 @@ const BookInfo: React.FC<BookInfoProps> = ({ setTrade, bookInfo }) => {
         color: "bg-gradient-to-tr from-health to-white"
     }])
 
+    const router = useRouter();
+    const { data: session, status } = useSession()
 
     useEffect(() => {
         if (bookInfo) {
@@ -200,11 +203,26 @@ const BookInfo: React.FC<BookInfoProps> = ({ setTrade, bookInfo }) => {
             const formattedDate = `${day} ${thaiMonths[month]} ${year + 543}`;
             setDatePost(formattedDate);
         }
+        const fetchData = async () => {
+            try{
+                const response = await axios.get(`/api/wishlist/${session?.user.id}`)
+                const wishlist = response.data.wishlist as BookItem[]
+                if (wishlist.some(item => item.id === bookInfoShow?.bookinfo.id)) {
+                    setStateWishlist(true)
+                } else {
+                    setStateWishlist(false)
+                }
+            }catch(err){
+                console.error(err)
+            }
+        }
+        if (bookInfoShow?.bookinfo.id !== undefined) {
+            fetchData()
+        }
     }
     , [bookInfoShow, category]);
 
-    const router = useRouter();
-    const { data: session, status } = useSession()
+
 
     const handleComment = async(e:any) => {
         e.preventDefault()
@@ -233,10 +251,6 @@ const BookInfo: React.FC<BookInfoProps> = ({ setTrade, bookInfo }) => {
     const handleGoTrade=()=>{
         setTrade(true)
     }
-
-    useEffect(() => {
-        console.log('reviewComment',reviewComment)
-    }, [reviewComment])
 
     const openCommentForm = () => {
         if (status === 'unauthenticated') {
@@ -269,19 +283,30 @@ const BookInfo: React.FC<BookInfoProps> = ({ setTrade, bookInfo }) => {
         if (status === 'unauthenticated') {
             router.push('/login')
         }else{
-            try{
-                console.log('bookInfoShow?.bookinfo.id',bookInfoShow?.bookinfo.id,session?.user.id)
+                try{
                 const response = await axios.post(`/api/wishlist/add`, {
                     book_id: bookInfoShow?.bookinfo.id,
                     user_id: session?.user.id
                 })
                 console.log(response.data)
 
-            }catch(err){
-                console.error(err)
-            }
+                }catch(err){
+                    console.error(err)
+                }
         }
     }
+
+    console.log('send',bookInfo.bookinfo.send,'pickup',bookInfo.bookinfo.pickup);
+
+
+
+
+
+
+
+
+
+
 
     return (
         <>
@@ -360,18 +385,18 @@ const BookInfo: React.FC<BookInfoProps> = ({ setTrade, bookInfo }) => {
                 className='flex bg-dark1 text-white w-40 h-10 items-center justify-center rounded-xl shadow-md duration-100'>ส่งคำขอแลกหนังสือ</button>
                 <div 
                 onClick={handleWishlist}
-                className="flex cursor-pointer ml-4 underline text-sm h-10 items-center">Add to Wishlist</div>
+                className="flex cursor-pointer ml-4 underline text-sm h-10 items-center">{stateWishlist ? 'Remove from Wishlist' : 'Add to Wishlist' }</div>
                 </div>
                 
                 <div className="flex w-96 ml-24 text-xl mt-10 pl-5 border-b-2 border-gray-300 pb-2">วิธีการแลกเปลี่ยน</div>
                 
                 <div className="flex w-full pl-24 gap-3 mt-5 ml-5">
-                {bookInfoShow?.bookinfo.pickup !== (null || '') ?
+                {(bookInfo.bookinfo.pickup !== null && bookInfo.bookinfo.pickup !== undefined && bookInfo.bookinfo.pickup !== '') ?
                 <div
                 style={{boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}} 
                 className="flex justify-center items-center w-20 h-10 rounded-full shadow-xl bg-white">นัดรับ</div>
                 :<div className="flex justify-center items-center w-20 h-10 rounded-full bg-gray-300 text-white">นัดรับ</div>}
-                {bookInfoShow?.bookinfo.address !== (null || '') ?<div 
+                {(bookInfo.bookinfo.address !== null && bookInfo.bookinfo.address !== undefined && bookInfo.bookinfo.address !== '') ?<div 
                 style={{boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}} 
                 className="flex justify-center items-center w-20 h-10 rounded-full shadow-xl bg-white">จัดส่ง</div> 
                 :
@@ -532,8 +557,20 @@ const BookInfo: React.FC<BookInfoProps> = ({ setTrade, bookInfo }) => {
                 readOnly
                 value={item.describe}
                 className="flex w-full h-36 break-words pt-1 text-gray-500 resize-none css-scrollbar"/>
-                <div className="flex text-sm mt-2 pl-3">
-                    {item.User.username}
+                <div className="flex text-sm mt-2 pl-3 justify-between">
+                    <div className="flex">{item.User.username}</div>
+                    <div className="flex mr-2 ">
+                        <Icon icon="material-symbols:star" width="20" height="20" 
+                        className={item.score >= 1 ?'text-yellow-300' :'text-gray-300'}/>
+                        <Icon icon="material-symbols:star" width="20" height="20" 
+                        className={item.score >= 2 ?'text-yellow-300' :'text-gray-300'}/>
+                        <Icon icon="material-symbols:star" width="20" height="20" 
+                        className={item.score >= 3 ?'text-yellow-300' :'text-gray-300'}/>
+                        <Icon icon="material-symbols:star" width="20" height="20" 
+                        className={item.score >= 4 ?'text-yellow-300' :'text-gray-300'}/>
+                        <Icon icon="material-symbols:star" width="20" height="20" 
+                        className={item.score >= 5 ?'text-yellow-300' :'text-gray-300'}/>
+                    </div>
                 </div>
                 </div>
             ))}
@@ -555,7 +592,7 @@ const BookInfo: React.FC<BookInfoProps> = ({ setTrade, bookInfo }) => {
         </div>
         <button className="flex bg-dark2 text-white w-28 h-10 justify-center items-center rounded-full text-lg underline">ดูทั้งหมด</button>
         </div>
-        <SlideBookMini moreFromUserData={moreFromUserData}/>
+        <SlideBookMini data={moreFromUserData}/>
         </div>
         <Footer/>
         </>
