@@ -4,7 +4,7 @@ import { prismadb } from "@/lib/db";
 
 export async function POST(req: Request) {
     try {
-        const { username , email , password , card_id , phone_number , first_name , last_name , address } = await req.json()
+        const { username , email , password , card_id , phone_number , first_name , last_name , address , category} = await req.json()
         
         if (!username || !email || !password || !card_id || !phone_number || !first_name || !last_name || !address) {
             return NextResponse.json({ user:null, message: 'Must fill all input.'},{status:409})
@@ -40,11 +40,18 @@ export async function POST(req: Request) {
                 last_name,
                 address,
                 card_id,
-                phone_number
+                phone_number,
             }
         })
-        
 
+        for (let i = 0;i < category.length; i++) {
+            await prismadb.userlike.create({
+                data: {
+                    user_id:newUser.id,
+                    category_id:category[i]
+                }
+            })
+        }
         return NextResponse.json({
             user:newUser,
             message: "Signup successfully"
