@@ -5,15 +5,15 @@ export async function PUT(req: Request) {
     try {
         const { book_id, pickup, address } = await req.json()
 
-        const date = new Date()
-        console.log(book_id, pickup, address)
+        const date = new Date
+
         const newbook = await prismadb.book.update({
             where: { id:book_id },
             data : {
                 isPost_trade:true,
                 pickup,
                 address,
-                datetime: date.toISOString(),
+                time: date.toISOString(),
                 req_count:0,  
             }
         })
