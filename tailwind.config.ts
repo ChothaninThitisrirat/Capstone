@@ -25,6 +25,7 @@ const config: Config = {
         "travel": "#FF4500",
         "health": "#FF6347",
         "grayname": "#CBCBCB",
+        "graynamehead": "#9A9A9A"
     },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
