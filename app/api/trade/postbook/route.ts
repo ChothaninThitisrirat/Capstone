@@ -13,7 +13,7 @@ export async function PUT(req: Request) {
                 isPost_trade:true,
                 pickup,
                 address,
-                time: date.toISOString(),
+                postdate: date.toISOString(),
                 req_count:0,  
             }
         })
