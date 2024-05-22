@@ -9,6 +9,9 @@ import React, { FC, useState } from 'react';
 import SlideBookMini from '@/Components/SlideBookMini';
 import SlideBookBig from '@/Components/BookFeedInfo/SlideBookBig';
 import Searchbar from '@/Components/Searchbar';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 interface Props {
 }
@@ -89,6 +92,10 @@ const Page: FC<Props> = (): JSX.Element => {
 
   const [results, setResults] = useState<{ id: string; title: string }[]>([]);
   const [selectedProfile, setSelectedProfile] = useState<{ id: string; title:string}>();
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
+
   
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
       const { value } = e.target;
@@ -103,16 +110,31 @@ const Page: FC<Props> = (): JSX.Element => {
       setResults(filteredValue);
   };
 
+  useEffect(() => {
+    if (status === 'authenticated' && session?.user?.id) {
+      fetch('api/user/${session.user.id}')
+      .then(response => response.json())
+      .then(data => {
+        setLoading(false)
+      })
+      .catch (error => {
+        console.error('Error fetching user data:', error)
+        setLoading(false)
+      })
+    }
+    
+    
+  },[session, status, router])
+
+  useEffect(() => {
+    if (status === 'authenticated' && session?.user?.isAdmin) {
+      router.push('/admin');
+    }
+  }, [status, session, router]);
+
   return (
     <>
-      <style>
-          {`
-          body {
-              overflow-x: hidden;
-          }
-          `}
-      </style>
-      <Navbar backGroundOn={false} withTitle={false}/>
+      <Navbar backGroundOn />
       {/* แถบบน and Search bar */}
       <div className='flex justify-center flex-col w-full h-screen'>
         <div className='flex flex-col justify-center items-center w-full h-full bg-dark2 rounded-b-3xl'>
@@ -139,6 +161,10 @@ const Page: FC<Props> = (): JSX.Element => {
             onSelect={(item) => setSelectedProfile(item)}
             value={selectedProfile?.title}
           />
+          
+          <div className='absolute'>
+          <img src="https://dfmtboqfsygnjttfuvgq.supabase.co/storage/v1/object/public/b-trade/profile/43474571-17aa-4c70-bf6c-960848a25ed4.jpg" alt="" /> 
+          </div>
 
         </div>
 

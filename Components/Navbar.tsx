@@ -86,7 +86,7 @@ function DropDown() {
     const data = [{
         id: 1,
         icon: "mdi:user",
-        link: "/profile",
+        link: "/editprofile",
         text: "Edit Profile",
         size: "30"
     },

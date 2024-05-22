@@ -38,3 +38,6 @@ next-env.d.ts
 
 #myown
 test
+app/api/user/[user_id]/profile/route.ts
+app/api/user/\[user_id\]/profile/route.ts
+/app/api/user

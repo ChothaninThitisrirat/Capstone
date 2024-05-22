@@ -15,7 +15,6 @@ import HashLoader from "react-spinners/HashLoader";
 import { on } from 'events';
 
 
-
 interface BookInfoProps {
     setTrade: (state: boolean) => void;
     bookInfo: any
@@ -327,6 +326,14 @@ const BookInfo: React.FC<BookInfoProps> = ({ setTrade, bookInfo }) => {
 
     console.log('send',bookInfo.bookinfo.send,'pickup',bookInfo.bookinfo.pickup);
 
+    const handleToProfile = (User_ID: number | null | undefined) => {
+        if (User_ID !== null && User_ID !== undefined) {
+          router.push(`/profile/${User_ID.toString()}`);
+        } else {
+          console.error("User_ID is null or undefined");
+        }
+      };
+
 
 
 
@@ -449,7 +456,10 @@ const BookInfo: React.FC<BookInfoProps> = ({ setTrade, bookInfo }) => {
                 />
             </div>
             <div className="flex ml-5 flex-col ">
-                <div className="flex text-gray-600 text-lg underline ml-5 w-44">
+                <div 
+                    className="flex text-gray-600 text-lg underline ml-5 w-44"
+                    onClick={() => handleToProfile(bookInfoShow.user.id)}
+                >
                 {bookInfoShow?.user.username}
                 </div>
             </div>
