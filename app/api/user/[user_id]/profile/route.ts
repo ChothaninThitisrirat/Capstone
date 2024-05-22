@@ -30,16 +30,16 @@ export async function GET(req: Request,{ params }: { params: { user_id: string}}
 
 export async function PUT(req: Request) {
     try {
-        const formData = await req.formData();
-        let image: string | null = null;
-    
-        const file = formData.get('profile')?.valueOf() as Blob | null;
-    
-        if (file) {
-          const buffer = Buffer.from(await file.arrayBuffer());
-          image = await upLoadPROFILE(buffer);
-        }
-            
+            const formData = await req.formData();
+            let image: string | null =  null;
+
+            const file = formData.get('profile')?.valueOf() as Blob | null;
+
+            if (file) {
+                const buffer = Buffer.from(await file.arrayBuffer());
+                image = await upLoadPROFILE(buffer);
+            }
+
             const oldpic = await prismadb.user.findUnique({
                 where: { id:parseInt(formData.get('id') as string) },
                 select: {

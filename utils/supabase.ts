@@ -29,7 +29,7 @@ export const upLoadPROFILE = async (fileOrBlob: File | Blob | Buffer) => {
       const { error } = await supabase.storage
         .from("b-trade")
         .upload(filePath, fileOrBlob, {
-          cacheControl: "3600",
+          cacheControl: "3600"
         });
   
       if (error) {
@@ -38,6 +38,33 @@ export const upLoadPROFILE = async (fileOrBlob: File | Blob | Buffer) => {
   
       const { data } = await supabase.storage.from("b-trade").getPublicUrl(filePath);
       return data.publicUrl;
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      throw error;
+    }
+  };
+
+  export const upLoadIMGMAC = async (fileOrBlob: File | Blob | Buffer) => {
+    if (!fileOrBlob) {
+      throw new Error("No file or blob provided.");
+    }
+  
+    try {
+      const fileName = `book/${uuid()}.jpg`;
+      const filePath = `${fileName}`;
+  
+      const { error } = await supabase.storage
+        .from("b-trade")
+        .upload(filePath, fileOrBlob, {
+          cacheControl: "3600"
+        });
+  
+      if (error) {
+        throw error;
+      }
+  
+      const { data } = await supabase.storage.from("b-trade").getPublicUrl(filePath);
+      return [data.publicUrl];
     } catch (error) {
       console.error("Error uploading file:", error);
       throw error;
@@ -56,7 +83,7 @@ export const upLoadPROFILE = async (fileOrBlob: File | Blob | Buffer) => {
       const { error } = await supabase.storage
         .from("b-trade")
         .upload(filePath, fileOrBlob, {
-          cacheControl: "3600",
+          cacheControl: "3600"
         });
   
       if (error) {
@@ -70,7 +97,6 @@ export const upLoadPROFILE = async (fileOrBlob: File | Blob | Buffer) => {
       throw error;
     }
   };
-
 
 
 export const image = `https://dfmtboqfsygnjttfuvgq.supabase.co/storage/v1/object/public/b-trade/web/`
