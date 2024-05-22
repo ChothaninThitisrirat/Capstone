@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prismadb } from "@/lib/db";
+import { Decimal } from "@prisma/client/runtime/library";
 
 export async function GET(req: Request,{ params }: { params: { user_id: string }}) {
     try {
@@ -22,7 +23,7 @@ export async function GET(req: Request,{ params }: { params: { user_id: string }
         })
 
         const review_agg = await prismadb.review_User.aggregate({
-            where: { id: parseInt(params.user_id) },
+            where: { user_id: parseInt(params.user_id) },
             _avg: {
                 score:true
             },
@@ -38,10 +39,14 @@ export async function GET(req: Request,{ params }: { params: { user_id: string }
             }
         })
 
+        const avg = review_agg._avg.score as Decimal
+
+        const decimal = Math.round(avg.toNumber() * 100) / 100
+
         return NextResponse.json({
             user: userinfo,
             review_count: review_agg._count,
-            review_avg: review_agg._avg,
+            review_avg: decimal,
             book_count:book_agg._count,
             message: "All information of this user have been sent successfully."
         },{ status: 200 }

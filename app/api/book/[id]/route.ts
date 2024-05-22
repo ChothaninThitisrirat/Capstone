@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prismadb } from "@/lib/db";
+import { Decimal } from "@prisma/client/runtime/library";
 
 export async function GET(req: Request,{ params }: { params: { id: string }}) {
     try {
@@ -45,6 +46,9 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
             where: { book_id: parseInt(params.id) }
         })
 
+        const book_score = review_book_agg._avg.score as Decimal
+        const avg_book = Math.round(book_score.toNumber() * 100) / 100
+
         const user = await prismadb.user.findUnique({
             where: { id: findbook?.user_id},
             select: {
@@ -70,6 +74,9 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
             },
             where: { user_id:findbook?.user_id }
         })
+
+        const user_score = review_user_agg._avg.score as Decimal
+        const avg_user = Math.round(user_score.toNumber() * 100) / 100
 
         const otherbook = await prismadb.book.findMany({
             where: { 
@@ -102,14 +109,15 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
             }
         })
 
+
         return NextResponse.json({
             bookinfo,
             count_review_book_agg:review_book_agg._count,
-            avg_review_book_agg:review_book_agg._avg,
+            avg_review_book_agg:avg_book,
             category:findbook?.category.map(book => book.name),
             user,
             count_user_book:user_count_book._count,
-            avg_user_score:review_user_agg._avg,
+            avg_user_score:avg_user,
             count_user_review:review_user_agg._count,
             review_book,
             otherbook,
