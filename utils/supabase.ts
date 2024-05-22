@@ -17,7 +17,7 @@ export function isBlob(value: any): value is Blob {
     return value instanceof Blob;
   }
 
-export const upLoadPROFILE = async (fileOrBlob: File | Blob) => {
+export const upLoadPROFILE = async (fileOrBlob: File | Blob | Buffer) => {
     if (!fileOrBlob) {
       throw new Error("No file or blob provided.");
     }
@@ -29,8 +29,7 @@ export const upLoadPROFILE = async (fileOrBlob: File | Blob) => {
       const { error } = await supabase.storage
         .from("b-trade")
         .upload(filePath, fileOrBlob, {
-          cacheControl: "3600",
-          contentType: fileOrBlob.type,
+          cacheControl: "3600"
         });
   
       if (error) {
@@ -45,7 +44,8 @@ export const upLoadPROFILE = async (fileOrBlob: File | Blob) => {
     }
   };
 
-  export const upLoadIMG = async (fileOrBlob: File | Blob) => {
+
+  export const upLoadIMG = async (fileOrBlob: File | Blob | Buffer) => {
     if (!fileOrBlob) {
       throw new Error("No file or blob provided.");
     }
@@ -57,8 +57,7 @@ export const upLoadPROFILE = async (fileOrBlob: File | Blob) => {
       const { error } = await supabase.storage
         .from("b-trade")
         .upload(filePath, fileOrBlob, {
-          cacheControl: "3600",
-          contentType: fileOrBlob.type,
+          cacheControl: "3600"
         });
   
       if (error) {
@@ -66,13 +65,12 @@ export const upLoadPROFILE = async (fileOrBlob: File | Blob) => {
       }
   
       const { data } = await supabase.storage.from("b-trade").getPublicUrl(filePath);
-      return data.publicUrl;
+      return [data.publicUrl];
     } catch (error) {
       console.error("Error uploading file:", error);
       throw error;
     }
   };
-
 
 
 export const image = `https://dfmtboqfsygnjttfuvgq.supabase.co/storage/v1/object/public/b-trade/web/`

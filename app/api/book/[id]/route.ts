@@ -47,8 +47,13 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
             where: { book_id: parseInt(params.id) }
         })
 
-        const book_score = review_book_agg._avg.score as Decimal
-        const avg_book = Math.round(book_score.toNumber() * 100) / 100
+        let avg_book:number = 0
+
+        if (review_book_agg._avg.score != null) {
+            const book_score = review_book_agg._avg.score as Decimal
+            const avg_book = Math.round(book_score.toNumber() * 100) / 100    
+        }
+
 
         const user = await prismadb.user.findUnique({
             where: { id: findbook?.user_id},
@@ -76,17 +81,20 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
             where: { user_id:findbook?.user_id }
         })
 
-        const user_score = review_user_agg._avg.score as Decimal
-        const avg_user = Math.round(user_score.toNumber() * 100) / 100
+        let avg_user:number = 0
 
+        if (review_user_agg._avg.score != null) {
+            const user_score = review_user_agg._avg.score as Decimal
+            const avg_user = Math.round(user_score.toNumber() * 100) / 100
+        }
+        
         const otherbook = await prismadb.book.findMany({
             where: { 
                 user_id: findbook?.user_id,
-                AND: {
-                    NOT: {
-                        id: parseInt(params.id)
-                    }
-                }
+                NOT: {
+                    id: parseInt(params.id)
+                },
+                isPost_trade:true
             },
             select: {
                 id:true,

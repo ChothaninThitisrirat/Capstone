@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prismadb } from "@/lib/db";
-import { upLoadIMG, isBlob, isFile } from "@/utils/supabase";
+import { upLoadIMG } from "@/utils/supabase";
 
 export async function POST(req: Request) {
     try {
@@ -17,14 +17,17 @@ export async function POST(req: Request) {
             });
 
             let image: string[] = [];
-            for await (const [name , value] of formData.entries()){
-                if (name === 'image' && (isBlob(value) || isFile(value))) {
-                    const imageUrl = await upLoadIMG(value);
-                    if (imageUrl) {
-                        image.push(imageUrl);
+
+            const files = formData.getAll('image');
+
+                for (const file of files) {
+                    if (file instanceof Blob) {
+                        const buffer = Buffer.from(await file.arrayBuffer());
+                        const imageurl = await upLoadIMG(buffer);
+                        image.push(...imageurl);
                     }
-                }
             }
+            
 
             const newlibrarybook = await prismadb.book.create({
                 data : {
