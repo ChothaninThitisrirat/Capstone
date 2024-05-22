@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prismadb } from "@/lib/db";
-import { supabase, upLoadPROFILE } from "@/utils/supabase";
+import { supabase, upLoadPROFILE, isBlob, isFile } from "@/utils/supabase";
 
 export async function GET(req: Request,{ params }: { params: { user_id: string}}) {
     try {
@@ -26,15 +26,17 @@ export async function GET(req: Request,{ params }: { params: { user_id: string}}
     }
 }
 
+
+
 export async function PUT(req: Request) {
     try {
             const formData = await req.formData();
             let image: string | null =  null;
 
             for await (const [name , value] of formData.entries()){
-                if (name === 'profile' && value instanceof File) {
-                    image = await upLoadPROFILE(value);
-                }
+                if (name === 'profile' && (isFile(value) || isBlob(value))) {
+                        image = await upLoadPROFILE(value);
+                    }
             }
             
             const oldpic = await prismadb.user.findUnique({
