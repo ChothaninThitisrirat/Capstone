@@ -49,7 +49,7 @@ const BookInfoMain: React.FC = ( ) => {
               try {
                   
                   const response = await axios.get(`/api/book/${bookId}`);
-                  console.log('response.data',response.data);
+                  console.log(bookId,'response.data-------',response.data);
                   
                   if (response.data.bookinfo.isPost_trade){
                     setOnPost(true)

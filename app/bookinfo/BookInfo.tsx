@@ -32,7 +32,7 @@ interface BookInfoShow {
         picture: string[]; //
         pickup: string; //
         address: string; //
-        datetime: Date; //
+        postdate: Date; //
         status: string; //
     };
     count_review_book_agg: {
@@ -171,8 +171,9 @@ const BookInfo: React.FC<BookInfoProps> = ({ setTrade, bookInfo }) => {
     }
     , [bookInfo]);
 
+
     useEffect(() => {
-        const datetimeString = bookInfoShow?.bookinfo?.datetime;
+        const datetimeString = bookInfoShow?.bookinfo?.postdate;
         const datetimeObject = datetimeString ? new Date(datetimeString) : null;
         const avgReviewScore = bookInfoShow?.avg_review_book_agg?.score;
         if (avgReviewScore !== null && avgReviewScore !== undefined) {
@@ -223,7 +224,7 @@ const BookInfo: React.FC<BookInfoProps> = ({ setTrade, bookInfo }) => {
         }
     }
     , [bookInfoShow, category]);
-
+console.log('datePost',datePost)
 
 
     useEffect(() => {
@@ -324,7 +325,7 @@ const BookInfo: React.FC<BookInfoProps> = ({ setTrade, bookInfo }) => {
         }
     }
 
-    console.log('send',bookInfo.bookinfo.send,'pickup',bookInfo.bookinfo.pickup);
+    console.log('send',bookInfo.bookinfo.address,'pickup',bookInfo.bookinfo.postdate);
 
     const handleToProfile = (User_ID: number | null | undefined) => {
         if (User_ID !== null && User_ID !== undefined) {
@@ -359,7 +360,7 @@ const BookInfo: React.FC<BookInfoProps> = ({ setTrade, bookInfo }) => {
         style={{maxWidth: '1700px'}}
         className="flex w-full h-auto justify-center pt-16 mx-auto pb-40 flex-col">
             
-            <div className="flex mb-36">
+            <div className="flex mb-36 responsive-bookinfo">
             <div className="flex w-1/2 h-auto justify-end">
                 <div className="flex flex-col mr-20 mt-24 w-auto h-auto gap-2">
                 {bookInfoShow?.bookinfo?.picture.map((item, index) => (
@@ -413,7 +414,7 @@ const BookInfo: React.FC<BookInfoProps> = ({ setTrade, bookInfo }) => {
                 readOnly
                 style={{maxWidth: '550px',backgroundColor: '#f9f9f9'}}
                 value={bookInfoShow?.bookinfo.description}
-                className="break-words w-full h-40 ml-24 overflow-auto close-scrollbar mt-4 pr-20 resize-none"/>
+                className="break-words w-full h-40 ml-24 overflow-auto css-scrollbar mt-4 pr-20 resize-none"/>
                 
                 <div className="flex w-full pl-24 mt-8">
                 <button 
@@ -446,46 +447,45 @@ const BookInfo: React.FC<BookInfoProps> = ({ setTrade, bookInfo }) => {
 
         <div 
         style={{boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}} 
-        className="flex w-8/12 h-40 mx-auto mb-32 rounded items-center bg-white">
-            <div className="flex h-32 items-center border-r pr-14 border-gray-300 ml-10 cursor-pointer">
-            <div className="flex w-20 h-20 rounded-full bg-black">
-                <img
-                src={bookInfoShow?.user.profile_picture}
-                alt="Profile picture"
-                className="w-20 h-20 rounded-full"
-                />
-            </div>
-            <div className="flex ml-5 flex-col ">
-                <div 
-                    className="flex text-gray-600 text-lg underline ml-5 w-44"
-                    onClick={() => handleToProfile(bookInfoShow.user.id)}
-                >
-                {bookInfoShow?.user.username}
+        className="flex w-8/12 h-auto mx-auto mb-32 rounded items-center bg-white justify-around responsive-userCard">
+            <div className="flex h-32 items-center border-r border-gray-300 ml-10 cursor-pointer my-5 pb-3 responsive-border-line">
+                <div className="flex w-20 h-20 rounded-full bg-black">
+                    <img
+                    src={bookInfoShow?.user.profile_picture}
+                    alt="Profile picture"
+                    className="w-20 h-20 rounded-full"
+                    />
+                </div>
+                <div className="flex ml-5 flex-col ">
+                    <div 
+                    onClick={() => handleToProfile(bookInfoShow?.user.id)}
+                    className="flex text-gray-600 text-lg underline ml-5 w-44">
+                    {bookInfoShow?.user.username}
+                    </div>
                 </div>
             </div>
-            </div>
-            <div className="flex w-full justify-around px-20">
-            <div className="flex flex-col w-40 items-center gap-2 justify-center">
-                <div className="flex text-gray-600">คะแนนผู้ใช้</div>
-                <div className="flex mr-2 ">
-                        <Icon icon="material-symbols:star" width="20" height="20" 
-                        className={avgScoreUser >= 1 ?'text-yellow-300' :'text-gray-300'}/>
-                        <Icon icon="material-symbols:star" width="20" height="20" 
-                        className={avgScoreUser >= 2 ?'text-yellow-300' :'text-gray-300'}/>
-                        <Icon icon="material-symbols:star" width="20" height="20" 
-                        className={avgScoreUser >= 3 ?'text-yellow-300' :'text-gray-300'}/>
-                        <Icon icon="material-symbols:star" width="20" height="20" 
-                        className={avgScoreUser >= 4 ?'text-yellow-300' :'text-gray-300'}/>
-                        <Icon icon="material-symbols:star" width="20" height="20" 
-                        className={avgScoreUser >= 5 ?'text-yellow-300' :'text-gray-300'}/>
+            <div className="flex w-full justify-around my-5">
+                <div className="flex flex-col items-center gap-2 justify-center">
+                    <div className="flex text-gray-600">คะแนนผู้ใช้</div>
+                    <div className="flex mr-2 ">
+                            <Icon icon="material-symbols:star" width="20" height="20" 
+                            className={avgScoreUser >= 1 ?'text-yellow-300' :'text-gray-300'}/>
+                            <Icon icon="material-symbols:star" width="20" height="20" 
+                            className={avgScoreUser >= 2 ?'text-yellow-300' :'text-gray-300'}/>
+                            <Icon icon="material-symbols:star" width="20" height="20" 
+                            className={avgScoreUser >= 3 ?'text-yellow-300' :'text-gray-300'}/>
+                            <Icon icon="material-symbols:star" width="20" height="20" 
+                            className={avgScoreUser >= 4 ?'text-yellow-300' :'text-gray-300'}/>
+                            <Icon icon="material-symbols:star" width="20" height="20" 
+                            className={avgScoreUser >= 5 ?'text-yellow-300' :'text-gray-300'}/>
+                    </div>
+                    <div className="flex text-xs text-gray-500">{ avgScoreUser } คะแนน ( {bookInfoShow?.count_user_review.user_id} รีวิว )</div>
                 </div>
-                <div className="flex text-xs text-gray-500">{ avgScoreUser } คะแนน ( {bookInfoShow?.count_user_review.user_id} รีวิว )</div>
-            </div>
-            <div className="flex flex-col w-40 items-center gap-2 justify-center">
-                <div className="flex text-gray-600">รายการหนังสือทั้งหมด</div>
-                <div className="flex text-gray-600">{bookInfoShow?.count_user_book.user_id}</div>
-                <div className="flex text-xs text-gray-500">เล่ม</div>
-            </div>
+                <div className="flex flex-col items-center gap-2 justify-center">
+                    <div className="flex text-gray-600">รายการหนังสือทั้งหมด</div>
+                    <div className="flex text-gray-600">{bookInfoShow?.count_user_book.user_id}</div>
+                    <div className="flex text-xs text-gray-500">เล่ม</div>
+                </div>
             </div>
         </div>
 
