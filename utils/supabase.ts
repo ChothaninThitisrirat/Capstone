@@ -36,4 +36,6 @@ export const upLoadPROFILE = async (file: any) => {
   
 };
 
+
+
 export const image = `https://dfmtboqfsygnjttfuvgq.supabase.co/storage/v1/object/public/b-trade/web/`
