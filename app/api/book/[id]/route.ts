@@ -82,11 +82,10 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
         const otherbook = await prismadb.book.findMany({
             where: { 
                 user_id: findbook?.user_id,
-                AND: {
-                    NOT: {
-                        id: parseInt(params.id)
-                    }
-                }
+                NOT: {
+                    id: parseInt(params.id)
+                },
+                isPost_trade:true
             },
             select: {
                 id:true,

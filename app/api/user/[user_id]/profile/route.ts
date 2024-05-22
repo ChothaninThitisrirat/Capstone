@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prismadb } from "@/lib/db";
-import { supabase, upLoadPROFILE, isBlob, isFile } from "@/utils/supabase";
+import { supabase, upLoadPROFILE } from "@/utils/supabase";
 
 export async function GET(req: Request,{ params }: { params: { user_id: string}}) {
     try {
