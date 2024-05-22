@@ -111,9 +111,7 @@ const Page: FC<Props> = (): JSX.Element => {
   };
 
   useEffect(() => {
-    if (status === 'unauthenticated') {
-      router.push('/login')
-    }else if (status === 'authenticated' && session?.user?.id) {
+    if (status === 'authenticated' && session?.user?.id) {
       fetch('api/user/${session.user.id}')
       .then(response => response.json())
       .then(data => {
@@ -136,7 +134,6 @@ const Page: FC<Props> = (): JSX.Element => {
 
   return (
     <>
-
       <Navbar backGroundOn />
       {/* แถบบน and Search bar */}
       <div className='flex justify-center flex-col w-full h-screen'>
