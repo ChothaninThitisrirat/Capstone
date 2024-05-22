@@ -4,7 +4,7 @@ import { prismadb } from "@/lib/db";
 export async function GET(req: Request,{ params }: { params: { book_id: string }}) {
     try {
         const reviewbook = await prismadb.review_Book.findMany({
-            where: { user_id:parseInt(params.book_id) },
+            where: { book_id:parseInt(params.book_id) },
             select: {
                 id:true,
                 title:true,

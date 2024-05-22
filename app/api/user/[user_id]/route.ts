@@ -22,7 +22,7 @@ export async function GET(req: Request,{ params }: { params: { user_id: string }
         })
 
         const review_agg = await prismadb.review_User.aggregate({
-            where: { id: parseInt(params.user_id) },
+            where: { user_id: parseInt(params.user_id) },
             _avg: {
                 score:true
             },
