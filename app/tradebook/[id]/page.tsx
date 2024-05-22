@@ -13,6 +13,7 @@ import { useRouter, useParams } from 'next/navigation'
 import axios from 'axios';
 import HashLoader from "react-spinners/HashLoader";
 import Router from 'next/router'
+import ManageRequest from '@/Components/ManageRequest';
 
 interface Book {
     id: number;
@@ -63,16 +64,30 @@ function TradeBookSelect() {
   }, [param.id]);
 
     const [tradeBook, setTradeBook] = useState<BookRequest>();
-    const [tradeReQuest, setTradeReQuest] = useState<tradeReQuest[]>();
+    const [tradeReQuest, setTradeReQuest] = useState<tradeReQuest[]>([]);
+    const [historyTrade, setHistoryTrade] = useState<tradeReQuest[]>([]);
+    const [tradingBook, setTradingBook] = useState<tradeReQuest[]>([]);
+
+    const [bookIdSelect, setBookIdSelect] = useState<number | null | undefined>(null)
+    const [stateOpen, setStateOpen] = useState(false)
+    const [classAddBookbg, setClassAddBookbg] = useState('fixed h-screen w-screen bg-slate-200 top-0 left-0 z-50 opacity-30 backdrop-blur-2xl hidden')
+    const [classAddBook, setClassAddBook] = useState({
+        transform:'translateY(100%)',
+        visibility: "hidden",
+        transitionDuration: '0.3s'
+    })
 
     useEffect(() => {
+      setLoadcompo(false)
         const fetchData = async () => {
             try {
-                const response = await axios.get(`/api/trade/mybookrequest/${userId}/${bookId}`);
+                const response = await axios.get(`/api/trade/mybookrequest/${userId}/book/${bookId}`);
                 console.log('response', response.data.mybookrequest);
 
                 setTradeBook(response.data.mybookrequest);
-                // setTradeReQuest(response.data.mybookrequest.Trade_Trade_book_idToBook);
+                setTradeReQuest(response.data.mybookrequest.Trade_Trade_book_idToBook.filter((item:tradeReQuest) => item.status === 'pending').reverse());
+                setHistoryTrade(response.data.mybookrequest.Trade_Trade_book_idToBook.filter((item:tradeReQuest) => item.status === 'traded').reverse());
+                setTradingBook(response.data.mybookrequest.Trade_Trade_book_idToBook.filter((item:tradeReQuest) => item.status === 'trading'));
                 setLoading(false);
             } catch (error) {
                 console.error('Error:', error);
@@ -82,15 +97,74 @@ function TradeBookSelect() {
         if (bookId !== undefined && userId !== undefined) {
         fetchData(); 
         }
-    }, [userId,bookId]);
+    }, [userId,bookId,loadcompo]);
     
     console.log(userId,bookId,'tradeBook', tradeBook);
     console.log('tradeReQuest', tradeReQuest);
+    console.log('tradeReQuest', historyTrade);
+    console.log('tradingBook--------', tradingBook[0]);
+    console.log('tradingBook--------',tradingBook[0] !== undefined && tradingBook[0].Book_Trade_req_book_idToBook.id);
+
+
+
+
+
+
+  const handlePopup = (item:any) => {
+    if(item.Book_Trade_req_book_idToBook.status === 'available'){
+      setBookIdSelect(item.Book_Trade_req_book_idToBook.id)
+      setStateOpen(true);
+    }
+  }
+
+  const handlePopuptrading = (item:any) => {
+    if(tradingBook[0] !== undefined){
+      setBookIdSelect(item.Book_Trade_req_book_idToBook.id)
+      setStateOpen(true);
+    }
+  }
+
+  useEffect(() => {
+    if (stateOpen) {
+        setClassAddBookbg('visible fixed h-screen w-screen bg-slate-200 top-0 left-0 z-50 opacity-30 backdrop-blur-2xl')
+        setClassAddBook({
+            transform:'translateY(0%)',
+            visibility: "visible",
+            transitionDuration: '0.3s'
+        })
+    } else {
+        setClassAddBookbg('hidden fixed h-screen w-screen bg-slate-200 top-0 left-0 z-50 opacity-30 backdrop-blur-2xl')
+        setClassAddBook({
+            transform:'translateY(100%)',
+            visibility: "hidden",
+            transitionDuration: '0.3s'
+        })
+    }   
+}, [stateOpen])
+
+
+
+
+
+
+
+
+
+    const handleToBookInfo = (BookId: any) => {
+        if (BookId !== null && BookId !== undefined) {
+
+            router.push(`/bookinfo/${BookId.toString()}`)
+        }
+    }
+
+
 
     return (<>
         <style>
-            {`body {
-                overflow-x: hidden;
+            {stateOpen?`body {
+                overflow: hidden;
+            }`:`body {
+              overflow-x: hidden;
             }`}
         </style>
             <Navbar backGroundOn={true} withTitle={true}/>
@@ -103,12 +177,30 @@ function TradeBookSelect() {
             :<div
             style={{minHeight: "800px", maxWidth: '1800px'}}
             className="flex items-center h-auto z-10 bg-none w-screen pb-20 flex-col mx-auto">
-{/* 
+
                     <div className="flex bg-dark3 w-10/12 h-auto mt-10 rounded-3xl flex-col">
                         <div className="flex w-full bg-dark1 text-white h-12 items-center justify-center rounded-t-3xl text-2xl">{tradeBook?.title}</div>
                         <div className="flex justify-around py-5 px-5">
                             <div className="flex items-center justify-center rounded-sm w-24 h-36 shrink-0">
-                                <img src={tradeBook?.picture} className="w-full h-full object-cover shadow shrink-0" />
+                            {
+                            tradeBook?.picture && tradeBook.picture.length > 0 ?
+                              <img
+                                onClick={() => handleToBookInfo(tradeBook?.id)}
+                                src={tradeBook.picture[0]}
+                                className="w-full h-full object-cover shadow shrink-0 cursor-pointer"
+                                alt="Trade Book"
+                              />
+                              :<div>
+                                <HashLoader
+                                  className="ml-1 mr-2"
+                                  color='#fff'
+                                  loading={true}
+                                  size={20}
+                                  aria-label="Loading Spinner"
+                                  data-testid="loader"
+                                />
+                              </div>}
+                                
                             </div>
                             <div className="flex flex-col my-auto w-60">
                                 <div className="flex justify-center text-xl text-white">วิธีการแลกเปลี่ยน</div>
@@ -135,18 +227,86 @@ function TradeBookSelect() {
                             <div className="flex border-l-2 border-gray-400 "></div>
                             <div className="flex flex-col gap-5 my-auto">
                                 <div className="flex justify-center text-xl text-white">จำนวนหนังสือที่เสนอแลกเปลี่ยน</div>
-                                <div className="flex justify-center text-xl text-white">{tradeBook?.Trade_Trade_book_idToBook.length}</div>
+                                <div className="flex justify-center text-xl text-white">{tradeReQuest?.length}</div>
                                 <div className="flex justify-center text-xl text-white">เล่ม</div>
                             </div>
                         </div>
                     </div>
                     
-                     */}
-
-
-                    <div className="flex text-3xl text-dark1 font-bold mt-14">หนังสือที่เสนอแลกเปลี่ยน</div>
-
                     
+                    {tradingBook[0]?.status === 'trading' &&
+                    <>
+                      <div className="flex text-4xl text-dark1 font-bold mt-14 mb-10">หนังสือที่กำลังเทรดด้วย</div>
+                      <div 
+                      onClick={() => handlePopuptrading(tradingBook[0])}
+                      className='flex items-center justify-center rounded-sm border w-40 h-60 cursor-pointer shadow-sm hover:scale-105 duration-300 relative mb-5'>
+                              <div className="flex flex-col absolute bottom-0 translate-y-12 text-base w-full">
+                                  <div className="flex w-full justify-center">{tradingBook[0].Book_Trade_req_book_idToBook.title}</div>
+                              </div>
+                              <img
+                              src={tradingBook[0].Book_Trade_req_book_idToBook.picture[0]}
+                              alt="Profile picture"
+                              className='w-full h-full object-cover cursor-pointer bg-white'
+                              />
+                          </div>
+                    </>
+                    }  
+                    
+
+
+
+                    <div className="flex text-4xl text-dark1 font-bold mt-14">หนังสือที่เสนอแลกเปลี่ยน</div>
+                    {tradeReQuest.length === 0 ? <div className="flex  items-center h-52 text-xl font-bold text-gray-400 w-full pl-32">
+                        ไม่มีหนังสือที่เสนอแลกเปลี่ยน
+                        </div>
+                    :<div
+                    className="flex w-full h-auto p-10 flex-wrap gap-20 mb-10 mt-5 library-container">
+                      {tradeReQuest?.map((item, index) => (
+                          <div
+                          key={index}
+                          onClick={() => handlePopup(item)}
+                          className='flex items-center justify-center rounded-sm border w-40 h-60 cursor-pointer shadow-sm hover:scale-105 duration-300 relative'>
+                                {(item.Book_Trade_req_book_idToBook.status === 'trading')&& 
+                                <div 
+                                    style={{backgroundColor:'#57575780'}}
+                                    className={"absolute top-0 left-0 w-40 h-60 flex justify-center items-center font-bold text-xl duration-300"}>
+                                    {item.Book_Trade_req_book_idToBook.status === 'trading' && <div className="flex">UNAVAILABLE</div>}
+                                </div>}
+                              <div className="flex flex-col absolute bottom-0 translate-y-12 text-base w-full">
+                                  <div className="flex w-full justify-center">{item.Book_Trade_req_book_idToBook.title}</div>
+                              </div>
+                              <img
+                              src={item.Book_Trade_req_book_idToBook.picture[0]}
+                              alt="Profile picture"
+                              className='w-full h-full object-cover cursor-pointer bg-white'
+                              />
+                          </div>
+                      ))}
+                    </div>}
+
+                    <div className="flex text-2xl text-dark1 font-bold mt-14 w-full px-20">ประวัติหนังสือที่แลกเปลี่ยน</div>
+                    {historyTrade.length === 0 ? <div className="flex  items-center h-52 text-xl font-bold text-gray-400 w-full pl-32">
+                        ไม่มีประวัติหนังสือที่แลกเปลี่ยน
+                        </div>
+                    :
+                      <div
+                      className="flex w-full h-auto p-10 flex-wrap gap-20 mb-10 mt-5 library-container">
+                        {historyTrade?.map((item, index) => (
+                            <div
+                            key={index}
+                            onClick={() => handleToBookInfo(item.req_book_id)}
+                            className='flex items-center justify-center rounded-sm border w-40 h-60 cursor-pointer shadow-sm hover:scale-105 duration-300 relative'>
+                                <div className="flex flex-col absolute bottom-0 translate-y-12 text-base w-full">
+                                    <div className="flex w-full justify-center">{item.Book_Trade_req_book_idToBook.title}</div>
+                                </div>
+                                <img
+                                src={item.Book_Trade_req_book_idToBook.picture[0]}
+                                alt="Profile picture"
+                                className='w-full h-full object-cover cursor-pointer bg-white'
+                                />
+                            </div>
+                        ))}
+                      </div>}
             </div>}
 
 
@@ -156,7 +316,8 @@ function TradeBookSelect() {
 
 
             <Footer/>
-                
+            <div className={classAddBookbg}></div>
+            <ManageRequest stateOpen={stateOpen} setStateOpen={setStateOpen} classAddBook={classAddBook} setLoadcompo={setLoadcompo} tradeReQuest={tradeReQuest} bookIdSelect={bookIdSelect} tradingBook={tradingBook}/>
             
 
             

@@ -31,7 +31,8 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
                 pickup:true,
                 address:true,
                 postdate:true,
-                isPost_trade:true
+                isPost_trade:true,
+                status:true,
             }
         })
 

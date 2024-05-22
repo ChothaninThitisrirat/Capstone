@@ -53,23 +53,48 @@ function TradeBook() {
             try {
                 const response = await axios.get(`/api/trade/mybookrequest/${userId}`);
                 const myBookRequest: BookRequest[] = response.data.mybookrequest;
-                const filteredBookRequest = myBookRequest.filter(
-                    (request) => request.Trade_Trade_book_idToBook.length !== 0
-                );
+    
+                const bookRequestWithBooks = myBookRequest.filter((request: BookRequest) => {
+                    const hasBooks = request.Trade_Trade_book_idToBook.length !== 0;
+                    console.log(`Request ID: ${request.id}, Has Books: ${hasBooks}`);
+                    return hasBooks;
+                });
+    
+                const bookRequestTrading = myBookRequest.filter((request: BookRequest) => {
+                    const isTrading = request.status === 'trading';
+                    console.log(`Request ID: ${request.id}, Is Trading: ${isTrading}`);
+                    return isTrading;
+                });
 
-                setTradeBook(filteredBookRequest.reverse());
+                const combinedBookRequest = [...bookRequestTrading,...bookRequestWithBooks ];
+                
+                const uniqueBookRequests = combinedBookRequest.reduce((acc: BookRequest[], current: BookRequest) => {
+                    const x = acc.find(item => item.id === current.id);
+                    if (!x) {
+                        return acc.concat([current]);
+                    } else {
+                        return acc;
+                    }
+                }, []);
+    
+                console.log('Unique Book Requests:', uniqueBookRequests);
+    
+                setTradeBook(uniqueBookRequests);
                 setLoading(false);
             } catch (error) {
                 console.error('Error:', error);
                 setLoading(false);
             }
         };
+    
         if (userId !== undefined) {
-        fetchData(); 
+            fetchData();
         }
     }, [userId]);
     
+    
     console.log('book', tradeBook);
+
 
 
     const handleToBookInfo = (BookId: number | null | undefined) => {
@@ -153,6 +178,7 @@ function TradeBook() {
 
 
             <Footer/>
+
                 
             
 
