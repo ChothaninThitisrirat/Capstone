@@ -6,7 +6,6 @@ export async function PUT(req: Request) {
         const { id } = await req.json()
  
         const date = new Date()
-
         const returnbook = await prismadb.trade.update({
             where: { id:id },
             data: {
@@ -14,7 +13,7 @@ export async function PUT(req: Request) {
                 datetime: date.toISOString()
             }
         })
-
+        
         if (!returnbook) {
             return NextResponse.json({
                 trade:null,

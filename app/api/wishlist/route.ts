@@ -7,7 +7,7 @@ export async function POST(req: Request) {
 
         const existWishlist = await prismadb.wishlist.findFirst({
             where: { 
-                user_id:user_id,
+                user_id:parseInt(user_id),
                 book_id:book_id
             }
         })
@@ -15,7 +15,7 @@ export async function POST(req: Request) {
         if (existWishlist) {
             const deleteWishlist = await prismadb.wishlist.deleteMany({
                 where: { 
-                    user_id:user_id,
+                    user_id:parseInt(user_id),
                     book_id:book_id
                 }
             })
@@ -30,7 +30,7 @@ export async function POST(req: Request) {
 
         const addWishlist = await prismadb.wishlist.create({
             data: {
-                    user_id,
+                    user_id:parseInt(user_id),
                     book_id
             }
         })

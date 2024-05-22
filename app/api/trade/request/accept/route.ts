@@ -3,7 +3,7 @@ import { prismadb } from "@/lib/db";
 
 export async function PUT(req: Request) {
     try {
-        const { id } = await req.json()
+        const { id } = await req.json() // trade id
         
         const date = new Date()
 

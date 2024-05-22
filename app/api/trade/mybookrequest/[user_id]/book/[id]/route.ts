@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prismadb } from "@/lib/db";
-
+// user id เรา book id เรา
 export async function GET(req: Request,{ params }: { params: { user_id: string , id : string }}) {
     try {
         const mybookrequest = await prismadb.book.findUnique({
@@ -11,25 +11,26 @@ export async function GET(req: Request,{ params }: { params: { user_id: string ,
                 picture:true,
                 status:true,
                 address:true,
+                title:true,
                 Trade_Trade_book_idToBook: {
                     where: {
                         NOT: {
                             status: 'decline'
                         }
                     },
-                    select: {
+                    select: { // trade
                         id:true,
                         req_book_id:true,
                         status:true,
                         pickup_req:true,
                         req_address:true,
                         Book_Trade_req_book_idToBook: {
-                            select: {
+                            select: { // book เขาที่มาขอเทรด
                                 id:true,
                                 title:true,
                                 picture:true,
-                                status:true,
-                                User: {
+                                status:true, // สถานะของหนังสือ
+                                User: { // ข้อมูลเขา
                                     select: {
                                         id:true,
                                         username:true,

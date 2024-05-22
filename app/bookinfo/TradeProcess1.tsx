@@ -105,8 +105,8 @@ const TradeProcess: React.FC<TradeProcess1Props> = ({ bookId, setStateProcess, s
     
         const fetchData = async () => {
             try {
-                const response = await axios.get(`/api/library/${userId}`);
-                setBook(response.data.library.reverse());
+                const response = await axios.get<{ library: Book[] }>(`/api/library/${userId}`);
+                setBook(response.data.library.sort((a, b) => b.id - a.id));
                 setLoading(false);
             } catch (error) {
                 console.error('Error:', error);
@@ -158,7 +158,7 @@ return (
         style={{minHeight: "800px",marginLeft:'450px'}}
         className="flex justify-center h-auto w-sceen z-10 bg-none">
             <div
-            className="flex w-full h-screen p-10 flex-wrap gap-20 gap-y-14 mb-10 overflow-y-auto close-scrollbar z-10 trade-container">
+            className="flex w-full h-screen p-10 flex-wrap gap-20 gap-y-14 mb-10 overflow-y-auto close-scrollbar z-10 trade-container pb-52">
                 <div 
                 onClick={() => setStateAddBook(true)}
                 className="flex items-center justify-center rounded-sm border w-64 h-96 bg-slate-200 cursor-pointer shadow-sm hover:bg-slate-300  hover:scale-105 duration-300">

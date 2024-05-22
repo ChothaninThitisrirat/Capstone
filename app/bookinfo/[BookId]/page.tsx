@@ -43,6 +43,30 @@ const BookInfoMain: React.FC = ( ) => {
     }
   }, [param.BookId]);
 
+
+  useEffect(() => {
+    const fetchData = async () => {
+        try{
+            const response = await axios.get(`/api/trade/ownerinfo/${bookId}`)
+              if (response.data.bookinfo.isPost_trade){
+                setOnPost(true)
+                setBookInfo(response.data);
+                setLoading(false)
+              }else{
+                setOnPost(false)
+                setLoading(false)
+              }
+          
+        }catch(err){
+            console.log(err)
+        }
+    }
+    if(bookId !== null){
+        fetchData()
+    }
+
+}, [bookId])
+
   useEffect(() => {
       const fetchData = async () => {
           if (bookId) {

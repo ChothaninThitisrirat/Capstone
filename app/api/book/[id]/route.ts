@@ -30,7 +30,7 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
                 picture:true,
                 pickup:true,
                 address:true,
-                datetime:true,
+                postdate:true,
                 isPost_trade:true
             }
         })

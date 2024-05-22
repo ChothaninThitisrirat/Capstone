@@ -90,6 +90,7 @@ const BookInfo: React.FC<BookInfoProps> = ({ setTrade, bookInfo }) => {
     const [ reViewShow, setReViewShow ] = useState<ReViewShow[]>([]);
 
     const [ bookInfoShow, setBookInfoShow ] = useState<BookInfoShow>();
+    const [ state1, setState1 ] = useState(false)
     const param = useParams();
 
     const thaiMonths = [
@@ -202,6 +203,7 @@ const BookInfo: React.FC<BookInfoProps> = ({ setTrade, bookInfo }) => {
             const formattedDate = `${day} ${thaiMonths[month]} ${year + 543}`;
             setDatePost(formattedDate);
         }
+        setState1(false)
         const fetchData = async () => {
             try{
                 const response = await axios.get(`/api/wishlist/${session?.user.id}`)
@@ -220,6 +222,29 @@ const BookInfo: React.FC<BookInfoProps> = ({ setTrade, bookInfo }) => {
         }
     }
     , [bookInfoShow, category]);
+
+
+
+    useEffect(() => {
+        setState1(false)
+        const fetchData = async () => {
+            try{
+                const response = await axios.get(`/api/wishlist/${session?.user.id}`)
+                const wishlist = response.data.wishlist as BookItem[]
+                if (wishlist.some(item => item.id === bookInfoShow?.bookinfo.id)) {
+                    setStateWishlist(true)
+                } else {
+                    setStateWishlist(false)
+                }
+            }catch(err){
+                console.error(err)
+            }
+        }
+        if (bookInfoShow?.bookinfo.id !== undefined) {
+            fetchData()
+        }
+    }
+    , [state1]);
 
 
 
@@ -279,11 +304,13 @@ const BookInfo: React.FC<BookInfoProps> = ({ setTrade, bookInfo }) => {
     }, []);
 
     const handleWishlist = async() => {
+        setState1(true)
         if (status === 'unauthenticated') {
             router.push('/login')
         }else{
+
                 try{
-                const response = await axios.post(`/api/wishlist/add`, {
+                const response = await axios.post(`/api/wishlist`, {
                     book_id: bookInfoShow?.bookinfo.id,
                     user_id: session?.user.id
                 })
@@ -292,6 +319,7 @@ const BookInfo: React.FC<BookInfoProps> = ({ setTrade, bookInfo }) => {
                 }catch(err){
                     console.error(err)
                 }
+            
         }
     }
 
@@ -514,7 +542,7 @@ const BookInfo: React.FC<BookInfoProps> = ({ setTrade, bookInfo }) => {
                     <textarea
                         id="book-detail"
                         value={detailReview}
-                        placeholder="Book Detail"
+                        placeholder="Review Detail"
                         maxLength={100}
                         onChange={(e) => setDetailReview(e.target.value)}
                         required

@@ -65,19 +65,23 @@ function Library() {
     useEffect(() => {
         console.log('userId', userId);
         setLoadcompo(false);
-    
+
         const fetchData = async () => {
             try {
-                const response = await axios.get(`/api/library/${userId}`);
-                setBook(response.data.library.reverse());
+                const response = await axios.get<{ library: Book[] }>(`/api/library/${userId}`);
+
+                const sortedLibrary = response.data.library.sort((a, b) => b.id - a.id);
+                
+                setBook(sortedLibrary);
                 setLoading(false);
             } catch (error) {
                 console.error('Error:', error);
                 setLoading(false);
             }
         };
+
         if (userId !== undefined) {
-        fetchData(); 
+            fetchData();
         }
     }, [userId, loadcompo]);
     
@@ -122,7 +126,7 @@ function Library() {
                     {book.map((item, index) => (
                         <div
                         onClick={()=>handleToBookInfo(item.id)} // ต้องส่งค่าไปหน้า BookInfo
-                        key={index} 
+                        key={index}
                         className='flex items-center justify-center rounded-sm border w-64 h-96 cursor-pointer shadow-sm hover:scale-105 duration-300 relative'>
                             <div className="flex absolute top-0 -translate-y-5 text-base w-full">
                                 <div className="flex w-full justify-start gap-2">

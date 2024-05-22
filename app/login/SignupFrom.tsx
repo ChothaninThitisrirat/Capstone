@@ -192,6 +192,7 @@ const Login: React.FC<LoginProps> = ({
                 card_id: personalId,
                 address: [address],
                 phone_number: telNumber,
+                category: dataCatin,
             }),
             });
             const responseData = await response.json();
@@ -274,6 +275,7 @@ const Login: React.FC<LoginProps> = ({
     };
 
     const [dataCatin, setDataCatin] = useState([])
+    console.log('dataCatin', dataCatin)
     const [classCategory, setClassCategory] = useState("flex items-center justify-center rounded-lg w-32 h-8 text cursor-pointer py-0.5 px-3 flex-grow-4 duration-1000")
     const [category, setCategory] = useState<Category[]>([{
         id:null,

@@ -8,7 +8,7 @@ export async function POST(req: Request) {
         const reviewbook = await prismadb.review_User.create({
             data: {
                 user_id, 
-                reviewer_id, 
+                reviewer_id: parseInt(reviewer_id), 
                 score, 
                 title, 
                 describe

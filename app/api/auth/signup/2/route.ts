@@ -48,7 +48,7 @@ export async function POST(req: Request) {
             await prismadb.userlike.create({
                 data: {
                     user_id:newUser.id,
-                    category_id:category[i]
+                    category_id:parseInt(category[i])
                 }
             })
         }

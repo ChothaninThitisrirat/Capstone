@@ -3,6 +3,7 @@ import { Icon } from '@iconify/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation'
+import HashLoader from "react-spinners/HashLoader";
 
 
 interface PostBook3Props {
@@ -27,10 +28,15 @@ const PostBook3: React.FC<PostBook3Props> = ({bookSelect, book}) =>{
     };
 
     useEffect(() => {
+        const fetchBook = async () => {
+            // const response = await axios.get(`/api/trade/ownerinfo/${bookId}`)
         const filteredBook = book.filter((book: any) => book.id === bookSelect);
         setBookProp2(filteredBook)
-    }, [book])
-console.log(bookProp2)
+        }
+        fetchBook()
+        
+    }, [book,bookSelect])
+console.log(bookSelect,'bookProp2',bookProp2)
 
 
     return (
@@ -40,15 +46,22 @@ console.log(bookProp2)
                 className='text-green-400  z-30'/>
                 <div className="text-3xl mt-2  z-30">โพสต์หนังสือเสร็จสิ้น</div>
                 <div className="mt-8 text-3xl  z-30">{bookProp2[0]?.title }</div>
-                <div  
-                    className={classBook}>
-                        <img
-                        src={bookProp2[0]?.picture}
-                        alt="Profile picture"
-                        className='w-64 h-96 object-cover'
+                <div className={classBook}>
+                    {bookProp2.length > 0 && bookProp2[0].picture.length > 0 ? (
+                    <img
+                        src={bookProp2[0].picture[0]}
+                        alt="Picture"
+                        className="w-64 h-96 object-cover"
                         />
+                    ) : (
+                        <div><HashLoader
+                        className="ml-1 mr-2"
+                        color='#fff' loading={true} size={20} aria-label="Loading Spinner" data-testid="loader"/></div>
+                    )}
                 </div>
-                <button className='text-xl text-dark1 border-4 border-dark1 rounded-full h-10 w-52 z-30'>ดูโพสต์ของฉัน</button>
+                <button 
+                onClick={() => router.push( `/bookinfo/${bookSelect}`)}
+                className='text-xl text-dark1 border-4 border-dark1 rounded-full h-10 w-52 z-30'>ดูโพสต์ของฉัน</button>
                 <button onClick={handleCancel} className='text-xl text-white bg-dark2 rounded-full h-10 w-44 z-30 mt-10'>กลับสู่หน้าหลัก</button>
             </div>
         </>

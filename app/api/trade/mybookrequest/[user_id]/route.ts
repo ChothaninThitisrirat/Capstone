@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prismadb } from "@/lib/db";
-
+// ดูหนังสื่อของเราที่เคยโพสเทรด
 export async function GET(req: Request,{ params }: { params: { user_id: string }}) {
     try {
         const mybookrequest = await prismadb.book.findMany({
@@ -18,9 +18,11 @@ export async function GET(req: Request,{ params }: { params: { user_id: string }
                 pickup:true,
                 address:true,
                 picture:true,
+                title:true,
+                status:true,
                 Trade_Trade_book_idToBook:{
                     select:{
-                        req_book_id:true
+                        req_book_id:true // จน.นส.
                     },
                     where: {
                         status: 'pending'
