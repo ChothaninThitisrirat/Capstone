@@ -33,12 +33,13 @@ export async function PUT(req: Request) {
             const formData = await req.formData();
             let image: string | null =  null;
 
-            for await (const [name , value] of formData.entries()){
-                if (name === 'profile' && (isFile(value) || isBlob(value))) {
-                        image = await upLoadPROFILE(value);
-                    }
+            const file = formData.get('profile')?.valueOf() as Blob | null;
+
+            if (file) {
+                const buffer = Buffer.from(await file.arrayBuffer());
+                image = await upLoadPROFILE(buffer);
             }
-            
+
             const oldpic = await prismadb.user.findUnique({
                 where: { id:parseInt(formData.get('id') as string) },
                 select: {
