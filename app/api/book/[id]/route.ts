@@ -6,7 +6,6 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
         const findbook = await prismadb.book.findUnique({
             where: { 
                 id: parseInt(params.id),
-                isPost_trade: true
             },
             select: {
                 user_id:true,
@@ -29,7 +28,9 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
                 description:true,
                 picture:true,
                 pickup:true,
-                address:true
+                address:true,
+                datetime:true,
+                isPost_trade:true
             }
         })
 
@@ -48,7 +49,8 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
             where: { id: findbook?.user_id},
             select: {
                 id:true,
-                username:true
+                username:true,
+                profile_picture:true
             },
         })
 

@@ -10,22 +10,25 @@ import Link from "next/link";
 
 interface NavbarProps {
     backGroundOn: boolean;
+    withTitle: boolean;
 }
 
 
-const Navbar: React.FC<NavbarProps> = ({backGroundOn}) =>{
+const Navbar: React.FC<NavbarProps> = ({backGroundOn, withTitle}) =>{
     const { data: session, status } = useSession()
 
     const [showDropDown, setShowDropDown] = useState(false)
     return (<>
+        <div className={withTitle?"flex  w-screen h-16 cursor-pointer justify-center z-30 bg-dark3"
+            :"flex  w-screen h-16 cursor-pointer justify-center z-30"}>
             <div 
             className={backGroundOn
-            ?"flex w-screen h-16  relative cursor-pointer justify-center z-30 bg-dark2"
-            :"flex w-screen h-16 rounded-b-3xl relative cursor-pointer justify-center z-30"} >
+            ?"flex w-screen h-16  rounded-b-3xl relative cursor-pointer justify-center z-30 bg-dark2"
+            :"flex w-screen h-16 relative cursor-pointer justify-center z-30 bg-dark2"} >
                 <div 
                 style={{maxWidth: '2200px'}}
                 className="flex w-screen h-16 justify-between relative z-30">
-                    <div className="flex gap-10 ml-10 items-center">
+                    <div className="flex gap-5 ml-10 items-center">
                     <Link href='/' >
                         <Image
                         src={logoWhite}
@@ -69,6 +72,7 @@ const Navbar: React.FC<NavbarProps> = ({backGroundOn}) =>{
                     :"absolute top-16 right-14 -translate-y-96 duration-500 z-10"}>
                 <DropDown/>
             </div>
+        </div>
             
             
         </>
@@ -88,7 +92,7 @@ function DropDown() {
     {
         id: 2,
         icon: "mdi:list-status",
-        link: "",
+        link: "/statustrade",
         text: "สถานะคำขอแลกเปลี่ยน",
         size: "25"
     },

@@ -12,11 +12,14 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import axios from 'axios';
 import HashLoader from "react-spinners/HashLoader";
+import Router from 'next/router'
 
 interface Book {
     id: number;
     title: string;
     picture: string;
+    status: string;
+    isPost_trade: boolean;
 }
 
 function Library() {
@@ -40,8 +43,6 @@ function Library() {
     })
 
     const [book, setBook] = useState<Book[]>([]);
-
-
 
     useEffect(() => {
         if (stateAddBook) {
@@ -68,7 +69,7 @@ function Library() {
         const fetchData = async () => {
             try {
                 const response = await axios.get(`/api/library/${userId}`);
-                setBook(response.data.library);
+                setBook(response.data.library.reverse());
                 setLoading(false);
             } catch (error) {
                 console.error('Error:', error);
@@ -83,6 +84,12 @@ function Library() {
     console.log('book', book);
 
 
+    const handleToBookInfo = (BookId: number | null | undefined) => {
+        if (BookId !== null && BookId !== undefined) {
+
+            router.push(`/bookinfo/${BookId.toString()}`)
+        }
+    }
 
     return (<>
         <style>
@@ -94,7 +101,7 @@ function Library() {
                 overflow-x: hidden;
             }`}
         </style>
-            <Navbar backGroundOn={true}/>
+            <Navbar backGroundOn={true} withTitle={true}/>
             <TitleBar textTitle='คลังหนังสือของฉัน'/>
             {loading ?<div className="flex justify-center h-screen mt-52">
                         <HashLoader
@@ -113,9 +120,19 @@ function Library() {
                         className='text-gray-500'/>
                     </div>
                     {book.map((item, index) => (
-                        <div key={index} 
+                        <div
+                        onClick={()=>handleToBookInfo(item.id)} // ต้องส่งค่าไปหน้า BookInfo
+                        key={index} 
                         className='flex items-center justify-center rounded-sm border w-64 h-96 cursor-pointer shadow-sm hover:scale-105 duration-300 relative'>
-                            <div className="flex absolute bottom-0 translate-y-10 text-base">{item.title}</div>
+                            <div className="flex absolute top-0 -translate-y-5 text-base w-full">
+                                <div className="flex w-full justify-start gap-2">
+                                    {item.isPost_trade &&<div className="flex text-xs text-green-600 font-bold">[ POST ]</div>}
+                                    {item.status === 'trading' && <div className="flex text-xs text-orange-800 font-bold">[ TRADING ]</div>}
+                                </div>
+                            </div>
+                            <div className="flex flex-col absolute bottom-0 translate-y-12 text-base w-full">
+                                <div className="flex w-full justify-center">{item.title}</div>
+                            </div>
                             <img
                             src={item.picture[0]}
                             alt="Profile picture"

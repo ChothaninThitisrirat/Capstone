@@ -14,6 +14,7 @@ export async function GET(req: Request,{ params }: { params: { user_id: string }
                         status:true
                     }
                 },
+                id:true,
                 status:true
             }
         })

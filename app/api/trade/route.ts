@@ -4,14 +4,16 @@ import { prismadb } from "@/lib/db";
 export async function POST(req: Request) {
     try {
         const { book_id, req_book_id, owner_id, req_user_id, pickup_req, req_address } = await req.json()
-        
+        const id = Math.floor(Math.random() * 100000000)
+
+
         const date = new Date()
 
         const checkreq = await prismadb.trade.findMany({
             where: {
               AND: [
-                { book_id: book_id },
-                { req_book_id: req_book_id },
+                { book_id: parseInt(book_id) },
+                { req_book_id: parseInt(req_book_id) },
                 { status: 'pending' }
               ],
             },
@@ -25,7 +27,7 @@ export async function POST(req: Request) {
         )}
 
         await prismadb.book.update({
-            where: { id:book_id },
+            where: { id:parseInt(book_id) },
             data: {
                 req_count: +1
             }
@@ -33,8 +35,9 @@ export async function POST(req: Request) {
 
         const newtrade_req = await prismadb.trade.create({
             data: {
-                book_id,
-                req_book_id,
+                id,
+                book_id:parseInt(book_id),
+                req_book_id:parseInt(req_book_id),
                 owner_id,
                 req_user_id,
                 datetime:date.toISOString(),

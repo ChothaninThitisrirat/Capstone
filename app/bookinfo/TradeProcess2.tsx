@@ -9,9 +9,10 @@ import { useRouter } from 'next/navigation'
 import bgExchangebook from '../../public/images/bgExchangebook.png';
 import { setTimeout } from 'timers';
 import AddAddress from '@/Components/AddAddress';
+import axios from 'axios';
 
 
-interface TradeProcessProps {
+interface TradeProcess2Props {
     bookId:string
     setStateProcess: (state: number) => void;
     setTrade: (state: boolean) => void;
@@ -20,18 +21,35 @@ interface TradeProcessProps {
     addressPost:string;
     placeToPic:string;
     setPlaceToPic: (state: string) => void;
+    pickOrSend:number;
+    setPickOrSend: (state: number) => void;
+    pickFormOpen: boolean;
+    setPickFormOpen: (state: boolean) => void;
+    sendFormOpen: boolean;
+    setSendFormOpen: (state: boolean) => void;
+    cssSendPickNext: boolean;
+    setCssSendPickNext: (state: boolean) => void;
+    bookInfo: any;
 
 }
 
-const TradeProcess: React.FC<TradeProcessProps> = ({ bookId, setStateProcess, setStatusAddress, addressPost, setAddressPost, placeToPic, setPlaceToPic }) => {
+const TradeProcess: React.FC<TradeProcess2Props> = ({ 
+    bookId, setStateProcess, setStatusAddress, 
+    addressPost, setAddressPost, 
+    placeToPic, setPlaceToPic, 
+    pickOrSend, setPickOrSend,
+    pickFormOpen, setPickFormOpen,
+    sendFormOpen, setSendFormOpen,
+    cssSendPickNext, setCssSendPickNext,
+    bookInfo
+    }) => {
 
 
     
-    const [ pickOrSend, setPickOrSend] = useState(0)
+    
     
 
-    const [ pickFormOpen, setPickFormOpen] = useState(false)
-    const [ sendFormOpen, setSendFormOpen] = useState(false)
+    
     const [dropDownAddress, setDropDownAddress] = useState(false);
     
     const { data: session, status } = useSession()
@@ -39,35 +57,72 @@ const TradeProcess: React.FC<TradeProcessProps> = ({ bookId, setStateProcess, se
     const router = useRouter();
 
 
+    useEffect(() => {
+        if ((bookInfo.bookinfo.pickup !== null && bookInfo.bookinfo.pickup !== undefined && bookInfo.bookinfo.pickup !== '') && (bookInfo.bookinfo.address !== null && bookInfo.bookinfo.address !== undefined && bookInfo.bookinfo.address !== '')){
+            setPickOrSend(0)
+            setPickFormOpen(false)
+            setSendFormOpen(false)
+        }else if (bookInfo.bookinfo.pickup !== null && bookInfo.bookinfo.pickup !== undefined && bookInfo.bookinfo.pickup !== ''){
+            setPickOrSend(1)
+            setSendFormOpen(false)
+            setTimeout(() => {
+                setPickFormOpen(true)
+            }, 1500);
+        }else if (bookInfo.bookinfo.address !== null && bookInfo.bookinfo.address !== undefined && bookInfo.bookinfo.address !== ''){
+            setPickOrSend(2)
+            setPickFormOpen(false)
+            setTimeout(() => {
+                setSendFormOpen(true)
+            }, 1500);
+            }
+    }, [bookInfo]);
 
 
     const handleGoBack=()=>{
-        if (pickOrSend === 0){
-            setStateProcess(0)
-        }else{
-            setDropDownAddress(false)
-            setPlaceToPic('')
-            setAddressPost('')
-            setPickOrSend(0)
+        if((bookInfo.bookinfo.pickup !== null && bookInfo.bookinfo.pickup !== undefined && bookInfo.bookinfo.pickup !== '') && (bookInfo.bookinfo.address !== null && bookInfo.bookinfo.address !== undefined && bookInfo.bookinfo.address !== '')){
+            if (pickOrSend === 0){
+                setStateProcess(0)
+            }else{
+                setCssSendPickNext(false)
+                setDropDownAddress(false)
+                setPlaceToPic('')
+                setAddressPost('')
+                setPickOrSend(0)
+            }
+        }else if(bookInfo.bookinfo.pickup !== null && bookInfo.bookinfo.pickup !== undefined && bookInfo.bookinfo.pickup !== ''){
+            if (pickOrSend === 1){
+                setCssSendPickNext(true)
+                setStateProcess(0)
+            }
+        }else if(bookInfo.bookinfo.address !== null && bookInfo.bookinfo.address !== undefined && bookInfo.bookinfo.address !== ''){
+            if (pickOrSend === 2){
+                setCssSendPickNext(true)
+                setStateProcess(0)
+            }
         }
+        
     }
 
     const handlePick =()=>{
-        setPickOrSend(1)
-        setSendFormOpen(false)
-        setTimeout(() => {
-            setPickFormOpen(true)
-        }, 1500);
+        if (pickOrSend === 0){
+            setPickOrSend(1)
+            setSendFormOpen(false)
+            setTimeout(() => {
+                setPickFormOpen(true)
+            }, 1500);
+        }
+        
         
     }
 
     const handleSend =()=>{
+        if (pickOrSend === 0){
         setPickOrSend(2)
         setPickFormOpen(false)
         setTimeout(() => {
             setSendFormOpen(true)
         }, 1500);
-        
+        }
     }
 
 
@@ -79,7 +134,13 @@ const TradeProcess: React.FC<TradeProcessProps> = ({ bookId, setStateProcess, se
     }, [pickOrSend]);
 
 
-
+    const handleNextStep = () => {
+        console.log('placeToPic',placeToPic,'cssSendPickNext',cssSendPickNext)
+        if (placeToPic || addressPost ){
+            setStateProcess(2)
+            setCssSendPickNext(true)
+        }
+    }
 
 
 
@@ -108,7 +169,6 @@ return (
 
 
 
-        <div className="fixed left-0 top-0 h-screen w-96 bg-dark1 z-20"></div>
         <div
         style={{minHeight: "800px",marginLeft:'450px'}}
         className="flex justify-center h-auto w-sceen z-10 bg-none">
@@ -120,7 +180,10 @@ return (
                     <div 
                     onClick={handlePick}
                     className= {pickOrSend === 0 ?"flex flex-col items-center h-40 cursor-pointer"
-                                :(pickOrSend === 1 ?"flex flex-col items-center h-40 pickUpSelectAnimation cursor-pointer z-10":"flex flex-col items-center h-40 pickUpNonSelectAnimation z-0 cursor-pointer")}>
+                                :(pickOrSend === 1 ?(cssSendPickNext ?"flex flex-col items-center h-40 cursor-pointer z-10 positionFixedpick"
+                                    :"flex flex-col items-center h-40 pickUpSelectAnimation cursor-pointer z-10")
+                                :(cssSendPickNext ?"flex flex-col items-center h-40 z-0 cursor-pointer positionFixedNonpick"
+                                :"flex flex-col items-center h-40 pickUpNonSelectAnimation z-0 cursor-pointer"))}>
                         <div className="flex flex-col w-36 h-40 shadow-xl rounded-2xl bg-white relative cursor-pointer">
                             <div className="flex items-center justify-center rounded-t-2xl bg-dark1 w-full h-12 text-white text-xl">นัดรับ</div>
                             <Icon icon="tdesign:undertake-delivery" width="65" height="65" 
@@ -135,7 +198,10 @@ return (
                     <div 
                     onClick={handleSend}
                     className={pickOrSend === 0 ?"flex flex-col items-center h-40"
-                                :(pickOrSend === 2 ?"flex flex-col items-center h-40 sendSelectAnimation z-30":"flex flex-col items-center h-40 sendNonSelectAnimation z-0" )}>
+                                :(pickOrSend === 2 ?(cssSendPickNext ? "flex flex-col items-center h-40 z-30 positionFixedsend"
+                                    :"flex flex-col items-center h-40 sendSelectAnimation z-30")
+                                :(cssSendPickNext ? "flex flex-col items-center h-40  z-0 positionFixedNonsend"
+                                :"flex flex-col items-center h-40 sendNonSelectAnimation z-0" ))}>
                         <div className="flex flex-col w-36 h-40 shadow-xl rounded-2xl bg-white relative cursor-pointer items-center">
                             <div className="flex items-center justify-center rounded-t-2xl bg-dark1 w-full h-12 text-white text-xl">จัดส่ง</div>
                             <Icon icon="iconoir:delivery-truck" width="100" height="100" />
@@ -153,8 +219,14 @@ return (
                 className={pickFormOpen ?" relative w-9/12 duration-700 z-10 ":" relative w-9/12 invisible translate-y-10 duration-700 z-10"}>
                     <div className="flex items-center">
                         <div className="flex text-3xl font-bold">สถานที่นัดรับของ</div>
-                        <div className="flex w-10 h-10 bg-black rounded-full ml-4"></div>
-                        <div className="flex text-2xl ml-2 text-gray-500">Username</div>
+                        <div className="flex w-10 h-10 rounded-full ml-4">
+                            <img
+                            src={bookInfo.user.profile_picture}
+                            alt="Profile picture"
+                            className=' w-10 h-10 object-cover cursor-pointer bg-dark3 rounded-full shadow-sm duration-300'
+                            />
+                        </div>
+                        <div className="flex text-2xl ml-2 text-gray-500">{bookInfo.user.username}</div>
                     </div>
                     <div className="flex mt-5 w-full">
                         <Icon
@@ -165,9 +237,9 @@ return (
                             className="mb-2"
                         />
                         <textarea 
-                        className="flex text-lg w-full resize-none h-28 close-scrollbar p-2 ">
-                            dawdawdawdawdawddawdawdawdawdawdwdawdawwdaddawdawdawdawdawddawdawdawdawdawdwdawdawwdaddawdawdawdawdawddawdawdawdawdawdwdawdawwdaddawdawdawdawdawddawdawdawdawdawdwdawdawwdaddawdawdawdawdawddawdawdawdawdawdwdawdawwdaddawdawdawdawdawddawdawdawdawdawdwdawdawwdaddawdawdawdawdawddawdawdawdawdawdwdawdawwdaddawdawdawdawdawddawdawdawdawdawdwdawdawwdaddawdawdawdawdawddawdawdawdawdawdwdawdawwdaddawdawdawdawdawddawdawdawdawdawdwdawdawwdaddawdawdawdawdawddawdawdawdawdawdwdawdawwdaddawdawdawdawdawddawdawdawdawdawdwdawdawwdaddawdawdawdawdawddawdawdawdawdawdwdawdawwdaddawdawdawdawdawddawdawdawdawdawdwdawdawwdad
-                        </textarea>
+                        readOnly
+                        value={bookInfo.bookinfo.pickup}
+                        className="flex text-lg w-full resize-none h-28 close-scrollbar p-2 "/>
                     </div>
                     <div className="flex text-3xl font-bold mt-10">สถานที่นัดรับของคุณ</div>
                     <div className="flex relative">
@@ -179,6 +251,7 @@ return (
                             className="absolute bottom-2 left-2"
                         />
                         <input 
+                        value={placeToPic}
                         onChange={(e)=>setPlaceToPic(e.target.value)}
                         type="text" 
                         className='w-full border-b mt-8 border-gray-400 px-12 pl-16 text-lg pb-2'/>
@@ -240,7 +313,7 @@ return (
                     <Icon icon="icons8:left-round" width="30" height="30" />
                         ย้อนกลับ
                 </button>
-                <button onClick={() =>( placeToPic || addressPost ?setStateProcess(2):null)} 
+                <button onClick={handleNextStep} 
                 className={pickOrSend === 0 ? "hidden duration-300" :(placeToPic || addressPost
                 ?'w-40 h-10 bg-dark1 text-white rounded-full mr-16 mt-2 flex justify-center items-center gap-2'
                 :'w-40 h-10 border-2 border-gray-500 text-gray-500 rounded-full mr-16 mt-2 flex justify-center items-center gap-2')}>
@@ -248,9 +321,7 @@ return (
                 </button>
         </div>
     </>
-
-
-  )
+    )
 }
 
 
@@ -263,19 +334,29 @@ interface DropDownAddressProps {
 }
 
 const DropDownAddress: React.FC<DropDownAddressProps> = ({setAddressPost, setDropDownAddress, dropDownAddress}) =>{
-    const [dataAddress, setDataAddress] = useState([{
-        id:1,
-        address:'1-เลขที่ 37/5 ม.3 ต.วังตะกู อ.เมื่อง จ.นครปฐม 73000'
-    },{
-        id:2,
-        address:'2-เลขที่ 37/5 ม.3 ต.วังตะกู อ.เมื่อง จ.นครปฐม 73000'
-    },{
-        id:3,
-        address:'3-เลขที่ 37/5 ม.3 ต.วังตะกู อ.เมื่อง จ.นครปฐม 73000'
-    },{
-        id:3,
-        address:'4-เลขที่ 37/5 ม.3 ต.วังตะกู อ.เมื่อง จ.นครปฐม 73000'
-    }]);
+    const { data: session, status } = useSession()
+    const router = useRouter()   
+    const userId: number | undefined = session?.user.id
+    const [dataAddress, setDataAddress] = useState([]);
+
+    useEffect(() => {
+        console.log('userId', userId);
+    
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`/api/user/${userId}/address`);
+
+                setDataAddress(response.data.address.address);
+                
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        };
+        if (userId !== undefined) {
+        fetchData(); 
+        }
+    }, [userId]);
+    console.log('dataAddress',dataAddress);
     return (
             <div 
             onClick={() => setDropDownAddress(!dropDownAddress)}
@@ -283,9 +364,9 @@ const DropDownAddress: React.FC<DropDownAddressProps> = ({setAddressPost, setDro
                     {dataAddress.map((item,index)=>(
                         <div 
                         key={index}
-                        onClick={() => setAddressPost(item.address)}
+                        onClick={() => setAddressPost(item)}
                         className="flex items-center justify-between w-11/12 h-20 pl-5 pr-5 break-words border-b  p-2 mx-auto text-lg">
-                            {item.address}
+                            {item}
                         </div>
                     
                     ))}

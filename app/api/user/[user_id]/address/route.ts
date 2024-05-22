@@ -30,7 +30,7 @@ export async function POST(req: Request) {
         const { user_id, address  } = await req.json()
         
         const newaddress = await prismadb.user.update({
-            where: { id:user_id },
+            where: { id:parseInt(user_id) },
             data: {
                 address: {
                     push:address
@@ -45,7 +45,6 @@ export async function POST(req: Request) {
     )
 
     } catch (error) {
-        
         console.log(error);
         return NextResponse.json({error})
 
