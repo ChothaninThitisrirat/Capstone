@@ -15,6 +15,8 @@ export const upLoadPROFILE = async (fileOrBlob: File | Blob) => {
     }
   
     try {
+      console.log("Uploading file...", fileOrBlob);
+      
       const fileName = `profile/${uuid()}.jpg`;
       const filePath = `${fileName}`;
   

@@ -1,14 +1,11 @@
 'use client'
 
-
-import React from 'react'
-import { useParams, useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
-import TitleBar from '@/Components/TitleBar'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'next/navigation'
 import Navbar from '@/Components/Navbar'
 import { HashLoader } from 'react-spinners'
 import { Rating } from '@mui/material'
-import {Icon} from '@iconify/react'
+import { Icon } from '@iconify/react'
 
 export default function Profile() {
 
@@ -18,7 +15,7 @@ export default function Profile() {
       username: string;
       profile_picture: string;
     };
-    review_avg: number,
+    review_avg: number;
     review_count: {
       reviewer_id: number;
     };
@@ -31,21 +28,19 @@ export default function Profile() {
     title: string;
     describe: string;
     score: number;
-    user?: {
-      username: string;
-    };
-    User_Review_User_reviewer_idToUser:{
+    User_Review_User_reviewer_idToUser: {
       username: string;
     }
   }
 
-  interface UserBook{
-    library: {
-      id: number;
-      picture: string;
-    }
+  interface UserBook {
+    id: number;
+    title: string;
+    picture: string[];
+    status: string;
+    isPost_trade: boolean;
   }
-  
+
   const { id } = useParams();
   const [user, setUser] = useState<User | null>(null)
   const [userReview, setUserReview] = useState<ReviewItem[]>([])
@@ -53,67 +48,65 @@ export default function Profile() {
   const [reviewComment, setReviewComment] = useState(0)
 
   useEffect(() => {
-    if (id){
+    if (id) {
       const userID = Array.isArray(id) ? id[0] : id;
       fetchUserData(parseInt(userID))
       fetchReviewData(parseInt(userID))
       fetchUserBook(parseInt(userID))
     }
-  },[id])
+  }, [id])
 
   const fetchUserData = async (userID: number) => {
-    try{
+    try {
       const response = await fetch(`/api/user/${userID}`)
       const data = await response.json()
       setUser(data)
-    }catch(err){
+    } catch (err) {
       console.log("Fetch User Data", err)
     }
   }
 
   const fetchUserBook = async (userID: number) => {
-    try{
+    try {
       const response = await fetch(`/api/library/${userID}`)
       const data = await response.json()
-      setUserBook(data.review || [])  
-      console.log(data)     
-    }catch (err){
+      console.log("Fetch User Book data:", data)
+      setUserBook(data.library || [])  // Correctly access the library property
+    } catch (err) {
       console.log("Fetch User Book", err)
     }
   }
 
   const fetchReviewData = async (userID: number) => {
-    try{
+    try {
       const response = await fetch(`/api/review/user/${userID}`)
       const data = await response.json()
       setUserReview(data.review || []);
-    }catch(err){
+    } catch (err) {
       console.log("Fetch Review Data", err)
     }
   }
 
-  useEffect(()=> {
+  useEffect(() => {
     console.log(userBook)
-  })
+  }, [userBook])
 
-
-  if (!user) return <div>
+  if (!user) return (
     <div className='w-screen h-screen flex items-center justify-center opacity-95 bg-gradient-to-tr from-yellow-100 to-blue-100'>
-        <HashLoader
-        color='#435585' size={50} aria-label="Loading Spinner" data-testid="loader"/>
-      </div>
-  </div>;
-
+      <HashLoader
+        color='#435585' size={50} aria-label="Loading Spinner" data-testid="loader" />
+    </div>
+  );
 
   return (
     <>
-      <Navbar backGroundOn/>
+      <Navbar backGroundOn />
       <div className="flex w-screen h-screen flex-col">
         <div className="flex justify-start items-center w-full h-3/6 bg-dark2 flex-col rounded-b-2xl">
           <div className="flex w-1/2 h-1/2 justify-center mt-8">
             <div
-                className='aspect-square mt-8 bg-cover bg-black bg-no-repeat rounded-full'
-                style={{ backgroundImage: `url(${user.user.profile_picture})` }}
+              className='aspect-square mt-8 bg-cover bg-black bg-no-repeat rounded-full'
+              style={{ backgroundImage: `url(${user.user.profile_picture})` }}
             />
           </div>
           <div className="flex justify-center items-center pt-16 text-white font-semibold text-4xl">
@@ -194,11 +187,6 @@ export default function Profile() {
         
         </div>
 
-
-
-
-
-
         <div className="flex justify-center items-center flex-col w-full">
           <div className="flex w-4/5 mb-6 justify-center items-center">
             <p className='text-4xl font-bold'>
@@ -206,29 +194,27 @@ export default function Profile() {
             </p>
           </div>
           <div className="flex w-full gap-10 justify-center items-center px-3">
-  {userBook?.length === 0 ? (
-    <div
-      style={{ width: '1250px', WebkitOverflowScrolling: 'touch' }}
-      className="flex font-bold text-gray-400 text-xl justify-start h-68 pl-20 -translate-y-8"
-    >
-      No Books For this User
-    </div>
-  ) : (
-    userBook.map((item, index) => (
-      <div
-        key={index}
-        className="flex w-96 h-60 rounded-3xl pt-5 px-5 shrink-0 duration-500 flex-col bg-white"
-      >
-        <div
-          className="aspect-square mt-8 bg-cover bg-no-repeat rounded-full"
-          style={{ backgroundImage: `url(${item.library.picture})` }}
-        />
-      </div>
-    ))
-  )}
-</div>
-
-        
+            {userBook?.length === 0 ? (
+              <div
+                style={{ width: '1250px', WebkitOverflowScrolling: 'touch' }}
+                className="flex font-bold text-gray-400 text-xl justify-start h-68 pl-20 -translate-y-8"
+              >
+                No Books For this User
+              </div>
+            ) : (
+              userBook.map((item, index) => (
+                <div
+                  key={index}
+                  className="flex w-96 h-60 rounded-3xl pt-5 px-5 shrink-0 duration-500 flex-col bg-white"
+                >
+                  <div
+                    className="aspect-square mt-8 bg-cover bg-no-repeat rounded-full"
+                    style={{ backgroundImage: `url(${item.picture[0]})` }}
+                  />
+                </div>
+              ))
+            )}
+          </div>
         </div>
       </div>
     </>

@@ -106,6 +106,7 @@ const EditPage1 = () => {
 
     try {
       const formData = new FormData();
+      formData.append('id', session.user?.id);
       formData.append('profile', newProfilePicture);
 
       const response = await fetch(`/api/user/${session.user?.id}/profile`, {
@@ -116,10 +117,10 @@ const EditPage1 = () => {
       if (response.ok) {
         console.log('Profile picture updated successfully');
       } else {
-        console.error('Failed to update profile picture:', response.statusText);
+        console.error(response.statusText);
       }
     } catch (error) {
-      console.error('Error uploading profile picture:', error);
+      console.error(error);
     }
   };
 
