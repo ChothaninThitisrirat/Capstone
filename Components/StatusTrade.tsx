@@ -67,7 +67,7 @@ const Status: React.FC<PostNewBookProp> = ({setStateOpen, classAddBook, tradeId,
             if (tradeId) {
                 try {
                     console.log('tradeId---',tradeId);
-                    const response = await axios.get(`/api/trade/myrequest/${userId}/${tradeId}`);
+                    const response = await axios.get(`/api/trade/myrequest/${userId}/book/${tradeId}`);
                     
                     setTradeInfo(response.data.mybookrequest)
                     setBookSelectTrade(response.data.mybookrequest.Book_Trade_book_idToBook)

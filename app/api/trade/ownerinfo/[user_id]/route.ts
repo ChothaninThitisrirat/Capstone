@@ -9,6 +9,7 @@ export async function GET(req: Request,{ params }: { params: { user_id: string }
                 id:true,
                 title:true,
                 picture:true,
+                isPost_trade:true,
                 User: {
                     select: {
                         id:true,

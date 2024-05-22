@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { prismadb } from "@/lib/db";
+import { prismadb } from "@/lib/db"
+;
 // user id เรา book id เรา
 export async function GET(req: Request,{ params }: { params: { user_id: string , id : string }}) {
     try {
@@ -30,7 +31,6 @@ export async function GET(req: Request,{ params }: { params: { user_id: string ,
                                 title:true,
                                 picture:true,
                                 status:true, // สถานะของหนังสือ
-                                description:true,
                                 User: { // ข้อมูลเขา
                                     select: {
                                         id:true,

@@ -34,6 +34,7 @@ interface BookInfoShow {
         pickup: string; //
         address: string; //
         datetime: Date; //
+        status: string; //
     };
     count_review_book_agg: {
         book_id: number;//
@@ -415,6 +416,7 @@ const BookInfo: React.FC<BookInfoProps> = ({ setTrade, bookInfo }) => {
                 onClick={handleWishlist}
                 className="flex cursor-pointer ml-4 underline text-sm h-10 items-center">{stateWishlist ? 'Remove from Wishlist' : 'Add to Wishlist' }</div>
                 </div>
+                {bookInfoShow?.bookinfo.status === 'trading' &&<div className="flex w-96 ml-24 text-sm mt-2 pl-3 text-red-500">*หนังสือกำลังถูกเทรดอยู่ในขณะนี้</div>}
                 
                 <div className="flex w-96 ml-24 text-xl mt-10 pl-5 border-b-2 border-gray-300 pb-2">วิธีการแลกเปลี่ยน</div>
                 
