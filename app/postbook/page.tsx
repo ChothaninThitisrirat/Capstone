@@ -62,10 +62,11 @@ function PostBook() {
     
         const fetchData = async () => {
             try {
-                const response = await axios.get(`/api/library/${userId}`);
+                const response = await axios.get<{ library: Book[] }>(`/api/library/${userId}`);
 
-                const filteredBooks = response.data.library.filter((book: any) => !book.isPost_trade);
-                setBook(filteredBooks.reverse());
+                const filteredBooks = response.data.library.filter((book: any) => !book.isPost_trade).sort((a, b) => b.id - a.id);
+                console.log('filteredBooks', filteredBooks);
+                setBook(filteredBooks);
                 
                 setLoading(false);
             } catch (error) {
@@ -79,7 +80,6 @@ function PostBook() {
     }, [userId, loadcompo]);
 
     console.log('book', book);
-
 
     return (
         <>

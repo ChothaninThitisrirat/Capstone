@@ -10,14 +10,18 @@ import axios from 'axios';
 import { Icon } from '@iconify/react';
 import HashLoader from "react-spinners/HashLoader";
 import StatusTrade from '@/Components/StatusTrade';
+import UserReview from '@/Components/UserReview';
 
 interface Book {
     Book_Trade_book_idToBook:any
+    id: number;
     status: string;
 }
 
 
 function statustrade() {
+
+
 
     const [loading, setLoading] = useState(true)
     const [ loadcompo, setLoadcompo] = useState(false)
@@ -32,16 +36,22 @@ function statustrade() {
     }, [status, router])
 
     const [stateOpen, setStateOpen] = useState(false)
+    const [popUpReviewUser, setPopUpReviewUser] = useState(false) //
+    
     const [classAddBookbg, setClassAddBookbg] = useState('fixed h-screen w-screen bg-slate-200 top-0 left-0 z-50 opacity-30 backdrop-blur-2xl hidden')
     const [classAddBook, setClassAddBook] = useState({
         transform:'translateY(100%)',
         visibility: "hidden",
         transitionDuration: '0.3s'
     })
+    const [classReviewUser, setClassReviewUser] = useState({
+        transform:'translateY(100%)',
+        visibility: "hidden",
+        transitionDuration: '0.3s'
+    })
 
     const [book, setBook] = useState<Book[]>([]);
-    const [bookId, setBookId] = useState(44)
-    const [bookStatus, setBookStatus] = useState('')
+    const [tradeId, setTradeId] = useState<number>(0)
 
 
 
@@ -64,14 +74,30 @@ function statustrade() {
     }, [stateOpen])
 
     useEffect(() => {
-        console.log('userId', userId);
+        if (popUpReviewUser) {
+            setClassAddBookbg('visible fixed h-screen w-screen bg-slate-200 top-0 left-0 z-50 opacity-30 backdrop-blur-2xl')
+            setClassReviewUser({
+                transform:'translateY(0%)',
+                visibility: "visible",
+                transitionDuration: '0.3s'
+            })
+        } else {
+            setClassAddBookbg('hidden fixed h-screen w-screen bg-slate-200 top-0 left-0 z-50 opacity-30 backdrop-blur-2xl')
+            setClassReviewUser({
+                transform:'translateY(100%)',
+                visibility: "hidden",
+                transitionDuration: '0.3s'
+            })
+        }   
+    }, [popUpReviewUser])
+
+    useEffect(() => {
         setLoadcompo(false);
     
         const fetchData = async () => {
             try {
                 const response = await axios.get(`/api/trade/myrequest/${userId}`);
-                console.log(response.data)
-                setBook(response.data.myrequest);
+                setBook(response.data.myrequest.reverse());
                 setLoading(false);
             } catch (error) {
                 console.error('Error:', error);
@@ -85,16 +111,13 @@ function statustrade() {
     
     console.log('book', book);
 
-    const handleStatusCheck = (book: any) => {
-        setStateOpen(true)
-        setBookId(book.Book_Trade_book_idToBook.id)
-        setBookStatus(book.status)
+    const handleStatusCheck = (trade: any) => {
+        
+        if (trade.status !== 'decline'){
+            setStateOpen(true)
+            setTradeId(trade.id)
+        }
     }
-
-
-
-
-
 
 
 
@@ -121,7 +144,12 @@ function statustrade() {
                         className="ml-1 duration-300 "
                         color='#435585' loading={loading} size={50} aria-label="Loading Spinner" data-testid="loader"/>
                 </div>
-        :<div
+        :
+        (book === null)  
+        ?<div className="flex justify-center items-center h-auto mt-40 mb-96 py-96 text-3xl font-bold text-gray-400">
+            ยังไม่มีหนังสือที่เทรดอยู่!
+        </div>
+            :<div
         style={{minHeight: "800px"}}
         className="flex justify-center h-auto w-sceen z-10 bg-none">
             <div
@@ -133,22 +161,25 @@ function statustrade() {
                     className='flex items-center justify-center rounded-sm border w-64 h-96 cursor-pointer shadow-sm hover:scale-105 duration-300 relative'>
                         <div className="flex absolute bottom-0 translate-y-10 text-base">
                             {item.Book_Trade_book_idToBook.title}
-                            {item.status}
                         </div>
+                        <div className="flex absolute top-0 -translate-y-5 text-base w-full">
+                                <div className="flex w-full justify-start gap-2">
+                                    <div className="flex text-xs text-gray-400 font-bold"># {item.id}</div>
+                                </div>
+                            </div>
                         <img
                         src={item.Book_Trade_book_idToBook.picture[0]}
                         alt="Profile picture"
                         className='w-full h-full object-cover cursor-pointer bg-white'
                         />
-                        {(item.status === 'trading' || item.status === 'pending' || item.status === 'traded' || item.status === 'approved' || item.status === 'declined' )&& 
+                        {(item.status === 'trading' || item.status === 'pending' || item.status === 'traded' || item.status === 'decline' )&& 
                         <div 
                             style={{backgroundColor:'#57575780'}}
                             className={"absolute top-0 left-0 w-64 h-96 flex justify-center items-center font-bold text-2xl duration-300"}>
-                            {item.status === 'trading' && <div className="flex text-yellow-400">TRADING</div>}
+                            {item.status === 'trading' && <div className="flex text-green-400">TRADING</div>}
                             {item.status === 'pending' && <div className="flex text-orange-300">PENDING</div>}
                             {item.status === 'traded' && <div className="flex">TRADED</div>}
-                            {item.status === 'approved' && <div className="flex text-green-400">APPROVED</div>}
-                            {item.status === 'declined' && <div className="flex text-red-500">DECLINED</div>}
+                            {item.status === 'decline' && <div className="flex text-red-500">DECLINED</div>}
                         </div>}
                     </div>
                 ))}
@@ -156,9 +187,11 @@ function statustrade() {
 
             </div>
         </div>}
+        
         <Footer/>
         <div className={classAddBookbg}></div>
-        <StatusTrade setStateOpen={setStateOpen} classAddBook={classAddBook} bookId={bookId} bookStatus={bookStatus}/>
+        <StatusTrade setStateOpen={setStateOpen} classAddBook={classAddBook} tradeId={tradeId} setLoadcompo={setLoadcompo} setPopUpReviewUser={setPopUpReviewUser}/>
+        <UserReview classReviewUser={classReviewUser} setPopUpReviewUser={setPopUpReviewUser} tradeId={tradeId}/>
         </>
     )
 }

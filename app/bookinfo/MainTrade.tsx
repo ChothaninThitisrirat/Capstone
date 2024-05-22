@@ -66,7 +66,6 @@ const MainTrade: React.FC<MainTradeProps> = ({ bookId, setTrade, bookInfo }) => 
     }, [stateProcess]);
 
 
-    console.log('bookInfo', bookInfo.bookinfo.picture[0]);
 
 
 

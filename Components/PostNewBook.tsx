@@ -23,9 +23,9 @@ const PostNewBook: React.FC<PostNewBookProp> = ({setStateAddBook, classAddBook, 
     
     const { data: session, status } = useSession()
 
-    const [bookTitle, setBookTitle] = useState('')
-    const [bookDetail, setBookDetail] = useState('')
-    const [dataCatin, setDataCatin] = useState([])
+    const [bookTitle, setBookTitle] = useState('') //ชื่อหนังสือ
+    const [bookDetail, setBookDetail] = useState('') //รายละเอียดหนังสือ
+    const [dataCatin, setDataCatin] = useState([]) //ประเภทหนังสือ
 
     const [uploadPictureNum, setUploadPictureNum] = useState(0)
     const [dataPicture, setDataPicture] = useState<any[]>([]);
@@ -107,13 +107,17 @@ const PostNewBook: React.FC<PostNewBookProp> = ({setStateAddBook, classAddBook, 
     }, []);
 
     const reSetInfo = () => {
-        setStateAddBook(false)
-        setBookTitle('')
-        setBookDetail('')
         setDataCatin([])
         setDataPicture([])
+        setBookTitle('')
+        setBookDetail('')
+        const updatedCategory = category.map(item => ({ ...item, defaultClass: true }));
+        setCategory(updatedCategory);
+        setUploadPictureNum(0);
+        setDataImg([])
+        setStateAddBook(false)
     }
-
+console.log('reset',dataCatin, dataPicture)
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -166,6 +170,28 @@ const PostNewBook: React.FC<PostNewBookProp> = ({setStateAddBook, classAddBook, 
         }
         
     }
+
+    const handleSelectBookCategory = (cate: Category) => {
+        const newCatin:any = [...dataCatin]
+        const ClassCatin:any = [...category]
+        if(newCatin.includes(cate.id)){
+            ClassCatin.forEach((cat:any) => {
+                if (cat.id === cate.id) {
+                    cat.defaultClass = true;
+                }
+            });
+            newCatin.splice(newCatin.indexOf(cate.id),1)
+        }else{
+            ClassCatin.forEach((cat:any) => {
+                if (cat.id === cate.id) {
+                    cat.defaultClass = false;
+                }
+            });
+            newCatin.push(cate.id)
+        }
+        setCategory(ClassCatin)
+        setDataCatin(newCatin)
+    };
 
     return (
         <>
@@ -240,28 +266,7 @@ const PostNewBook: React.FC<PostNewBookProp> = ({setStateAddBook, classAddBook, 
                             <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-3">
                                 {category.map((cate, index) => (
                                     <div 
-                                    onClick={() => {
-                                        
-                                        const newCatin:any = [...dataCatin]
-                                        const ClassCatin:any = [...category]
-                                        if(newCatin.includes(cate.id)){
-                                            ClassCatin.forEach((cat:any) => {
-                                                if (cat.id === cate.id) {
-                                                    cat.defaultClass = true;
-                                                }
-                                            });
-                                            newCatin.splice(newCatin.indexOf(cate.id),1)
-                                        }else{
-                                            ClassCatin.forEach((cat:any) => {
-                                                if (cat.id === cate.id) {
-                                                    cat.defaultClass = false;
-                                                }
-                                            });
-                                            newCatin.push(cate.id)
-                                        }
-                                        setCategory(ClassCatin)
-                                        setDataCatin(newCatin)
-                                    }}
+                                    onClick={() => {handleSelectBookCategory(cate)}}
                                     key={index} className={classCategory+' '+ (cate.defaultClass?"bg-gray-300":cate.color )}
                                     >{cate.name}</div>
                                 ))}

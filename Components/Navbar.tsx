@@ -6,6 +6,7 @@ import logoWhite from '../public/images/logoWhite.png';
 import Image from 'next/image';
 import { useSession, signOut } from 'next-auth/react'
 import Link from "next/link";
+import { image } from '@/utils/supabase';
 
 
 interface NavbarProps {
@@ -48,8 +49,8 @@ const Navbar: React.FC<NavbarProps> = ({backGroundOn, withTitle}) =>{
                         <div 
                         onClick={() => setShowDropDown(!showDropDown)}
                         className="flex gap-2 items-center">
-                            <Image
-                            src={logoWhite}
+                            <img
+                            src={`${image}line_icon.jpg`}
                             alt="Profile picture"
                             className='w-9 h-9 object-cover rounded-full cursor-pointer bg-white'
                             />
@@ -99,7 +100,7 @@ function DropDown() {
     {
         id: 3,
         icon: "carbon:change-catalog",
-        link: "",
+        link: "/tradebook",
         text: "หนังสือแลกเปลี่ยนของฉัน",
         size: "24"
     

@@ -92,7 +92,7 @@ function WishList() {
                         color='#435585' loading={loading} size={50} aria-label="Loading Spinner" data-testid="loader"/>
                 </div>
                 :wishlist.length === 0
-                    ? <div className="text-4xl font-bold text-gray-500 mt-24">ยังไม่มีหนังสือที่อยากแลก</div>
+                    ? <div className="flex justify-center items-center h-auto mt-40 mb-96 py-96 text-3xl font-bold text-gray-400">ยังไม่มีหนังสือที่อยากแลก</div>
                     :<div
                     className="flex w-full h-auto p-10 flex-wrap gap-20 mb-10 mt-5 library-container">
                     {wishlist.map((item, index) => (
