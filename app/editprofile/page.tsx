@@ -22,9 +22,7 @@ interface User {
     phone_number: string;
     profile_picture: string;
   };
-  review_avg: {
-    score: number;
-  };
+  review_avg: number ,
   review_count: {
     reviewer_id: number;
   };
@@ -95,9 +93,9 @@ export default function EditProfile() {
             <div className="flex mt-10 text-lg mb-3">
               คะแนนของฉัน
             </div>
-            <Rating name="read-only" value={user.review_avg.score} readOnly size="large" />
+            <Rating name="half-rating-read" value={user.review_avg} readOnly size="large" />
             <div className="flex mt-10 text-lg mb-3">
-              {user.review_avg.score} คะแนน ({user.review_count.reviewer_id})
+              {user.review_avg} คะแนน ({user.review_count.reviewer_id})
             </div>
             <div 
                className='flex jusitfy-center items-center'

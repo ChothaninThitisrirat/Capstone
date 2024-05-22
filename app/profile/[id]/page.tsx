@@ -18,9 +18,7 @@ export default function Profile() {
       username: string;
       profile_picture: string;
     };
-    review_avg: {
-      score: number;
-    };
+    review_avg: number,
     review_count: {
       reviewer_id: number;
     };
@@ -104,8 +102,8 @@ export default function Profile() {
             <div className="flex w-full h-full ">
               <div className="flex w-1/2 h-full justify-center items-center flex-col">
                 <p>คะแนนผู้ใช้</p>
-                <Rating name="read-only" value={user.review_avg.score} readOnly size="large" />
-                <p>{user.review_avg.score} คะแนน ({user.review_count.reviewer_id})</p>
+                <Rating name="read-only" value={user.review_avg} readOnly size="large" />
+                <p>{user.review_avg} คะแนน ({user.review_count.reviewer_id})</p>
               </div>
               <div className="flex w-1/2 h-full justify-center items-center flex-col">
                 <p>รายการหนังสือทั้งหมด</p>
@@ -157,7 +155,7 @@ export default function Profile() {
                     <div className="flex text-sm mt-2 pl-3 justify-between">
                         <div className="flex">{item.User_Review_User_reviewer_idToUser.username}</div>
                         <div className="flex mr-2 ">
-                            <Rating name="read-only" value={item.score} readOnly size="medium" />
+                            <Rating name="half-rating-read" value={item.score} readOnly size="medium" />
                         </div>
                     </div>
                     </div>
