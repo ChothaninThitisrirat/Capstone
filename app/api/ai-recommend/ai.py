@@ -42,7 +42,7 @@ async def process_data(data: dict):
                 "Userlike" :
                  {
                     "include" : {
-                        "Category":True
+                        "Category":True,
                     }
                 }
             }
@@ -55,7 +55,8 @@ async def process_data(data: dict):
                 "status": "available"
             },
             include={
-                "category":True
+                "category":True,
+                "User":True
             }
         )
 
@@ -79,7 +80,10 @@ async def process_data(data: dict):
                 recommendation = {
                     "book_id" : book.id,
                     "title"  : book.title,
-                    "picture" : book.picture
+                    "picture" : book.picture,
+                    "description" : book.description,
+                    "username": book.User.username,
+                    "user_profile" : book.User.profile_picture
                 }
                 recommendations.append( recommendation )
             
