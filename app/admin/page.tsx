@@ -2,7 +2,6 @@
 import TitleBar from '@/Components/TitleBar'
 import React from 'react'
 import Navbar from '@/Components/Navbar'
-import { Admin_User } from '@/Components/Admin_User'
 
 export default function Admin(){
   return (
@@ -14,7 +13,6 @@ export default function Admin(){
                     <TitleBar textTitle="รายชื่อ User ทั้งหมด"/>
                 </div>
                 <div className="flex flex-wrap">
-                <Admin_User/>
                 </div>
             </div>
         </div>

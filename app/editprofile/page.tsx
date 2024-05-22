@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, use } from 'react';
 import Navbar from "@/Components/Navbar";
 import Rating from '@mui/material/Rating';
 import HashLoader from "react-spinners/HashLoader";
@@ -34,6 +34,8 @@ export default function EditProfile() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const [StatePage, setStatePage] = useState(0);
+  const [userReview, setUserReview] = useState<[]>([])
+  const [reviewComment, setReviewComment] = useState(0)
 
   useEffect(() => {
     console.log(session)
@@ -44,6 +46,7 @@ export default function EditProfile() {
         .then(response => response.json())
         .then(data => {
           setUser(data)
+          FetchReviewData(session.user.id)
           setLoading(false)
         })
         .catch(error => {
@@ -53,7 +56,22 @@ export default function EditProfile() {
     }
   }, [status, router, session])
 
-
+  const FetchReviewData = (id: number) => {
+    try{
+      fetch(`/api/review/user/${id}`)
+        .then(response => response.json())
+        .then(data => {
+          setUserReview(data.review || [])
+          setLoading(false)
+        })
+        .catch(error => {
+          console.error('Error fetching user data:', error)
+          setLoading(false)
+        })
+    }catch(err){
+      console.log("Fetch Review Data", err)
+    }
+  }
 
   if (loading === true) {
     return <div className='w-screen h-screen flex items-center justify-center opacity-95 bg-gradient-to-tr from-yellow-100 to-blue-100'>
@@ -144,7 +162,56 @@ export default function EditProfile() {
             <div className="flex w-full h-5/6 pb-12 bg-white">
                {StatePage === 0 && 
                <div className="flex w-full h-full bg-white">
-                  My Review
+                  <div className="flex w-full gap-10 justify-center items-center px-3">
+                    {reviewComment === 0 
+                      ? <div 
+                      className='mr-5 shrink-0 w-0 h-0'></div>
+                      :
+                      <Icon 
+                      onClick={() => setReviewComment(prev => prev-1)}
+                      className='mr-5 text-dark3 cursor-pointer shrink-0 hover:text-dark2 duration-200'
+                      icon="icon-park-solid:left-c" 
+                      width="50" 
+                      height="50" 
+                      />
+                      }
+                      {userReview?.length === 0
+                        ?<div
+                        style={{width: '1250px', WebkitOverflowScrolling: 'touch'}}
+                        className="flex font-bold text-gray-400 text-xl justify-start h-68 pl-20 -translate-y-8">No Review For this User</div> 
+                        :<div 
+                        style={{WebkitOverflowScrolling: 'touch'}}
+                        className="flex gap-10 w-10/12 justify-start items-center overflow-x-auto h-68 p-2 close-scrollbar">
+                        {userReview.map((item, index) => (
+                            <div 
+                            key={index}
+                            style={{boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',transform: `translateX(${reviewComment * -424}px)`}}
+                            className="flex w-96 h-60 rounded-3xl pt-5 px-5  shrink-0 duration-500 flex-col bg-white">
+
+
+                            <div className="flex w-full text-2xl font-bold">{item.title}</div>
+                            <textarea 
+                            readOnly
+                            value={item.describe}
+                            className="flex w-full h-36 break-words pt-1 text-gray-500 resize-none css-scrollbar"/>
+                            <div className="flex text-sm mt-2 pl-3 justify-between">
+                                <div className="flex">{item.User_Review_User_reviewer_idToUser.username}</div>
+                                <div className="flex mr-2 ">
+                                    <Rating name="half-rating-read" value={item.score} readOnly size="medium" />
+                                </div>
+                            </div>
+                            </div>
+                        ))}
+                        </div>
+                      }
+                      {userReview?.length !== 2 &&(reviewComment < userReview.length - 2 
+                    ?<Icon 
+                    onClick={() => setReviewComment(  prev => prev+1)}
+                    className='ml-5 text-dark3 cursor-pointer shrink-0 hover:text-dark2 duration-200'
+                    icon="icon-park-solid:right-c" width="50" height="50" />
+                    :<div style={{width: '70px'}}
+                    className='mr-5 shrink-0'></div>)}
+                  </div>
                </div>}
                {StatePage === 1 && <EditPage1 />}
                {StatePage === 2 && <EditPage2 />}

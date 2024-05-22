@@ -37,31 +37,50 @@ export default function Profile() {
     User_Review_User_reviewer_idToUser:{
       username: string;
     }
-    
+  }
+
+  interface UserBook{
+    library: {
+      id: number;
+      picture: string;
+    }
   }
   
   const { id } = useParams();
   const [user, setUser] = useState<User | null>(null)
-  const [userReview, setUserReview] = useState<ReviewItem[]>([])
+  const [userReview, setUserReview] = useState<[]>([])
+  const [userBook, setUserBook] = useState<[]>([])
   const [reviewComment, setReviewComment] = useState(0)
 
   useEffect(() => {
     if (id){
       const userID = Array.isArray(id) ? id[0] : id;
-      fetchUserData(userID)
+      fetchUserData(parseInt(userID))
       fetchReviewData(parseInt(userID))
+      fetchUserBook(parseInt(userID))
       console.log("User :", userID)
       console.log("UserReview :", userReview)
+      console.log("UserBook :", userBook)
     }
   },[id])
 
-  const fetchUserData = async (userID: string) => {
+  const fetchUserData = async (userID: number) => {
     try{
       const response = await fetch(`/api/user/${userID}`)
       const data = await response.json()
       setUser(data)
     }catch(err){
       console.log("Fetch User Data", err)
+    }
+  }
+
+  const fetchUserBook = async (userID: number) => {
+    try{
+      const response = await fetch(`/api/library/user/${userID}`)
+      const data = await response.json()
+      setUserBook(data.review || [])       
+    }catch (err){
+      console.log("Fetch User Book", err)
     }
   }
 
@@ -117,7 +136,7 @@ export default function Profile() {
         <div className="flex justify-center items-center flex-col w-full mt-12">
           <div className="flex w-4/5 mb-6">
             <p className='text-4xl font-bold'>
-              User Review
+              รีวิวทั้งหมดของ {user.user.username}
             </p>
           </div>
           <div className="flex w-full gap-10 justify-center items-center px-3">
@@ -169,6 +188,34 @@ export default function Profile() {
             icon="icon-park-solid:right-c" width="50" height="50" />
             :<div style={{width: '70px'}}
             className='mr-5 shrink-0'></div>)}
+          </div>
+        
+        </div>
+
+
+
+
+
+
+        <div className="flex justify-center items-center flex-col w-full">
+          <div className="flex w-4/5 mb-6 justify-center items-center">
+            <p className='text-4xl font-bold'>
+              หนังสือทั้งหมดของ {user.user.username}
+            </p>
+          </div>
+          <div className="flex w-full gap-10 justify-center items-center px-3">
+              {userBook.map((item, index) => (
+                    <div 
+                    key={index}
+                    className="flex w-96 h-60 rounded-3xl pt-5 px-5  shrink-0 duration-500 flex-col bg-white">
+
+                <div
+                  className='aspect-square mt-8 bg-cover bg-no-repeat rounded-full'
+                  style={{ backgroundImage: `url(${item.library.picture})` }}
+                />
+                    
+                    </div>
+                ))}
           </div>
         
         </div>
