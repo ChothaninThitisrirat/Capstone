@@ -52,7 +52,13 @@ async def process_data(data: dict):
         print(user_cat)
         books = await prisma.book.find_many(
             where={
-                "status": "available"
+                "status": "available",
+                "isPost_trade": True,
+                'NOT': [
+                    {
+                        "user_id": int(user)
+                    }
+                ]
             },
             include={
                 "category":True,
@@ -83,7 +89,8 @@ async def process_data(data: dict):
                     "picture" : book.picture,
                     "description" : book.description,
                     "username": book.User.username,
-                    "user_profile" : book.User.profile_picture
+                    "user_profile" : book.User.profile_picture,
+                    "user_id" : book.User.id
                 }
                 recommendations.append( recommendation )
             
