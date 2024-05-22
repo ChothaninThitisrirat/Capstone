@@ -31,19 +31,16 @@ export default function Profile() {
     title: string;
     describe: string;
     score: number;
-    user?: {
-      username: string;
-    };
     User_Review_User_reviewer_idToUser:{
       username: string;
     }
   }
 
   interface UserBook{
-    library: {
       id: number;
-      picture: string;
-    }
+      title: string;
+      picture: string[];
+      status: string;
   }
   
   const { id } = useParams();
@@ -75,7 +72,7 @@ export default function Profile() {
     try{
       const response = await fetch(`/api/library/${userID}`)
       const data = await response.json()
-      setUserBook(data.review || [])  
+      setUserBook(data.library || [])  
       console.log(data)     
     }catch (err){
       console.log("Fetch User Book", err)
@@ -217,11 +214,11 @@ export default function Profile() {
     userBook.map((item, index) => (
       <div
         key={index}
-        className="flex w-96 h-60 rounded-3xl pt-5 px-5 shrink-0 duration-500 flex-col bg-white"
+        className="flex flex-wrap gap-8 w-screen h-screen bg-white"
       >
         <div
-          className="aspect-square mt-8 bg-cover bg-no-repeat rounded-full"
-          style={{ backgroundImage: `url(${item.library.picture})` }}
+          className="flex w-2/12 h-1/3 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${item.picture[0]})` }}
         />
       </div>
     ))

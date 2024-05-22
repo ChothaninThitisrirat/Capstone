@@ -17,7 +17,7 @@ export function isBlob(value: any): value is Blob {
     return value instanceof Blob;
   }
 
-export const upLoadPROFILE = async (fileOrBlob: File | Blob) => {
+export const upLoadPROFILE = async (fileOrBlob: File | Blob | Buffer) => {
     if (!fileOrBlob) {
       throw new Error("No file or blob provided.");
     }
@@ -30,7 +30,6 @@ export const upLoadPROFILE = async (fileOrBlob: File | Blob) => {
         .from("b-trade")
         .upload(filePath, fileOrBlob, {
           cacheControl: "3600",
-          contentType: fileOrBlob.type,
         });
   
       if (error) {
@@ -45,7 +44,7 @@ export const upLoadPROFILE = async (fileOrBlob: File | Blob) => {
     }
   };
 
-  export const upLoadIMG = async (fileOrBlob: File | Blob) => {
+  export const upLoadIMG = async (fileOrBlob: File | Blob | Buffer) => {
     if (!fileOrBlob) {
       throw new Error("No file or blob provided.");
     }
@@ -58,7 +57,6 @@ export const upLoadPROFILE = async (fileOrBlob: File | Blob) => {
         .from("b-trade")
         .upload(filePath, fileOrBlob, {
           cacheControl: "3600",
-          contentType: fileOrBlob.type,
         });
   
       if (error) {
