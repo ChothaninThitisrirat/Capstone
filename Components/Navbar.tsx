@@ -7,22 +7,58 @@ import Image from 'next/image';
 import { useSession, signOut } from 'next-auth/react'
 import Link from "next/link";
 import { image } from '@/utils/supabase';
+import { useRouter } from 'next/navigation';
+import HashLoader from "react-spinners/HashLoader";
+import axios from "axios";
 
 
 interface NavbarProps {
     backGroundOn: boolean;
     withTitle: boolean;
 }
+interface User {
+    user: {
+        id: number;
+        first_name: string;
+        last_name: string;
+        email: string;
+        phone_number: string;
+        profile_picture: string;
+    };
+    review_avg: number ,
+    review_count: {
+        reviewer_id: number;
+    };
+}
 
 
 const Navbar: React.FC<NavbarProps> = ({backGroundOn, withTitle}) =>{
     const { data: session, status } = useSession()
+    const [user, setUser] = useState<User | null>(null);
+    const router = useRouter();
 
     const [showDropDown, setShowDropDown] = useState(false)
     const [showDropDownresponsive, setShowDropDownresponsive] = useState(false)
     const [stateResponsiveManu, setStateResponsiveManu] = useState(false)
     const [manuDropDown, setManuDropDown] = useState(false)
+    const [loading, setLoading] = useState(true)
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`/api/user/${session?.user.id}`);
+                setUser(response.data);
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        };
+    
+        if (status === 'authenticated' && session?.user?.id) {
+            fetchData();
+        }
+    }, [status, router, session]);
+    
 
 
     useEffect(() => {
@@ -62,8 +98,8 @@ const Navbar: React.FC<NavbarProps> = ({backGroundOn, withTitle}) =>{
             className={
                 showDropDownresponsive? "flex flex-col w-screen  rounded-b-3xl relative cursor-pointer items-center z-30 bg-dark2 duration-500 h-[460px]":
                 (backGroundOn
-            ?"flex w-screen h-16  rounded-b-3xl relative cursor-pointer justify-center z-30 bg-dark2 duration-500"
-            :"flex w-screen h-16 relative cursor-pointer justify-center z-30 bg-dark2 duration-500")} >
+            ?"flex w-screen h-16 rounded-b-3xl relative cursor-pointer justify-center z-30 bg-dark2 duration-500"
+            :"flex w-screen h-16 relative cursor-pointer justify-center z-30 bg-dark2 ")} >
                 <div 
                 style={{maxWidth: '2200px'}}
                 className="flex w-screen h-16 relative z-30 shrink-0">
@@ -88,11 +124,24 @@ const Navbar: React.FC<NavbarProps> = ({backGroundOn, withTitle}) =>{
                             <div 
                             onClick={() => setShowDropDown(!showDropDown)}
                             className="flex gap-2 items-center">
-                                <img
-                                src={`${image}line_icon.jpg`}
+                                {
+                                loading ?<div>
+                                    <HashLoader
+                                    className="ml-1 mr-2"
+                                    color='#fff'
+                                    loading={true}
+                                    size={20}
+                                    aria-label="Loading Spinner"
+                                    data-testid="loader"
+                                    />
+                                </div>
+                                :<img
+                                src={user?.user?.profile_picture}
                                 alt="Profile picture"
                                 className='w-9 h-9 object-cover rounded-full cursor-pointer bg-white'
                                 />
+                                }
+                                
                                 {session && session.user ?(
                                     <div className="flex text-center items-center justify-center text-white text-lg w-auto">{session.user.username}</div>
                                 ):<div className="flex w-20"></div>}
@@ -107,7 +156,7 @@ const Navbar: React.FC<NavbarProps> = ({backGroundOn, withTitle}) =>{
                             <div id="menuToggle">
                                 <input 
                                 checked={showDropDownresponsive}
-                                onClick={(e)=>handleManu(e)}
+                                onChange={(e)=>handleManu(e)}
                                 type="checkbox" />
                                 <span></span>
                                 <span></span>
@@ -116,11 +165,6 @@ const Navbar: React.FC<NavbarProps> = ({backGroundOn, withTitle}) =>{
                             </div>
                         </div>
                     </div>
-                    {/* <div className={showDropDownresponsive
-                                    ?"absolute top-16 right-1/2 duration-500 z-10"
-                                    :"absolute top-16      right-1/2            -translate-y-96 duration-500 z-10"}>
-                                    <DropDownResponsive/>
-                    </div> */}
                     <div className={showDropDown
                         ?"absolute top-16 right-14 duration-500 z-10  responsive-close"
                         :"absolute top-16 right-14 -translate-y-96 duration-500 z-10 responsive-close"}>
@@ -146,7 +190,7 @@ function DropDown() {
     const data = [{
         id: 1,
         icon: "mdi:user",
-        link: "/profile",
+        link: "/editprofile",
         text: "Edit Profile",
         size: "30"
     },
@@ -216,7 +260,7 @@ function DropDownResponsive() {
         size: "22"
     },{
         icon: "mdi:user",
-        link: "/profile",
+        link: "/editprofile",
         text: "Edit Profile",
         size: "30"
     },{

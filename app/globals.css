@@ -145,6 +145,7 @@ body::-webkit-scrollbar {
   transform: translateX(-93px) translateY(-230px);
   transition-duration: 0s;
 }
+
 @keyframes SendSelect {
   0% {
     
@@ -191,6 +192,7 @@ body::-webkit-scrollbar {
     align-items: center;
     padding-top: 0;
     gap: 50px;
+    padding-right: 50px;
   }
   .responsive-userCard{
     flex-direction: column;
@@ -208,7 +210,9 @@ body::-webkit-scrollbar {
     align-items: center;
     gap: 50px;
   }
-
+  .responsive-bookinfo-img{
+    margin-right: 0;
+  }
 }
 
 

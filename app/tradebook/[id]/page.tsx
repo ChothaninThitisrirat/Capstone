@@ -98,14 +98,6 @@ function TradeBookSelect() {
         fetchData(); 
         }
     }, [userId,bookId,loadcompo]);
-    
-    console.log(userId,bookId,'tradeBook', tradeBook);
-    console.log('tradeReQuest', tradeReQuest);
-    console.log('tradeReQuest', historyTrade);
-    console.log('tradingBook--------', tradingBook[0]);
-    console.log('tradingBook--------',tradingBook[0] !== undefined && tradingBook[0].Book_Trade_req_book_idToBook.id);
-
-
 
 
 
