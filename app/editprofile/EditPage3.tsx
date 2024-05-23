@@ -28,7 +28,7 @@ interface User {
   };
 }
 
-export default function EditPage3() {
+const EditPage3: React.FC = (): JSX.Element => {
    const { data: session, status } = useSession();
    const [user, setUser] = useState<User | null>(null);
    const [loading, setLoading] = useState(true);
@@ -113,20 +113,7 @@ export default function EditPage3() {
       </div>
   </div>;
   }
-
-  if (!session) {
-    return router.push('/login');
-  }
-
-  if (!user) {
-    return <div>
-      <div className='w-screen h-screen flex items-center justify-center opacity-95 bg-gradient-to-tr from-yellow-100 to-blue-100'>
-        <HashLoader
-        color='#435585' loading={loading} size={50} aria-label="Loading Spinner" data-testid="loader"/>
-      </div>
-  </div>;
-  }
-
+  
   return (
     <>
             <div className="flex w-full h-full bg-white flex-col items-center ">
@@ -196,3 +183,4 @@ export default function EditPage3() {
   );
 };
 
+export default EditPage3;
