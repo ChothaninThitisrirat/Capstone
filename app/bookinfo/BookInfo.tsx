@@ -453,7 +453,7 @@ console.log('datePost',datePost)
                     <img
                     src={bookInfoShow?.user.profile_picture}
                     alt="Profile picture"
-                    className="w-20 h-20 rounded-full"
+                    className="w-20 h-20 rounded-full object-cover"
                     />
                 </div>
                 <div className="flex ml-5 flex-col ">

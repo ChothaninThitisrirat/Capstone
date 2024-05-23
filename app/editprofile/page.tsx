@@ -98,7 +98,7 @@ export default function EditProfile() {
     <>
       <div className="h-screen overflow-y-hidden">
         <div className="absolute">
-          <Navbar backGroundOn />
+          <Navbar backGroundOn={true} withTitle={false} />
         </div>
         <div className="flex justify-center items-center w-full h-full bg-dark2 pt-16">
           <div className="flex flex-col justify-start items-center w-1/5 bg-white h-full drop-shadow-2xl rounded-tr-3xl ">

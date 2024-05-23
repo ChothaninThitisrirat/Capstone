@@ -134,7 +134,7 @@ const Page: FC<Props> = (): JSX.Element => {
 
   return (
     <>
-      <Navbar backGroundOn />
+      <Navbar backGroundOn={false} withTitle={false}/>
       {/* แถบบน and Search bar */}
       <div className='flex justify-center flex-col w-full h-screen'>
         <div className='flex flex-col justify-center items-center w-full h-full bg-dark2 rounded-b-3xl'>
