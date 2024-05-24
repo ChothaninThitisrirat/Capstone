@@ -203,29 +203,27 @@ export default function Profile() {
             </p>
           </div>
           <div className="flex w-full gap-10 justify-center items-center px-3">
-  {userBook?.length === 0 ? (
-    <div
-      style={{ width: '1250px', WebkitOverflowScrolling: 'touch' }}
-      className="flex font-bold text-gray-400 text-xl justify-start h-68 pl-20 -translate-y-8"
-    >
-      No Books For this User
-    </div>
-  ) : (
-    userBook.map((item, index) => (
-      <div
-        key={index}
-        className="flex flex-wrap gap-8 w-screen h-screen bg-white"
-      >
-        <div
-          className="flex w-2/12 h-1/3 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${item.picture[0]})` }}
-        />
-      </div>
-    ))
-  )}
-</div>
-
-        
+            {userBook?.length === 0 ? (
+              <div
+                style={{ width: '1250px', WebkitOverflowScrolling: 'touch' }}
+                className="flex font-bold text-gray-400 text-xl justify-start h-68 pl-20 -translate-y-8"
+              >
+                No Books For this User
+              </div>
+            ) : (
+              userBook.map((item, index) => (
+                <div
+                  key={index}
+                  className="flex flex-wrap gap-8 w-screen h-screen bg-white"
+                >
+                  <div
+                    className="flex w-2/12 h-1/3 bg-cover bg-center bg-no-repeat"
+                    style={{ backgroundImage: `url(${item.picture[0]})` }}
+                  />
+                </div>
+              ))
+            )}
+          </div>  
         </div>
       </div>
     </>

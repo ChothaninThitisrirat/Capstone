@@ -1,7 +1,7 @@
 'use client'
 import { set } from "mongoose";
 import React, { FC, useCallback, useEffect, useRef, useState } from "react";
-
+import { useRouter } from "next/navigation";
 
 
 interface Props<T> {
@@ -23,6 +23,7 @@ const Searchbar = <T extends object>({
       const resultContainer = useRef<HTMLDivElement>(null);
       const [showResults, setShowResults] = useState(false);
       const [defaultValue, setDefaultValue] = useState("");
+      const router = useRouter()
 
       const handleSelection = (selectedIndex: number) => {
          const selectedItem = results[selectedIndex];
@@ -60,6 +61,15 @@ const Searchbar = <T extends object>({
       }
       setFocusedIndex(nextIndexCount);
    };
+   const SearchSubmit = async () => {
+      try{
+         router.push(`/booksearch/${defaultValue}`)
+
+      }catch{
+         console.log(Error)
+      }
+   }
+
 
    type changeHandler = React.ChangeEventHandler<HTMLInputElement>;
    const handleChange: changeHandler = (e) => {
@@ -85,6 +95,7 @@ const Searchbar = <T extends object>({
          if (value) setDefaultValue(value)
       },[value])
 
+      
     return (
         <div 
         tabIndex={1} 
@@ -97,7 +108,9 @@ const Searchbar = <T extends object>({
                type="search" 
                id="search" 
                className="block rounded-3xl w-full p-4 ps-4 text-l text-gray-900" placeholder="ระบุหนังสือที่ต้องการค้นหาที่นี่" required />
-            <button type="submit" className="text-white absolute end-2.5 bottom-1.5 bg-dark1 hover:bg-dark2 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-3xl text-xl px-14 py-2 ">ค้นหา</button>
+            <button 
+               onClick={SearchSubmit} 
+               className="text-white absolute end-2.5 bottom-1.5 bg-dark1 hover:bg-dark2 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-3xl text-xl px-14 py-2 ">ค้นหา</button>
 
             {/* Search Suggest */}
             {showResults && (
