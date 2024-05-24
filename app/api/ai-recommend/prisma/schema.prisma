@@ -22,7 +22,7 @@ model Book {
   id                            Int           @id @unique @default(autoincrement())
   isPost_trade                  Boolean       @default(false)
   address                       String?
-  User                          User          @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "book_user_id")
+  User                          User          @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "book_user_id")
   Review_Book                   Review_Book[]
   Trade_Trade_book_idToBook     Trade[]       @relation("Trade_book_idToBook")
   Trade_Trade_req_book_idToBook Trade[]       @relation("Trade_req_book_idToBook")
@@ -37,8 +37,8 @@ model Review_Book {
   score    Decimal @db.Decimal(1, 0)
   describe String? @db.VarChar(100)
   title    String  @db.VarChar(20)
-  Book     Book    @relation(fields: [book_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "review_book-book_id")
-  User     User    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "review_book-user_id")
+  Book     Book    @relation(fields: [book_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "review_book-book_id")
+  User     User    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: Cascade, map: "review_book-user_id")
 
   @@id([id, book_id, user_id])
 }
@@ -53,10 +53,10 @@ model Trade {
   pickup_req                   String?
   req_book_id                  Int
   req_address                  String?
-  Book_Trade_book_idToBook     Book     @relation("Trade_book_idToBook", fields: [book_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "trade-book_id")
-  User_Trade_owner_idToUser    User     @relation("Trade_owner_idToUser", fields: [owner_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "trade-owner_id")
-  Book_Trade_req_book_idToBook Book     @relation("Trade_req_book_idToBook", fields: [req_book_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "trade-req_book_id")
-  User                         User     @relation(fields: [req_user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "trade-req_user_id")
+  Book_Trade_book_idToBook     Book     @relation("Trade_book_idToBook", fields: [book_id], references: [id], onDelete: NoAction, onUpdate: Cascade, map: "trade-book_id")
+  User_Trade_owner_idToUser    User     @relation("Trade_owner_idToUser", fields: [owner_id], references: [id], onDelete: NoAction, onUpdate: Cascade, map: "trade-owner_id")
+  Book_Trade_req_book_idToBook Book     @relation("Trade_req_book_idToBook", fields: [req_book_id], references: [id], onDelete: NoAction, onUpdate: Cascade, map: "trade-req_book_id")
+  User                         User     @relation(fields: [req_user_id], references: [id], onDelete: NoAction, onUpdate: Cascade, map: "trade-req_user_id")
 
   @@id([id])
 }
@@ -100,8 +100,8 @@ model Review_User {
   score                              Decimal @db.Decimal(1, 0)
   describe                           String?
   title                              String
-  User_Review_User_reviewer_idToUser User    @relation("Review_User_reviewer_idToUser", fields: [reviewer_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "review_user-reviewer_id")
-  User_Review_User_user_idToUser     User    @relation("Review_User_user_idToUser", fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "review_user-user_id")
+  User_Review_User_reviewer_idToUser User    @relation("Review_User_reviewer_idToUser", fields: [reviewer_id], references: [id], onDelete: NoAction, onUpdate: Cascade, map: "review_user-reviewer_id")
+  User_Review_User_user_idToUser     User    @relation("Review_User_user_idToUser", fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "review_user-user_id")
 
   @@id([id, user_id, reviewer_id])
 }
@@ -110,8 +110,8 @@ model Wishlist {
   id      Int  @default(autoincrement())
   user_id Int
   book_id Int
-  Book    Book @relation(fields: [book_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "wishlist-book_id")
-  User    User @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "wishlist-user_id")
+  Book    Book @relation(fields: [book_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "wishlist-book_id")
+  User    User @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "wishlist-user_id")
 
   @@id([id, user_id, book_id])
 }
@@ -120,7 +120,7 @@ model Userlike {
   user_id     Int
   category_id Int
   Category    Category @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Userlike-category_id")
-  User        User     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Userlike-user_id")
+  User        User     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "Userlike-user_id")
 
   @@id([user_id, category_id])
 }

@@ -41,9 +41,9 @@ export async function GET(req: Request,{ params }: { params: { user_id: string }
 
         let avg_user = 0
 
-        if (review_agg._avg.score != null) {
+        if (review_agg._avg.score !== null) {
             const avg = review_agg._avg.score as Decimal
-            const avg_user = Math.round(avg.toNumber() * 100) / 100
+            avg_user = Math.round(avg.toNumber() * 100) / 100
         }
 
         
@@ -52,7 +52,7 @@ export async function GET(req: Request,{ params }: { params: { user_id: string }
             review_count: review_agg._count,
             review_avg: avg_user,
             book_count:book_agg._count,
-            message: "All information of this user have been sent successfully."
+            message: "All information of this user has been sent successfully."
         },{ status: 200 }
     )
 

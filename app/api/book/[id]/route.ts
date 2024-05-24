@@ -51,7 +51,7 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
 
         if (review_book_agg._avg.score != null) {
             const book_score = review_book_agg._avg.score as Decimal
-            const avg_book = Math.round(book_score.toNumber() * 100) / 100    
+            avg_book = Math.round(book_score.toNumber() * 100) / 100    
         }
 
 
@@ -85,7 +85,7 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
 
         if (review_user_agg._avg.score != null) {
             const user_score = review_user_agg._avg.score as Decimal
-            const avg_user = Math.round(user_score.toNumber() * 100) / 100
+            avg_user = Math.round(user_score.toNumber() * 100) / 100
         }
         
         const otherbook = await prismadb.book.findMany({

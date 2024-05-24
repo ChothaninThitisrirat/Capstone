@@ -12,6 +12,7 @@ from sklearn.cluster import KMeans
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.decomposition import PCA
 from datetime import datetime
+import math
 
 app = FastAPI()
 load_dotenv()
@@ -78,7 +79,7 @@ async def process_data(data: dict):
         cos_sim_data = pd.DataFrame(cosine_similarity(X))
         recommendations_dict = {}
         for i in range(exp_size):
-            index_recomm = cos_sim_data.loc[i][exp_size:].sort_values(ascending=False).index.tolist()[0:3]
+            index_recomm = cos_sim_data.loc[i][exp_size:].sort_values(ascending=False).index.tolist()[0:math.ceil(10 / len(user_cat))]
             recomm = [x - exp_size for x in index_recomm]
             cat_data = [books[i] for i in recomm]
             recommendations = []
