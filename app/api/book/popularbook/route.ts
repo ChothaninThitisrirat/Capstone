@@ -8,6 +8,7 @@ export async function GET(req: Request) {
                 id:true,
                 title:true,
                 picture:true,
+                description:true,
                 User: {
                     select:{
                         username:true
