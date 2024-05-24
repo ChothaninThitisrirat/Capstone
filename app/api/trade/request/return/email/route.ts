@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prismadb } from "@/lib/db";
-import { transport, email, declineemail } from "@/lib/email";
+import { transport, email, returnemail } from "@/lib/email";
 
 export async function POST(req: Request) {
     try {
@@ -15,7 +15,7 @@ export async function POST(req: Request) {
                 User:true
             }
         })
-        
+
         if (!tradeinfo) {
             return NextResponse.json({
                 email:null,
@@ -27,14 +27,14 @@ export async function POST(req: Request) {
                 
         const send = await transport.sendMail({
             from: email.email,
-            to: `${tradeinfo?.User.email}`,
-            subject: `Trade: ${tradeinfo?.id}`,
-            html: declineemail(`${tradeinfo?.Book_Trade_book_idToBook.title}`, `${tradeinfo?.Book_Trade_req_book_idToBook.title}`, `${tradeinfo?.User_Trade_owner_idToUser.username}`, `${tradeinfo?.User.username}`)
+            to: `${tradeinfo?.User_Trade_owner_idToUser.email}`,
+            subject: `Trade: ${tradeinfo?.id} `,
+            html: returnemail(`${tradeinfo?.Book_Trade_book_idToBook.title}`, `${tradeinfo?.Book_Trade_req_book_idToBook.title}`, `${tradeinfo?.User_Trade_owner_idToUser.username}`, `${tradeinfo?.User.username}`)
         })
 
         return NextResponse.json({
             email:send,
-            message: "Decline email has been sent successfully."
+            message: "Return email has been sent successfully."
         })
 
     } catch (error) {

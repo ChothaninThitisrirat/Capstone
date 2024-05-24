@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prismadb } from "@/lib/db";
-import { transport,email, acceptedemail } from "@/lib/email";
+import { transport, email, acceptedemail } from "@/lib/email";
 
 export async function POST(req: Request) {
     try {
@@ -15,6 +15,13 @@ export async function POST(req: Request) {
                 User:true
             }
         })
+
+        if (!tradeinfo) {
+            return NextResponse.json({
+                email:null,
+                message: "Trade info not found."
+            })
+        }
         
         await transport.verify()
                 
@@ -27,7 +34,7 @@ export async function POST(req: Request) {
 
         return NextResponse.json({
             email:send,
-            message: "Email sent successfully."
+            message: "Accept email has been sent successfully."
         })
 
     } catch (error) {
