@@ -40,6 +40,8 @@ const EditPage2: React.FC = (): JSX.Element => {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const [userAddress, setUserAddress] = useState<UserAddress | null>(null);
+  const [statusAddress, setStatusAddress] = useState(false);
+
 
 
   useEffect(() => {
@@ -81,14 +83,13 @@ const EditPage2: React.FC = (): JSX.Element => {
           <div 
             className='flex w-2/3 h-1/6 justify-center items-center bg-dark1 flex-col drop-shadow-lg rounded-2xl min-h-48'  
           >
-              <button
-                className=""
-              >
-                Add Address
+              <button 
+                onClick={() => setStatusAddress(true)}>
+                  เพิ่มที่อยู่
               </button>
           </div>
 
-        {userAddress && user && userAddress.address.map((address, index) => (
+        {userAddress && user && userAddress.address.slice().reverse().map((address, index) => (
           <div 
             key={index}
             className='flex w-2/3 h-1/6 justify-center items-center bg-dark1 flex-col drop-shadow-lg rounded-2xl min-h-48'  
@@ -98,13 +99,14 @@ const EditPage2: React.FC = (): JSX.Element => {
             </div>
 
             <div className="flex w-full h-2/3 bg-white rounded-b-2xl text-black font-bold justify-start items-center pl-8">
-              {user.user.first_name} {user.user.last_name} , {user.user.phone_number}<br/>
               {address}
             </div>
             
           </div>
         ))}
       </div>
+
+      {statusAddress && <AddAddress setStatusAddress={setStatusAddress} />}
     </>
   );
 };

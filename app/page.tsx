@@ -7,14 +7,24 @@ import Navbar from "@/Components/Navbar";
 import Footer from "@/Components/Footer";
 import React, { FC, useState } from 'react';
 import SlideBookMini from '@/Components/SlideBookMini';
-import SlideBookBig from '@/Components/BookFeedInfo/SlideBookBig';
+import SlideBookBig from '@/Components/SlideBookBig';
 import Searchbar from '@/Components/Searchbar';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
-interface Props {
+interface POPBOOK {
+  id: number;
+  title: string;
+  picture: string;
+  User: {
+    username: string
+  }
 }
+
+interface Props {}
+
+
 
 const bookTitle = [
   { id: '1', title: "Book1" },
@@ -30,7 +40,7 @@ const bookTitle = [
   
 const Page: FC<Props> = (): JSX.Element => {
   const [bookSlide, setBookSlide] = useState([
-    { id: '1', img: 'images/books/book1.jpg' },
+    { id: '1', img: 'images/books/book1.jpg'},
     { id: '2', img: 'images/books/book2.jpg' },
     { id: '3', img: 'images/books/book3.jpg' },
     { id: '4', img: 'images/books/book4.jpg' },
@@ -78,23 +88,25 @@ const Page: FC<Props> = (): JSX.Element => {
     { id: '46', img: 'images/books/book45.jpg' },
   ]);
 
-  const bookTitle = [
-      { id: '1', title: "Book1" },
-      { id: '2', title: 'Book2' },
-      { id: '3', title: 'Book3' },
-      { id: '4', title: 'Book4' },
-      // { id: '5', title: 'Book5' },
-      // { id: '6', title: 'Book6' },
-      // { id: '7', title: 'Book7' },
-      // { id: '8', title: 'Book8' },
-      // { id: '9', title: 'Book9' },
-  ];
+  // const bookTitleLimit = [
+  //     { id: '1', title: "Book1" },
+  //     { id: '2', title: 'Book2' },
+  //     { id: '3', title: 'Book3' },
+  //     { id: '4', title: 'Book4' },
+  //     // { id: '5', title: 'Book5' },
+  //     // { id: '6', title: 'Book6' },
+  //     // { id: '7', title: 'Book7' },
+  //     // { id: '8', title: 'Book8' },
+  //     // { id: '9', title: 'Book9' },
+  // ];
 
   const [results, setResults] = useState<{ id: string; title: string }[]>([]);
   const [selectedProfile, setSelectedProfile] = useState<{ id: string; title:string}>();
   const { data: session, status } = useSession();
   const router = useRouter();
   const [loading, setLoading] = useState(true);
+  const [popBook, setPopBook] = useState<POPBOOK[]>([]);
+  const [bookTitleLimit, setbookTitleLimit] = useState()
 
   
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -104,37 +116,48 @@ const Page: FC<Props> = (): JSX.Element => {
           return;
       }
 
-      const filteredValue = bookTitle.filter((item) =>
+      const filteredValue = bookTitleLimit.filter((item) =>
           item.title.toLowerCase().startsWith(value.toLowerCase())
       );
       setResults(filteredValue);
   };
 
+
   useEffect(() => {
     if (status === 'authenticated' && session?.user?.id) {
-      fetch('api/user/${session.user.id}')
+      fetch('api/book/popularbook')
       .then(response => response.json())
       .then(data => {
+        setPopBook(data)
         setLoading(false)
       })
-      .catch (error => {
-        console.error('Error fetching user data:', error)
-        setLoading(false)
+      .catch(error => {
+        console.error(error)
       })
     }
-    
-    
-  },[session, status, router])
+  },[session,status,router])
+
+  // console.log("page",popBook)
+
+  useEffect (() => {
+    try{
+      fetch('api/book/')
+    }
+
+  })
 
   useEffect(() => {
     if (status === 'authenticated' && session?.user?.isAdmin) {
       router.push('/admin');
     }
-  }, [status, session, router]);
+  }, [status, session]);
 
   return (
     <>
-      <Navbar backGroundOn />
+      <div className="absolute">
+        <Navbar backGroundOn />
+      </div>
+      
       {/* แถบบน and Search bar */}
       <div className='flex justify-center flex-col w-full h-screen'>
         <div className='flex flex-col justify-center items-center w-full h-full bg-dark2 rounded-b-3xl'>
@@ -155,15 +178,17 @@ const Page: FC<Props> = (): JSX.Element => {
           </h1>
           {/* search bar */}
           <Searchbar 
+            
             results={results} 
             onChange={handleChange}
             renderItem={(item) => (<p>{item.title}</p>)} 
             onSelect={(item) => setSelectedProfile(item)}
             value={selectedProfile?.title}
+
           />
           
           <div className='absolute'>
-          <img src="https://dfmtboqfsygnjttfuvgq.supabase.co/storage/v1/object/public/b-trade/profile/43474571-17aa-4c70-bf6c-960848a25ed4.jpg" alt="" /> 
+
           </div>
 
         </div>
@@ -189,28 +214,12 @@ const Page: FC<Props> = (): JSX.Element => {
       
       <div className='flex flex-col w-full bg-bg justify-center items-center'>
         <div className='w-5/6 mt-10'>
-          <p className='text-5xl font-bold'>Popular</p>
-          <p className='text-xl font-bold mt-5'>หนังสือดี หนังสือเด่น คนนิยมอ่าน</p>
-          <div className='flex justify-center mt-10'>
-            <SlideBookBig data={bookSlide}/>
+          <div className='flex justify-center'>
+            <SlideBookBig data={popBook} />
           </div>
         </div>
 
-        <div className='w-5/6 mt-10'>
-          <p className='text-5xl font-bold'>Popular</p>
-          <p className='text-xl font-bold mt-5'>หนังสือดี หนังสือเด่น คนนิยมอ่าน</p>
-          <div className='flex justify-center mt-10'>
-            <SlideBookBig data={bookSlide}/>
-          </div>
-        </div>
-
-        <div className='w-5/6 mt-10'>
-          <p className='text-5xl font-bold'>Popular</p>
-          <p className='text-xl font-bold mt-5'>หนังสือดี หนังสือเด่น คนนิยมอ่าน</p>
-          <div className='flex justify-center mt-10'>
-            {/* <SlideBookMini data={bookSlide}/>  */}
-          </div>
-        </div>
+       
       </div>
       <Footer />
     </>
