@@ -186,6 +186,10 @@ body::-webkit-scrollbar {
 }
 
 
+.nav-z-index{
+  z-index: 100;
+}
+
 @media screen and (max-width: 1000px) {
   .responsive-bookinfo{
     flex-direction: column;

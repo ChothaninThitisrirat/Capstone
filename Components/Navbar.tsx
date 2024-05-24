@@ -63,8 +63,10 @@ const Navbar: React.FC<NavbarProps> = ({backGroundOn, withTitle}) =>{
 
     useEffect(() => {
         const handleResize = () => {
-            if (window.innerWidth > 1100) {
-                setShowDropDownresponsive(false);
+            if (window.innerWidth > 1050) {
+                setShowDropDownresponsive(false)
+                setStateResponsiveManu(false)
+                setManuDropDown(false)
             }
         };
 
@@ -96,87 +98,104 @@ const Navbar: React.FC<NavbarProps> = ({backGroundOn, withTitle}) =>{
             :"flex  w-screen h-16 cursor-pointer justify-center z-30"}>
             <div 
             className={
-                showDropDownresponsive? "flex flex-col w-screen  rounded-b-3xl relative cursor-pointer items-center z-30 bg-dark2 duration-500 h-[460px]":
                 (backGroundOn
-            ?"flex w-screen h-16 rounded-b-3xl relative cursor-pointer justify-center z-30 bg-dark2 duration-500"
-            :"flex w-screen h-16 relative cursor-pointer justify-center z-30 bg-dark2 ")} >
+            ?"flex w-screen h-16 rounded-b-3xl justify-center z-30 bg-dark2"
+            :"flex w-screen h-16 justify-center z-30 bg-dark2")} >
                 <div 
-                style={{maxWidth: '2200px'}}
-                className="flex w-screen h-16 relative z-30 shrink-0">
-                    <div className="flex w-full justify-between z-40 bg-dark2 rounded-b-3xl">
-                        <div className="flex gap-5 ml-10 items-center">
-                        <Link href='/' >
-                            <Image
-                            src={logoWhite}
-                            alt="Logo"
-                            className='w-32 h-12 object-contain ml-5'
-                            />
-                        </Link>
-                            <div className="flex gap-14 ml-5  responsive-close">
-                                <Link href='/' className="flex text-center items-center text-white text-base">หน้าแรก</Link>
-                                <Link href='/' className="flex text-center items-center text-white text-base">หมวดหมู่</Link>
-                                <Link href='/' className="flex text-center items-center text-white text-base">ยอดนิยม</Link>
-                            </div>
-                        </div>
-                        <div className="flex gap-14 mr-20 items-center  responsive-close">
-                            <Link href='/postbook' className="flex text-center items-center text-white text-base">โพสต์หนังสือ</Link>
-                            <Link href='/library' className="flex text-center items-center text-white text-base">คลังหนังสือ</Link>
-                            <div 
-                            onClick={() => setShowDropDown(!showDropDown)}
-                            className="flex gap-2 items-center">
-                                {
-                                loading ?<div>
-                                    <HashLoader
-                                    className="ml-1 mr-2"
-                                    color='#fff'
-                                    loading={true}
-                                    size={20}
-                                    aria-label="Loading Spinner"
-                                    data-testid="loader"
-                                    />
-                                </div>
-                                :<img
-                                src={user?.user?.profile_picture}
-                                alt="Profile picture"
-                                className='w-9 h-9 object-cover rounded-full cursor-pointer bg-white'
+                className={
+                showDropDownresponsive? "flex flex-col w-screen  rounded-b-3xl relative cursor-pointer items-center nav-z-index bg-dark2 duration-500 h-[460px] border-b border-white":
+                    (backGroundOn
+                ?"flex w-screen h-16 rounded-b-3xl relative cursor-pointer justify-center z-30 bg-dark2"
+                :"flex w-screen h-16 relative cursor-pointer justify-center z-30 bg-dark2 duration-500")} >
+                    <div 
+                    style={{maxWidth: '2200px'}}
+                    className="flex w-screen h-16 relative z-30 shrink-0">
+                        <div className="flex w-full justify-between z-40 bg-dark2 rounded-b-3xl">
+                            <div className="flex gap-5 ml-10 items-center">
+                            <Link href='/' >
+                                <Image
+                                src={logoWhite}
+                                alt="Logo"
+                                className='w-32 h-12 object-contain ml-5'
                                 />
-                                }
-                                
-                                {session && session.user ?(
-                                    <div className="flex text-center items-center justify-center text-white text-lg w-auto">{session.user.username}</div>
-                                ):<div className="flex w-20"></div>}
-                                {showDropDown
-                                ?<Icon icon="mdi:chevron-up" width="20" height="20"
-                                className="text-white"/>
-                                :<Icon icon="mdi:chevron-down" width="20" height="20"
-                                className="text-white"/>}
+                            </Link>
+                                <div className="flex gap-14 ml-5  responsive-close">
+                                    <Link href='/' className="flex text-center items-center text-white text-base">หน้าแรก</Link>
+                                    <Link href='/' className="flex text-center items-center text-white text-base">หมวดหมู่</Link>
+                                    <Link href='/' className="flex text-center items-center text-white text-base">ยอดนิยม</Link>
+                                </div>
                             </div>
+                            {status === 'authenticated'?
+                            <div className="flex gap-14 mr-20 items-center  responsive-close">
+                                <Link href='/postbook' className="flex text-center items-center text-white text-base">โพสต์หนังสือ</Link>
+                                <Link href='/library' className="flex text-center items-center text-white text-base">คลังหนังสือ</Link>
+                                <div 
+                                onClick={() => setShowDropDown(!showDropDown)}
+                                className="flex gap-2 items-center">
+                                    {
+                                    loading ?<div>
+                                        <HashLoader
+                                        className="ml-1 mr-2"
+                                        color='#fff'
+                                        loading={true}
+                                        size={20}
+                                        aria-label="Loading Spinner"
+                                        data-testid="loader"
+                                        />
+                                    </div>
+                                    :<img
+                                    src={user?.user?.profile_picture}
+                                    alt="Profile picture"
+                                    className='w-9 h-9 object-cover rounded-full cursor-pointer bg-white'
+                                    />
+                                    }
+                                    
+                                    {session && session.user ?(
+                                        <div className="flex text-center items-center justify-center text-white text-lg w-auto">{session.user.username}</div>
+                                    ):<div className="flex w-20"></div>}
+                                    {showDropDown
+                                    ?<Icon icon="mdi:chevron-up" width="20" height="20"
+                                    className="text-white"/>
+                                    :<Icon icon="mdi:chevron-down" width="20" height="20"
+                                    className="text-white"/>}
+                                </div>
+                            </div>
+                            :<div className="flex gap-10 mr-20 items-center">
+                                <button 
+                                onClick={()=> router.push('/signup')}
+                                className="flex text-white h-10 justify-center items-center rounded-full text-xl">Sign Up</button>
+                                <button 
+                                onClick={()=> router.push('/login')}
+                                style={{backgroundColor:'#F5E8C7'}}
+                                className="flex h-10 w-32 justify-center items-center rounded-full text-xl">Login</button>
+                            </div>}
+
+                            {status === 'authenticated' &&
+                            <div className="hidden gap-14 mr-20 items-center  responsive-open">
+                                <div id="menuToggle">
+                                    <input 
+                                    checked={showDropDownresponsive}
+                                    onChange={(e)=>handleManu(e)}
+                                    type="checkbox" />
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <div className="flex"></div>
+                                </div>
+                            </div>}
                         </div>
-                        <div className="hidden gap-14 mr-20 items-center  responsive-open">
-                            <div id="menuToggle">
-                                <input 
-                                checked={showDropDownresponsive}
-                                onChange={(e)=>handleManu(e)}
-                                type="checkbox" />
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <div className="flex"></div>
-                            </div>
+                        <div className={showDropDown
+                            ?"absolute top-16 right-14 duration-500 z-10  responsive-close"
+                            :"absolute top-16 right-14 -translate-y-96 duration-500 z-10 responsive-close"}>
+                            <DropDown/>
                         </div>
                     </div>
-                    <div className={showDropDown
-                        ?"absolute top-16 right-14 duration-500 z-10  responsive-close"
-                        :"absolute top-16 right-14 -translate-y-96 duration-500 z-10 responsive-close"}>
-                        <DropDown/>
-                    </div>
+                    {stateResponsiveManu &&
+                    <div className={ manuDropDown?"flex w-full h-auto shrink-0 responsive-open duration-300":" invisible duration-300 opacity-0"}>
+                        <DropDownResponsive/>
+                    </div>}
                 </div>
-                {stateResponsiveManu &&
-                <div className={ manuDropDown?"flex w-full h-auto shrink-0 responsive-open duration-300":" invisible duration-300 opacity-0"}>
-                    <DropDownResponsive/>
-                </div>}
             </div>
-            
         </div>
             
             
