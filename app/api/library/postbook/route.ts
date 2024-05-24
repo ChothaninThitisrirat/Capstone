@@ -5,6 +5,8 @@ import { upLoadIMG } from "@/utils/supabase";
 export async function POST(req: Request) {
     try {
             const formData = await req.formData();
+        
+            const id = Math.floor(10000 * Math.random())
 
             const categoryIds: number[] = []
             
@@ -27,10 +29,10 @@ export async function POST(req: Request) {
                         image.push(...imageurl);
                     }
             }
-            
 
             const newlibrarybook = await prismadb.book.create({
                 data : {
+                    id:id,
                     user_id: parseInt(formData.get('user_id') as string),
                     title: formData.get('title') as string,
                     picture: image,
