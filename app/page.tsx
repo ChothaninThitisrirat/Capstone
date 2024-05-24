@@ -126,11 +126,6 @@ const Page: FC<Props> = (): JSX.Element => {
     
   },[session, status, router])
 
-  useEffect(() => {
-    if (status === 'authenticated' && session?.user?.isAdmin) {
-      router.push('/admin');
-    }
-  }, [status, session, router]);
 
   return (
     <>

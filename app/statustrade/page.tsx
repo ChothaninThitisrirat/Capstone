@@ -37,6 +37,7 @@ function statustrade() {
 
     const [stateOpen, setStateOpen] = useState(false)
     const [popUpReviewUser, setPopUpReviewUser] = useState(false) //
+    const [reloadInfo, setReloadInfo] = useState(false) 
     
     const [classAddBookbg, setClassAddBookbg] = useState('fixed h-screen w-screen bg-slate-200 top-0 left-0 z-50 opacity-30 backdrop-blur-2xl hidden')
     const [classAddBook, setClassAddBook] = useState({
@@ -114,6 +115,7 @@ function statustrade() {
     const handleStatusCheck = (trade: any) => {
         
         if (trade.status !== 'decline'){
+            setReloadInfo((p)=>!p)
             setStateOpen(true)
             setTradeId(trade.id)
         }
@@ -190,7 +192,7 @@ function statustrade() {
         
         <Footer/>
         <div className={classAddBookbg}></div>
-        <StatusTrade setStateOpen={setStateOpen} classAddBook={classAddBook} tradeId={tradeId} setLoadcompo={setLoadcompo} setPopUpReviewUser={setPopUpReviewUser}/>
+        <StatusTrade setStateOpen={setStateOpen} classAddBook={classAddBook} tradeId={tradeId} setLoadcompo={setLoadcompo} setPopUpReviewUser={setPopUpReviewUser} reloadInfo={reloadInfo}/>
         <UserReview classReviewUser={classReviewUser} setPopUpReviewUser={setPopUpReviewUser} tradeId={tradeId}/>
         </>
     )

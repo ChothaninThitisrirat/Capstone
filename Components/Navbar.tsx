@@ -36,7 +36,6 @@ const Navbar: React.FC<NavbarProps> = ({backGroundOn, withTitle}) =>{
     const { data: session, status } = useSession()
     const [user, setUser] = useState<User | null>(null);
     const router = useRouter();
-
     const [showDropDown, setShowDropDown] = useState(false)
     const [showDropDownresponsive, setShowDropDownresponsive] = useState(false)
     const [stateResponsiveManu, setStateResponsiveManu] = useState(false)
@@ -206,22 +205,20 @@ const Navbar: React.FC<NavbarProps> = ({backGroundOn, withTitle}) =>{
 
 
 function DropDown() {
+    const { data: session, status } = useSession()
     const data = [{
-        id: 1,
         icon: "mdi:user",
         link: "/editprofile",
         text: "Edit Profile",
         size: "30"
     },
     {
-        id: 2,
         icon: "mdi:list-status",
         link: "/statustrade",
         text: "สถานะคำขอแลกเปลี่ยน",
         size: "25"
     },
     {
-        id: 3,
         icon: "carbon:change-catalog",
         link: "/tradebook",
         text: "หนังสือแลกเปลี่ยนของฉัน",
@@ -229,17 +226,19 @@ function DropDown() {
     
     },
     {
-        id: 4,
         icon: "cil:list",
         link: "/wishlist",
         text: "Wish List",
-        size: "22"
+        size: "24"
     }
+
 ]
+
+
     return (
         <div className=" flex-col w-auto bg-white border rounded-b-2xl shadow z-10">
-            {data.map((item) => (
-                <Link key={item.id} href={item.link} className="flex pl-4 h-12 pr-2 cursor-pointer hover:bg-slate-200 w-full items-center justify-start">
+            {data.map((item,index) => (
+                <Link key={index} href={item.link} className="flex pl-4 h-12 pr-2 cursor-pointer hover:bg-slate-200 w-full items-center justify-start">
                     <div
                     className="w-9 h-9 rounded-full bg-zinc-300 flex items-center justify-center">
                         <Icon icon={item.icon} width={item.size} height={item.size} 
@@ -248,6 +247,18 @@ function DropDown() {
                     <div  className="flex text-center items-center text-sm ml-3 mr-2">{item.text}</div>
                 </Link>
             ))}
+            {session?.user.isAdmin &&
+            <Link href='/admin' className="flex pl-4 h-12 pr-2 cursor-pointer hover:bg-red-100 w-full items-center justify-start">
+                <div
+                className="w-9 h-9 rounded-full bg-red-500 flex items-center justify-center">
+                    <Icon  
+                    // style={{color:'#363062'}}
+                    className="text-white"
+                    icon="eos-icons:admin-outlined" width="28" height="28"/>
+                </div>
+                <div  className="flex text-center items-center text-sm ml-3 mr-2 text-red-500">Admin Page</div>
+            </Link>}
+
             <button
             onClick={() => signOut({ callbackUrl: '/' })}
             className="flex items-center justify-center text-sm text-gray-500 py-2 border-t gap-2 w-full">
@@ -262,6 +273,7 @@ function DropDown() {
 
 
 function DropDownResponsive() {
+    const { data: session, status } = useSession()
     const data = [{
         icon: "iconamoon:category-light",
         link: "/",
@@ -286,7 +298,7 @@ function DropDownResponsive() {
         icon: "cil:list",
         link: "/wishlist",
         text: "Wish List",
-        size: "22"
+        size: "24"
     },{
         icon: "mdi:list-status",
         link: "/statustrade",
@@ -297,7 +309,6 @@ function DropDownResponsive() {
         link: "/tradebook",
         text: "หนังสือแลกเปลี่ยนของฉัน",
         size: "24"
-    
     },
     
 ]
@@ -316,6 +327,17 @@ function DropDownResponsive() {
                     </div>
                 </Link>
             ))}
+            {session?.user.isAdmin &&
+            <Link href='/admin' className="flex pl-4 h-12 pr-2 cursor-pointer hover:bg-red-100 w-full items-center justify-start">
+                <div
+                className="w-9 h-9 rounded-full bg-red-500 flex items-center justify-center">
+                    <Icon  
+                    // style={{color:'#363062'}}
+                    className="text-white"
+                    icon="eos-icons:admin-outlined" width="28" height="28"/>
+                </div>
+                <div  className="flex text-center items-center text-sm ml-3 mr-2 text-red-500">Admin Page</div>
+            </Link>}
             <button
             onClick={() => signOut({ callbackUrl: '/' })}
             className="flex items-center justify-center text-sm text-gray-200 py-2 border-t gap-2 w-10/12 pt-4">
