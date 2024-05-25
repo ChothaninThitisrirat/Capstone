@@ -47,7 +47,8 @@ const UserReview: React.FC<UserReviewProp> = ({classReviewUser, setPopUpReviewUs
             if (tradeId) {
                 try {
                     console.log('tradeId---',tradeId);
-                    const response = await axios.get(`/api/trade/myrequest/${userId}/${tradeId}`);
+                    const response = await axios.get(`/api/trade/myrequest/${userId}/book/${tradeId}`);
+                    console.log(userId,'response.data',response.data)
                     setUserIdTrade(response.data.mybookrequest.Book_Trade_book_idToBook.User.id)
                     setBookIdTrade(response.data.mybookrequest.Book_Trade_book_idToBook.id)
                     setLoading(false)
@@ -80,7 +81,7 @@ const UserReview: React.FC<UserReviewProp> = ({classReviewUser, setPopUpReviewUs
         }
 
     }, [bookIdTrade])
-
+console.log(userId,'bookInfo',bookInfo)
 
     const handleReviewUser = async (e: any) => {
         e.preventDefault();
