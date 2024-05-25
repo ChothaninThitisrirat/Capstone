@@ -62,7 +62,7 @@ export default function Profile() {
       <Navbar backGroundOn withTitle/>
       {/* <TitleBar textTitle={{`{}`}} /> */}
       {matchingCategory && <TitleBar textTitle={`${matchingCategory.name}`} />}
-      <div className='flex items-center justify-center'>
+      <div className='flex w-full items-center gap-12 justify-center flex-wrap pt-16'>
         {BookCategory?.length === 0 ? (
           <div
             style={{ width: '1250px', WebkitOverflowScrolling: 'touch' }}
@@ -74,10 +74,10 @@ export default function Profile() {
           BookCategory.map((item, index) => (
             <div
               key={index}
-              className="flex flex-wrap gap-8 w-screen h-screen bg-white justify-center "
+              className="flex w-max h-max bg-white justify-center "
             >
               <Link
-                className="flex w-full h-1/3 max-w-52 bg-cover bg-center bg-no-repeat"
+                className="flex w-svw h-1/4 max-w-52 min-h-72 bg-cover bg-center bg-no-repeat"
                 style={{ backgroundImage: `url(${item.picture[0]})` }}
                 href={`/bookinfo/${item.id}`}
               />

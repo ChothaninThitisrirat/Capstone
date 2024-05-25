@@ -10,6 +10,7 @@ import { Rating } from '@mui/material'
 import {Icon} from '@iconify/react'
 import Link from 'next/link'
 
+
 interface UserBook{
     id: number;
     title  : string;
@@ -48,7 +49,6 @@ export default function Profile() {
     <>
       <Navbar backGroundOn withTitle/>
       <TitleBar textTitle={`ผลการค้นหาของ ${title}`} />
-
       <div className='flex items-center justify-center'>
         {BookSearch?.length === 0 ? (
           <div

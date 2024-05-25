@@ -176,14 +176,14 @@ const Page: FC<Props> = (): JSX.Element => {
               loading ? Loader() : <SlideBookBig data={popBook} Headtitle={"Popular Book"} Subtitle={"หนังสือดี หนังสือดัง คนนิยมอ่าน"}/>
             }
           </div>
-{/* 
-          <div className='flex justify-center w-screen'>
+
+          <div className='flex justify-center pb-8'>
             {
               loading ? Loader() : <SlideBookBig data={popBook} Headtitle={"Recommend For You"} Subtitle={"หนังสือที่คุณอาจจะสนใจ"}/>
             }
           </div>
 
-          <div className='flex justify-center'>
+          {/* <div className='flex justify-center'>
             {
               loading ? Loader() : <SlideBookMini data={popBook}/>
             }
