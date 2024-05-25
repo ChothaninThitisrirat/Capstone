@@ -14,12 +14,12 @@ const config: Config = {
         'dark2': '#435585',
         'dark3': '#818FB4',
         'bg' : '#F7F8F9',
-        "novel": "#00B2FF",
-        "horror1":  "#FF0000",
+        "novel": "#F8F6E3",
+        "horror1":  "#FA7070",
         "horror2":  "#383535",
-        "cartoon":  "#eeff59",
-        "romantic":  "#FF69B4",
-        "science":  "#4efa4b",
+        "cartoon":  "#7BD3EA",
+        "romantic":  "#F6F7C4",
+        "science":  "#40A2E3",
         "business": "#ff7e47",
         "education": "#47fff3",
         "develop": "#fffb91",
@@ -35,6 +35,7 @@ const config: Config = {
     },
     height: {
       '110': '25rem',
+      '130': '35rem',
       '128': '32rem',
     },
     minWidth: {
@@ -42,7 +43,7 @@ const config: Config = {
     },
     minHeight: {
       '110': '25rem',
-      '128': '32rem',
+      '128': '60rem',
     },
     width:{
       '110': '25rem',

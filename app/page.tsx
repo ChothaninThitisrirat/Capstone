@@ -16,7 +16,6 @@ import { set } from 'mongoose';
 import { HashLoader } from 'react-spinners';
 
 interface POPBOOK {
-  popularbook: [];
   id: number;
   title: string;
   picture: string;
@@ -24,8 +23,7 @@ interface POPBOOK {
     username: string
   }
 }
-
-interface Props {}
+ interface Props {}
 
 interface Books{
   id: number;
@@ -35,18 +33,6 @@ interface Books{
 
 
 const Page: FC<Props> = (): JSX.Element => {
-
-  // const bookTitleLimit = [
-  //     { id: '1', title: "Book1" },
-  //     { id: '2', title: 'Book2' },
-  //     { id: '3', title: 'Book3' },
-  //     { id: '4', title: 'Book4' },
-  //     // { id: '5', title: 'Book5' },
-  //     // { id: '6', title: 'Book6' },
-  //     // { id: '7', title: 'Book7' },
-  //     // { id: '8', title: 'Book8' },
-  //     // { id: '9', title: 'Book9' },
-  // ];
 
   const [results, setResults] = useState<{ id: string; title: string }[]>([]);
   const [selectedProfile, setSelectedProfile] = useState<{ id: string; title:string}>();
@@ -82,7 +68,7 @@ const Page: FC<Props> = (): JSX.Element => {
       if (status === 'authenticated' && session?.user?.id) {
         const response = await fetch('api/book/popularbook');
         const data = await response.json();
-        setPopBook(data);
+        setPopBook(data.popularbook);
         setLoading(false);
       }
     } catch (error) {
@@ -113,9 +99,9 @@ const Page: FC<Props> = (): JSX.Element => {
       <Navbar backGroundOn={false} withTitle={false}/>
       
       {/* แถบบน and Search bar */}
-      <div className='flex justify-center flex-col w-full h-screen'>
-        <div className='flex flex-col justify-center items-center w-full h-full bg-dark2 rounded-b-3xl'>
-          <h1 className='text-7xl font-bold  text-white mb-8'>
+      <div className='flex flex-col w-screen h-full'>
+        <div className='flex flex-col justify-center items-center w-full h-fit bg-dark2 rounded-b-3xl pb-20'>
+          <h1 className='text-7xl font-bold  text-white pb-8 pt-20'>
             Trade The Book
           </h1>
           <h1 className='text-7xl font-bold  text-white mb-8'>
@@ -138,6 +124,7 @@ const Page: FC<Props> = (): JSX.Element => {
             renderItem={(item) => (<p>{item.title}</p>)} 
             onSelect={(item) => setSelectedProfile(item)}
             value={selectedProfile?.title}
+            
 
           />
           
@@ -170,31 +157,44 @@ const Page: FC<Props> = (): JSX.Element => {
             className='flex justify-center h-fit text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-business hover:shadow-xl rounded-2xl text-black transform transition duration-300 ease-in-out hover:scale-105'>การเงิน - ลงทุน</Link>
             <Link
             href='/category/7'
-            className='flex justify-center h-fit text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-education hover:shadow-xl rounded-2xl text-black transform transition duration-300 ease-in-out hover:scale-105'>การศึกษา</Link>
+            className='flex justify-center h-fit text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg- border-2 border-education hover:shadow-xl rounded-2xl text-black transform transition duration-300 ease-in-out hover:scale-105'>การศึกษา</Link>
             <Link
             href='/category/8'
-            className='flex justify-center h-fit text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-travel hover:shadow-xl rounded-2xl text-black transform transition duration-300 ease-in-out hover:scale-105'>ท่องเที่ยว</Link>
+            className='flex justify-center h-fit text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg- border-2 border-travel hover:shadow-xl rounded-2xl text-black transform transition duration-300 ease-in-out hover:scale-105'>ท่องเที่ยว</Link>
             <Link
             href='/category/9'
-            className='flex justify-center h-fit text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-develop hover:shadow-xl rounded-2xl text-black transform transition duration-300 ease-in-out hover:scale-105'>การพัฒนาตนเอง</Link>
+            className='flex justify-center h-fit text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg- border-2 border-develop hover:shadow-xl rounded-2xl text-black transform transition duration-300 ease-in-out hover:scale-105'>การพัฒนาตนเอง</Link>
             <Link
             href='/category/10'
-            className='flex justify-center h-fit text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-health hover:shadow-xl rounded-2xl text-black transform transition duration-300 ease-in-out hover:scale-105'>สุขภาพ</Link>
+            className='flex justify-center h-fit text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg- border-2 border-health hover:shadow-xl rounded-2xl text-black transform transition duration-300 ease-in-out hover:scale-105'>สุขภาพ</Link>
           </div>
         </div>
+        <div className='flex flex-col w-screen bg-bg justify-center items-center'>
+        <div className='w-5/6 mt-10'>
+          <div className='flex justify-center pb-8'>
+            {
+              loading ? Loader() : <SlideBookBig data={popBook} Headtitle={"Popular Book"} Subtitle={"หนังสือดี หนังสือดัง คนนิยมอ่าน"}/>
+            }
+          </div>
+{/* 
+          <div className='flex justify-center w-screen'>
+            {
+              loading ? Loader() : <SlideBookBig data={popBook} Headtitle={"Recommend For You"} Subtitle={"หนังสือที่คุณอาจจะสนใจ"}/>
+            }
+          </div>
+
+          <div className='flex justify-center'>
+            {
+              loading ? Loader() : <SlideBookMini data={popBook}/>
+            }
+          </div> */}
+        </div>
+
       </div>
 
       
       
-      <div className='flex flex-col w-full bg-bg justify-center items-center'>
-        <div className='w-5/6 mt-10'>
-          <div className='flex justify-center'>
-            {
-              loading ? Loader() : <SlideBookBig data={popBook.popularbook} />
-            }
-          </div>
-        </div>
-
+      
        
       </div>
       <Footer />
