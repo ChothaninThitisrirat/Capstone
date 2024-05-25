@@ -51,7 +51,7 @@ function statustrade() {
         transitionDuration: '0.3s'
     })
 
-    const [book, setBook] = useState<Book[]>([]);
+    const [book, setBook] = useState<Book[] | null>([]);
     const [tradeId, setTradeId] = useState<number>(0)
 
 
@@ -98,7 +98,12 @@ function statustrade() {
         const fetchData = async () => {
             try {
                 const response = await axios.get(`/api/trade/myrequest/${userId}`);
-                setBook(response.data.myrequest.reverse());
+                console.log(response.data)
+                if(response.data.myrequest !== null){
+                    setBook(response.data.myrequest.reverse());
+                }else{
+                    setBook(null)
+                }
                 setLoading(false);
             } catch (error) {
                 console.error('Error:', error);
@@ -148,7 +153,7 @@ function statustrade() {
                 </div>
         :
         (book === null)  
-        ?<div className="flex justify-center items-center h-auto mt-40 mb-96 py-96 text-3xl font-bold text-gray-400">
+        ?<div className="flex justify-center items-center h-auto mt-40 mb-96 text-xl font-bold text-gray-400 sm:mt-40 sm:py96 sm:text-3xl">
             ยังไม่มีหนังสือที่เทรดอยู่!
         </div>
             :<div
