@@ -418,7 +418,7 @@ console.log('datePost',datePost)
                 className="break-words w-full h-40 ml-24 overflow-auto css-scrollbar mt-4 pr-20 resize-none"/>
                 
                 <div className="flex w-full pl-24 mt-8">
-                {bookInfoShow?.user.id !== session?.user.id ?
+                {bookInfoShow?.user.id == session?.user.id ?
                 <button
                 className='flex bg-gray-400 text-white w-40 h-10 items-center justify-center rounded-xl shadow-md duration-100'>
                     ส่งคำขอแลกหนังสือ
