@@ -8,14 +8,12 @@ export async function GET(req: Request) {
                 id:true,
                 title:true,
                 picture:true,
-                datetime:true
+                postdate:true
             },
             take: 20,
             orderBy: [
                 {
-                    id: 'desc'
-                },{
-                    datetime: 'desc'
+                    postdate: 'desc'
                 }
             ]
         })
