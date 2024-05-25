@@ -10,6 +10,7 @@ import { Rating } from '@mui/material'
 import {Icon} from '@iconify/react'
 import Link from 'next/link'
 
+
 interface UserBook{
     id: number;
     title  : string;
@@ -24,7 +25,7 @@ export default function Profile() {
   useEffect(() => {
     if (title){
       const titleID = Array.isArray(title) ? title[0] : title;
-      fetchBookSearch(title[0])
+      fetchBookSearch(titleID)
     }
   },[title])
 
@@ -32,7 +33,7 @@ export default function Profile() {
     const res = await fetch(`/api/book/searchbook/${title}`)
     const data = await res.json()
     setBookSearch(data.book)
-    console.log(data.book)
+    console.log("logdata",data,title)
    }
 
 
@@ -48,7 +49,6 @@ export default function Profile() {
     <>
       <Navbar backGroundOn withTitle/>
       <TitleBar textTitle={`ผลการค้นหาของ ${title}`} />
-
       <div className='flex items-center justify-center'>
         {BookSearch?.length === 0 ? (
           <div

@@ -19,10 +19,10 @@ function Footer() {
     <>
         <footer 
         style={{backgroundColor: '#435585'}}
-        className="flex justify-center items-center w-screen h-56 relative mt10">
+        className="flex justify-center items-center w-screen h-56 relative">
             <div
             style={{maxWidth: '2200px'}}
-            className="flex justify-around items-center w-screen h-56 relative mt10">
+            className="flex justify-around items-center w-screen h-56 relative">
                 <Image
                     src={propFooter}
                     alt="Logo"

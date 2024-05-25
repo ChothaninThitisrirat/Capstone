@@ -13,6 +13,7 @@ import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import HashLoader from "react-spinners/HashLoader";
 import { on } from 'events';
+import SlideBookBig from '@/Components/SlideBookBig';
 
 
 interface BookInfoProps {
@@ -641,6 +642,7 @@ console.log('datePost',datePost)
         <button className="flex bg-dark2 text-white w-28 h-10 justify-center items-center rounded-full text-lg underline">ดูทั้งหมด</button>
         </div>
         <SlideBookMini data={moreFromUserData}/>
+        {/* <SlideBookBig data={popBook} Headtitle={"Recommend For You"} Subtitle={"หนังสือที่คุณอาจจะสนใจ"}/> */}
         </div>
         <Footer/>
         </>
