@@ -24,8 +24,7 @@ interface User {
     reviewer_id: number;
   };
 }
-
-const EditPage1 = () => {
+const EditPage1: React.FC = (): JSX.Element => {
   const { data: session, status } = useSession();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
@@ -143,9 +142,6 @@ const EditPage1 = () => {
   </div>;
   }
 
-  if (!session) {
-    return router.push('/login');
-  }
 
   if (!user) {
     return <div>
@@ -295,4 +291,4 @@ const EditPage1 = () => {
   );
 };
 
-export default EditPage1
+export default EditPage1;

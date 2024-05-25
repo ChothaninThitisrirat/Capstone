@@ -28,13 +28,22 @@ interface User {
   };
 }
 
+interface UserReview {
+  title: string;
+  describe: string;
+  score: number;
+  User_Review_User_reviewer_idToUser:{
+    username: string;
+  }
+}
+
 export default function EditProfile() {
   const { data: session, status } = useSession();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const [StatePage, setStatePage] = useState(0);
-  const [userReview, setUserReview] = useState<[]>([])
+  const [userReview, setUserReview] = useState<UserReview[]>([])
   const [reviewComment, setReviewComment] = useState(0)
 
   useEffect(() => {

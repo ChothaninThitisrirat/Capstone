@@ -6,19 +6,20 @@ import HashLoader from "react-spinners/HashLoader";
 import { Icon } from '@iconify/react';
 import { useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+import AddAddress from '@/Components/AddAddress';
+import { set } from 'mongoose';
 
 interface User {
   user: {
-   id: number;
-   first_name: string;
-   last_name: string;
-   email: string;
-   phone_number: string;
-   profile_picture: string;
-   facebook: string;
-   instagram: string;
-   line: string;
+    id: number;
+    first_name: string;
+    last_name: string;
+    email: string;
+    phone_number: string;
+    profile_picture: string;
+    facebook: string;
+    instagram: string;
+    line: string;
   };
   review_avg: {
     score: number;
@@ -28,59 +29,86 @@ interface User {
   };
 }
 
-export default function EditPa() {
-   const { data: session, status } = useSession();
-   const [user, setUser] = useState<User | null>(null);
-   const [loading, setLoading] = useState(true);
-   const router = useRouter();
+interface UserAddress {
+  id: number;
+  address: string[];
+}
+
+const EditPage2: React.FC = (): JSX.Element => {
+  const { data: session, status } = useSession();
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+  const [userAddress, setUserAddress] = useState<UserAddress | null>(null);
+  const [statusAddress, setStatusAddress] = useState(false);
+
+
 
   useEffect(() => {
-    console.log(session)
     if (status === 'unauthenticated') {
-      router.push('/login')
+      router.push('/login');
     } else if (status === 'authenticated' && session?.user?.id) {
-      fetch(`/api/user/${session.user.id}`)
-        .then(response => response.json())
-        .then(data => {
-          setUser(data)
-          setLoading(false)
-        })
-        .catch(error => {
-          console.error('Error fetching user data:', error)
-          setLoading(false)
-        })
+      fetchUserData(session.user.id);
     }
-  }, [status, router, session])
+  }, [status, session?.user?.id, router]);
 
-  if (status === 'loading') {
-    return <div>
+  const fetchUserData = async (id: number) => {
+    try {
+      const userResponse = await fetch(`/api/user/${id}`);
+      const userData = await userResponse.json();
+      setUser(userData);
+
+      const addressResponse = await fetch(`/api/user/${id}/address`);
+      const addressData = await addressResponse.json();
+      setUserAddress(addressData.address || null);
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (status === 'loading' || loading) {
+    return (
       <div className='w-screen h-screen flex items-center justify-center opacity-95 bg-gradient-to-tr from-yellow-100 to-blue-100'>
-        <HashLoader
-        color='#435585' loading={loading} size={50} aria-label="Loading Spinner" data-testid="loader"/>
+        <HashLoader color='#435585' loading={loading} size={50} aria-label="Loading Spinner" data-testid="loader"/>
       </div>
-  </div>;
-  }
-
-  if (!session) {
-    return router.push('/login');
-  }
-
-  if (!user) {
-    return <div>
-      <div className='w-screen h-screen flex items-center justify-center opacity-95 bg-gradient-to-tr from-yellow-100 to-blue-100'>
-        <HashLoader
-        color='#435585' loading={loading} size={50} aria-label="Loading Spinner" data-testid="loader"/>
-      </div>
-  </div>;
+    );
   }
 
   return (
     <>
-            <div className="flex w-full h-full bg-white flex-col items-center ">
-                สถานที่จัดส่ง
+      <div className="flex justify-start w-full h-full items-center flex-col gap-4 overflow-y-auto mt-10 pb-20">
+
+          <div 
+            className='flex w-2/3 h-1/6 justify-center items-center bg-dark1 flex-col drop-shadow-lg rounded-2xl min-h-48'  
+          >
+              <button 
+                onClick={() => setStatusAddress(true)}>
+                  เพิ่มที่อยู่
+              </button>
+          </div>
+
+        {userAddress && user && userAddress.address.slice().reverse().map((address, index) => (
+          <div 
+            key={index}
+            className='flex w-2/3 h-1/6 justify-center items-center bg-dark1 flex-col drop-shadow-lg rounded-2xl min-h-48'  
+          >
+            <div className='flex w-full h-1/3 text-white font-bold justify-start items-center pl-8'> 
+              Address 
             </div>
 
+            <div className="flex w-full h-2/3 bg-white rounded-b-2xl text-black font-bold justify-start items-center pl-8">
+              {address}
+            </div>
+            
+          </div>
+        ))}
+      </div>
+
+      {statusAddress && <AddAddress setStatusAddress={setStatusAddress} />}
     </>
   );
 };
 
+export default EditPage2;
