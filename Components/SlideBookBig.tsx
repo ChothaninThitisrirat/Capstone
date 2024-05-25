@@ -2,6 +2,7 @@
 
 import React,{useEffect, useState} from 'react';
 import { Icon } from '@iconify/react';
+import Link from 'next/link';
 
 
 interface SlideBookBigProps {
@@ -58,7 +59,7 @@ interface BookItems {
                                         {item.User.username}
                                     </div>
                                     <div className='flex justify-end w-1/2'>
-                                        <button className='flex justify-center items-center w-1/3 h-2/3  bg-dark2 rounded-2xl min-w-24 max-h-12 text-white hover:shadow-inner transform transition duration-300 ease-in-out hover:scale-95'>ดูเพิ่มเติม</button>
+                                        <Link href={`/bookinfo/${item.id}`} className='flex justify-center items-center w-1/3 h-2/3  bg-dark2 rounded-2xl min-w-24 max-h-12 text-white hover:shadow-inner transform transition duration-300 ease-in-out hover:scale-95'>ดูเพิ่มเติม</Link>
                                     </div>
                                 </div>
                         </div>
