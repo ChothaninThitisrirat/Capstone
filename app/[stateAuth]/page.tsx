@@ -10,10 +10,13 @@ import bgPropBlue1 from '../../public/images/bgPropBlue1.png'
 import bgPropBlue2 from '../../public/images/bgPropBlue2.png'
 import logologinsignup from '../../public/images/logologinsignup.png'
 import HashLoader from "react-spinners/HashLoader";
+import { useParams } from 'next/navigation';
 
 
 function LoginSignup() {
+  const param = useParams<{ stateAuth?: string }>()
   const [loading, setLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false)
   
 
   const [stylesingup, setStylesingup] = useState(false)
@@ -50,6 +53,18 @@ function LoginSignup() {
     transform:'translateX(25%) translateY(10%)',
     transitionDuration: '3s'
   })
+
+  useEffect(() =>{
+    if(param.stateAuth === 'login'){
+      setStylesingup(false);
+      setStylelogin(true);
+    }else if(param.stateAuth === 'signup'){
+      setStylesingup(true);
+      setStylelogin(false);
+    }else{
+      setNotFound(true)
+    }
+  },[param])
 
   const [registerSccuess, setRegisterSccuess] = useState("fixed z-20 w-64 h-12 text-white text-center flex items-center justify-center top-0 left-0 right-0 mx-auto mt-5 rounded-lg drop-shadow-lg duration-500 -translate-y-20 invisible bg-dark1")
   useEffect(() => {
@@ -137,7 +152,9 @@ function LoginSignup() {
       color='#435585' loading={loading} size={50} aria-label="Loading Spinner" data-testid="loader"/>
     </div>
     :
-    <>
+    (notFound 
+    ?<div className="flex justify-center items-center h-screen text-3xl font-bold bg-yellow-50">Not Found !</div>
+    :<>
     <div 
     className={registerSccuess}
     >Register successfully.</div>
@@ -186,7 +203,7 @@ function LoginSignup() {
         <SignupFrom setStylesingup={setStylesingup} setStylelogin={setStylelogin} setRegisterSccuess={setRegisterSccuess}/>
       </div>
     </div >
-    </>
+    </>)
     }
     
     </>

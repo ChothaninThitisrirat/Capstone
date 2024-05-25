@@ -32,8 +32,8 @@ const UserReview: React.FC<UserReviewProp> = ({classReviewUser, setPopUpReviewUs
     const [ scoreComment, setScoreComment ] = useState(0)
     const [userIdTrade, setUserIdTrade] = useState<number | null>(null)
     const [bookIdTrade, setBookIdTrade] = useState<number | null>(null)
-    const [loading, setLoading] = useState(false)// true
-    const [loadingRe, setLoadingRe] = useState(false)// true
+    const [loading, setLoading] = useState(true)// true
+    const [loadingRe, setLoadingRe] = useState(false)
     const [bookInfo, setBookInfo] = useState<BookInfo>()
     const { data: session, status } = useSession()
     const userId  = session?.user.id;
@@ -84,7 +84,7 @@ const UserReview: React.FC<UserReviewProp> = ({classReviewUser, setPopUpReviewUs
 
     const handleReviewUser = async (e: any) => {
         e.preventDefault();
-        setLoading(true)
+        setLoadingRe(true)
         try{
             const response = await axios.post(`/api/review/user`,{
                 user_id:userIdTrade,
@@ -95,7 +95,7 @@ const UserReview: React.FC<UserReviewProp> = ({classReviewUser, setPopUpReviewUs
             })
             if(response.status === 201){
                 setPopUpReviewUser(false)
-                setLoading(false)
+                setLoadingRe(false)
                 setTopicReview('')
                 setDetailReview('')
                 setScoreComment(0)

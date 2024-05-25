@@ -7,7 +7,10 @@ export async function POST(req: Request) {
         const { id } = await req.json()
         
         const tradeinfo = await prismadb.trade.findUnique({
-            where: { id:id },
+            where: { 
+                id:id, 
+                status: 'pending'
+            },
             include: {
                 User_Trade_owner_idToUser:true,
                 Book_Trade_req_book_idToBook:true,

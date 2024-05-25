@@ -97,14 +97,10 @@ const Page: FC<Props> = (): JSX.Element => {
   
   console.log(popBook)
 
-  useEffect(() => {
-    if (status === 'authenticated' && session?.user?.isAdmin) {
-      router.push('/admin');
-    }
-  }, [status, session]);
+
 
   function Loader() {
-   return <div className='w-screen h-screen flex items-center justify-center opacity-95 bg-gradient-to-tr from-yellow-100 to-blue-100'>
+    return <div className='w-screen h-screen flex items-center justify-center opacity-95 bg-gradient-to-tr from-yellow-100 to-blue-100'>
         <HashLoader
         color='#435585' size={50} aria-label="Loading Spinner" data-testid="loader"/>
       </div>
@@ -114,9 +110,7 @@ const Page: FC<Props> = (): JSX.Element => {
 
   return (
     <>
-      <div className="absolute">
-        <Navbar backGroundOn />
-      </div>
+      <Navbar backGroundOn={false} withTitle={false}/>
       
       {/* แถบบน and Search bar */}
       <div className='flex justify-center flex-col w-full h-screen'>

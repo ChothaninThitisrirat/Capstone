@@ -19,7 +19,7 @@ model Book {
   isPost_trade                  Boolean       @default(false)
   address                       String?
   postdate                      DateTime?     @db.Date
-  User                          User          @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "book_user_id")
+  User                          User          @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: Cascade, map: "book_user_id")
   Review_Book                   Review_Book[]
   Trade_Trade_book_idToBook     Trade[]       @relation("Trade_book_idToBook")
   Trade_Trade_req_book_idToBook Trade[]       @relation("Trade_req_book_idToBook")

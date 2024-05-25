@@ -16,6 +16,7 @@ interface PostNewBookProp {
     tradeId: number;
     setLoadcompo: (state: boolean) => void;
     setPopUpReviewUser: (state: boolean) => void;
+    reloadInfo:boolean;
 }
 interface BookShow {
     User: {
@@ -39,7 +40,7 @@ interface TradeShow {
     req_address: string;
     status: string;
 }
-const Status: React.FC<PostNewBookProp> = ({setStateOpen, classAddBook, tradeId, setLoadcompo, setPopUpReviewUser}) =>{
+const Status: React.FC<PostNewBookProp> = ({setStateOpen, classAddBook, tradeId, setLoadcompo, setPopUpReviewUser, reloadInfo}) =>{
     const [tradeInfo, setTradeInfo] = useState<TradeShow>()
     const [loadTrade, setLoadTrade] = useState(false)
     const [bookSelectTrade, setBookSelectTrade] = useState<BookShow>()
@@ -91,7 +92,7 @@ const Status: React.FC<PostNewBookProp> = ({setStateOpen, classAddBook, tradeId,
             fetchData();
         }
         
-    }, [tradeId]);
+    }, [tradeId,reloadInfo]);
 
     console.log('popUptradeSuccess---',popUptradeSuccess);
 
@@ -158,7 +159,7 @@ const Status: React.FC<PostNewBookProp> = ({setStateOpen, classAddBook, tradeId,
                         <div
                         className="flex justify-center h-auto w-sceen z-30 mt-5 gap-10">
                             <div className="flex flex-col z-30 w-80 items-center">
-                                <div className="flex text-2xl font bold w-72 justify-center h-auto break-words mb-5">
+                                <div className="flex text-2xl w-72 justify-center h-auto break-words mb-5">
                                     {bookSelectTrade?.title}
                                 </div>
                                 <div className="flex">
@@ -237,7 +238,7 @@ const Status: React.FC<PostNewBookProp> = ({setStateOpen, classAddBook, tradeId,
                             </div>
 
                             <div className="flex flex-col z-30 w-80 items-center">
-                            <div className="flex text-2xl font bold w-72 justify-center h-auto break-words mb-5">
+                            <div className="flex text-2xl w-72 justify-center h-auto break-words mb-5">
                                     {bookInfo?.title}
                                 </div>
                                 <div className="flex">

@@ -72,17 +72,23 @@ async def process_data(data: dict):
         print(books_category)
 
         encoded_user_cat = model.encode(user_cat, show_progress_bar=True)
+        print(encoded_user_cat)
         encoded_book_category = model.encode(books_category, show_progress_bar=True)
+        print(encoded_book_category)
         result =  np.concatenate((encoded_user_cat, encoded_book_category), axis=0)
+
         exp_size = np.size(user_cat)
         X = np.array(result)
         cos_sim_data = pd.DataFrame(cosine_similarity(X))
         recommendations_dict = {}
+        print(recommendations_dict)
+        id = []
         for i in range(exp_size):
             index_recomm = cos_sim_data.loc[i][exp_size:].sort_values(ascending=False).index.tolist()[0:math.ceil(10 / len(user_cat))]
             recomm = [x - exp_size for x in index_recomm]
             cat_data = [books[i] for i in recomm]
             recommendations = []
+            
             for book in cat_data:
                 recommendation = {
                     "book_id" : book.id,
@@ -91,13 +97,109 @@ async def process_data(data: dict):
                     "description" : book.description,
                     "username": book.User.username,
                     "user_profile" : book.User.profile_picture,
-                    "user_id" : book.User.id
+                    "user_id" : book.User.id,
+                    "category" : book.category
                 }
-                recommendations.append( recommendation )
-            
+                
+                if recommendation["book_id"] not in id:
+                    recommendations.append(recommendation)
+                    id.append(recommendation["book_id"])
+
             watched_book = user_cat[i]
             recommendations_dict[watched_book] = recommendations
-            print(recommendations_dict)
+    
+        return {
+            "recommend" : recommendations_dict
+        }
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post('/api/ai/book')
+async def process_data(data: dict):
+    prisma = Prisma()
+    await prisma.connect()
+    model_name = 'distilbert-base-nli-mean-tokens' 
+    model = SentenceTransformer(model_name)
+    print('Processing data...')
+    try:
+        if not data:
+            raise HTTPException(status_code=400, detail='No JSON data provided')
+
+        book_id = data.get('book_id')
+        
+
+        if book_id is None:
+            raise HTTPException(status_code=400, detail='Input data not found or not valid')
+
+        book_data = await prisma.book.find_unique(
+            where={
+                "id": int(book_id)
+            },
+            include={
+                "category":True
+            }
+        )
+        
+        book_cat = [category.name for category in book_data.category]
+        print(book_cat)
+        books = await prisma.book.find_many(
+            where={
+                "status": "available",
+                "isPost_trade": True,
+                'NOT': [
+                    {
+                        "id": int(book_id)
+                    }
+                ]
+            },
+            include={
+                "category":True,
+                "User":True
+            }
+        )
+
+        
+        books_category = [[category.name for category in book.category] for book in books]
+        print(books_category)
+
+        encoded_book_cat = model.encode(book_cat, show_progress_bar=True)
+        print(encoded_book_cat)
+        encoded_book_category = model.encode(books_category, show_progress_bar=True)
+        print(encoded_book_category)
+        result =  np.concatenate((encoded_book_cat, encoded_book_category), axis=0)
+
+        exp_size = np.size(book_cat)
+        X = np.array(result)
+        cos_sim_data = pd.DataFrame(cosine_similarity(X))
+        recommendations_dict = {}
+        print(recommendations_dict)
+        id = []
+        for i in range(exp_size):
+            index_recomm = cos_sim_data.loc[i][exp_size:].sort_values(ascending=False).index.tolist()[0:math.ceil(10 / len(book_cat))]
+            recomm = [x - exp_size for x in index_recomm]
+            cat_data = [books[i] for i in recomm]
+            recommendations = []
+            
+            for book in cat_data:
+                recommendation = {
+                    "book_id" : book.id,
+                    "title"  : book.title,
+                    "picture" : book.picture,
+                    "description" : book.description,
+                    "username": book.User.username,
+                    "user_profile" : book.User.profile_picture,
+                    "user_id" : book.User.id,
+                    "category" : book.category
+                }
+                
+                if recommendation["book_id"] not in id:
+                    recommendations.append(recommendation)
+                    id.append(recommendation["book_id"])
+
+            watched_book = book_cat[i]
+            recommendations_dict[watched_book] = recommendations
+    
         return {
             "recommend" : recommendations_dict
         }

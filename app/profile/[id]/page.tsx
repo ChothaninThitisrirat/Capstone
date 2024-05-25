@@ -104,7 +104,7 @@ export default function Profile() {
 
   return (
     <>
-      <Navbar backGroundOn/>
+      <Navbar backGroundOn={false} withTitle={false}/>
       <div className="flex w-screen h-screen flex-col">
         <div className="flex justify-start items-center w-full h-3/6 bg-dark2 flex-col rounded-b-2xl">
           <div className="flex w-1/2 h-1/2 justify-center mt-8">

@@ -376,7 +376,7 @@ console.log('datePost',datePost)
                 <img
                 src={bookInfoShow?.bookinfo.picture[pictureShow]}
                 alt="Book picture"
-                className=' w-64 h-96 object-cover bg-slate-300 mr-20 mt-32 scale-125 duration-300 rounded shadow-md'
+                className=' w-64 h-96 object-cover bg-slate-300 mr-20 mt-32 scale-125 duration-300 rounded shadow-md responsive-bookinfo-img'
                 />
             </div>
             <div className="flex flex-col items-start w-1/2 h-auto pt-10">
@@ -417,9 +417,17 @@ console.log('datePost',datePost)
                 className="break-words w-full h-40 ml-24 overflow-auto css-scrollbar mt-4 pr-20 resize-none"/>
                 
                 <div className="flex w-full pl-24 mt-8">
+                {bookInfoShow?.user.id !== session?.user.id ?
+                <button
+                className='flex bg-gray-400 text-white w-40 h-10 items-center justify-center rounded-xl shadow-md duration-100'>
+                    ส่งคำขอแลกหนังสือ
+                </button>
+                :
                 <button 
                 onClick={handleGoTrade}
-                className='flex bg-dark1 text-white w-40 h-10 items-center justify-center rounded-xl shadow-md duration-100'>ส่งคำขอแลกหนังสือ</button>
+                className='flex bg-dark1 text-white w-40 h-10 items-center justify-center rounded-xl shadow-md duration-100'>
+                    ส่งคำขอแลกหนังสือ
+                </button>}
                 <div 
                 onClick={handleWishlist}
                 className="flex cursor-pointer ml-4 underline text-sm h-10 items-center">{stateWishlist ? 'Remove from Wishlist' : 'Add to Wishlist' }</div>
@@ -453,7 +461,7 @@ console.log('datePost',datePost)
                     <img
                     src={bookInfoShow?.user.profile_picture}
                     alt="Profile picture"
-                    className="w-20 h-20 rounded-full"
+                    className="w-20 h-20 rounded-full object-cover"
                     />
                 </div>
                 <div className="flex ml-5 flex-col ">
