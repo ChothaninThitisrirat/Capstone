@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Book" ALTER COLUMN "postdate" SET DATA TYPE TIMESTAMPTZ(6);
