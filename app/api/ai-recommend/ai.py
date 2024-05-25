@@ -21,21 +21,20 @@ load_dotenv()
 @app.post('/api/ai')
 async def process_data(data: dict):
     prisma = Prisma()
-    await prisma.connect()
-    model_name = 'distilbert-base-nli-mean-tokens' 
+    await prisma.connect()                                 #Connect to Database with prisma python
+    model_name = 'distilbert-base-nli-mean-tokens'         #import AI model
     model = SentenceTransformer(model_name)
     print('Processing data...')
     try:
         if not data:
             raise HTTPException(status_code=400, detail='No JSON data provided')
 
-        user = data.get('user_id')
-        
-
+        user = data.get('user_id')                         
+    
         if user is None:
             raise HTTPException(status_code=400, detail='Input data not found or not valid')
 
-        user_data = await prisma.user.find_unique(
+        user_data = await prisma.user.find_unique(          #Find categories that user like
             where={
                 "id": int(user)
             },
@@ -49,9 +48,9 @@ async def process_data(data: dict):
             }
         )
         
-        user_cat = [cat.Category.name.strip() for cat in user_data.Userlike]
+        user_cat = [cat.Category.name.strip() for cat in user_data.Userlike]            #Get the categories
         print(user_cat)
-        books = await prisma.book.find_many(
+        books = await prisma.book.find_many(                                            #Get book in database thai is post trade and not trading
             where={
                 "status": "available",
                 "isPost_trade": True,
@@ -68,28 +67,28 @@ async def process_data(data: dict):
         )
 
         
-        books_category = [[category.name for category in book.category] for book in books]
+        books_category = [[category.name for category in book.category] for book in books]      #Get all book categories in array
         print(books_category)
 
-        encoded_user_cat = model.encode(user_cat, show_progress_bar=True)
+        encoded_user_cat = model.encode(user_cat, show_progress_bar=True)                       #Tranform user categories into matrix
         print(encoded_user_cat)
-        encoded_book_category = model.encode(books_category, show_progress_bar=True)
+        encoded_book_category = model.encode(books_category, show_progress_bar=True)            #Tranform book categories into matrix
         print(encoded_book_category)
-        result =  np.concatenate((encoded_user_cat, encoded_book_category), axis=0)
+        result =  np.concatenate((encoded_user_cat, encoded_book_category), axis=0)             #Combine the 2 matrix 
 
-        exp_size = np.size(user_cat)
-        X = np.array(result)
-        cos_sim_data = pd.DataFrame(cosine_similarity(X))
+        user_cat_size = np.size(user_cat)                                        
+        X = np.array(result)                                                                    #Tranfrom into array
+        cos_sim_data = pd.DataFrame(cosine_similarity(X))                                       #Use cosine similarity to find the closest categories book
         recommendations_dict = {}
-        print(recommendations_dict)
         id = []
-        for i in range(exp_size):
-            index_recomm = cos_sim_data.loc[i][exp_size:].sort_values(ascending=False).index.tolist()[0:math.ceil(10 / len(user_cat))]
-            recomm = [x - exp_size for x in index_recomm]
+
+        for i in range(user_cat_size):
+            index_recomm = cos_sim_data.loc[i][user_cat_size:].sort_values(ascending=False).index.tolist()[0:math.ceil(10 / len(user_cat))]      
+            recomm = [x - user_cat_size for x in index_recomm]
             cat_data = [books[i] for i in recomm]
             recommendations = []
             
-            for book in cat_data:
+            for book in cat_data:                                       #Store the closest categories book in dictionary
                 recommendation = {
                     "book_id" : book.id,
                     "title"  : book.title,
@@ -98,7 +97,6 @@ async def process_data(data: dict):
                     "username": book.User.username,
                     "user_profile" : book.User.profile_picture,
                     "user_id" : book.User.id,
-                    "category" : book.category
                 }
                 
                 if recommendation["book_id"] not in id:
@@ -108,7 +106,7 @@ async def process_data(data: dict):
             watched_book = user_cat[i]
             recommendations_dict[watched_book] = recommendations
     
-        return {
+        return {                                                        #Return books
             "recommend" : recommendations_dict
         }
     except Exception as e:
