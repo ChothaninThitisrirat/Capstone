@@ -25,8 +25,6 @@ interface BookItems {
     const SlideBookBig: React.FC<SlideBookBigProps> = ({data,Headtitle,Subtitle}) =>{
     const [moreFrom, setMoreFrom] = useState(0)
 
-    console.log("data",data)
-
     return (
         <>  
             <div className='flex flex-col w-full h-full'>
