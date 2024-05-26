@@ -87,7 +87,7 @@ const TradeProcess3: React.FC<TradeProcess3Props> = ({ bookId, setStateProcess, 
 
             <div
             style={{minHeight: "800px"}}
-            className="flex sm:justify-center h-full w-full z-30 sm:mt-28 flex-col items-center sm:items-start sm:flex-row overflow-y-auto sm:overflow-hidden close-scrollbar">
+            className="flex sm:justify-center h-screen sm:h-full w-full z-30 sm:mt-28 flex-col items-center sm:items-start sm:flex-row overflow-y-auto sm:overflow-hidden close-scrollbar pb-[600px]">
                 <div className="flex flex-col sm:flex-row w-full h-screen sm:h-full sm:justify-center sm:items-start items-center z-10 sm:gap-20 ">        
                     <div className="flex flex-col z-30 w-80 items-center ">
                         <div className="flex text-3xl font bold w-72 justify-center h-auto break-words mb-5">
