@@ -104,7 +104,7 @@ const Navbar: React.FC<NavbarProps> = ({backGroundOn, withTitle}) =>{
                 className={
                 showDropDownresponsive? "flex flex-col w-screen  rounded-b-3xl relative cursor-pointer items-center nav-z-index bg-white  duration-500 h-[460px] border-b border-white":
                     (backGroundOn
-                ?"flex w-screen h-16 rounded-b-3xl relative cursor-pointer justify-center z-30 bg-dark2"
+                ?"flex w-screen h-16 rounded-b-3xl relative cursor-pointer justify-center z-30 bg-dark2 duration-500"
                 :"flex w-screen h-16 relative cursor-pointer justify-center z-30 bg-dark2 duration-500")} >
                     <div 
                     style={{maxWidth: '2200px'}}
@@ -115,7 +115,7 @@ const Navbar: React.FC<NavbarProps> = ({backGroundOn, withTitle}) =>{
                                 <Image
                                 src={logoWhite}
                                 alt="Logo"
-                                className='w-32 h-12 object-contain ml-5'
+                                className='w-32 h-12 object-contain ml- sm:ml-5'
                                 />
                             </Link>
                                 <div className="flex gap-14 ml-5  responsive-close">
@@ -286,7 +286,7 @@ function DropDownResponsive() {
         size: "25"
     },{
         icon: "ph:share",
-        link: "/wishlist",
+        link: "/postbook",
         text: "โพสหนังสือ",
         size: "22"
     },{

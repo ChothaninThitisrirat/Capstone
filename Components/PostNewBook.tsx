@@ -216,8 +216,8 @@ console.log('reset',dataCatin, dataPicture)
                 className="fixed flex top-0 left-0 z-50 h-screen w-screen items-center justify-center">
                     <form 
                     onSubmit={handlePostBook}
-                    style={{width: "600px",borderRadius: "30px"}}
-                    className="flex flex-col w-auto h-auto bg-white p-10 border border-gray-300 items-center justify-center relative">
+                    style={{borderRadius: "30px"}}
+                    className="flex flex-col w-11/12 h-auto bg-white py-10 px-5 border border-gray-300 items-center justify-center relative sm:p-10 sm:w-[600px] sm:h-auto sm:">
                         <div className="absolute top-0 right-0 translate-x-2 -translate-y-2 rounded-full bg-white w-9 h-9"></div>
                         <Icon icon="carbon:close-filled" width="45" height="45"
                         onClick={() => reSetInfo()}
@@ -272,10 +272,10 @@ console.log('reset',dataCatin, dataPicture)
                                 ))}
                             </div>
                         </div>
-                        <div className="flex border-t border-gray-400 w-full mt-10 pt-6">
+                        <div className="flex border-t border-gray-400 mt-10 pt-6 w-full flex-wrap gap-y-4">
 
                             {uploadPictureNum < 5 
-                            ?<button className="flex items-center justify-center rounded-lg bg-gray-200 w-16 h-16 cursor-pointer hover:bg-gray-300">
+                            ?<button className="flex items-center justify-center rounded-lg bg-gray-200 w-16 h-16 cursor-pointer hover:bg-gray-300 shrink-0">
                                 <input 
                                 className='bg-none border-none absolute w-16 h-16 cursor-pointer opacity-0'
                                 type="file" accept="image/*" onChange={handleFileChange}/>
@@ -287,7 +287,6 @@ console.log('reset',dataCatin, dataPicture)
                                 className='text-gray-500'/>
                             </div>}
                             <div className="w-0.5 h-16 bg-gray-300 mx-3"></div>
-
                             {dataImg.map((picture, index) => (
                                 <div key={index} className="flex items-center justify-center rounded-lg bg-gray-200 w-16 h-16 mr-4 relative">
                                     <Icon 
@@ -305,7 +304,6 @@ console.log('reset',dataCatin, dataPicture)
                                 <Icon icon="fe:picture" width="50" height="50" 
                                 className='text-gray-400'/>
                             </div>}
-                            
 
 
                         </div>

@@ -92,15 +92,15 @@ function WishList() {
                         color='#435585' loading={loading} size={50} aria-label="Loading Spinner" data-testid="loader"/>
                 </div>
                 :wishlist.length === 0
-                    ? <div className="flex justify-center items-center h-auto mt-40 mb-96 py-96 text-3xl font-bold text-gray-400">ยังไม่มีหนังสือที่อยากแลก</div>
+                    ? <div className="flex justify-center items-center h-auto mt-40 mb-96 text-xl font-bold text-gray-400 sm:mt-40 sm:py96 sm:text-3xl">ยังไม่มีหนังสือที่อยากแลก</div>
                     :<div
-                    className="flex w-full h-auto p-10 flex-wrap gap-20 mb-10 mt-5 library-container">
+                    className="flex w-full h-auto p-10 flex-wrap justify-between mb-10 mt-5 max-w-[1700px] library-container sm:justify-start sm:w-auto sm:gap-20">
                     {wishlist.map((item, index) => (
                             <div
                             onClick={()=>handleToBookInfo(item.id)} // ต้องส่งค่าไปหน้า BookInfo
                             key={index} 
-                            className='flex items-center justify-center rounded-sm border w-64 h-96 cursor-pointer shadow-sm hover:scale-105 duration-300 relative'>
-                                <div className="flex flex-col absolute bottom-0 translate-y-12 text-base w-full">
+                            className='flex items-center justify-center rounded-sm border w-40 h-60 cursor-pointer shadow-sm hover:scale-105 duration-300 relative sm:w-64 sm:h-96'>
+                                <div className="flex flex-col absolute bottom-0 translate-y-8 text-base w-full sm:translate-y-12">
                                     <div className="flex w-full justify-center">{item.title}</div>
                                 </div>
                                 <img
