@@ -357,7 +357,7 @@ const Login: React.FC<LoginProps> = ({
             <form
                 onSubmit={(e) => handleSubmitInfoPage1(e)}
                 style={{ width: "500px" }}
-                className="w-auto px-10 pt-10 pb-5 rounded-3xl shadow-md bg-white border border-gray-300 flex-col"
+                className="w-auto px-10 pt-10 pb-5 rounded-3xl shadow-md bg-white border border-gray-300 flex-col -translate-x-10 sm:translate-x-40 scale-75 sm:scale-100"
             >
                 <div className="max-w-96 w-screen text-4xl font-bold">Sign up</div>
                 <div className=" text-gray-400 mt-4 ml-4">สร้างบัญชีผู้ใช้</div>

@@ -359,11 +359,11 @@ console.log('datePost',datePost)
         <Navbar backGroundOn={true}  withTitle={false}/>
         <div
         style={{maxWidth: '1700px'}}
-        className="flex w-full h-auto justify-center pt-16 mx-auto pb-40 flex-col">
+        className="flex w-full h-auto justify-center sm:pt-16 mx-auto pb-40 flex-col padt-0">
             
             <div className="flex mb-36 responsive-bookinfo">
-            <div className="flex w-1/2 h-auto justify-end">
-                <div className="flex flex-col mr-20 mt-24 w-auto h-auto gap-2">
+            <div className="flex w-1/2 h-auto justify-end mt-10 sm:mt-14">
+                <div className="flex flex-col mr-20 sm:mt-14 w-auto h-auto gap-2">
                 {bookInfoShow?.bookinfo?.picture.map((item, index) => (
                     <div 
                     key={index} 
@@ -377,18 +377,18 @@ console.log('datePost',datePost)
                 <img
                 src={bookInfoShow?.bookinfo.picture[pictureShow]}
                 alt="Book picture"
-                className=' w-64 h-96 object-cover bg-slate-300 mr-20 mt-32 scale-125 duration-300 rounded shadow-md responsive-bookinfo-img'
+                className='w-40 h-60 sm:w-64 sm:h-96 object-cover bg-slate-300 mr-20 mt-20 sm:scale-125 scale-150 duration-300 rounded shadow-md responsive-bookinfo-img'
                 />
             </div>
-            <div className="flex flex-col items-start w-1/2 h-auto pt-10">
-                <div className="flex justify-end w-full text-sm text-gray-400 pr-40 gap-2">
+            <div className="flex flex-col items-start w-10/12 sm:w-1/2 h-auto pt-10">
+                <div className="flex justify-end w-full text-sm text-gray-400 sm:pr-40 gap-2">
                 <Icon icon="tabler:clock-down" width="18" height="18" />
                 {datePost}
                 </div>
                 
-                <div className="flex font-bold text-3xl w-full pl-24 mt-5">{bookInfoShow?.bookinfo.title}</div>
+                <div className="flex font-bold text-3xl w-full sm:pl-24 mt-5 ">{bookInfoShow?.bookinfo.title}</div>
                 
-                <div className="flex w-full pl-28 my-3 h-auto items-start">
+                <div className="flex w-full sm:pl-28 my-3 h-auto items-start">
                     <div className="flex mr-2 ">
                         <Icon icon="material-symbols:star" width="20" height="20" 
                         className={avgScoreBook >= 1 ?'text-yellow-300' :'text-gray-300'}/>
@@ -415,9 +415,9 @@ console.log('datePost',datePost)
                 readOnly
                 style={{maxWidth: '550px',backgroundColor: '#f9f9f9'}}
                 value={bookInfoShow?.bookinfo.description}
-                className="break-words w-full h-40 ml-24 overflow-auto css-scrollbar mt-4 pr-20 resize-none"/>
+                className="break-words w-full h-40 sm:ml-24 overflow-auto css-scrollbar mt-4 pr-20 resize-none"/>
                 
-                <div className="flex w-full pl-24 mt-8">
+                <div className="flex w-full sm:pl-24 mt-8">
                 {bookInfoShow?.user.id == session?.user.id ?
                 <button
                 className='flex bg-gray-400 text-white w-40 h-10 items-center justify-center rounded-xl shadow-md duration-100'>
@@ -435,9 +435,9 @@ console.log('datePost',datePost)
                 </div>
                 {bookInfoShow?.bookinfo.status === 'trading' &&<div className="flex w-96 ml-24 text-sm mt-2 pl-3 text-red-500">*หนังสือกำลังถูกเทรดอยู่ในขณะนี้</div>}
                 
-                <div className="flex w-96 ml-24 text-xl mt-10 pl-5 border-b-2 border-gray-300 pb-2">วิธีการแลกเปลี่ยน</div>
+                <div className="flex w-full sm:w-96 sm:ml-24 text-xl mt-10 pl-5 border-b-2 border-gray-300 pb-2">วิธีการแลกเปลี่ยน</div>
                 
-                <div className="flex w-full pl-24 gap-3 mt-5 ml-5">
+                <div className="flex w-full sm:pl-24 gap-3 mt-5 ml-5">
                 {(bookInfo.bookinfo.pickup !== null && bookInfo.bookinfo.pickup !== undefined && bookInfo.bookinfo.pickup !== '') ?
                 <div
                 style={{boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}} 
@@ -456,7 +456,7 @@ console.log('datePost',datePost)
 
         <div 
         style={{boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}} 
-        className="flex w-8/12 h-auto mx-auto mb-32 rounded items-center bg-white justify-around responsive-userCard">
+        className="flex w-10/12 sm:w-8/12 h-auto mx-auto mb-32 rounded items-center bg-white justify-around responsive-userCard">
             <div className="flex h-32 items-center border-r border-gray-300 ml-10 cursor-pointer my-5 pb-3 responsive-border-line">
                 <div className="flex w-20 h-20 rounded-full bg-black">
                     <img
@@ -498,13 +498,13 @@ console.log('datePost',datePost)
             </div>
         </div>
 
-        <div className="flex px-36 mb-10 w-full justify-between relative pr-52 h-20">
-            <div className="flex text-4xl font-bold">Review The Book</div>
+        <div className="flex w-11/12 mx-auto sm:mx-0 sm:px-36 mb-10 sm:w-full justify-between relative sm:pr-52 h-auto">
+            <div className="flex text-2xl sm:text-4xl font-bold">Review The Book</div>
             {stateComment ?
             <button onClick={(e) => handleComment(e)}
             className={topicReview && detailReview && scoreComment !== 0
-            ?"flex bg-dark2 text-white w-44 h-10 justify-start items-center rounded-full text-lg z-20 duration-300 pl-4 relative "
-            :"flex bg-gray-300 text-white w-44 h-10 justify-start items-center rounded-full text-lg z-20 duration-300 pl-4 relative"}>เพิ่มความคิดเห็น
+            ?"flex bg-dark2 text-white w-44 h-10 justify-start items-center rounded-full text-lg z-20 duration-300 pl-4 relative scale-75 sm:scale-100"
+            :"flex bg-gray-300 text-white w-44 h-10 justify-start items-center rounded-full text-lg z-20 duration-300 pl-4 relative scale-75 sm:scale-100"}>เพิ่มความคิดเห็น
             
             <Icon 
             className='ml-2 text-white cursor-pointer shrink-0 absolute right-2 hover:scale-105'
@@ -514,12 +514,12 @@ console.log('datePost',datePost)
             :
             <button 
             onClick={openCommentForm}
-            className={"flex bg-dark2 text-white w-40 h-10 justify-start items-center rounded-full text-lg z-20 duration-300 pl-5 relative"}>เพิ่มความคิดเห็น</button>}
+            className={"flex bg-dark2 text-white w-40 h-10 justify-start items-center rounded-full text-lg z-20 duration-300 pl-5 relative scale-75 sm:scale-100"}>เพิ่มความคิดเห็น</button>}
             
             <form 
             style={{boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}
-            className={stateComment ? "flex flex-col absolute h-72 w-96 right-52 top-5 z-10 bg-white rounded-es-3xl rounded-tl-3xl rounded-ee-3xl duration-500 justify-center items-center"
-            :"flex flex-col absolute h-72 w-96 right-52 top-5 z-10 bg-white rounded-es-3xl rounded-tl-3xl rounded-ee-3xl duration-500 justify-center items-center scale-0 translate-x-40 -translate-y-32"
+            className={stateComment ? "flex flex-col absolute h-72 w-96 sm:right-52 top-5 z-10 bg-white rounded-es-3xl rounded-tl-3xl rounded-ee-3xl duration-500 justify-center items-center "
+            :"flex flex-col absolute h-72 w-96 sm:right-52 top-5 z-10 bg-white rounded-es-3xl rounded-tl-3xl rounded-ee-3xl duration-500 justify-center items-center scale-0 translate-x-40 -translate-y-32"
             }>
                 <div className="flex relative w-full h-10 px-8 items-center mt-2">
                     <Icon
@@ -579,33 +579,33 @@ console.log('datePost',datePost)
                 </div>
             </form>
         </div>
-        <div className="flex gap-10 justify-center items-center px-3">
+        <div className="flex sm:gap-10 justify-start sm:justify-center items-center px-1 w-auto">
 
             {reviewComment === 0 
             ? <div style={{width: '70px'}}
-            className='mr-5 shrink-0'></div>
+            className='sm:mr-5 shrink-0'></div>
             :<Icon 
             onClick={() => setReviewComment(prev => prev-1)}
-            className='mr-5 text-dark3 cursor-pointer shrink-0 hover:text-dark2 duration-200'
+            className='sm:mr-5 text-dark3 cursor-pointer shrink-0 hover:text-dark2 duration-200 scale-75 sm:scale-100'
             icon="icon-park-solid:left-c" width="50" height="50" />}
 
             {reViewShow?.length === 0
             ?<div
-            style={{width: '1250px', WebkitOverflowScrolling: 'touch'}}
-            className="flex font-bold text-gray-400 text-xl justify-start h-68 pl-20 -translate-y-8">Let's start the first review!</div> 
+            style={{ WebkitOverflowScrolling: 'touch'}}
+            className="flex font-bold text-gray-400 w-96 text-xl justify-center sm:justify-start h-68 sm:pl-20 -translate-y-8 mt-10 shrink-0">Let's start the first review!</div> 
             :<div 
-            style={{width: '1250px', WebkitOverflowScrolling: 'touch'}}
-            className="flex gap-10 justify-start items-center overflow-x-auto h-68 p-2 close-scrollbar">
+            style={{WebkitOverflowScrolling: 'touch'}}
+            className="flex gap-10 justify-start items-center overflow-x-auto h-68 p-2 close-scrollbar w-full sm:w-[1250px]">
             {reViewShow.map((item, index) => (
                 <div 
                 key={index}
                 style={{boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',transform: `translateX(${reviewComment * -424}px)`}}
-                className="flex w-96 h-60 rounded-3xl pt-5 px-5  shrink-0 duration-500 flex-col bg-white">
-                <div className="flex w-full text-2xl font-bold">{item.title}</div>
+                className="flex w-[280px] sm:w-96 h-48 sm:h-60 rounded-3xl pt-5 px-5  shrink-0 duration-500 flex-col bg-white mr-[109px] sm:mr-0">
+                <div className="flex w-full text-xl sm:text-2xl font-bold">{item.title}</div>
                 <textarea 
                 readOnly
                 value={item.describe}
-                className="flex w-full h-36 break-words pt-1 text-gray-500 resize-none css-scrollbar"/>
+                className="flex w-full h-24 sm:h-36 break-words pt-1 text-gray-500 resize-none css-scrollbar"/>
                 <div className="flex text-sm mt-2 pl-3 justify-between">
                     <div className="flex">{item.User.username}</div>
                     <div className="flex mr-2 ">
@@ -625,21 +625,21 @@ console.log('datePost',datePost)
             ))}
             </div>}
             
-            {reViewShow?.length !== 2 &&(reviewComment < reViewShow.length - 2 
+            {reViewShow?.length !== 1 &&(reviewComment < reViewShow.length - 1
             ?<Icon 
             onClick={() => setReviewComment(  prev => prev+1)}
-            className='ml-5 text-dark3 cursor-pointer shrink-0 hover:text-dark2 duration-200'
+            className='sm:ml-5 text-dark3 cursor-pointer shrink-0 hover:text-dark2 duration-200 scale-75 sm:scale-100'
             icon="icon-park-solid:right-c" width="50" height="50" />
             :<div style={{width: '70px'}}
-            className='mr-5 shrink-0'></div>)}
+            className='sm:mr-5 shrink-0'></div>)}
         </div>
 
-        <div className="flex w-full items-center justify-between pr-32">
+        <div className="flex w-11/12 mx-auto sm:mx-0 sm:w-full items-center justify-between sm:pr-32">
         <div className="flex">
-            <div className="flex text-4xl font-bold ml-36 mt-10 mb-10">More From</div>
-            <div className="flex text-4xl ml-2 mt-10 mb-10">Champ</div>
+            <div className="flex text-2xl sm:text-4xl font-bold w-full sm:ml-36 mt-10 mb-10">More From</div>
+            <div className="flex text-2xl sm:text-4xl ml-2 mt-10 mb-10">Champ</div>
         </div>
-        <button className="flex bg-dark2 text-white w-28 h-10 justify-center items-center rounded-full text-lg underline">ดูทั้งหมด</button>
+        <button className="flex bg-dark2 text-white w-28 h-10 justify-center items-center rounded-full text-lg underline scale-75 sm:scale-100">ดูทั้งหมด</button>
         </div>
         <SlideBookMini data={moreFromUserData}/>
         {/* <SlideBookBig data={popBook} Headtitle={"Recommend For You"} Subtitle={"หนังสือที่คุณอาจจะสนใจ"}/> */}

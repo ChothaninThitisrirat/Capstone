@@ -30,7 +30,7 @@ interface BookProp {
 }
 const PostBook1: React.FC<PostBook1Props> = ({setStatePage, setBookSelect, bookSelect, setLoadcompo, book, loading}) =>{
 
-    const classBook = "flex items-center justify-center rounded-sm w-64 h-96 cursor-pointer duration-300 relative"
+    const classBook = "flex items-center justify-center rounded-sm border w-40 h-60 mb-5 sm:mb-12 cursor-pointer shadow-sm duration-300 relative sm:w-64 sm:h-96"
     const [stateAddBook, setStateAddBook] = useState(false)
     const [classAddBookbg, setClassAddBookbg] = useState('fixed h-screen w-screen bg-slate-200 top-0 left-0 z-50 opacity-30 backdrop-blur-2xl hidden')
     const [classAddBook, setClassAddBook] = useState({
@@ -100,10 +100,11 @@ const PostBook1: React.FC<PostBook1Props> = ({setStatePage, setBookSelect, bookS
             style={{minHeight: "800px"}}
             className="flex justify-center h-auto w-sceen z-10 bg-none">
                 <div
-                className="flex w-full h-screen p-10 flex-wrap gap-20 gap-y-14 mb-10 overflow-y-auto close-scrollbar z-10 library-container pb-52 pt-20">
+                className="flex w-full h-auto p-10 flex-wrap justify-between mb-10 mt-5 max-w-[1700px] gap-5 library-container sm:justify-start sm:w-auto sm:gap-20
+                gap-y-14 overflow-y-auto close-scrollbar z-10 library-container pb-52 sm:pt-20">
                     <div 
                     onClick={() => setStateAddBook(true)}
-                    className="flex items-center justify-center rounded-sm border w-64 h-96 bg-slate-200 cursor-pointer shadow-sm hover:bg-slate-300  hover:scale-105 duration-300">
+                    className="flex items-center justify-center rounded-sm border w-40 h-60 bg-slate-200 cursor-pointer shadow-sm hover:bg-slate-300  hover:scale-105 duration-300 sm:w-64 sm:h-96">
                         <Icon icon="ic:baseline-plus" width="50" height="50"
                         className='text-gray-500'/>
                     </div>
@@ -125,24 +126,24 @@ const PostBook1: React.FC<PostBook1Props> = ({setStatePage, setBookSelect, bookS
                                 <img
                                 src={ item.picture[0] !== '' ? item.picture[0] : 'https://picsum.photos/200/300'}
                                 alt="Profile picture"
-                                className={'w-64 h-96 object-cover cursor-pointer duration-300 border shadow-sm bg-gray-50'+' '+(bookSelect === item.id ?' border-4 border-dark2' : '')}
+                                className={'w-full h-full object-cover cursor-pointer bg-white'+' '+(bookSelect === item.id ?' border-4 border-dark2' : '')}
                                 />
                                 
 
                             </div>
-                            <div className='flex mx-auto mt-5'>{item.title}</div>
+                            <div className='flex mx-auto sm:mt-5'>{item.title}</div>
                         </div>
                     ))}
                 </div>
             </div>}
             <div className={classAddBookbg}></div>
             <PostNewBook setStateAddBook={setStateAddBook} classAddBook={classAddBook} setLoadcompo={setLoadcompo}/>
-            <div className='fixed bottom-0 left-0 w-screen h-24 z-20 flex justify-between'>
-                    <button onClick={handleCancel} className='w-20 h-10 border-2 border-red-500 rounded-full ml-20 mt-2 hover:bg-red-100'>ยกเลิก</button>
+            <div className='fixed bottom-0 left-0 w-screen h-24 z-20 flex justify-between scale-90 sm:scale-100'>
+                    <button onClick={handleCancel} className='w-20 h-10 border-2 border-red-500 rounded-full sm:ml-20 mt-2 hover:bg-red-100'>ยกเลิก</button>
                     <button onClick={handleChangeState} 
                     className={bookSelect === null
-                    ?'w-40 h-10 border-2 border-gray-500 text-gray-500 rounded-full mr-16 mt-2 flex justify-center items-center gap-2'
-                    :'w-40 h-10 bg-dark1 text-white rounded-full mr-16 mt-2 flex justify-center items-center gap-2'}>
+                    ?'w-40 h-10 border-2 border-gray-500 text-gray-500 rounded-full sm:mr-16 mt-2 flex justify-center items-center gap-2'
+                    :'w-40 h-10 bg-dark1 text-white rounded-full ms:mr-16 mt-2 flex justify-center items-center gap-2'}>
                         ดำเนินการต่อ<Icon icon="icons8:right-round" width="30" height="30" />
                     </button>
             </div>

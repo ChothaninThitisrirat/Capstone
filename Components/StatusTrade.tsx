@@ -99,6 +99,9 @@ const Status: React.FC<PostNewBookProp> = ({setStateOpen, classAddBook, tradeId,
     const handleTradeSuccess = async () => {
         try {
             setLoadTrade(true)
+            await axios.post(`/api/trade/request/return/email`,{
+                id:tradeId
+            });
             const response = await axios.put(`/api/trade/request/return`,{id:tradeId});
             console.log('response---',response);
             setTimeout(() => {
@@ -130,10 +133,10 @@ const Status: React.FC<PostNewBookProp> = ({setStateOpen, classAddBook, tradeId,
             
             <div 
             style={{borderRadius: "30px"}}
-            className="flex flex-col w-auto h-auto bg-white border border-gray-300 items-center relative px-14 pb-14 pt-10 min-w-80 min-h-80">
+            className="flex flex-col h-auto bg-white border border-gray-300 items-center relative px-3 sm:px-14 sm:pb-14 sm:pt-10 min-w-80 min-h-80 ">
                 <div 
                 style={{maxHeight: "700px"}}
-                className="flex flex-col items-center overflow-y-auto css-scrollbar">
+                className="flex flex-col items-center overflow-y-auto css-scrollbar h-[600px] sm:h-auto py-5">
                     <div className="absolute top-0 right-0 translate-x-2 -translate-y-2 rounded-full bg-white w-9 h-9"></div>
                     <Icon 
                     onClick={handleClosePopUp}
@@ -146,19 +149,19 @@ const Status: React.FC<PostNewBookProp> = ({setStateOpen, classAddBook, tradeId,
                         </div>
                     :<>
                     
-                        <div className="text-4xl font-bold w-full flex items-center justify-center text-dark1 mt-5">
+                        <div className="text-3xl sm:text-4xl font-bold w-full flex items-center justify-center text-dark1 mt-5">
                             {tradeInfo?.status === 'pending' && 'Pending'}
                             {tradeInfo?.status === 'trading' && 'Trading'}
                             {tradeInfo?.status === 'traded' && 'Traded'}
                             {tradeInfo?.status === 'decline' && 'Decline'}
                         </div>
-                        <div className="flex mt-5 text-xl">B-Trade ID #{tradeInfo?.id}</div>
+                        <div className="flex mt-5 sm:text-xl">B-Trade ID #{tradeInfo?.id}</div>
 
 
 
                         <div
-                        className="flex justify-center h-auto w-sceen z-30 mt-5 gap-10">
-                            <div className="flex flex-col z-30 w-80 items-center">
+                        className="flex justify-center h-auto w-sceen z-30 mt-5 gap-10 flex-col sm:flex-row">
+                            <div className="flex flex-col z-30 w-80 items-center ">
                                 <div className="flex text-2xl w-72 justify-center h-auto break-words mb-5">
                                     {bookSelectTrade?.title}
                                 </div>
@@ -166,7 +169,7 @@ const Status: React.FC<PostNewBookProp> = ({setStateOpen, classAddBook, tradeId,
                                     <img
                                     src={bookSelectTrade?.picture[0]}
                                     alt="Profile picture"
-                                    className=' w-56 h-80 object-cover cursor-pointer shadow-lg'
+                                    className=' w-28 h-40 object-cover cursor-pointer shadow-lg sm:w-56 sm:h-80'
                                     />
                                 </div>
                                 
@@ -188,25 +191,25 @@ const Status: React.FC<PostNewBookProp> = ({setStateOpen, classAddBook, tradeId,
                                             icon="mdi:address-marker-outline"
                                             width="40"
                                             height="40"
-                                            className="absolute top-0 left-3"
+                                            className="absolute top-0 left-3 scale-75 sm:scale-100"
                                         />
                                     </div>
-                                    <div className="flex ml-16 mt-2 text-lg w-80 break-word h-auto mr-10 mb-10 break-words">
+                                    <div className="flex ml-14 sm:ml-16 mt-2 sm:text-lg w-80 break-word h-auto mr-10 mb-5 break-words sm:mb-10">
                                         {pickOrSend === 1 ? placeToPic:bookSelectTrade?.address}
                                     </div>
                                 </div>}
                                 {tradeInfo?.status === 'trading' && 
                                     <>
-                                        <div className="flex flex-col gap-8">
-                                            <div className="flex items-center w-52">
+                                        <div className="flex flex-col gap-2 sm:gap-8">
+                                            <div className="flex items-center w-52 scale-90 sm:scale-100">
                                                 <Icon icon="skill-icons:instagram" width="32" height="32" />
                                                 <div className="flex text-xl ml-3">{bookSelectTrade?.User.instagram === null ? '-' :bookSelectTrade?.User.instagram}</div>
                                             </div>
-                                            <div className="flex items-center w-52">
+                                            <div className="flex items-center w-52 scale-90 sm:scale-100">
                                                 <Icon icon="logos:facebook" width="32" height="32" />
                                                 <div className="flex text-xl ml-3">{bookSelectTrade?.User.facebook === null ? '-' :bookSelectTrade?.User.facebook}</div>
                                             </div>
-                                            <div className="flex items-center w-52">
+                                            <div className="flex items-center w-52 scale-90 sm:scale-100">
                                                 <img
                                                 src={`${image}line_icon.jpg`}
                                                 className='w-8 h-8 object-cover cursor-pointer bg-dark3 rounded-lg shadow-sm duration-300'
@@ -218,18 +221,18 @@ const Status: React.FC<PostNewBookProp> = ({setStateOpen, classAddBook, tradeId,
                                 }
                             </div>
 
-                            <div className="flex flex-col z-30 mt-28 gap-10">
+                            <div className="flex flex-col z-30 scale-75 items-center sm:scale-100 sm:gap-10 sm:mt-28">
                                 <Icon icon="uil:exchange" width="80" height="80" 
                                 className='mx-auto  z-30'/>
                                 {pickOrSend === 1
-                                ?<div className="flex flex-col w-28 h-32 shadow-xl rounded-2xl bg-white a scale-90  z-30">
+                                ?<div className="flex flex-col w-28 h-32 shadow-xl rounded-2xl bg-white a scale-90 ">
                                     <div className="flex items-center justify-center rounded-t-2xl bg-dark1 w-full h-10 text-white">นัดรับ</div>
                                     <Icon icon="tdesign:undertake-delivery" width="50" height="50" 
                                     className='ml-2 mt-1'/>
                                     <Icon icon="mdi:hand-extended-outline" width="50" height="50"
                                     className='scale-x-[-1] absolute top-16 right-2' />
                                 </div>
-                                :<div className="flex flex-col w-28 h-32 shadow-xl rounded-2xl bg-white items-center relative  scale-90  z-30">
+                                :<div className="flex flex-col w-28 h-32 shadow-xl rounded-2xl bg-white items-center relative  scale-90">
                                     <div className="flex items-center justify-center rounded-t-2xl bg-dark1 w-full h-10 text-white">จัดส่ง</div>
                                     <Icon icon="iconoir:delivery-truck" width="70" height="70" />
                                     <Icon icon="fluent:checkmark-12-filled" width="20" height="20" 
@@ -245,7 +248,7 @@ const Status: React.FC<PostNewBookProp> = ({setStateOpen, classAddBook, tradeId,
                                     <img
                                     src={bookInfo?.picture[0]}
                                     alt="Profile picture"
-                                    className='w-56 h-80 object-cover cursor-pointer shadow-lg'
+                                    className=' w-28 h-40 object-cover cursor-pointer shadow-lg sm:w-56 sm:h-80'
                                     />
                                 </div>
                                 
@@ -267,23 +270,25 @@ const Status: React.FC<PostNewBookProp> = ({setStateOpen, classAddBook, tradeId,
                                             icon="mdi:address-marker-outline"
                                             width="40"
                                             height="40"
-                                            className="absolute top-0 left-3"
+                                            className="absolute top-0 left-3 scale-75 sm:scale-100"
                                         />
                                     </div>
-                                    <div className="flex ml-16 mt-2 text-lg w-80 break-word h-auto mr-10  mb-10 break-words">{pickOrSend === 1 ? placeToPic:tradeInfo?.req_address}</div>
+                                    <div className="flex ml-14 sm:ml-16 mt-2 sm:text-lg w-80 break-word h-auto mr-10 mb-5 break-words sm:mb-10">
+                                        {pickOrSend === 1 ? placeToPic:tradeInfo?.req_address}
+                                    </div>
                                 </div>}
                                 {tradeInfo?.status === 'trading' && 
                                     <>
-                                        <div className="flex flex-col gap-8">
-                                            <div className="flex items-center w-52">
+                                        <div className="flex flex-col gap-2 sm:gap-8">
+                                            <div className="flex items-center w-52 scale-90 sm:scale-100">
                                                 <Icon icon="skill-icons:instagram" width="32" height="32" />
                                                 <div className="flex text-xl ml-3">{bookInfo?.User.instagram === null ? '-' :bookSelectTrade?.User.instagram}</div>
                                             </div>
-                                            <div className="flex items-center w-52">
+                                            <div className="flex items-center w-52 scale-90 sm:scale-100">
                                                 <Icon icon="logos:facebook" width="32" height="32" />
                                                 <div className="flex text-xl ml-3">{bookInfo?.User.facebook === null ? '-' :bookSelectTrade?.User.facebook}</div>
                                             </div>
-                                            <div className="flex items-center w-52">
+                                            <div className="flex items-center w-52 scale-90 sm:scale-100">
                                                 <img
                                                 src={`${image}line_icon.jpg`}
                                                 className='w-8 h-8 object-cover cursor-pointer bg-dark3 rounded-lg shadow-sm duration-300'
@@ -299,25 +304,25 @@ const Status: React.FC<PostNewBookProp> = ({setStateOpen, classAddBook, tradeId,
                         <>
                             <div 
                             onClick={() => popUptradeSuccess ? null : setPopUptradeSuccess(true)}
-                            className={popUptradeSuccess?" rounded-3xl flex mt-14 mb-10 shadow-xl border-2 border-dark2 bg-white w-auto h-auto justify-center items-center shrink-0 px-20 py-10 duration-1000"
-                                :"flex mt-14 mb-10 bg-dark2 text-white w-48 h-12 rounded-3xl justify-center items-center cursor-pointer shrink-0  duration-1000"}>
+                            className={popUptradeSuccess?" rounded-3xl flex mt-14 mb-10 shadow-xl border-2 border-dark2 bg-white w-auto h-auto justify-center items-center shrink-0 px-5 py-5 sm:px-20 sm:py-10 duration-1000"
+                                :"flex mt-14 mb-10 bg-dark2 text-white w-36 h-8 sm:w-48 sm:h-12 rounded-3xl justify-center items-center cursor-pointer shrink-0  duration-1000 "}>
                                     {popUptradeSuccess? 
                                     <div 
                                     className='flex flex-col items-center'>
                                         <Icon icon="uil:exchange" width="80" height="80" 
-                                        className='mx-auto  z-30'/>
-                                        <div className="flex text-4xl mt-5">ดำเนินการแลกเปลี่ยนเสร็จสิ้น</div>
-                                        <div className="flex text-2xl mt-10">ได้รับหนังสือของคุณคืนเรียบร้อยแล้วใช่ไหม?</div>
-                                        <div className="flex mt-10 gap-20">
+                                        className='mx-auto  z-30 scale-75 sm:scale-100'/>
+                                        <div className="flex text-xl sm:text-4xl mt-5">ดำเนินการแลกเปลี่ยนเสร็จสิ้น</div>
+                                        <div className="flex sm:text-2xl mt-10">ได้รับหนังสือของคุณคืนเรียบร้อยแล้วใช่ไหม?</div>
+                                        <div className="flex mt-10 sm:gap-20 ">
                                             <button 
                                             onClick={() => setPopUptradeSuccess(false)}
-                                            className='w-32 h-10 border-4 border-dark2 rounded-full text-lg flex justify-center items-center hover:scale-105 duration-300'>ยกเลิก</button>
+                                            className='w-32 h-10 border-4 border-dark2 rounded-full text-lg flex justify-center items-center hover:scale-105 duration-300 scale-75 sm:scale-100'>ยกเลิก</button>
                                             <button 
                                             onClick={handleTradeSuccess}
-                                            className='w-32 h-10 bg-dark2 rounded-full text-lg flex justify-center items-center text-white hover:scale-105 duration-300'>
+                                            className='w-32 h-10 bg-dark2 rounded-full text-lg flex justify-center items-center text-white hover:scale-105 duration-300 scale-75 sm:scale-100'>
                                                 <div className="flex duration-300">ยืนยัน</div>    
                                                 {loadTrade && <HashLoader
-                                                className="ml-2"
+                                                className="ml-2 scale-75 sm:scale-100"
                                                 color='#fff' loading={loadTrade} size={20} aria-label="Loading Spinner" data-testid="loader"/>}
                                             </button>
                                         </div>
@@ -327,59 +332,11 @@ const Status: React.FC<PostNewBookProp> = ({setStateOpen, classAddBook, tradeId,
                             </div>
                         </>
                         }
-                        {/* {tradeInfo?.status === 'trading' && 
-                        <>
-                            <div 
-                            onClick={() => popUptradeSuccess ? null : setPopUptradeSuccess(true)}
-                            className="flex mt-14 mb-10 bg-dark2 text-white w-48 h-12 rounded-3xl justify-center items-center cursor-pointer shrink-0  duration-1000">
-                                แลกเปลี่ยนสำเร็จ
-                            </div>
-                        {popUptradeSuccess && 
-                            <div className=" rounded-3xl flex mt-14 mb-10 shadow-xl border-2 border-dark2 bg-white w-auto h-auto justify-center items-center shrink-0 px-20 py-10 duration-1000 relative z-90">
-                                <div 
-                                className='flex flex-col items-center'>
-                                    <Icon icon="uil:exchange" width="80" height="80" 
-                                    className='mx-auto  z-30'/>
-                                    <div className="flex text-4xl mt-5">ดำเนินการแลกเปลี่ยนเสร็จสิ้น</div>
-                                    <div className="flex text-2xl mt-10">ได้รับหนังสือของคุณคืนเรียบร้อยแล้วใช่ไหม?</div>
-                                    <div className="flex mt-10 gap-20">
-                                        <button 
-                                        onClick={() => setPopUptradeSuccess(false)}
-                                        className='w-32 h-10 border-4 border-dark2 rounded-full text-lg flex justify-center items-center hover:scale-105 duration-300'>ยกเลิก</button>
-                                        <button 
-                                        className='w-32 h-10 bg-dark2 rounded-full text-lg flex justify-center items-center text-white hover:scale-105 duration-300'>ยืนยัน</button>
-                                    </div>
-                                </div>
-                            </div>}
-                        </>
-                    } */}
-
                         
                         
                     </>}
                 </div>
             </div>
-
-
-
-            {/* <div
-            style={classAddBook} 
-            className="absolute flex top-0 left-0 z-90 h-screen w-screen items-center justify-center ">
-                 <div 
-                style={{borderRadius: "30px"}}
-                className="flex flex-col w-auto h-auto bg-white border border-gray-300 items-center relative px-14 pb-14 pt-10 z-50">
-                    <div 
-                    style={{maxHeight: "700px"}}
-                    className="flex flex-col items-center overflow-y-auto css-scrollbar">
-                        <div className="absolute top-0 right-0 translate-x-2 -translate-y-2 rounded-full bg-white w-9 h-9"></div>
-                        <Icon 
-                        icon="carbon:close-filled" width="45" height="45"
-                        className=' absolute top-0 right-0 translate-x-3 -translate-y-3 text-gray-300 cursor-pointer hover:text-red-500 z-50'/>
-                    </div>
-                </div>
-            </div> */}
-
-
 
 
         </div>

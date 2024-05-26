@@ -94,7 +94,7 @@ function WishList() {
                 :wishlist.length === 0
                     ? <div className="flex justify-center items-center h-auto mt-40 mb-96 text-xl font-bold text-gray-400 sm:mt-40 sm:py96 sm:text-3xl">ยังไม่มีหนังสือที่อยากแลก</div>
                     :<div
-                    className="flex w-full h-auto p-10 flex-wrap justify-between mb-10 mt-5 max-w-[1700px] library-container sm:justify-start sm:w-auto sm:gap-20">
+                    className="flex w-full h-auto p-10 flex-wrap gap-5 justify-between mb-10 mt-5 max-w-[1700px] library-container sm:justify-start sm:w-auto sm:gap-20">
                     {wishlist.map((item, index) => (
                             <div
                             onClick={()=>handleToBookInfo(item.id)} // ต้องส่งค่าไปหน้า BookInfo

@@ -48,11 +48,11 @@ const AddAddress: React.FC<AddressProps> = ({setStatusAddress}) =>{
         <form 
             onSubmit={handleAddAddress}
             style={{width: "600px",borderRadius: "30px"}}
-            className="flex flex-col w-auto h-auto bg-white p-10 border border-gray-300 items-center justify-center relative">
+            className="flex flex-col w-auto h-auto bg-white py-5 sm:p-10 border border-gray-300 items-center justify-center relative mx-5">
             <Icon icon="carbon:close-filled" width="45" height="45"
                     onClick={() => reSetInfo()}
                     className=' absolute top-0 right-0 translate-x-3 -translate-y-3 text-gray-300 cursor-pointer hover:text-red-500'/>
-            <div className="text-4xl font-bold w-full flex items-center justify-center">เพิ่มที่อยู่ใหม่</div>
+            <div className="text-3xl sm:text-4xl font-bold w-full flex items-center justify-center">เพิ่มที่อยู่ใหม่</div>
             <div className="flex relative mb-4 w-full px-5">
                 <Icon
                     icon="mdi:address-marker-outline"

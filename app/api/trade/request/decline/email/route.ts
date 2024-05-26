@@ -8,7 +8,7 @@ export async function POST(req: Request) {
         
         const tradeinfo = await prismadb.trade.findUnique({
             where: { 
-                id:id, 
+                id:parseInt(id), 
                 status: 'pending'
             },
             include: {
@@ -30,8 +30,8 @@ export async function POST(req: Request) {
                 
         const send = await transport.sendMail({
             from: email.email,
-            // to: `${tradeinfo?.User.email}`,
-            to: "SuperDoggez2004@gmail.com",
+            to: `${tradeinfo?.User.email}`,
+            // to: "SuperDoggez2004@gmail.com",
             subject: `Trade: ${tradeinfo?.id}`,
             html: declineemail(`${tradeinfo?.Book_Trade_book_idToBook.title}`, `${tradeinfo?.Book_Trade_req_book_idToBook.title}`, `${tradeinfo?.User_Trade_owner_idToUser.username}`, `${tradeinfo?.User.username}`)
         })

@@ -83,11 +83,12 @@ function TradeBookSelect() {
             try {
                 const response = await axios.get(`/api/trade/mybookrequest/${userId}/book/${bookId}`);
                 console.log('response', response.data.mybookrequest);
-
+                if(response.data.mybookrequest !== undefined && response.data.mybookrequest !== null){
                 setTradeBook(response.data.mybookrequest);
                 setTradeReQuest(response.data.mybookrequest.Trade_Trade_book_idToBook.filter((item:tradeReQuest) => item.status === 'pending').reverse());
                 setHistoryTrade(response.data.mybookrequest.Trade_Trade_book_idToBook.filter((item:tradeReQuest) => item.status === 'traded').reverse());
                 setTradingBook(response.data.mybookrequest.Trade_Trade_book_idToBook.filter((item:tradeReQuest) => item.status === 'trading'));
+                }
                 setLoading(false);
             } catch (error) {
                 console.error('Error:', error);
@@ -171,53 +172,55 @@ function TradeBookSelect() {
             className="flex items-center h-auto z-10 bg-none w-screen pb-20 flex-col mx-auto">
 
                     <div className="flex bg-dark3 w-10/12 h-auto mt-10 rounded-3xl flex-col">
-                        <div className="flex w-full bg-dark1 text-white h-12 items-center justify-center rounded-t-3xl text-2xl">{tradeBook?.title}</div>
-                        <div className="flex justify-around py-5 px-5">
-                            <div className="flex items-center justify-center rounded-sm w-24 h-36 shrink-0">
-                            {
-                            tradeBook?.picture && tradeBook.picture.length > 0 ?
-                              <img
-                                onClick={() => handleToBookInfo(tradeBook?.id)}
-                                src={tradeBook.picture[0]}
-                                className="w-full h-full object-cover shadow shrink-0 cursor-pointer"
-                                alt="Trade Book"
-                              />
-                              :<div>
-                                <HashLoader
-                                  className="ml-1 mr-2"
-                                  color='#fff'
-                                  loading={true}
-                                  size={20}
-                                  aria-label="Loading Spinner"
-                                  data-testid="loader"
+                        <div className="flex w-full bg-dark1 text-white h-10 items-center justify-center rounded-t-3xl text-xl sm:text-2xl sm:h-12">{tradeBook?.title}</div>
+                        <div className="flex justify-around py-5 px-5 responsive-trade-book">
+                          <div className="flex w-full justify-around">
+                              <div className="flex items-center justify-center rounded-sm w-24 h-36 shrink-0">
+                              {
+                              tradeBook?.picture && tradeBook.picture.length > 0 ?
+                                <img
+                                  onClick={() => handleToBookInfo(tradeBook?.id)}
+                                  src={tradeBook.picture[0]}
+                                  className="w-full h-full object-cover shadow shrink-0 cursor-pointer"
+                                  alt="Trade Book"
                                 />
-                              </div>}
-                                
-                            </div>
-                            <div className="flex flex-col my-auto w-60">
-                                <div className="flex justify-center text-xl text-white">วิธีการแลกเปลี่ยน</div>
-                                <div className="flex w-full justify-center">
-                                    <div className="flex justify-center text-xl">{tradeBook?.pickup !== null  && tradeBook?.pickup !== undefined && tradeBook?.pickup !== '' 
-                                    &&<div className="flex flex-col w-24 h-28 shadow-xl rounded-2xl bg-white scale-90 relative z-30">
-                                            <div className="flex items-center justify-center rounded-t-2xl bg-dark1 w-full h-8 text-white">นัดรับ</div>
-                                            <Icon icon="tdesign:undertake-delivery" width="50" height="50" 
-                                            className='ml-2 mt-1'/>
-                                            <Icon icon="mdi:hand-extended-outline" width="50" height="50"
-                                            className='scale-x-[-1] absolute top-16 right-2' />
-                                        </div>
-                                    }</div>
-                                    <div className="flex justify-center text-xl">{tradeBook?.address !== null  && tradeBook?.address !== undefined && tradeBook?.address !== '' 
-                                    &&<div className="flex flex-col w-24 h-28 shadow-xl rounded-2xl bg-white items-center scale-90 relative z-30">
-                                            <div className="flex items-center justify-center rounded-t-2xl bg-dark1 w-full h-8 text-white">จัดส่ง</div>
-                                            <Icon icon="iconoir:delivery-truck" width="70" height="70" />
-                                            <Icon icon="fluent:checkmark-12-filled" width="20" height="20" 
-                                            className=' absolute top-14 left-8'/>
-                                        </div>
-                                    }</div>
-                                </div>
+                                :<div>
+                                  <HashLoader
+                                    className="ml-1 mr-2"
+                                    color='#fff'
+                                    loading={true}
+                                    size={20}
+                                    aria-label="Loading Spinner"
+                                    data-testid="loader"
+                                  />
+                                </div>}
+                                  
+                              </div>
+                              <div className="flex flex-col my-auto w-auto">
+                                  <div className="flex justify-center text-xl text-white">วิธีการแลกเปลี่ยน</div>
+                                  <div className="flex w-full justify-center">
+                                      <div className="flex justify-center text-xl">{tradeBook?.pickup !== null  && tradeBook?.pickup !== undefined && tradeBook?.pickup !== '' 
+                                      &&<div className="flex flex-col w-24 h-28 shadow-xl rounded-2xl bg-white scale-90 relative">
+                                              <div className="flex items-center justify-center rounded-t-2xl bg-dark1 w-full h-8 text-white">นัดรับ</div>
+                                              <Icon icon="tdesign:undertake-delivery" width="50" height="50" 
+                                              className='ml-2 mt-1'/>
+                                              <Icon icon="mdi:hand-extended-outline" width="50" height="50"
+                                              className='scale-x-[-1] absolute top-16 right-2' />
+                                          </div>
+                                      }</div>
+                                      <div className="flex justify-center text-xl">{tradeBook?.address !== null  && tradeBook?.address !== undefined && tradeBook?.address !== '' 
+                                      &&<div className="flex flex-col w-24 h-28 shadow-xl rounded-2xl bg-white items-center scale-90 relative">
+                                              <div className="flex items-center justify-center rounded-t-2xl bg-dark1 w-full h-8 text-white">จัดส่ง</div>
+                                              <Icon icon="iconoir:delivery-truck" width="70" height="70" />
+                                              <Icon icon="fluent:checkmark-12-filled" width="20" height="20" 
+                                              className=' absolute top-14 left-8'/>
+                                          </div>
+                                      }</div>
+                                  </div>
+                              </div>
                             </div>
                             <div className="flex border-l-2 border-gray-400 "></div>
-                            <div className="flex flex-col gap-5 my-auto">
+                            <div className="flex flex-col gap-5 my-auto w-full sm:w-2/3">
                                 <div className="flex justify-center text-xl text-white">จำนวนหนังสือที่เสนอแลกเปลี่ยน</div>
                                 <div className="flex justify-center text-xl text-white">{tradeReQuest?.length}</div>
                                 <div className="flex justify-center text-xl text-white">เล่ม</div>
@@ -228,7 +231,7 @@ function TradeBookSelect() {
                     
                     {tradingBook[0]?.status === 'trading' &&
                     <>
-                      <div className="flex text-4xl text-dark1 font-bold mt-14 mb-10">หนังสือที่กำลังเทรดด้วย</div>
+                      <div className="flex text-3xl text-dark1 font-bold mt-14 mb-10 sm:text-4xl">หนังสือที่กำลังเทรดด้วย</div>
                       <div 
                       onClick={() => handlePopuptrading(tradingBook[0])}
                       className='flex items-center justify-center rounded-sm border w-40 h-60 cursor-pointer shadow-sm hover:scale-105 duration-300 relative mb-5'>
@@ -247,12 +250,12 @@ function TradeBookSelect() {
 
 
 
-                    <div className="flex text-4xl text-dark1 font-bold mt-14">หนังสือที่เสนอแลกเปลี่ยน</div>
+                    <div className="flex text-3xl text-dark1 font-bold mt-14 sm:text-4xl">หนังสือที่เสนอแลกเปลี่ยน</div>
                     {tradeReQuest.length === 0 ? <div className="flex  items-center h-52 text-xl font-bold text-gray-400 w-full pl-32">
                         ไม่มีหนังสือที่เสนอแลกเปลี่ยน
                         </div>
                     :<div
-                    className="flex w-full h-auto p-10 flex-wrap gap-20 mb-10 mt-5 library-container">
+                    className="flex w-full h-auto p-10 flex-wrap justify-between mb-10 mt-5 gap-5 library-container sm:justify-start sm:w-auto sm:gap-20">
                       {tradeReQuest?.map((item, index) => (
                           <div
                           key={index}
@@ -276,8 +279,8 @@ function TradeBookSelect() {
                       ))}
                     </div>}
 
-                    <div className="flex text-2xl text-dark1 font-bold mt-14 w-full px-20">ประวัติหนังสือที่แลกเปลี่ยน</div>
-                    {historyTrade.length === 0 ? <div className="flex  items-center h-52 text-xl font-bold text-gray-400 w-full pl-32">
+                    <div className="flex text-2xl text-dark1 font-bold mt-14 w-full px-5 sm:px-20">ประวัติหนังสือที่แลกเปลี่ยน</div>
+                    {historyTrade.length === 0 ? <div className="flex  items-center h-52 text-xl font-bold text-gray-400 w-full pl-10 sm:pl-32">
                         ไม่มีประวัติหนังสือที่แลกเปลี่ยน
                         </div>
                     :
