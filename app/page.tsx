@@ -105,7 +105,6 @@ const Page: FC<Props> = (): JSX.Element => {
         return;
     }
       const response = await fetch(`http://localhost:4000/api/ai`, {
-        mode: 'no-cors',
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
