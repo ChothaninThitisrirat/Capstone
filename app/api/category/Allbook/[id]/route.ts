@@ -4,9 +4,11 @@ import { prismadb } from "@/lib/db";
 export async function GET(req: Request,{ params }: { params: { id: string }}) {
     try {
         const allbook = await prismadb.category.findUnique({
-            where: { id: parseInt(params.id) },
+            where: { 
+                id: parseInt(params.id) },
             include: {
                 book: {
+                    where: { isPost_trade:true },
                     select: {
                         id:true,
                         title:true,

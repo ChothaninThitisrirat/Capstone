@@ -8,7 +8,8 @@ export async function GET(req: Request,{ params }: { params: { title: string }})
                 title: {
                     startsWith:params.title,
                     mode: "insensitive"
-                }
+                },
+                isPost_trade: true
             },
             select: {
                 id:true,
