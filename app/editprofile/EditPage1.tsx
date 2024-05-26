@@ -34,6 +34,8 @@ const EditPage1: React.FC = (): JSX.Element => {
   const [tempPhoneNumber, setTempPhoneNumber] = useState("");
 
   
+
+  
   useEffect(() => {
     console.log(session)
     if (status === 'unauthenticated') {
@@ -113,6 +115,8 @@ const EditPage1: React.FC = (): JSX.Element => {
         method: 'PUT',
         body: formData
       });
+
+      location.reload()
 
       if (response.ok) {
         console.log('Profile picture updated successfully');
