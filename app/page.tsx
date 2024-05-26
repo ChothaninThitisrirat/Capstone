@@ -53,6 +53,7 @@ const Page: FC<Props> = (): JSX.Element => {
   const [category8, setCategory8] = useState<Books[]>([]);
   const [category9, setCategory9] = useState<Books[]>([]);
   const [category10, setCategory10] = useState<Books[]>([]);
+  const categories = ['นวนิยาย', 'สยองขวัญ', 'การ์ตูน', 'โรแมนติก', 'วิทยาศาสตร์', 'การเงิน - ลงทุน', 'การศึกษา', 'ท่องเที่ยว', 'การพัฒนาตนเอง', 'สุขภาพ'];
 
   
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = async (e) => {
@@ -119,7 +120,7 @@ const Page: FC<Props> = (): JSX.Element => {
 
         if (response.ok) {
           const data = await response.json();
-          setRecommendBook(data.recommend.สยองขวัญ);
+          setRecommendBook(data.recommend[categories]);
         } else {
           console.error('Failed to fetch data:', response.statusText);
         }
@@ -127,6 +128,8 @@ const Page: FC<Props> = (): JSX.Element => {
         console.error('Error fetching data:', error);
       }
     }
+
+    
 
     fetchData();
   }, [session]);
@@ -367,8 +370,8 @@ console.log("Recommended",recommendBook)
               <SlideBookBig data={popBook} Headtitle={"Popular Book"} Subtitle={"หนังสือดี หนังสือดัง คนนิยมอ่าน"}/>
             }
           </div>
-{/* 
-          <div className='flex justify-center pb-8'>
+
+          {/* <div className='flex justify-center pb-8'>
             {
               session && loading ? Loader() : session && (<SlideBookBig data={recommendBook} Headtitle={"Recommended For You"} Subtitle={"หนังสือที่คุณอาจจะสนใจ"}/>)
             }

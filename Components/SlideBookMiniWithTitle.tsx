@@ -20,7 +20,6 @@ interface BookItem {
 
 const SlideBookMiniWithTitle: React.FC<SlideBookMiniwithTitleProps> = ({data, Headtitle}) =>{
     const [moreFrom, setMoreFrom] = useState(0)
-    console.log(data)
     return (
         <>
             <div className="font-bold text-5xl pt-12 pb-4">
@@ -49,7 +48,7 @@ const SlideBookMiniWithTitle: React.FC<SlideBookMiniwithTitleProps> = ({data, He
                     
                     <div
                     style={{ backgroundImage: `url(${item.picture[0]})` }}
-                    className='flex pb-2 object-cover w-full h-full rounded-s-xs shrink-0 duration-300 hover:scale-105'
+                    className='flex pb-2 object-cover w-full h-full bg-cover bg-no-repeat rounded-s-xs shrink-0 duration-300 hover:scale-105'
                     />
                     <div className="flex absolute bottom-0 translate-y-6 text-lg w-full justify-center break-words font-bold ">{item.title}</div>
                     </Link>
