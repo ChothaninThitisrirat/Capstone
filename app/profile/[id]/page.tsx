@@ -105,7 +105,7 @@ export default function Profile() {
   return (
     <>
       <Navbar backGroundOn={false} withTitle={false}/>
-      <div className="flex w-full h-full flex-col">
+      <div className="flex w-full h-full flex-col mb-8">
         <div className="flex justify-start h-full items-center bg-dark2 flex-col rounded-b-2xl">
           <div
                 className='aspect-square mt-8 w-60 h-60 bg-cover bg-black bg-no-repeat rounded-full'
@@ -137,7 +137,7 @@ export default function Profile() {
               รีวิวทั้งหมดของ {user.user.username}
             </p>
           </div>
-          <div className="flex w-full gap-10 justify-center items-center px-3">
+          <div className="flex w-full gap-10 justify-center items-center px-3 pb-12">
             {reviewComment === 0 
               ? <div 
               className='mr-5 shrink-0 w-0 h-0'></div>

@@ -84,6 +84,7 @@ const EditPage1: React.FC = (): JSX.Element => {
           };
         });
         setIsEditingPhone(false);
+        location.reload();
       } else {
         console.error('Failed to update phone number:', response.statusText);
       }
