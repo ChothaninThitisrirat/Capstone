@@ -439,6 +439,7 @@ console.log('datePost',datePost)
                 :
                 <button 
                 onClick={handleGoTrade}
+                
                 className='flex bg-dark1 text-white w-40 h-10 items-center justify-center rounded-xl shadow-md duration-100'>
                     ส่งคำขอแลกหนังสือ
                 </button>}

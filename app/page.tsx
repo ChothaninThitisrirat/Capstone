@@ -141,7 +141,8 @@ console.log("Recommended",recommendBook)
       try {
         const response = await fetch(`/api/category/allbook/1`);
         const data = await response.json();
-        setCategory1(data.allbook);
+        const shuffledData = data.allbook.sort(() => Math.random() - 0.5);;
+        setCategory1(shuffledData)
       } catch (error) {
         console.error('Error fetching search results:', error);
       }
@@ -157,8 +158,8 @@ console.log("Recommended",recommendBook)
       try {
         const response = await fetch(`/api/category/allbook/2`);
         const data = await response.json();
-        setCategory2(data.allbook);
-        console.log("cat2",data.allbook)
+        const shuffledData = data.allbook.sort(() => Math.random() - 0.5);;
+        setCategory1(shuffledData)
       } catch (error) {
         console.error('Error fetching search results:', error);
       }
