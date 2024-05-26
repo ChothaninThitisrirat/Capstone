@@ -81,11 +81,11 @@ const TradeProcess3: React.FC<TradeProcess3Props> = ({ bookId, setStateProcess, 
 
             <div
             style={{minHeight: "800px"}}
-            className="flex flex-col items-center h-auto w-sceen z-30 scale-75 sm:scale-100 -translate-y-32 sm:translate-y-0">
-                <Icon icon="carbon:checkmark-outline" width="70" height="70" className='text-green-400 z-30 mt-5'/>
+            className="flex flex-col items-center h-screen w-sceen z-30 overflow-y-auto sm:overflow-hidden close-scrollbar pb-[300px]  sm:pb-0">
+                <Icon icon="carbon:checkmark-outline" width="70" height="70" className='text-green-400 z-30 mt-5 shrink-0'/>
                 <div className="flex z-30  mt-2 text-3xl">ดำเนินการส่งคำขอเสร็จสิ้น</div>
                 <div className="flex z-30  mt-3 text-xl">B-Trade ID #{idTrade}</div>
-                <div className="flex gap-5 sm:gap-20 mt-8">
+                <div className="flex gap-5 sm:gap-20 mt-8 flex-col sm:flex-row h-auto">
                     <div className="flex flex-col z-30">
                         <div className="flex text-3xl font-bold mx-auto mb-5">{bookInfo.bookinfo.title}</div>
                         <div className="flex w-full">
@@ -108,7 +108,7 @@ const TradeProcess3: React.FC<TradeProcess3Props> = ({ bookId, setStateProcess, 
                         </div>
                     </div>
 
-                    <div className="flex flex-col z-30 mt-40 gap-10">
+                    <div className="flex flex-col  z-30 sm:mt-40 gap-10">
                         <Icon icon="fontisto:arrow-h" width="100" height="100" 
                         className='mx-auto text-dark1'/>
                     </div>
