@@ -100,8 +100,7 @@ const PostBook1: React.FC<PostBook1Props> = ({setStatePage, setBookSelect, bookS
             style={{minHeight: "800px"}}
             className="flex justify-center h-auto w-sceen z-10 bg-none">
                 <div
-                className="flex w-full h-auto p-10 flex-wrap justify-between mb-10 mt-5 max-w-[1700px] gap-5 library-container sm:justify-start sm:w-auto sm:gap-20
-                gap-y-14 overflow-y-auto close-scrollbar z-10 library-container pb-52 sm:pt-20">
+                className="flex w-full h-screen p-10 flex-wrap justify-between mb-10 mt-5 max-w-[1700px] gap-5 library-container overflow-y-auto close-scrollbar sm:justify-start sm:w-auto sm:gap-20 z-10 pb-96">
                     <div 
                     onClick={() => setStateAddBook(true)}
                     className="flex items-center justify-center rounded-sm border w-40 h-60 bg-slate-200 cursor-pointer shadow-sm hover:bg-slate-300  hover:scale-105 duration-300 sm:w-64 sm:h-96">
@@ -110,9 +109,7 @@ const PostBook1: React.FC<PostBook1Props> = ({setStatePage, setBookSelect, bookS
                     </div>
 
                     {bookProp.map((item, index) => (
-                        <div 
-                        key={index}
-                        className='flex flex-col'>
+                        <>
                             <div 
                             key={index} 
                             onClick={()=>handlesetBookSelect(item.id)}
@@ -128,11 +125,12 @@ const PostBook1: React.FC<PostBook1Props> = ({setStatePage, setBookSelect, bookS
                                 alt="Profile picture"
                                 className={'w-full h-full object-cover cursor-pointer bg-white'+' '+(bookSelect === item.id ?' border-4 border-dark2' : '')}
                                 />
-                                
-
+                                <div className="flex flex-col absolute bottom-0 translate-y-8 text-base w-full sm:translate-y-12">
+                                    <div className="flex w-full justify-center ">{item.title}</div>
+                                </div>
                             </div>
-                            <div className='flex mx-auto sm:mt-5'>{item.title}</div>
-                        </div>
+                            
+                        </>
                     ))}
                 </div>
             </div>}
@@ -143,7 +141,7 @@ const PostBook1: React.FC<PostBook1Props> = ({setStatePage, setBookSelect, bookS
                     <button onClick={handleChangeState} 
                     className={bookSelect === null
                     ?'w-40 h-10 border-2 border-gray-500 text-gray-500 rounded-full sm:mr-16 mt-2 flex justify-center items-center gap-2'
-                    :'w-40 h-10 bg-dark1 text-white rounded-full ms:mr-16 mt-2 flex justify-center items-center gap-2'}>
+                    :'w-40 h-10 bg-dark1 text-white rounded-full sm:mr-16 mt-2 flex justify-center items-center gap-2'}>
                         ดำเนินการต่อ<Icon icon="icons8:right-round" width="30" height="30" />
                     </button>
             </div>
