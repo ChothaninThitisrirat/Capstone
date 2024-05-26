@@ -111,13 +111,12 @@ export default function Profile() {
                 className='aspect-square mt-8 w-60 h-60 bg-cover bg-black bg-no-repeat rounded-full'
                 style={{ backgroundImage: `url(${user.user.profile_picture})` }}
             />
-          <div className="flex justify-center items-center pt-16 text-white font-semibold text-4xl">
-          {user.user.username}
+          <div className="flex justify-center items-center pt-16 text-white font-semibold text-4xl pb-8" >
+            {user.user.username}
           </div>
-          <div className="flex justify-center items-center pt-16 text-white font-semibold mb- text-4xl">
-          </div>
-          {/* <div className="absolute bottom-0 w-2/5 h-1/6 bg-white rounded-xl drop-shadow-2xl">
-            <div className="flex w-full h-full ">
+
+          <div className="flex w-2/5 bg-white rounded-xl drop-shadow-2xl">
+            <div className="flex w-full h-full p-8">
               <div className="flex w-1/2 h-full justify-center items-center flex-col">
                 <p>คะแนนผู้ใช้</p>
                 <Rating name="read-only" value={user.review_avg} readOnly size="large" />
@@ -129,7 +128,7 @@ export default function Profile() {
                 <p>เล่ม </p>
               </div>
             </div>
-          </div> */}
+          </div>
         </div>
 
         <div className="flex justify-center items-center flex-col w-full mt-12">

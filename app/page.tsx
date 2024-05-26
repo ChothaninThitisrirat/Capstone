@@ -116,8 +116,7 @@ const Page: FC<Props> = (): JSX.Element => {
 
       if (response.ok) {
         const data = await response.json();
-        setRecommendBook(data);
-        console.log("datarec",data)
+        setRecommendBook(data.recommendbook);
     } else {
       console.error('Failed to update contact information')
     }
@@ -363,7 +362,7 @@ console.log("Recommended",recommendBook)
 
           <div className='flex justify-center pb-8'>
             {
-              session && loading ? Loader() : session && (<SlideBookBig data={popBook} Headtitle={"Recommended For You"} Subtitle={"หนังสือที่คุณอาจจะสนใจ"}/>)
+              session && loading ? Loader() : session && (<SlideBookBig data={recommendBook} Headtitle={"Recommended For You"} Subtitle={"หนังสือที่คุณอาจจะสนใจ"}/>)
             }
           </div>
 
