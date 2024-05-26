@@ -3,6 +3,7 @@
 import React,{useEffect, useState} from 'react';
 import { Icon } from '@iconify/react';
 import Link from 'next/link';
+import { DotLoader } from 'react-spinners';
 
 
 interface SlideBookBigProps {
@@ -24,11 +25,27 @@ interface BookItems {
         id: number;
     }
 }
+
+
     const SlideBookBig: React.FC<SlideBookBigProps> = ({data,Headtitle,Subtitle}) =>{
     const [moreFrom, setMoreFrom] = useState(0)
 
+
+    function Loader() {
+        return <div className='w-full  flex items-center justify-center opacity-95'>
+            <DotLoader
+            color='#435585' size={35} aria-label="Loading Spinner" data-testid="loader"/>
+          </div>
+    
+          
+      }
+
     return (
         <>  
+
+
+            
+                
             <div className='flex flex-col w-full h-full'>
                 <div className="flex flex-col">
                     <p className='text-5xl font-bold'>{Headtitle}</p>
@@ -63,6 +80,7 @@ interface BookItems {
                         
                     </div>
                 </div>
+                { data?.length === 0 ? Loader() :
                 <div 
                 style={{WebkitOverflowScrolling: 'touch'}}
                 className="flex gap-14 w-full justify-start items-center overflow-x-auto close-scrollbar pb-8">
@@ -114,7 +132,7 @@ interface BookItems {
                             </div>
                     ))}
                     
-                </div>
+                </div>}
                 
             </div>
             

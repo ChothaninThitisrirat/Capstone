@@ -149,7 +149,7 @@ return (
         {loading 
         ?<div 
             style={{minHeight: "800px"}}
-            className="flex  items-center pb-52 ">
+            className="flex h-screen items-center pb-52 ">
                 <HashLoader
                     className="ml-1 duration-300 "
                     color='#435585' loading={loading} size={50} aria-label="Loading Spinner" data-testid="loader"/>

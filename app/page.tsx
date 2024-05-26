@@ -13,7 +13,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { set } from 'mongoose';
-import { HashLoader,SyncLoader } from 'react-spinners';
+import { DotLoader} from 'react-spinners';
 import SlideBookMiniWithTitle from '@/Components/SlideBookMiniWithTitle';
 
 
@@ -42,7 +42,6 @@ const Page: FC<Props> = (): JSX.Element => {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [popBook, setPopBook] = useState<POPBOOK[]>([]);
-  const [recommendBook, setRecommendBook] = useState<Books[]>([])
   const [category1, setCategory1] = useState<Books[]>([]);
   const [category2, setCategory2] = useState<Books[]>([]);
   const [category3, setCategory3] = useState<Books[]>([]);
@@ -54,7 +53,45 @@ const Page: FC<Props> = (): JSX.Element => {
   const [category9, setCategory9] = useState<Books[]>([]);
   const [category10, setCategory10] = useState<Books[]>([]);
   const categories = ['นวนิยาย', 'สยองขวัญ', 'การ์ตูน', 'โรแมนติก', 'วิทยาศาสตร์', 'การเงิน - ลงทุน', 'การศึกษา', 'ท่องเที่ยว', 'การพัฒนาตนเอง', 'สุขภาพ'];
+  const [allrecommend, setAllrecommend] = useState<Books[]>([]);
 
+  useEffect(() => {
+    async function fetchData() {
+      if (!session) {
+        console.log('No session available');
+        return;
+      }
+      try {
+        const response = await fetch(`http://localhost:4000/api/ai`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            user_id: parseInt(session.user.id)
+          })
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+  
+          const recommendations = categories.map(category => data.recommend[category] || []);
+          const allRecommendations = recommendations.flat();
+          
+          setAllrecommend(allRecommendations);
+          console.log(allRecommendations, 'all recommendations');
+        } else {
+          console.error('Failed to fetch data:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+    
+    fetchData();
+  }, [session]);
+
+console.log("RecommendedAllFinal",allrecommend)
   
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = async (e) => {
     const { value } = e.target;
@@ -93,52 +130,12 @@ const Page: FC<Props> = (): JSX.Element => {
 
   function Loader() {
     return <div className='w-screen h-screen flex items-center justify-center opacity-95'>
-        <SyncLoader
+        <DotLoader
         color='#435585' size={10} aria-label="Loading Spinner" data-testid="loader"/>
       </div>
 
       
   }
-
-  useEffect(() => {
-    async function fetchData() {
-      if (!session) {
-        console.log('No session available');
-        return;
-      }
-
-      try {
-        const response = await fetch(`http://localhost:4000/api/ai`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            user_id: parseInt(session.user.id)
-          })
-        });
-
-        if (response.ok) {
-          for (let i = 0; i < categories.length; i++) {
-            const data = await response.json();
-            setRecommendBook(data.recommend[categories[i]]);
-          }
-        } else {
-          console.error('Failed to fetch data:', response.statusText);
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    }
-
-    
-
-    fetchData();
-  }, [session]);
-
-console.log("Recommended",recommendBook)
-
-
 
 
   useEffect(() => {
@@ -156,15 +153,13 @@ console.log("Recommended",recommendBook)
     fetchData();
   }, []);
 
-  
-
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await fetch(`/api/category/allbook/2`);
         const data = await response.json();
         const shuffledData = data.allbook.sort(() => Math.random() - 0.5);;
-        setCategory1(shuffledData)
+        setCategory2(shuffledData)
       } catch (error) {
         console.error('Error fetching search results:', error);
       }
@@ -178,7 +173,8 @@ console.log("Recommended",recommendBook)
       try {
         const response = await fetch(`/api/category/allbook/3`);
         const data = await response.json();
-        setCategory3(data.allbook);
+        const shuffledData = data.allbook.sort(() => Math.random() - 0.5);;
+        setCategory3(shuffledData)
       } catch (error) {
         console.error('Error fetching search results:', error);
       }
@@ -192,7 +188,8 @@ console.log("Recommended",recommendBook)
       try {
         const response = await fetch(`/api/category/allbook/4`);
         const data = await response.json();
-        setCategory4(data.allbook);
+        const shuffledData = data.allbook.sort(() => Math.random() - 0.5);;
+        setCategory4(shuffledData)
         
       } catch (error) {
         console.error('Error fetching search results:', error);
@@ -206,7 +203,8 @@ console.log("Recommended",recommendBook)
       try {
         const response = await fetch(`/api/category/allbook/5`);
         const data = await response.json();
-        setCategory5(data.allbook);
+        const shuffledData = data.allbook.sort(() => Math.random() - 0.5);;
+        setCategory5(shuffledData)
       } catch (error) {
         console.error('Error fetching search results:', error);
       }
@@ -220,7 +218,8 @@ console.log("Recommended",recommendBook)
       try {
         const response = await fetch(`/api/category/allbook/6`);
         const data = await response.json();
-        setCategory6(data.allbook);
+        const shuffledData = data.allbook.sort(() => Math.random() - 0.5);;
+        setCategory6(shuffledData)
       } catch (error) {
         console.error('Error fetching search results:', error);
       }
@@ -234,7 +233,8 @@ console.log("Recommended",recommendBook)
       try {
         const response = await fetch(`/api/category/allbook/7`);
         const data = await response.json();
-        setCategory7(data.allbook);
+        const shuffledData = data.allbook.sort(() => Math.random() - 0.5);;
+        setCategory7(shuffledData)
       } catch (error) {
         console.error('Error fetching search results:', error);
       }
@@ -248,7 +248,8 @@ console.log("Recommended",recommendBook)
       try {
         const response = await fetch(`/api/category/allbook/8`);
         const data = await response.json();
-        setCategory8(data.allbook);
+        const shuffledData = data.allbook.sort(() => Math.random() - 0.5);;
+        setCategory8(shuffledData)
       } catch (error) {
         console.error('Error fetching search results:', error);
       }
@@ -262,7 +263,8 @@ console.log("Recommended",recommendBook)
       try {
         const response = await fetch(`/api/category/allbook/9`);
         const data = await response.json();
-        setCategory9(data.allbook);
+        const shuffledData = data.allbook.sort(() => Math.random() - 0.5);;
+        setCategory9(shuffledData)
       } catch (error) {
         console.error('Error fetching search results:', error);
       }
@@ -276,7 +278,8 @@ console.log("Recommended",recommendBook)
       try {
         const response = await fetch(`/api/category/allbook/10`);
         const data = await response.json();
-        setCategory10(data.allbook);
+        const shuffledData = data.allbook.sort(() => Math.random() - 0.5);;
+        setCategory10(shuffledData)
       } catch (error) {
         console.error('Error fetching search results:', error);
       }
@@ -373,11 +376,11 @@ console.log("Recommended",recommendBook)
             }
           </div>
 
-          {/* <div className='flex justify-center pb-8'>
+          <div className='flex justify-center pb-8'>
             {
-              session && loading ? Loader() : session && (<SlideBookBig data={recommendBook} Headtitle={"Recommended For You"} Subtitle={"หนังสือที่คุณอาจจะสนใจ"}/>)
+              session && loading ? Loader() : session && (<SlideBookBig data={allrecommend} Headtitle={"Recommended For You"} Subtitle={"หนังสือที่คุณอาจจะสนใจ"}/>)
             }
-          </div> */}
+          </div>
 
 
             {
