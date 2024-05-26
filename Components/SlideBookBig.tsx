@@ -20,6 +20,8 @@ interface BookItems {
     picture: string[];
     User: {
         username: string;
+        profile_picture: string;
+        id: number;
     }
 }
     const SlideBookBig: React.FC<SlideBookBigProps> = ({data,Headtitle,Subtitle}) =>{
@@ -82,12 +84,20 @@ interface BookItems {
                                         
                                         <div className='flex w-5/6 text-xl font-thin mt-5 ml-5'>
 
-                                            {item.description}
+                                            {item.description.length > 100 ? item.description.substring(0, 100) + '...' : item.description}
                                         </div>
                                     </div>
-                                    <div className="flex w-10/12 h-1/6 justify-between">
-                                        <div className='flex justify-end items-center'>
-                                            {item.User.username}
+                                    <Link 
+                                    href={`/profile/${item.User.id}`} className="flex w-10/12 h-1/6 justify-between mb-2">
+                                        <div className='flex items-center '>
+                                            <div 
+                                            style={{backgroundImage: `url(${item.User.profile_picture})`}}
+                                            className="aspect-square w-10 h-10 mr-2 bg-cover bg-black bg-no-repeat rounded-full">
+                                                
+                                            </div>
+                                            <p>
+                                                {item.User.username}
+                                            </p>
                                         </div>
                                         <div className='flex justify-end items-center cursor-pointer '>
                                             <Link 
@@ -96,7 +106,7 @@ interface BookItems {
                                                 ดูเพิ่มเติม
                                             </Link>
                                         </div>
-                                    </div>
+                                    </Link>
                                 </div>
 
 
