@@ -49,7 +49,7 @@ export default function Profile() {
     <>
       <Navbar backGroundOn withTitle/>
       <TitleBar textTitle={`ผลการค้นหาของ ${title}`} />
-      <div className='flex items-center justify-center'>
+      <div className='flex w-full items-center gap-12 justify-center flex-wrap pt-16'>
         {BookSearch?.length === 0 ? (
           <div
             style={{ width: '1250px', WebkitOverflowScrolling: 'touch' }}
@@ -60,17 +60,26 @@ export default function Profile() {
         ) : (
           BookSearch.map((item, index) => (
             <div
-              key={index}
-              className="flex flex-wrap gap-8 w-screen h-screen bg-white justify-center "
+            key={index}
+            className="flex flex-col items-center font-bold w-max h-max bg-transparent justify-center "
+          >
+            <Link
+              className="flex w-svw h-1/4 max-w-52 min-h-72 bg-cover bg-center bg-no-repeat hover:shadow-2xl transform transition duration-300 ease-in-out hover:scale-105"
+              style={{ backgroundImage: `url(${item.picture[0]})` }}
+              href={`/bookinfo/${item.id}`}
+            />
+            <Link 
+            href={`/bookinfo/${item.id}`}
+            className='pt-2'
             >
-              <Link
-                className="flex w-full h-1/3 max-w-52 bg-cover bg-center bg-no-repeat"
-                style={{ backgroundImage: `url(${item.picture[0]})` }}
-                href={`/bookinfo/${item.id}`}
-              />
-            </div>
+              {item.title}
+            </Link>
+
+          </div>
+          
           ))
         )}
+        
       </div>
       
     </>

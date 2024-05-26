@@ -25,8 +25,6 @@ interface BookItems {
     const SlideBookBig: React.FC<SlideBookBigProps> = ({data,Headtitle,Subtitle}) =>{
     const [moreFrom, setMoreFrom] = useState(0)
 
-    console.log("data",data)
-
     return (
         <>  
             <div className='flex flex-col w-full h-full'>
@@ -41,7 +39,7 @@ interface BookItems {
                             :
                             <Icon 
                             onClick={() => setMoreFrom(prev => prev-1)}
-                            className='mr-5 text-dark3 cursor-pointer shrink-0 hover:text-dark2 duration-200'
+                            className='mr-5 text-dark3 shrink-0 hover:text-dark2 duration-200'
                             icon="icon-park-solid:left-c" 
                             width="50" 
                             height="50" 
@@ -51,13 +49,13 @@ interface BookItems {
                         {data?.length !== 2 &&(moreFrom < data.length - 2 
                             ?<Icon 
                             onClick={() => setMoreFrom(  prev => prev+1)}
-                            className='ml-5 text-dark3 cursor-pointer shrink-0 hover:text-dark2 duration-200'
+                            className='ml-5 text-dark3  shrink-0 hover:text-dark2 duration-200'
                             icon="icon-park-solid:right-c" width="50" height="50" />
                             :<div
                             className='mr-5 shrink-0 w-50 h-50'></div>)}
                             <div 
                             style={{background:'linear-gradient(to right, rgba(255, 255, 255, 0) 20%, #f9f9f9 80%)'}}
-                            className="w-32 h-130 mt-20 absolute z-10">
+                            className="w-32 h-115 mt-20 absolute z-10">
                             </div>
                         </div>
                         
@@ -65,11 +63,11 @@ interface BookItems {
                 </div>
                 <div 
                 style={{WebkitOverflowScrolling: 'touch'}}
-                className="flex gap-20 w-full justify-start items-center overflow-x-auto close-scrollbar pb-8">
+                className="flex gap-14 w-full justify-start items-center overflow-x-auto close-scrollbar pb-8">
                     {data.map((item: BookItems, index:number)=>(
                         <div 
                         key={index}
-                        className='flex flex-row justify-start shrink-0 w-5/12 h-128 drop-shadow-xl rounded-2xl duration-300 cursor-pointer bg-white min-w-128 mt-8'
+                        className='flex flex-row justify-start shrink-0 w-5/12 h-96 drop-shadow-xl rounded-2xl duration-300  bg-white min-w-128 mt-8'
                         style={{transform: `translateX(${moreFrom * -504}px)`, transition: 'transform 0.6s ease-in-out' }}>
                             
                             <div className='flex justify-center w-2/4 min-w-56 bg-cover bg-center bg-no-repeat rounded-l-2xl' style={{backgroundImage: `url(${item.picture[0]})`}} />
@@ -91,7 +89,7 @@ interface BookItems {
                                         <div className='flex justify-end items-center'>
                                             {item.User.username}
                                         </div>
-                                        <div className='flex justify-end items-center'>
+                                        <div className='flex justify-end items-center cursor-pointer '>
                                             <Link 
                                             href={`/bookinfo/${item.id}`} 
                                             className='flex justify-center items-center w-full h-1/2  bg-dark2 rounded-2xl min-w-24 max-h-12 text-white hover:shadow-inner transform transition duration-300 ease-in-out hover:scale-95'>

@@ -5,16 +5,18 @@ import { useParams, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import TitleBar from '@/Components/TitleBar'
 import Navbar from '@/Components/Navbar'
-import { HashLoader } from 'react-spinners'
+import { SyncLoader } from 'react-spinners'
 import { Rating } from '@mui/material'
 import {Icon} from '@iconify/react'
 import Link from 'next/link'
+import { set } from 'mongoose'
 
 interface UserBook{
     id: number;
-    title  : string[];
+    title  : string;
     picture: string[];
     name: string;
+    titleID: number
 }
 
 export default function Profile() {
@@ -22,17 +24,27 @@ export default function Profile() {
   const { title } = useParams();
   const [BookCategory, setBookCategory] = useState<UserBook[]>([])
   const [BookCategoryName, setBookCategoryName] = useState<UserBook[]>([])
+  const titleID = Array.isArray(title) ? title[0] : title;
+  const matchingCategory = BookCategoryName.find(item => item.id == Number(titleID));
+  const [loader, setLoader] = useState(true)
+
 
   useEffect(() => {
     if (title){
-      const titleID = Array.isArray(title) ? title[0] : title;
-      fetchBookCategory(title[0])
+      let titleID;
+        if (Array.isArray(title)) {
+          titleID = title[0];
+        } else {
+          titleID = title;
+        }
+      fetchBookCategory(titleID)
       fetchBookCategoryName()
+      setLoader(false)
 
     }
   },[title])
 
-   const fetchBookCategory = async (title: string) => {
+    const fetchBookCategory = async (title: string) => {
     const res = await fetch(`/api/category/allbook/${title}`)
     const data = await res.json()
     setBookCategory(data.allbook)
@@ -46,16 +58,14 @@ export default function Profile() {
     console.log(data.category)
    }
 
-   const matchingCategory = BookCategoryName.find(item => item.id === parseInt(title[0]));
-
-
-  if (!title) return <div>
-    <div className='w-screen h-screen flex items-center justify-center opacity-95 bg-gradient-to-tr from-yellow-100 to-blue-100'>
-        <HashLoader
-        color='#435585' size={50} aria-label="Loading Spinner" data-testid="loader"/>
-      </div>
+   if (loader) return <div>
+   <div className='w-screen h-screen flex items-center justify-center opacity-95'>
+       <SyncLoader
+       color='#435585' size={10} aria-label="Loading Spinner" data-testid="loader"/>
+     </div>
   </div>;
-
+   
+  
 
   return (
     <>
@@ -74,13 +84,20 @@ export default function Profile() {
           BookCategory.map((item, index) => (
             <div
               key={index}
-              className="flex w-max h-max bg-white justify-center "
+              className="flex flex-col items-center w-max h-max bg-white justify-center "
             >
               <Link
-                className="flex w-svw h-1/4 max-w-52 min-h-72 bg-cover bg-center bg-no-repeat"
+                className="flex w-svw h-1/4 max-w-52 min-h-72 bg-cover bg-center bg-no-repeat hover:shadow-2xl transform transition duration-300 ease-in-out hover:scale-105"
                 style={{ backgroundImage: `url(${item.picture[0]})` }}
                 href={`/bookinfo/${item.id}`}
               />
+              <Link 
+                href={`/bookinfo/${item.id}`}
+                className='pt-2 font-bold'
+                >
+                  {item.title}
+                </Link>
+
             </div>
           ))
         )}

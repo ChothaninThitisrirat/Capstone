@@ -98,11 +98,11 @@ const Navbar: React.FC<NavbarProps> = ({backGroundOn, withTitle}) =>{
             <div 
             className={
                 (backGroundOn
-            ?"flex w-screen h-16 rounded-b-3xl justify-center z-30 bg-dark2"
+            ?"flex w-screen h-16 rounded-b-3xl justify-center z-30 bg-dark"
             :"flex w-screen h-16 justify-center z-30 bg-dark2")} >
                 <div 
                 className={
-                showDropDownresponsive? "flex flex-col w-screen  rounded-b-3xl relative cursor-pointer items-center nav-z-index bg-dark2 duration-500 h-[460px] border-b border-white":
+                showDropDownresponsive? "flex flex-col w-screen  rounded-b-3xl relative cursor-pointer items-center nav-z-index bg-white  duration-500 h-[460px] border-b border-white":
                     (backGroundOn
                 ?"flex w-screen h-16 rounded-b-3xl relative cursor-pointer justify-center z-30 bg-dark2 duration-500"
                 :"flex w-screen h-16 relative cursor-pointer justify-center z-30 bg-dark2 duration-500")} >
@@ -185,7 +185,7 @@ const Navbar: React.FC<NavbarProps> = ({backGroundOn, withTitle}) =>{
                         </div>
                         <div className={showDropDown
                             ?"absolute top-16 right-14 duration-500 z-10  responsive-close"
-                            :"absolute top-16 right-14 -translate-y-96 duration-500 z-10 responsive-close"}>
+                            :"absolute top-16 right-14 -translate-y-96 duration-500 z-10 responsive-close "}>
                             <DropDown/>
                         </div>
                     </div>
@@ -315,15 +315,15 @@ function DropDownResponsive() {
     return (
         <div className="flex flex-col w-full z-10 items-center">
             {data.map((item,index) => (
-                <Link key={index} href={item.link} className="flex pl-4 h-12 pr-2 cursor-pointer hover:bg-dark3 items-center justify-center w-full">
+                <Link key={index} href={item.link} className="flex pl-4 h-12 pr-2 cursor-pointer hover:bg-bg items-center justify-center w-full">
                     <div className="flex pl-4 h-12 pr-2 items-center justify-start w-64 ml-10">
                         <div
                         className="w-9 h-9 rounded-full flex items-center justify-center">
                             <Icon icon={item.icon} width={item.size} height={item.size} 
                             // style={{color:'#363062'}}
-                            className="text-white"/>
+                            className="text-dark2"/>
                         </div>
-                        <div  className="flex text-center items-center text-sm ml-3 mr-2 text-white">{item.text}</div>
+                        <div  className="flex text-center items-center text-sm ml-3 mr-2 text-dark1 font-bold">{item.text}</div>
                     </div>
                 </Link>
             ))}
@@ -339,8 +339,8 @@ function DropDownResponsive() {
                 <div  className="flex text-center items-center text-sm ml-3 mr-2 text-red-500">Admin Page</div>
             </Link>}
             <button
-            onClick={() => signOut({ callbackUrl: '/' })}
-            className="flex items-center justify-center text-sm text-gray-200 py-2 border-t gap-2 w-10/12 pt-4">
+            onClick={() => signOut({ callbackUrl: 'http://superdoggez.trueddns.com:10610', redirect: true})}
+            className="flex items-center justify-center text-sm text-dark1 font-bold py-2 border-t gap-2 w-10/12 pt-4">
             <Icon icon="ic:sharp-logout" width="20" height="20" />
                 Logout</button>
             

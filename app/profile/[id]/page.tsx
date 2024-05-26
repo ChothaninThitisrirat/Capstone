@@ -9,7 +9,7 @@ import Navbar from '@/Components/Navbar'
 import { HashLoader } from 'react-spinners'
 import { Rating } from '@mui/material'
 import {Icon} from '@iconify/react'
-
+import Link from 'next/link'
 export default function Profile() {
 
   interface User {
@@ -105,19 +105,18 @@ export default function Profile() {
   return (
     <>
       <Navbar backGroundOn={false} withTitle={false}/>
-      <div className="flex w-screen h-screen flex-col">
-        <div className="flex justify-start items-center w-full h-3/6 bg-dark2 flex-col rounded-b-2xl">
-          <div className="flex w-1/2 h-1/2 justify-center mt-8">
-            <div
-                className='aspect-square mt-8 bg-cover bg-black bg-no-repeat rounded-full'
+      <div className="flex w-full h-full flex-col">
+        <div className="flex justify-start h-full items-center bg-dark2 flex-col rounded-b-2xl">
+          <div
+                className='aspect-square mt-8 w-60 h-60 bg-cover bg-black bg-no-repeat rounded-full'
                 style={{ backgroundImage: `url(${user.user.profile_picture})` }}
             />
-          </div>
-          <div className="flex justify-center items-center pt-16 text-white font-semibold text-4xl">
+          <div className="flex justify-center items-center pt-16 text-white font-semibold text-4xl pb-8" >
             {user.user.username}
           </div>
-          <div className="absolute mt- w-2/5 h-1/6 bg-white rounded-xl drop-shadow-2xl">
-            <div className="flex w-full h-full ">
+
+          <div className="flex w-2/5 bg-white rounded-xl drop-shadow-2xl">
+            <div className="flex w-full h-full p-8">
               <div className="flex w-1/2 h-full justify-center items-center flex-col">
                 <p>คะแนนผู้ใช้</p>
                 <Rating name="read-only" value={user.review_avg} readOnly size="large" />
@@ -197,12 +196,13 @@ export default function Profile() {
 
 
         <div className="flex justify-center items-center flex-col w-full">
-          <div className="flex w-4/5 mb-6 justify-center items-center">
+          <div className="flex w-4/5 mb-6 justify-center items-center pt-12">
             <p className='text-4xl font-bold'>
               หนังสือทั้งหมดของ {user.user.username}
             </p>
           </div>
-          <div className="flex w-full gap-10 justify-center items-center px-3">
+          <div className="flex w-full flex-wrap gap-10 justify-center items-center px-3">
+            
             {userBook?.length === 0 ? (
               <div
                 style={{ width: '1250px', WebkitOverflowScrolling: 'touch' }}
@@ -214,13 +214,22 @@ export default function Profile() {
               userBook.map((item, index) => (
                 <div
                   key={index}
-                  className="flex flex-wrap gap-8 w-screen h-screen bg-white"
+                  className="flex flex-col items-center font-bold w-max h-max bg-transparent justify-center "
                 >
-                  <div
-                    className="flex w-2/12 h-1/3 bg-cover bg-center bg-no-repeat"
+                  <Link
+                    className="flex w-svw h-1/4 max-w-52 min-h-72 bg-cover bg-center bg-no-repeat hover:shadow-2xl transform transition duration-300 ease-in-out hover:scale-105"
                     style={{ backgroundImage: `url(${item.picture[0]})` }}
+                    href={`/bookinfo/${item.id}`}
                   />
-                </div>
+                  <Link 
+                  href={`/bookinfo/${item.id}`}
+                  className='pt-2'
+                  >
+                    {item.title}
+                  </Link>
+
+          </div>
+          
               ))
             )}
           </div>  
