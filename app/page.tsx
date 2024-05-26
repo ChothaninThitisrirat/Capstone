@@ -284,7 +284,7 @@ console.log("Recommended",recommendBook)
       <Navbar backGroundOn={false} withTitle={false}/>
       
       {/* แถบบน and Search bar */}
-      <div className='flex flex-col w-screen h-full'>
+      <div className='flex flex-col w-screen h-full max-w-screen'>
         <div className='flex flex-col justify-center items-center w-full h-fit bg-dark2 rounded-b-3xl pb-20'>
           <h1 className='text-7xl font-bold  text-white pb-8 pt-20'>
             Trade The Book
@@ -355,7 +355,7 @@ console.log("Recommended",recommendBook)
           </div>
         </div>
         <div className='flex flex-col w-screen bg-bg justify-center items-center'>
-        <div className='w-5/6 mt-10'>
+        <div className='w-5/6 mt-10 '>
           <div className='flex justify-center pb-8'>
             {
               <SlideBookBig data={popBook} Headtitle={"Popular Book"} Subtitle={"หนังสือดี หนังสือดัง คนนิยมอ่าน"}/>
@@ -364,71 +364,51 @@ console.log("Recommended",recommendBook)
 
           <div className='flex justify-center pb-8'>
             {
-              session && loading ? Loader() : session && (<SlideBookBig data={recommendBook} Headtitle={"Recommended For You"} Subtitle={"หนังสือที่คุณอาจจะสนใจ"}/>)
+              session && loading ? Loader() : session && (<SlideBookBig data={popBook} Headtitle={"Recommended For You"} Subtitle={"หนังสือที่คุณอาจจะสนใจ"}/>)
             }
           </div>
 
-          <div className='flex justify-center'>
+
             {
-              category1 && (<SlideBookMiniWithTitle data={category1} Headtitle='นวนิยาย'/>)
+              category1 && (<SlideBookMiniWithTitle data={category1} Headtitle='นวนิยาย' />)
             }
-          </div>
 
-          
-          <div className='flex justify-center'>
             {
               category2 && <SlideBookMiniWithTitle data={category2} Headtitle='สยองขวัญ'/>
             }
-          </div>
 
-          <div className='flex justify-center'>
             {
               category3 &&<SlideBookMiniWithTitle data={category3} Headtitle='การ์ตูน'/>
             }
-          </div>
 
-          <div className='flex justify-center'>
             {
               category4 &&<SlideBookMiniWithTitle data={category4} Headtitle='โรแมนติก'/>
             }
-          </div>
 
-          <div className='flex justify-center'>
             {
               category5 &&<SlideBookMiniWithTitle data={category5} Headtitle='วิทยาศาสตร์'/>
             }
-          </div>
-          <div className='flex justify-center'>
+
             {
               category6 &&<SlideBookMiniWithTitle data={category6} Headtitle='การเงิน - ลงทุน'/>
             }
-          </div>
-
           
-          <div className='flex justify-center'>
             {
               category7 &&<SlideBookMiniWithTitle data={category7} Headtitle='การศึกษา'/>
             }
-          </div>
 
-          <div className='flex justify-center'>
             {
               category8 &&<SlideBookMiniWithTitle data={category8} Headtitle='ท่องเที่ยว'/>
             }
-          </div>
 
-          <div className='flex justify-center'>
             {
               category9 &&<SlideBookMiniWithTitle data={category9} Headtitle='การพัฒนาตนเอง'/>
             }
-          </div>
 
-          <div className='flex w-full justify-center'>
             {
               category10 && <SlideBookMiniWithTitle data={category10} Headtitle='สุขภาพ'/>
             }
-          </div>
-        </div>
+        </div> 
 
       </div>
 
