@@ -439,6 +439,7 @@ console.log('datePost',datePost)
                 :
                 <button 
                 onClick={handleGoTrade}
+                
                 className='flex bg-dark1 text-white w-40 h-10 items-center justify-center rounded-xl shadow-md duration-100'>
                     ส่งคำขอแลกหนังสือ
                 </button>}
@@ -649,10 +650,13 @@ console.log('datePost',datePost)
 
         <div className="flex w-11/12 mx-auto sm:mx-0 sm:w-full items-center justify-between sm:pr-32">
         <div className="flex">
-            <div className="flex text-2xl sm:text-4xl font-bold w-full sm:ml-36 mt-10 mb-10">More From</div>
-            <div className="flex text-2xl sm:text-4xl ml-2 mt-10 mb-10">Champ</div>
+            <div
+             className="flex text-2xl sm:text-4xl font-bold w-full sm:ml-36 mt-10 mb-10">More From</div>
+            <div className="flex text-2xl sm:text-4xl ml-2 mt-10 mb-10">{bookInfoShow?.user.username}</div>
         </div>
-        <button className="flex bg-dark2 text-white w-28 h-10 justify-center items-center rounded-full text-lg underline scale-75 sm:scale-100">ดูทั้งหมด</button>
+        <Link 
+        href={`/profile/${bookInfoShow?.user.id}`}
+        className="flex bg-dark2 text-white w-28 h-10 justify-center items-center rounded-full text-lg underline scale-75 sm:scale-100">ดูทั้งหมด</Link>
         </div>
         <SlideBookMini data={moreFromUserData}/>
         {/* <SlideBookBig data={popBook} Headtitle={"Recommend For You"} Subtitle={"หนังสือที่คุณอาจจะสนใจ"}/> */}

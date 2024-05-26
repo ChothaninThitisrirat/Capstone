@@ -3,6 +3,7 @@
 import React,{useEffect, useState} from 'react';
 import { Icon } from '@iconify/react';
 import Link from 'next/link';
+import { DotLoader } from 'react-spinners';
 
 
 interface SlideBookBigProps {
@@ -20,13 +21,31 @@ interface BookItems {
     picture: string[];
     User: {
         username: string;
+        profile_picture: string;
+        id: number;
     }
 }
+
+
     const SlideBookBig: React.FC<SlideBookBigProps> = ({data,Headtitle,Subtitle}) =>{
     const [moreFrom, setMoreFrom] = useState(0)
 
+
+    function Loader() {
+        return <div className='w-full  flex items-center justify-center opacity-95'>
+            <DotLoader
+            color='#435585' size={35} aria-label="Loading Spinner" data-testid="loader"/>
+          </div>
+    
+          
+      }
+
     return (
         <>  
+
+
+            
+                
             <div className='flex flex-col w-full h-full'>
                 <div className="flex flex-col">
                     <p className='text-5xl font-bold'>{Headtitle}</p>
@@ -61,10 +80,11 @@ interface BookItems {
                         
                     </div>
                 </div>
+                { data?.length === 0 ? Loader() :
                 <div 
                 style={{WebkitOverflowScrolling: 'touch'}}
                 className="flex gap-14 w-full justify-start items-center overflow-x-auto close-scrollbar pb-8">
-                    {data.map((item: BookItems, index:number)=>(
+                    {Array.isArray(data) && data.map((item: BookItems, index:number)=>(
                         <div 
                         key={index}
                         className='flex flex-row justify-start shrink-0 w-5/12 h-96 drop-shadow-xl rounded-2xl duration-300  bg-white min-w-128 mt-8'
@@ -76,18 +96,26 @@ interface BookItems {
 
                                 <div className='flex flex-col items-center w-2/4 h-full min-w-96'>
                                     <div className="flex w-10/12 flex-col h-5/6">
-                                        <div className='flex w-8/12 text-3xl font-bold mt-5'>
-                                            {item.title}
+                                        <div className='flex w-8/12 text-3xl font-bold mt-5 no-wrap'>
+                                            {item.title.length > 25 ? item.title.substring(0,25) + '...' : item.title}
                                         </div>
                                         
                                         <div className='flex w-5/6 text-xl font-thin mt-5 ml-5'>
 
-                                            {item.description}
+                                            {item.description.length > 100 ? item.description.substring(0, 100) + '...' : item.description}
                                         </div>
                                     </div>
-                                    <div className="flex w-10/12 h-1/6 justify-between">
-                                        <div className='flex justify-end items-center'>
-                                            {item.User.username}
+                                    <Link 
+                                    href={`/profile/${item.User.id}`} className="flex w-10/12 h-1/6 justify-between mb-2">
+                                        <div className='flex items-center '>
+                                            <div 
+                                            style={{backgroundImage: `url(${item.User.profile_picture})`}}
+                                            className="aspect-square w-10 h-10 mr-2 bg-cover bg-black bg-no-repeat rounded-full">
+                                                
+                                            </div>
+                                            <p>
+                                                {item.User.username}
+                                            </p>
                                         </div>
                                         <div className='flex justify-end items-center cursor-pointer '>
                                             <Link 
@@ -96,7 +124,7 @@ interface BookItems {
                                                 ดูเพิ่มเติม
                                             </Link>
                                         </div>
-                                    </div>
+                                    </Link>
                                 </div>
 
 
@@ -104,7 +132,7 @@ interface BookItems {
                             </div>
                     ))}
                     
-                </div>
+                </div>}
                 
             </div>
             

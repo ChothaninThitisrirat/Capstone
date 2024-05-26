@@ -62,15 +62,15 @@ async def process_data(data: dict):
         user_cat = [cat.Category.name.strip() for cat in user_data.Userlike]            #Get the categories
         print(user_cat)
         books = await prisma.book.find_many(                                            #Get book in database thai is post trade and not trading
-            where={
-                "status": "available",
-                "isPost_trade": True,
-                'NOT': [
-                    {
-                        "user_id": int(user)
-                    }
-                ]
-            },
+            # where={
+            #     "status": "available",
+            #     "isPost_trade": True,
+            #     'NOT': [
+            #         {
+            #             "user_id": int(user)
+            #         }
+            #     ]
+            # },
             include={
                 "category":True,
                 "User":True

@@ -3,6 +3,7 @@
 import React,{useState} from 'react'
 import { Icon } from '@iconify/react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface SlideBookMiniProps {
     data: any;
@@ -32,7 +33,8 @@ const SlideBookMini: React.FC<SlideBookMiniProps> = ({data}) =>{
                 style={{width: '1350px', WebkitOverflowScrolling: 'touch'}}
                 className="flex gap-10 justify-start items-center overflow-x-auto h-64 p-2 close-scrollbar ">
                 {data?.map((item: BookItem, index: number) => (
-                    <div 
+                    <Link
+                    href={`/bookinfo/${item.id}`}
                     key={index}
                     style={{transform: `translateX(${moreFrom * -168}px)`, transition: 'transform 0.6s ease-in-out' }}
                     className="flex w-32 h-48 rounded-s-xs shrink-0 duration-300 bg-white cursor-pointer ">
@@ -42,7 +44,7 @@ const SlideBookMini: React.FC<SlideBookMiniProps> = ({data}) =>{
                     className='object-cover w-full h-full rounded-s-xs shrink-0 duration-300 hover:scale-105'
                     />
                     <div className="flex absolute bottom-0 translate-y-6 text-sm w-full justify-center break-words">{item.title}</div>
-                    </div>
+                    </Link>
                 ))}
                 <div 
                 style={{background:'linear-gradient(to right, rgba(255, 255, 255, 0) 20%, #f9f9f9 80%)'}}

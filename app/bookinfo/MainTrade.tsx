@@ -15,6 +15,7 @@ import TradeProcess3 from './TradeProcess3'
 import TradeProcess4 from './TradeProcess4'
 import bgExchangebook from '../../public/images/bgExchangebook.png';
 import AddAddress from '@/Components/AddAddress';
+import { useSession } from 'next-auth/react';
 
 interface MainTradeProps {
     bookId:string;
@@ -24,6 +25,7 @@ interface MainTradeProps {
 
 
 const MainTrade: React.FC<MainTradeProps> = ({ bookId, setTrade, bookInfo }) => {
+    const { data: session, status } = useSession()
     const [stateProcess, setStateProcess] = useState(0)
     const [showExchangeInfo1, setShowExchangeInfo1] = useState(false);
     const [showExchangeInfo2, setShowExchangeInfo2] = useState(false);
@@ -37,8 +39,14 @@ const MainTrade: React.FC<MainTradeProps> = ({ bookId, setTrade, bookInfo }) => 
     const [statusAddress, setStatusAddress] = useState(false);
     const [idTrade, setIdTrade] = useState<number>(0);
     const [bookSelect, setBookSelect] = useState<number[]>([]);
+    const router = useRouter();
     
-
+    useEffect(() => {
+        if (status === 'unauthenticated') {
+            router.push('/login')
+        }
+    }, [status, router])
+    
     useEffect(() => {
         if(stateProcess === 0 ){
             showShowExchangeInfo3(false);
@@ -64,6 +72,10 @@ const MainTrade: React.FC<MainTradeProps> = ({ bookId, setTrade, bookInfo }) => 
         }
         
     }, [stateProcess]);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
 
 
 
@@ -98,8 +110,8 @@ const MainTrade: React.FC<MainTradeProps> = ({ bookId, setTrade, bookInfo }) => 
                         className=' w-32 h-44 sm:w-64 sm:h-96 object-cover cursor-pointer bg-white rou'
                         />
                     </div>
-                    <div className="flex flex-col items-center">
-                        <div className="flex text-xl sm:text-3xl font-bold text-white w-auto justify-center h-auto break-words mt-5">
+                    <div className="flex flex-col items-center justify-center">
+                        <div className="flex text-xl sm:text-3xl font-bold justify-center text-white w-auto word-break items-center h-auto mt-5">
                             {bookInfo.bookinfo.title}
                         </div>
                         <div className="flex items-center gap-3 sm:mx-auto mt-5 mx-3">
@@ -108,10 +120,10 @@ const MainTrade: React.FC<MainTradeProps> = ({ bookId, setTrade, bookInfo }) => 
                                 <img
                                 src={bookInfo.user.profile_picture}
                                 alt="Profile picture"
-                                className=' w-10 h-10 object-cover cursor-pointer bg-dark3 rounded-full shadow-sm duration-300'
+                                className=' w-10 h-10 object-cover cursor-pointer bg-dark3 rounded-full shadow-sm duration-300 '
                                 />
                             </div>
-                            <div className="flex text-white">{bookInfo.user.username}</div>
+                            <div className="flex text-white ">{bookInfo.user.username}</div>
                         </div>
                     </div>
                 </>}

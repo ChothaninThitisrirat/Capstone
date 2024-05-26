@@ -34,6 +34,8 @@ const EditPage1: React.FC = (): JSX.Element => {
   const [tempPhoneNumber, setTempPhoneNumber] = useState("");
 
   
+
+  
   useEffect(() => {
     console.log(session)
     if (status === 'unauthenticated') {
@@ -84,6 +86,7 @@ const EditPage1: React.FC = (): JSX.Element => {
           };
         });
         setIsEditingPhone(false);
+        location.reload();
       } else {
         console.error('Failed to update phone number:', response.statusText);
       }
@@ -113,8 +116,11 @@ const EditPage1: React.FC = (): JSX.Element => {
         body: formData
       });
 
+      location.reload()
+
       if (response.ok) {
         console.log('Profile picture updated successfully');
+        location.reload()
       } else {
         console.error(response.statusText);
       }
@@ -282,6 +288,16 @@ const EditPage1: React.FC = (): JSX.Element => {
                                 </button>
                               )}
                           </div>
+                    </div>
+
+                    <div className="flex w-full flex-col h-fit justify-center items-center mt-8">
+                      <div className="flex items-start w-full">
+                        <p className="font-bold text-2xl text-graynamehead">Category หนังสือที่ชื่นชอบ</p>
+                      </div>
+                        <div className="flex w-full border-b border-gray-400 justify-start items-center">
+                            
+                            
+                        </div>
                     </div>
                     
                 </div>

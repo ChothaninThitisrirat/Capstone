@@ -125,9 +125,9 @@ export default function EditProfile() {
               {user.review_avg} คะแนน ({user.review_count.reviewer_id})
             </div>
             <div 
-               className='flex jusitfy-center items-center'
+               className='flex justify-center items-center bg-dark2 rounded-full text-white text-lg font-bold  w-3/6  h-10 cursor-pointer transform transition duration-500 ease-in-out hover:scale-105'
                onClick={() => setStatePage(0)}>
-               รีวิวของฉัน
+               อ่านรีวิวของฉัน
             </div>
 
           </div>
@@ -136,10 +136,10 @@ export default function EditProfile() {
               <p className="text-6xl font-bold pl-8 text-white"> Edit Profile </p>
             </div>
 
-            <div className="flex flex-row justify-evenly items-center w-full h-16 bg-dark3 ">
+            <div className="flex flex-row justify-evenly items-center w-full h-16 bg-dark3">
               <div className="flex flex-row min-w-28 text-white text-xl font-bold">
                 <p 
-                  className="flex w-full justify-center items-center underline underline-offset-"
+                  className="flex w-full justify-center items-center underline underline-offset-  cursor-pointer "
                   onClick={() => setStatePage(1)}
                 >
                   <Icon icon="iconamoon:profile" className='w-8 h-8 mr-4'/>
@@ -149,7 +149,7 @@ export default function EditProfile() {
 
               <div className="flex flex-row min-w-28 text-white text-xl font-bold">
                <p 
-                     className="flex w-full justify-center items-center underline underline-offset-"
+                     className="flex w-full justify-center items-center underline underline-offset-  cursor-pointer "
                      onClick={() => setStatePage(2)}
                   >
                   <Icon icon="material-symbols:local-shipping-outline" className='w-8 h-8 mr-4'/>
@@ -159,13 +159,14 @@ export default function EditProfile() {
 
               <div className="flex flex-row min-w-28 text-white text-xl font-bold">
                <p 
-                  className="flex w-full justify-center items-center underline underline-offset-"
+                  className="flex w-full justify-center items-center underline underline-offset-  cursor-pointer "
                   onClick={() => setStatePage(3)}
                 >
                   <Icon icon="tabler:social" className='w-8 h-8 mr-4'/>
                   ข้อมูลการติดต่อ
                 </p>
               </div>
+              
             </div>
 
             <div className="flex w-full h-5/6 pb-12 bg-white">

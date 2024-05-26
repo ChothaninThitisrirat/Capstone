@@ -81,11 +81,13 @@ const EditPage2: React.FC = (): JSX.Element => {
       <div className="flex justify-start w-full h-full items-center flex-col gap-4 overflow-y-auto mt-10 pb-20">
 
           <div 
-            className='flex w-2/3 h-1/6 justify-center items-center bg-dark1 flex-col drop-shadow-lg rounded-2xl min-h-48'  
+            className='flex w-2/3 h-1/6 justify-center items-center bg-dark1 text-white text-2xl font-bold flex-col drop-shadow-lg rounded-2xl min-h-48'
+            onClick={() => setStatusAddress(true)}
           >
               <button 
-                onClick={() => setStatusAddress(true)}>
-                  เพิ่มที่อยู่
+                onClick={() => setStatusAddress(true)}
+                >
+                  <Icon icon='akar-icons:plus' className='text-3xl' />
               </button>
           </div>
 

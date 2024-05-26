@@ -244,7 +244,7 @@ function DropDown() {
                         <Icon icon={item.icon} width={item.size} height={item.size} 
                         style={{color:'#363062'}}/>
                     </div>
-                    <div  className="flex text-center items-center text-sm ml-3 mr-2">{item.text}</div>
+                    <div  className="flex text-center items-center text-sm ml-3 mr-2 text-black">{item.text}</div>
                 </Link>
             ))}
             {session?.user.isAdmin &&
@@ -261,8 +261,10 @@ function DropDown() {
 
             <button
             onClick={() => signOut({ callbackUrl: '/' })}
-            className="flex items-center justify-center text-sm text-gray-500 py-2 border-t gap-2 w-full">
-            <Icon icon="ic:sharp-logout" width="20" height="20" />
+            className="flex items-center justify-center text-sm text-black py-2 border-t gap-2 w-full">
+            <Icon icon="ic:sharp-logout" 
+            style={{color:'#363062'}}
+            width="20" height="20" />
                 Logout</button>
             
             
