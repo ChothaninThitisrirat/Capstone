@@ -259,10 +259,34 @@ console.log('reset',dataCatin, dataPicture)
                             />
                         </div>
                         <div className="flex items-center justify-center flex-col w-full px-5">
-                            <div className={dataCatin.length > 0
-                            ?"flex w-full mt-5 mb-3 duration-300"
-                            :"flex text-gray-400 w-full mt-5 mb-3 duration-300"
-                            }>Category</div>
+                            <div className="flex justify-between w-full">
+                                <div className={dataCatin.length > 0
+                                ?"flex w-1/2 mt-5 mb-3 duration-300"
+                                :"flex text-gray-400 w-1/2 mt-5 mb-3 duration-300"
+                                }>Category 
+                                </div>
+                                <div className={dataCatin.length > 1
+                                ?"flex w-1/2 mt-5 mb-3 duration-300 justify-end text-green-400 text-sm gap-1"
+                                :"flex w-1/2 mt-5 mb-3 duration-300 justify-end text-gray-400 text-sm gap-1"}>
+                                    {dataCatin.length > 1 ? (
+                                        <Icon
+                                        className="mt-1"
+                                        icon="fluent:checkmark-16-filled"
+                                        width="15"
+                                        height="15"
+                                    />
+                                ) : (
+                                    <Icon
+                                        className="mt-2 ml-1"
+                                        icon="material-symbols:circle"
+                                        width="5"
+                                        height="5"
+                                    />
+                                )}
+                                เลือกอย่างน้อย 2 หมวดหมู่
+                                </div>
+                            </div>
+
                             <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-3">
                                 {category.map((cate, index) => (
                                     <div 
@@ -308,7 +332,7 @@ console.log('reset',dataCatin, dataPicture)
 
                         </div>
                         <div className="flex items-center justify-center mt-10 relative ">
-                            {bookTitle && bookDetail && dataCatin.length > 0 && dataPicture.length > 0
+                            {bookTitle && bookDetail && dataCatin.length > 1 && dataPicture.length > 0
                             ?<button
                             type="submit"
                             className={loading?"w-52 h-9 bg-dark2 text-white rounded-full cursor-pointer flex items-center justify-center gap-1 duration-300"

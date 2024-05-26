@@ -27,6 +27,26 @@ function PostBook() {
             router.push('/login')
         }
     }, [status, router])
+    
+    useEffect(() => {
+        const fetchData = async (userId:any)=>{
+            try{
+                const response = await axios.get(`/api/user/${userId}/contact`)
+                if(response.data.contact.line === null && response.data.contact.instagram === null && response.data.contact.facebook === null ){
+                    router.push('/editprofile')
+                    alert('กรุณากรอกข้อมูลการติดต่อก่อนใช้งาน')
+                }
+            }
+            catch(err){
+                console.log(err)
+            }
+        }
+        if (userId !== undefined) {
+            fetchData(userId)
+        }
+        
+    }, [userId])
+    
     const [statePage, setStatePage] = useState(0)
     const [showExchangeInfo1, setShowExchangeInfo1] = useState(false);
     const [showExchangeInfo2, setShowExchangeInfo2] = useState(false);

@@ -561,7 +561,7 @@ const Login: React.FC<LoginProps> = ({
             ? <>
             <div
             style={{ width: "500px" }}
-            className="w-auto px-10 pt-10 pb-5 rounded-3xl shadow-md bg-white border border-gray-300 flex-col">
+            className="w-auto px-10 pt-10 pb-5 rounded-3xl shadow-md bg-white border border-gray-300 flex-col -translate-x-10 sm:translate-x-40 ">
                 <div className="max-w-96 w-screen text-4xl font-bold">Sign up</div>
                 <div className=" text-gray-400 mt-4 ml-4">เลือกประเภทหนังที่คุณชื่นชอบ</div>
 
@@ -602,8 +602,28 @@ const Login: React.FC<LoginProps> = ({
                             >{cate.name}</div>
                         ))}
                     </div>
+                    <div className={dataCatin.length > 1
+                        ?"flex w-full mt-5 mb-3 duration-300 justify-end text-green-400 text-sm gap-1"
+                        :"flex w-full mt-5 mb-3 duration-300 justify-end text-gray-400 text-sm gap-1"}>
+                            {dataCatin.length > 1 ? (
+                                <Icon
+                                className="mt-1"
+                                icon="fluent:checkmark-16-filled"
+                                width="15"
+                                height="15"
+                            />
+                        ) : (
+                            <Icon
+                                className="mt-2 ml-1"
+                                icon="material-symbols:circle"
+                                width="5"
+                                height="5"
+                            />
+                        )}
+                        เลือกอย่างน้อย 2 หมวดหมู่
+                    </div>
                 </div>
-                <div className="flex items-center mt-10 justify-between">
+                <div className="flex items-center mt-6 justify-between">
                 <button onClick={() => setInfoPage(true)}>
                     <Icon
                     icon="fluent-mdl2:navigate-back"
@@ -613,7 +633,7 @@ const Login: React.FC<LoginProps> = ({
                     />
                 </button>
                 <button 
-                onClick={() => setCategoryLike(false)}
+                onClick={() => dataCatin.length > 1 ? setCategoryLike(false):null}
                 className="flex text-white p-1.5 rounded-full w-28 justify-center items-center gap-2 bg-dark2">
                     NEXT
                     <Icon icon="carbon:next-outline" width="24" height="24" />
@@ -632,7 +652,7 @@ const Login: React.FC<LoginProps> = ({
             <form
                 onSubmit={handleSubmit}
                 style={{ width: "500px" }}
-                className="w-auto px-10 pt-10 pb-5 rounded-3xl shadow-md bg-white border border-gray-300 flex-col duration-300"
+                className="w-auto px-10 pt-10 pb-5 rounded-3xl shadow-md bg-white border border-gray-300 flex-col duration-300 -translate-x-10 sm:translate-x-40 "
             >
                 <div className="max-w-96 w-screen text-4xl font-bold mt-2">
                 Sign up
