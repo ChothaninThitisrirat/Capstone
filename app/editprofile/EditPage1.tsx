@@ -120,6 +120,7 @@ const EditPage1: React.FC = (): JSX.Element => {
 
       if (response.ok) {
         console.log('Profile picture updated successfully');
+        location.reload()
       } else {
         console.error(response.statusText);
       }

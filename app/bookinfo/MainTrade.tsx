@@ -73,6 +73,10 @@ const MainTrade: React.FC<MainTradeProps> = ({ bookId, setTrade, bookInfo }) => 
         
     }, [stateProcess]);
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
+
 
 
 
@@ -106,8 +110,8 @@ const MainTrade: React.FC<MainTradeProps> = ({ bookId, setTrade, bookInfo }) => 
                         className=' w-32 h-44 sm:w-64 sm:h-96 object-cover cursor-pointer bg-white rou'
                         />
                     </div>
-                    <div className="flex flex-col items-center">
-                        <div className="flex text-xl sm:text-3xl font-bold text-white w-auto justify-center h-auto break-words mt-5">
+                    <div className="flex flex-col items-center justify-center">
+                        <div className="flex text-xl sm:text-3xl font-bold justify-center text-white w-auto word-break items-center h-auto mt-5">
                             {bookInfo.bookinfo.title}
                         </div>
                         <div className="flex items-center gap-3 sm:mx-auto mt-5 mx-3">
@@ -116,10 +120,10 @@ const MainTrade: React.FC<MainTradeProps> = ({ bookId, setTrade, bookInfo }) => 
                                 <img
                                 src={bookInfo.user.profile_picture}
                                 alt="Profile picture"
-                                className=' w-10 h-10 object-cover cursor-pointer bg-dark3 rounded-full shadow-sm duration-300'
+                                className=' w-10 h-10 object-cover cursor-pointer bg-dark3 rounded-full shadow-sm duration-300 '
                                 />
                             </div>
-                            <div className="flex text-white">{bookInfo.user.username}</div>
+                            <div className="flex text-white ">{bookInfo.user.username}</div>
                         </div>
                     </div>
                 </>}

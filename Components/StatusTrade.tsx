@@ -282,18 +282,18 @@ const Status: React.FC<PostNewBookProp> = ({setStateOpen, classAddBook, tradeId,
                                         <div className="flex flex-col gap-2 sm:gap-8">
                                             <div className="flex items-center w-52 scale-90 sm:scale-100">
                                                 <Icon icon="skill-icons:instagram" width="32" height="32" />
-                                                <div className="flex text-xl ml-3">{bookInfo?.User.instagram === null ? '-' :bookSelectTrade?.User.instagram}</div>
+                                                <div className="flex text-xl ml-3">{bookInfo?.User.instagram === null ? '-' :bookInfo?.User.instagram}</div>
                                             </div>
                                             <div className="flex items-center w-52 scale-90 sm:scale-100">
                                                 <Icon icon="logos:facebook" width="32" height="32" />
-                                                <div className="flex text-xl ml-3">{bookInfo?.User.facebook === null ? '-' :bookSelectTrade?.User.facebook}</div>
+                                                <div className="flex text-xl ml-3">{bookInfo?.User.facebook === null ? '-' :bookInfo?.User.facebook}</div>
                                             </div>
                                             <div className="flex items-center w-52 scale-90 sm:scale-100">
                                                 <img
                                                 src={`${image}line_icon.jpg`}
                                                 className='w-8 h-8 object-cover cursor-pointer bg-dark3 rounded-lg shadow-sm duration-300'
                                                 />
-                                                <div className="flex text-xl ml-3">{bookInfo?.User.line === null ? '-' :bookSelectTrade?.User.line}</div>
+                                                <div className="flex text-xl ml-3">{bookInfo?.User.line === null ? '-' :bookInfo?.User.line}</div>
                                             </div>
                                         </div>
                                     </>
