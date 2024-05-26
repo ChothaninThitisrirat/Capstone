@@ -76,7 +76,7 @@ const MainTrade: React.FC<MainTradeProps> = ({ bookId, setTrade, bookInfo }) => 
         <style>
             {`
             body {
-                overflow: hidden;
+                overflow-y: hidden;
             }
             `}
         </style>
@@ -86,122 +86,122 @@ const MainTrade: React.FC<MainTradeProps> = ({ bookId, setTrade, bookInfo }) => 
         alt="picture"
         className='fixed z-10 opacity-30 w-screen h-screen object-cover left-0'
         />
-        <div 
-        style={ stateProcess < 2 ?{width:'450px'}:{width:'250px'}}
-        className="fixed left-0 top-0 h-screen bg-dark1 z-20 duration-500 flex flex-col justify-center items-center">
-            { stateProcess < 2 && 
-            <>
-                <div className="flex">
-                    <img
-                    src={bookInfo.bookinfo.picture[0]}
-                    alt="Profile picture"
-                    className=' w-64 h-96 object-cover cursor-pointer bg-white'
-                    />
-                </div>
-                <div className="flex text-3xl font bold text-white w-72 justify-center h-auto break-words mt-5">
-                    {bookInfo.bookinfo.title}
-                </div>
-                <div className="flex items-center gap-3 mx-auto mt-5">
-                    <div className="flex text-white">Owner</div>
+        <div className="flex flex-col sm:flex-row">
+            <div 
+            className={`left-0 top-0 py-10 sm:py-0 w-full sm:h-screen bg-dark1 z-20 duration-500 flex sm:flex-col justify-center items-center ${stateProcess < 2 ? 'sm:w-[450px]' : 'sm:w-[250px]'}`}>
+                { stateProcess < 2 && 
+                <>
                     <div className="flex">
                         <img
-                        src={bookInfo.user.profile_picture}
+                        src={bookInfo.bookinfo.picture[0]}
                         alt="Profile picture"
-                        className=' w-10 h-10 object-cover cursor-pointer bg-dark3 rounded-full shadow-sm duration-300'
+                        className=' w-32 h-44 sm:w-64 sm:h-96 object-cover cursor-pointer bg-white rou'
                         />
                     </div>
-                    <div className="flex text-white">{bookInfo.user.username}</div>
+                    <div className="flex flex-col items-center">
+                        <div className="flex text-xl sm:text-3xl font-bold text-white w-auto justify-center h-auto break-words mt-5">
+                            {bookInfo.bookinfo.title}
+                        </div>
+                        <div className="flex items-center gap-3 sm:mx-auto mt-5 mx-3">
+                            <div className="flex text-white">Owner</div>
+                            <div className="flex">
+                                <img
+                                src={bookInfo.user.profile_picture}
+                                alt="Profile picture"
+                                className=' w-10 h-10 object-cover cursor-pointer bg-dark3 rounded-full shadow-sm duration-300'
+                                />
+                            </div>
+                            <div className="flex text-white">{bookInfo.user.username}</div>
+                        </div>
+                    </div>
+                </>}
+            </div>
+
+            {statusAddress && <AddAddress setStatusAddress={setStatusAddress}/>}
+
+
+            <div
+            className='flex w-full h-auto z-30 sm:mt-5 sm:pt-5 flex-col'>
+                <div className="flex h-24 w-auto items-center sm:ml-20 z-30 relative scale-75 sm:scale-100 -translate-x-5 sm:translate-x-0">
+
+                    {/* nav 1 */}
+                    <div 
+                    onClick={ stateProcess < 3 ?() => setStateProcess(0):undefined}
+                    className={stateProcess === 0 ?"flex items-center justify-center bg-orange-400 w-12 h-12 rounded-full duration-1000 cursor-pointer shrink-0"
+                    :stateProcess === 3 ? "flex items-center justify-center bg-green-400 w-12 h-12 rounded-full duration-1000":"flex items-center justify-center bg-green-400 w-12 h-12 rounded-full duration-1000 cursor-pointer shrink-0"}>
+                        <Icon icon="material-symbols:book-outline" width="30" height="30" className='text-white duration-500' />
+                    </div>
+                    {stateProcess === 0 && showExchangeInfo1 &&
+                    <div 
+                    className="flex items-center justify-center text-lg ml-5 duration-500 absolute left-12">
+                        เลือกหนังสือของคุณ</div>}
+                    <Icon icon="icon-park-outline:right" width="40" height="40" className={stateProcess === 0 ?' duration-500 ml-44 shrink-0':' duration-500  shrink-0'}/>
+
+                    {/* nav 2 */}
+                    <div 
+                    onClick={ stateProcess === 0 && bookSelect.length !== 0 ? () => setStateProcess(1): stateProcess === 2 && (addressPost !== '' || placeToPic !== '') ? () => setStateProcess(1):undefined}
+                    className={stateProcess === 0 ? "flex items-center justify-center bg-gray-200 w-12 h-12 rounded-full duration-1000 cursor-pointer shrink-0"
+                    :stateProcess === 1 ? "flex items-center justify-center bg-orange-400 w-12 h-12 rounded-full duration-1000 text-white cursor-pointer shrink-0": "flex items-center justify-center bg-green-400 w-12 h-12 rounded-full duration-1000 text-white shrink-0"}>
+                        <Icon icon="carbon:delivery-parcel" width="35" height="35" />
+                    </div>
+
+                    {stateProcess === 1 && showExchangeInfo2 &&
+                    <div 
+                    className="flex items-center justify-center text-lg ml-5 duration-500 absolute left-36">
+                        วิธีการแลกเปลี่ยน</div>}
+                    <Icon icon="icon-park-outline:right" width="40" height="40" className={stateProcess === 1?' duration-500 ml-40  shrink-0':'shrink-0'}/>
+
+
+                    {/* nav 3 */}
+                    <div 
+                    onClick={ stateProcess === 0 && bookSelect.length !== 0 && (addressPost !== '' || placeToPic !== '')? () => setStateProcess(2): stateProcess === 1 && (addressPost !== '' || placeToPic !== '') ? () => setStateProcess(2):undefined}
+                    className={stateProcess <= 1 ? "flex items-center justify-center bg-gray-200 w-12 h-12 rounded-full duration-1000 cursor-pointe shrink-0"
+                    :stateProcess === 2 ? "flex items-center justify-center bg-orange-400 w-12 h-12 rounded-full duration-1000 text-white cursor-pointer shrink-0": "flex items-center justify-center bg-green-400 w-12 h-12 rounded-full duration-1000 text-white shrink-0"}>
+                        <Icon icon="ion:document-text-outline" width="30" height="30" />
+                    </div>
+                    {stateProcess === 2 && showExchangeInfo3 &&
+                    <div 
+                    className="flex items-center justify-center text-lg ml-5 duration-500 absolute left-56">
+                        ตรวจสอบความถูกต้อง</div>}
+                    <Icon icon="icon-park-outline:right" width="40" height="40" className={stateProcess === 2?' duration-500 ml-44 shrink-0':' shrink-0'}/>
+
+
+
+                    <div 
+                    className={stateProcess < 3 ? "flex items-center justify-center bg-gray-200 w-12 h-12 rounded-full duration-1000 shrink-0" : "flex items-center justify-center bg-green-400 w-12 h-12 rounded-full duration-1000 text-white shrink-0"}>
+                        <Icon icon="carbon:checkmark-outline" width="30" height="30" />
+                    </div>
+                    {stateProcess === 3 &&<div className="flex items-center justify-center text-lg ml-5 duration-500">ดำเนินการสำเร็จ</div>}
                 </div>
-            </>}
-        </div>
-
-        {statusAddress && <AddAddress setStatusAddress={setStatusAddress}/>}
-
-
-        <div 
-        style={{paddingLeft:'500px'}}
-        className='flex w-auto h-24 z-30 pt-5'>
-            <div className="flex h-full w-auto items-center ml-20 z-30">
-
-                {/* nav 1 */}
-                <div 
-                onClick={ stateProcess < 3 ?() => setStateProcess(0):undefined}
-                className={stateProcess === 0 ?"flex items-center justify-center bg-orange-400 w-12 h-12 rounded-full duration-1000 cursor-pointer"
-                :stateProcess === 3 ? "flex items-center justify-center bg-green-400 w-12 h-12 rounded-full duration-1000":"flex items-center justify-center bg-green-400 w-12 h-12 rounded-full duration-1000 cursor-pointer"}>
-                    <Icon icon="material-symbols:book-outline" width="30" height="30" className='text-white duration-500' />
+            
+       
+                <div className="flex w-full justify-center">
+                    {stateProcess === 0 && <TradeProcess1  setTrade={setTrade} setStateProcess={setStateProcess} 
+                                                            bookId={bookId} bookSelect={bookSelect} 
+                                                            setBookSelect={setBookSelect}/>}
+                    {stateProcess === 1 && <TradeProcess2  setTrade={setTrade} setStateProcess={setStateProcess} 
+                                                            bookId={bookId} setStatusAddress={setStatusAddress} 
+                                                            addressPost={addressPost} setAddressPost={setAddressPost} 
+                                                            placeToPic={placeToPic} setPlaceToPic={setPlaceToPic} 
+                                                            pickOrSend={pickOrSend} setPickOrSend={setPickOrSend} 
+                                                            pickFormOpen={pickFormOpen} setPickFormOpen={setPickFormOpen}
+                                                            sendFormOpen={sendFormOpen} setSendFormOpen={setSendFormOpen}
+                                                            cssSendPickNext={cssSendPickNext} setCssSendPickNext={setCssSendPickNext}
+                                                            bookInfo={bookInfo}/>}
+                    {stateProcess === 2 && <TradeProcess3  setTrade={setTrade} setStateProcess={setStateProcess} 
+                                                            bookId={bookId} setStatusAddress={setStatusAddress} 
+                                                            addressPost={addressPost} setAddressPost={setAddressPost} 
+                                                            placeToPic={placeToPic} setPlaceToPic={setPlaceToPic} 
+                                                            pickOrSend={pickOrSend} bookInfo={bookInfo}  bookSelect={bookSelect} 
+                                                            setIdTrade={setIdTrade}/>}
+                    {stateProcess === 3 && <TradeProcess4  setTrade={setTrade} setStateProcess={setStateProcess}
+                                                            bookId={bookId} setStatusAddress={setStatusAddress} 
+                                                            addressPost={addressPost} setAddressPost={setAddressPost} 
+                                                            placeToPic={placeToPic} setPlaceToPic={setPlaceToPic} pickOrSend={pickOrSend}
+                                                            bookInfo={bookInfo}  bookSelect={bookSelect} idTrade={idTrade}/>}
                 </div>
-                {stateProcess === 0 && showExchangeInfo1 &&
-                <div 
-                style={{left:'625px'}}
-                className="flex items-center justify-center text-lg ml-5 duration-500 absolute">
-                    เลือกหนังสือของคุณ</div>}
-                <Icon icon="icon-park-outline:right" width="40" height="40" className={stateProcess === 0 ?' duration-500 ml-44':' duration-500'}/>
-
-                {/* nav 2 */}
-                <div 
-                onClick={ stateProcess === 0 && bookSelect.length !== 0 ? () => setStateProcess(1): stateProcess === 2 && (addressPost !== '' || placeToPic !== '') ? () => setStateProcess(1):undefined}
-                className={stateProcess === 0 ? "flex items-center justify-center bg-gray-200 w-12 h-12 rounded-full duration-1000 cursor-pointer"
-                :stateProcess === 1 ? "flex items-center justify-center bg-orange-400 w-12 h-12 rounded-full duration-1000 text-white cursor-pointer": "flex items-center justify-center bg-green-400 w-12 h-12 rounded-full duration-1000 text-white"}>
-                    <Icon icon="carbon:delivery-parcel" width="35" height="35" />
-                </div>
-
-                {stateProcess === 1 && showExchangeInfo2 &&
-                <div 
-                style={{left:'710px'}}
-                className="flex items-center justify-center text-lg ml-5 duration-500 absolute">
-                    วิธีการแลกเปลี่ยน</div>}
-                <Icon icon="icon-park-outline:right" width="40" height="40" className={stateProcess === 1?' duration-500 ml-40':''}/>
-
-
-                {/* nav 3 */}
-                <div 
-                onClick={ stateProcess === 0 && bookSelect.length !== 0 && (addressPost !== '' || placeToPic !== '')? () => setStateProcess(2): stateProcess === 1 && (addressPost !== '' || placeToPic !== '') ? () => setStateProcess(2):undefined}
-                className={stateProcess <= 1 ? "flex items-center justify-center bg-gray-200 w-12 h-12 rounded-full duration-1000 cursor-pointer"
-                :stateProcess === 2 ? "flex items-center justify-center bg-orange-400 w-12 h-12 rounded-full duration-1000 text-white cursor-pointer": "flex items-center justify-center bg-green-400 w-12 h-12 rounded-full duration-1000 text-white"}>
-                    <Icon icon="ion:document-text-outline" width="30" height="30" />
-                </div>
-                {stateProcess === 2 && showExchangeInfo3 &&
-                <div 
-                style={{left:'800px'}}
-                className="flex items-center justify-center text-lg ml-5 duration-500 absolute">
-                    ตรวจสอบความถูกต้อง</div>}
-                <Icon icon="icon-park-outline:right" width="40" height="40" className={stateProcess === 2?' duration-500 ml-44':''}/>
-
-
-
-                <div 
-                className={stateProcess < 3 ? "flex items-center justify-center bg-gray-200 w-12 h-12 rounded-full duration-1000" : "flex items-center justify-center bg-green-400 w-12 h-12 rounded-full duration-1000 text-white"}>
-                    <Icon icon="carbon:checkmark-outline" width="30" height="30" />
-                </div>
-                {stateProcess === 3 &&<div className="flex items-center justify-center text-lg ml-5 duration-500">ดำเนินการสำเร็จ</div>}
             </div>
         </div>
-
-
-        {stateProcess === 0 && <TradeProcess1  setTrade={setTrade} setStateProcess={setStateProcess} 
-                                                bookId={bookId} bookSelect={bookSelect} 
-                                                setBookSelect={setBookSelect}/>}
-        {stateProcess === 1 && <TradeProcess2  setTrade={setTrade} setStateProcess={setStateProcess} 
-                                                bookId={bookId} setStatusAddress={setStatusAddress} 
-                                                addressPost={addressPost} setAddressPost={setAddressPost} 
-                                                placeToPic={placeToPic} setPlaceToPic={setPlaceToPic} 
-                                                pickOrSend={pickOrSend} setPickOrSend={setPickOrSend} 
-                                                pickFormOpen={pickFormOpen} setPickFormOpen={setPickFormOpen}
-                                                sendFormOpen={sendFormOpen} setSendFormOpen={setSendFormOpen}
-                                                cssSendPickNext={cssSendPickNext} setCssSendPickNext={setCssSendPickNext}
-                                                bookInfo={bookInfo}/>}
-        {stateProcess === 2 && <TradeProcess3  setTrade={setTrade} setStateProcess={setStateProcess} 
-                                                bookId={bookId} setStatusAddress={setStatusAddress} 
-                                                addressPost={addressPost} setAddressPost={setAddressPost} 
-                                                placeToPic={placeToPic} setPlaceToPic={setPlaceToPic} 
-                                                pickOrSend={pickOrSend} bookInfo={bookInfo}  bookSelect={bookSelect} 
-                                                setIdTrade={setIdTrade}/>}
-        {stateProcess === 3 && <TradeProcess4  setTrade={setTrade} setStateProcess={setStateProcess}
-                                                bookId={bookId} setStatusAddress={setStatusAddress} 
-                                                addressPost={addressPost} setAddressPost={setAddressPost} 
-                                                placeToPic={placeToPic} setPlaceToPic={setPlaceToPic} pickOrSend={pickOrSend}
-                                                bookInfo={bookInfo}  bookSelect={bookSelect} idTrade={idTrade}/>}
-
         
 
         

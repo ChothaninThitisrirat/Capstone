@@ -70,7 +70,7 @@ function LoginSignup() {
   useEffect(() => {
     if (stylelogin) {//Login
       setStyleloginOn({
-        transform:'translateX(-40%)',
+        transform:'translateX(0%)',
         transitionDuration: '3s'
       })
       setStylesingupOn({
@@ -103,7 +103,7 @@ function LoginSignup() {
         transitionDuration: '3s'
       })
       setStylesingupOn({
-        transform:'translateX(30%)',
+        transform:'translateX(0%)',
         transitionDuration: '3s'
       }) 
       setStylebgPropBook({
@@ -140,7 +140,7 @@ function LoginSignup() {
     <>
     <style>
       {`
-      * {
+      body{
         overflow: hidden;
       }
       `}
@@ -190,7 +190,7 @@ function LoginSignup() {
     >
       <div 
       style={styleloginOn}
-      className="w-auto" >
+      className="w-auto flex justify-end" >
         <LoginFrom setStylesingup={setStylesingup} setStylelogin={setStylelogin}/>
       </div>
     </div >
@@ -199,7 +199,7 @@ function LoginSignup() {
     className="flex items-center justify-start absolute top-0 left-0 h-screen w-screen z-20">
       <div 
       style={stylesingupOn}
-      className="w-auto" >
+      className="w-auto flex" >
         <SignupFrom setStylesingup={setStylesingup} setStylelogin={setStylelogin} setRegisterSccuess={setRegisterSccuess}/>
       </div>
     </div >

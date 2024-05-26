@@ -125,6 +125,7 @@ function TradeBook() {
                         <div className="flex w-full bg-dark1 text-white h-10 items-center justify-center rounded-t-3xl text-xl sm:text-2xl sm:h-12">{book.title}</div>
                         <div className="flex justify-around py-5 px-5 responsive-trade-book">
                             <div className="flex w-full justify-around">
+                                
                                 <div className="flex items-center justify-center rounded-sm w-24 h-36 shrink-0 relative">
                                     <img src={book.picture[0]} className="w-full h-full object-cover shadow shrink-0 scale-90 sm:scale-100" />
                                     {(book.status === 'trading' || book.status === 'pending' || book.status === 'traded' || book.status === 'decline' )&& 

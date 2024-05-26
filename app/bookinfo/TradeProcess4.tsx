@@ -80,8 +80,8 @@ const TradeProcess3: React.FC<TradeProcess3Props> = ({ bookId, setStateProcess, 
 
 
             <div
-            style={{minHeight: "800px",marginLeft:'250px'}}
-            className="flex flex-col items-center h-auto w-sceen z-30">
+            style={{minHeight: "800px"}}
+            className="flex flex-col items-center h-auto w-sceen z-30 scale-50 sm:scale-100 -translate-y-40 sm:translate-y-0">
                 <Icon icon="carbon:checkmark-outline" width="70" height="70" className='text-green-400 z-30 mt-5'/>
                 <div className="flex z-30  mt-2 text-3xl">ดำเนินการส่งคำขอเสร็จสิ้น</div>
                 <div className="flex z-30  mt-3 text-xl">B-Trade ID #{idTrade}</div>
@@ -136,10 +136,10 @@ const TradeProcess3: React.FC<TradeProcess3Props> = ({ bookId, setStateProcess, 
                 </div>
                 <div 
                 onClick={handleStatusTrade()}
-                className="flex rounded-full border-2 border-dark1 w-56 h-10 justify-center items-center text-dark1 text-lg cursor-pointer z-30 mt-10">สถานะการแลกเปลี่ยน</div>
+                className="flex rounded-full border-2 border-dark1 w-56 h-10 justify-center items-center text-dark1 text-lg cursor-pointer z-30 mt-5">สถานะการแลกเปลี่ยน</div>
                 <div 
                 onClick={handleHome()}
-                className="flex rounded-full w-48 h-10 justify-center items-center text-white bg-dark2 text-lg cursor-pointer z-30 mt-8">กลับสู่หน้าหลัก</div>
+                className="flex rounded-full w-48 h-10 justify-center items-center text-white bg-dark2 text-lg cursor-pointer z-30 mt-3">กลับสู่หน้าหลัก</div>
             </div>
 
 

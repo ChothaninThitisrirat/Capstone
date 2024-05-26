@@ -35,7 +35,7 @@ const PostBook2: React.FC<PostBook2Props> = ({setStatePage, bookSelect, book}) =
     const [statusAddress, setStatusAddress] = useState(false);
     const [loadingInfo, setLoadingInfo] = useState(false);
 
-    const classBook = "flex items-center justify-center rounded-sm border w-64 h-96 shadow-sm duration-300 relative bg-dark3 mb-28 scale-125"
+    const classBook = "flex items-center justify-center rounded-sm border w-40 h-60 sm:w-64 sm:h-96 shadow-sm duration-300 relative bg-dark3 sm:mb-28 sm:scale-125"
     
     const [bookProp2, setBookProp2] = useState<BookProp2[]>([]);
 
@@ -90,10 +90,10 @@ const PostBook2: React.FC<PostBook2Props> = ({setStatePage, bookSelect, book}) =
 
     return (
         <>
-        <div className="flex z-20">
-            <div className="flex h-screen w-1/3 items-center justify-end z-20">
+        <div className="flex z-20 flex-col sm:flex-row">
+            <div className="flex h-auto sm:h-screen w-full sm:w-1/3 mt-10 sm:mt-0 sm:items-center justify-center sm:justify-end z-20">
                 <div className="flex flex-col">
-                    <div className='flex -translate-y-20 justify-center text-2xl font-bold'>Book Name</div>
+                    <div className='flex mb-5 sm:mb-0 sm:-translate-y-20 justify-center text-2xl font-bold'>Book Name</div>
                     <div className={classBook}>
                         <img
                         src={bookProp2[0]?.picture[0]}
@@ -103,9 +103,9 @@ const PostBook2: React.FC<PostBook2Props> = ({setStatePage, bookSelect, book}) =
                     </div>
                 </div>
             </div>
-            <div className="flex flex-col h-screen w-2/3 pl-40 z-20 justify-center">
-                <div className="flex text-2xl font-bold">วิธีการแลกเปลี่ยน</div>
-                <div className="flex w-auto items-end ml-20 mt-10">
+            <div className="flex mt-10 w-11/12 mx-auto sm:mx-0 sm:mt-10 flex-col h-auto sm:h-screen sm:w-2/3 sm:pl-40 z-20 justify-center">
+                <div className="flex text-xl sm:text-2xl font-bold">วิธีการแลกเปลี่ยน</div>
+                <div className="flex w-auto items-end sm:ml-20 sm:mt-10 scale-75 sm:scale-100">
                     {/* check box */}
                     <div className="flex flex-col items-center h-36"> 
                         <div className="checkbox-wrapper-19">
@@ -138,7 +138,7 @@ const PostBook2: React.FC<PostBook2Props> = ({setStatePage, bookSelect, book}) =
                     />
                 </div>
                 {/* check address */}
-                <div className="flex w-auto items-end ml-20 mb-40 mt-10">
+                <div className="flex w-auto items-end sm:ml-20 mb-40 sm:mt-10 scale-75 sm:scale-100">
                     <div 
                     className="flex flex-col items-center h-36"> 
                         <div className="checkbox-wrapper-19">
@@ -174,13 +174,13 @@ const PostBook2: React.FC<PostBook2Props> = ({setStatePage, bookSelect, book}) =
                 </div>
             </div>
         </div>
-                    <button onClick={() => setStatePage(0)} className='w-32 h-10 border-2 border-dark1 rounded-full ml-20 mt-2 flex pl-1 items-center gap-2 hover:bg-indigo-100 fixed bottom-6 left-6 z-50'>
+                    <button onClick={() => setStatePage(0)} className='w-32 h-10 border-2 border-dark1 rounded-full sm:ml-20 mt-2 flex pl-1 items-center gap-2 hover:bg-indigo-100 fixed bottom-6 left-6 z-50 scale-90 sm:scale-100'>
                     <Icon icon="icons8:left-round" width="30" height="30" />
                         ย้อนกลับ</button>
                     <button onClick={()=> haveData ? postBookData() : null} className={haveData
-                    ?(loadingInfo ?'w-40 h-10 border-2 bg-dark1 text-white rounded-full mr-16 mt-2 flex justify-end items-center gap-2 pr-1 fixed bottom-6 right-6 z-50 duration-300'
-                        :'w-36 h-10 border-2 bg-dark1 text-white rounded-full mr-16 mt-2 flex justify-end items-center gap-2 pr-1 fixed bottom-6 right-6 z-50 duration-100')
-                    :'w-36 h-10 border-2 border-gray-500 text-gray-500 rounded-full mr-16 mt-2 flex justify-end items-center gap-2 pr-1 fixed bottom-6 right-6 z-50'}>
+                    ?(loadingInfo ?'w-40 h-10 border-2 bg-dark1 text-white rounded-full sm:mr-16 mt-2 flex justify-end items-center gap-2 pr-1 fixed bottom-6 right-6 z-50 duration-300 scale-90 sm:scale-100'
+                        :'w-36 h-10 border-2 bg-dark1 text-white rounded-full sm:mr-16 mt-2 flex justify-end items-center gap-2 pr-1 fixed bottom-6 right-6 z-50 duration-100 scale-90 sm:scale-100')
+                    :'w-36 h-10 border-2 border-gray-500 text-gray-500 rounded-full sm:mr-16 mt-2 flex justify-end items-center gap-2 pr-1 fixed bottom-6 right-6 z-50 scale-90 sm:scale-100'}>
                         โพสต์หนังสือ 
                         {loadingInfo ?<HashLoader
                                 className="ml-2 mr-3"
@@ -235,7 +235,7 @@ const DropDownAddress: React.FC<DropDownAddressProps> = ({setAddressPost, setSta
 
     
     return (
-            <div className="absolute top-0 left-7 w-80 h-60 bg-white rounded-b-xl shadow-lg z-0 overflow-y-auto overflow-x-hidden close-scrollbar text-black pt-2 duration-500 animetion-addressOn cursor-pointer">
+            <div className="absolute top-0 sm:left-7 w-56 sm:w-80 max-h-48  bg-white rounded-b-xl shadow-lg z-0 overflow-y-auto overflow-x-hidden close-scrollbar text-black pt-2 duration-500 animetion-addressOn cursor-pointer">
                     {dataAddress.map((item,index)=>(
                         <div 
                         key={index}

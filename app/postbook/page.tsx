@@ -90,8 +90,8 @@ function PostBook() {
             }
             `}
         </style>
-            <div className='flex w-screen h-24 bg-dark1 shadow-lg z-30'>
-                <div className="flex h-full w-auto items-center ml-20">
+            <div className='flex w-screen h-20 sm:h-24 bg-dark1 shadow-lg z-30 '>
+                <div className="flex h-full w-auto items-center sm:ml-20 scale-75 sm:scale-100">
 
                     <div 
                     onClick={ statePage < 2 ?() => setStatePage(0):undefined}
@@ -99,7 +99,7 @@ function PostBook() {
                         <Icon icon="material-symbols:book-outline" width="30" height="30" className='text-white duration-500' />
                     </div>
                     {statePage === 0 && showExchangeInfo1 &&
-                    <div className="flex items-center justify-center text-white text-lg ml-5 duration-500 absolute left-32">
+                    <div className="flex items-center justify-center text-white text-lg ml-5 duration-500 absolute left-14 ">
                         เลือกหนังสือของคุณ</div>}
                     <Icon icon="icon-park-outline:right" width="40" height="40" className={statePage === 0 ?'text-white duration-500 ml-44':'text-white duration-500'}/>
                     <div 
@@ -109,7 +109,7 @@ function PostBook() {
                         <Icon icon="ion:document-text-outline" width="30" height="30" />
                     </div>
                     {statePage === 1 && showExchangeInfo2 &&
-                    <div className="flex items-center justify-center text-white text-lg ml-5 duration-500 absolute left-52">
+                    <div className="flex items-center justify-center text-white text-lg ml-5 duration-500 absolute left-32">
                         ข้อมูลการแลกเปลี่ยน</div>}
                     <Icon icon="icon-park-outline:right" width="40" height="40" className={statePage === 1?'text-white duration-500 ml-40':'text-white'}/>
                     <div 

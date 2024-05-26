@@ -17,7 +17,7 @@ interface BookProp2 {
 }
 const PostBook3: React.FC<PostBook3Props> = ({bookSelect, book}) =>{
 
-    const classBook = "flex items-center justify-center rounded-sm border w-64 h-96 shadow-sm duration-300 bg-dark3 mb-10 z-30 mt-5"
+    const classBook = "flex items-center justify-center rounded-sm border w-40 h-60 sm:w-64 sm:h-96 shadow-sm duration-300 bg-dark3 mb-10 z-30 mt-5"
 
     const [bookProp2, setBookProp2] = useState<BookProp2[]>([]);
 
@@ -41,17 +41,17 @@ console.log(bookSelect,'bookProp2',bookProp2)
 
     return (
         <>
-            <div className='w-screen h-screen flex flex-col items-center mt-5 z-30'>
+            <div className='w-screen h-screen flex flex-col items-center mt-10 sm:mt-5 z-30'>
                 <Icon icon="carbon:checkmark-outline" width="80" height="80" 
-                className='text-green-400  z-30'/>
-                <div className="text-3xl mt-2  z-30">โพสต์หนังสือเสร็จสิ้น</div>
-                <div className="mt-8 text-3xl  z-30">{bookProp2[0]?.title }</div>
+                className='text-green-400 z-30 scale-75 sm:scale-100'/>
+                <div className="text-xl sm:text-3xl mt-2 z-30">โพสต์หนังสือเสร็จสิ้น</div>
+                <div className="mt-8 text-xl sm:text-3xl z-30">{bookProp2[0]?.title }</div>
                 <div className={classBook}>
                     {bookProp2.length > 0 && bookProp2[0].picture.length > 0 ? (
                     <img
                         src={bookProp2[0].picture[0]}
                         alt="Picture"
-                        className="w-64 h-96 object-cover"
+                        className="w-full h-full object-cover"
                         />
                     ) : (
                         <div><HashLoader
@@ -61,8 +61,8 @@ console.log(bookSelect,'bookProp2',bookProp2)
                 </div>
                 <button 
                 onClick={() => router.push( `/bookinfo/${bookSelect}`)}
-                className='text-xl text-dark1 border-4 border-dark1 rounded-full h-10 w-52 z-30'>ดูโพสต์ของฉัน</button>
-                <button onClick={handleCancel} className='text-xl text-white bg-dark2 rounded-full h-10 w-44 z-30 mt-10'>กลับสู่หน้าหลัก</button>
+                className='text-xl text-dark1 border-4 border-dark1 rounded-full h-10 w-52 z-30 scale-90 sm:scale-100'>ดูโพสต์ของฉัน</button>
+                <button onClick={handleCancel} className='text-xl text-white bg-dark2 rounded-full h-10 w-44 z-30 mt-5 sm:mt-10 scale-90 sm:scale-100'>กลับสู่หน้าหลัก</button>
             </div>
         </>
     )

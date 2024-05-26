@@ -75,7 +75,7 @@ const SignIn: React.FC<SignInProps> = ({ setStylesingup, setStylelogin }) => {
   return (
       <form
         onSubmit={handleSubmit}
-        className="w-auto px-10 pt-10 pb-5 rounded-3xl shadow-md bg-white border border-gray-300 flex-col duration-300"
+        className="w-[400px] px-10 pt-10 pb-5 rounded-3xl shadow-md bg-white border border-gray-300 flex-col duration-300 scale- sm:scale-100 -translate-x-3 sm:-translate-x-52"
       >
         <div className="max-w-96 w-screen text-4xl font-bold">Login</div>
         <div className=" text-gray-400 mt-5 ml-2">เข้าสู่ระบบ</div>

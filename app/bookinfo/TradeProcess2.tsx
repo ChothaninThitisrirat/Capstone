@@ -170,12 +170,12 @@ return (
 
 
         <div
-        style={{minHeight: "800px",marginLeft:'450px'}}
-        className="flex justify-center h-auto w-sceen z-10 bg-none">
-            <div className="flex flex-col w-full h-screen items-center close-scrollbar z-10 translate-y-52">
-                <div className={pickOrSend === 0?"flex text-3xl mb-10"
-                :"flex text-3xl mb-10 opacity-0 duration-300"}>กรุณาเลือกช่องทางการแลกเปลี่ยน</div>
-                <div className={pickOrSend === 0?"flex scale-125 duration-1000 z-30":"flex duration-1000 z-0" }>
+        style={{minHeight: "800px"}}
+        className="flex justify-center h-auto w-full z-10 bg-none overflow-y-auto close-scrollbar sm:overflow-hidden">
+            <div className="flex flex-col w-full h-screen items-center z-10 translate-y-52">
+                <div className={pickOrSend === 0?"flex mb-10 text-xl sm:text-3xl"
+                :"flex text-xl sm:text-3xl mb-10 opacity-0 duration-300"}>กรุณาเลือกช่องทางการแลกเปลี่ยน</div> 
+                <div className={pickOrSend === 0?"flex duration-1000 z-30 scale-75 sm:scale-125":"flex duration-1000 z-0 scale-75 sm:scale-100" }>
 
                     <div 
                     onClick={handlePick}
@@ -218,7 +218,7 @@ return (
                 style={{top:'-150px'}}
                 className={pickFormOpen ?" relative w-9/12 duration-700 z-10 ":" relative w-9/12 invisible translate-y-10 duration-700 z-10"}>
                     <div className="flex items-center">
-                        <div className="flex text-3xl font-bold">สถานที่นัดรับของ</div>
+                        <div className="flex text-xl sm:text-3xl font-bold">สถานที่นัดรับของ</div>
                         <div className="flex w-10 h-10 rounded-full ml-4">
                             <img
                             src={bookInfo.user.profile_picture}
@@ -226,7 +226,7 @@ return (
                             className=' w-10 h-10 object-cover cursor-pointer bg-dark3 rounded-full shadow-sm duration-300'
                             />
                         </div>
-                        <div className="flex text-2xl ml-2 text-gray-500">{bookInfo.user.username}</div>
+                        <div className="flex text-xl sm:text-2xl ml-2 text-gray-500">{bookInfo.user.username}</div>
                     </div>
                     <div className="flex mt-5 w-full">
                         <Icon
@@ -241,7 +241,7 @@ return (
                         value={bookInfo.bookinfo.pickup}
                         className="flex text-lg w-full resize-none h-28 close-scrollbar p-2 "/>
                     </div>
-                    <div className="flex text-3xl font-bold mt-10">สถานที่นัดรับของคุณ</div>
+                    <div className="flex text-xl sm:text-3xl font-bold mt-10">สถานที่นัดรับของคุณ</div>
                     <div className="flex relative">
                         <Icon
                             icon="mdi:address-marker-outline"
@@ -262,11 +262,11 @@ return (
                 <div 
                 style={{top:'-500px'}}
                 className={sendFormOpen ?" relative w-9/12 duration-700 ":" relative w-9/12 translate-y-10 invisible duration-700"}>
-                <div className="flex text-3xl font-bold flex-col">กรุณาเลือกสถานที่จัดส่งของคุณ</div>
+                <div className="flex text-xl sm:text-3xl font-bold flex-col mt-10 sm:mt-0">กรุณาเลือกสถานที่จัดส่งของคุณ</div>
                     <div
                     style={{ boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px'}}
-                    className="flex flex-col w-10/12 bg-white h-40 mt-8 rounded-3xl mx-auto relative">
-                        <div className="flex w-full h-16 bg-dark2 rounded-t-3xl text-white text-xl items-center px-10 ">
+                    className="flex flex-col w-10/12 bg-white h-28 sm:h-40 mt-8 rounded-xl sm:rounded-3xl mx-auto relative">
+                        <div className="flex w-full h-16 bg-dark2 rounded-t-xl sm:rounded-t-3xl text-white text-xl items-center px-10 ">
                             Address
                         </div>
                         <div  
@@ -285,7 +285,7 @@ return (
                     <div 
                     style={{ boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px'}}
                     onClick={()=>setStatusAddress(true)}
-                    className="flex w-10/12 h-36 mt-8 rounded-3xl mx-auto shadow bg-dark2 text-white justify-center items-center cursor-pointer">
+                    className="flex w-10/12 h-36 mt-8 rounded-xl sm:rounded-3xl mx-auto shadow bg-dark2 text-white justify-center items-center cursor-pointer">
                         <Icon icon="ic:outline-plus" width="50" height="50" />
                     </div>
                     
@@ -309,14 +309,14 @@ return (
         <div className='fixed bottom-0 left-0 w-screen h-24 flex justify-between z-30'>
                 <button 
                 onClick={() => handleGoBack()}
-                className='w-32 h-10 border-2 border-white text-white rounded-full ml-20 mt-2 flex pl-1 items-center gap-2 z-50'>
+                className='w-32 h-10 border-2 border-gray-500 sm:border-white text-gray-500 sm:text-white rounded-full ml-3 sm:ml-20 mt-2 flex pl-1 items-center gap-2 z-50 scale-90 sm:scale-100'>
                     <Icon icon="icons8:left-round" width="30" height="30" />
                         ย้อนกลับ
                 </button>
                 <button onClick={handleNextStep} 
                 className={pickOrSend === 0 ? "hidden duration-300" :(placeToPic || addressPost
-                ?'w-40 h-10 bg-dark1 text-white rounded-full mr-16 mt-2 flex justify-center items-center gap-2'
-                :'w-40 h-10 border-2 border-gray-500 text-gray-500 rounded-full mr-16 mt-2 flex justify-center items-center gap-2')}>
+                ?'w-40 h-10 bg-dark1 text-white rounded-full mr-3 sm:mr-16 mt-2 flex justify-center items-center gap-2 scale-90 sm:scale-100'
+                :'w-40 h-10 border-2 border-gray-500 text-gray-500 rounded-full mr-3 sm:mr-16 mt-2 flex justify-center items-center gap-2 scale-90 sm:scale-100')}>
                     ดำเนินการต่อ<Icon icon="icons8:right-round" width="30" height="30" />
                 </button>
         </div>
@@ -360,7 +360,7 @@ const DropDownAddress: React.FC<DropDownAddressProps> = ({setAddressPost, setDro
     return (
             <div 
             onClick={() => setDropDownAddress(!dropDownAddress)}
-            className="absolute top-36 left-1/2 -translate-x-1/2 w-10/12 h-60 bg-white rounded-b-xl shadow-lg z-0 overflow-y-auto overflow-x-hidden close-scrollbar text-black pt-2 duration-500 animetion-addressOn cursor-pointer">
+            className="absolute top-28 sm:top-36 left-1/2 -translate-x-1/2 w-10/12 h-60 bg-white rounded-b-xl shadow-lg z-0 overflow-y-auto overflow-x-hidden close-scrollbar text-black pt-2 duration-500 animetion-addressOn cursor-pointer">
                     {dataAddress.map((item,index)=>(
                         <div 
                         key={index}

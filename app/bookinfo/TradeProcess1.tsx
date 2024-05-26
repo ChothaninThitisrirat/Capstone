@@ -32,7 +32,7 @@ const TradeProcess: React.FC<TradeProcess1Props> = ({ bookId, setStateProcess, s
 
     
     const [loading, setLoading] = useState(true)
-    const classBook = "flex items-center justify-center rounded-sm border w-64 h-96 cursor-pointer shadow-sm duration-300 relative mb-5"
+    const classBook = "flex items-center justify-center rounded-sm border w-40 h-60 sm:w-64 sm:h-96 cursor-pointer shadow-sm duration-300 relative mb-5"
     const [stateAddBook, setStateAddBook] = useState(false)
     const [ loadcompo, setLoadcompo] = useState(false)
     const [classAddBookbg, setClassAddBookbg] = useState('fixed h-screen w-screen bg-slate-200 top-0 left-0 z-50 opacity-30 backdrop-blur-2xl hidden')
@@ -148,20 +148,21 @@ return (
         </style>
         {loading 
         ?<div 
-            style={{minHeight: "800px",marginLeft:'450px'}}
-            className="flex justify-center h-screen items-center pb-52">
+            style={{minHeight: "800px"}}
+            className="flex h-screen items-center pb-52 ">
                 <HashLoader
                     className="ml-1 duration-300 "
                     color='#435585' loading={loading} size={50} aria-label="Loading Spinner" data-testid="loader"/>
             </div>
         :<div
-        style={{minHeight: "800px",marginLeft:'450px'}}
-        className="flex justify-center h-auto w-sceen z-10 bg-none">
+        style={{minHeight: "800px"}}
+        className="flex justify-center h-auto w-full z-10 bg-none">
             <div
-            className="flex w-full h-screen p-10 flex-wrap gap-20 gap-y-14 mb-10 overflow-y-auto close-scrollbar z-10 trade-container pb-52">
+            style={{paddingBottom:'300px'}}
+            className="flex w-full h-1/2 sm:h-screen px-5 pt-5 sm:p-10 flex-wrap sm:gap-20 gap-y-14 mb-10 overflow-y-auto close-scrollbar z-10 trade-container pb-96">
                 <div 
                 onClick={() => setStateAddBook(true)}
-                className="flex items-center justify-center rounded-sm border w-64 h-96 bg-slate-200 cursor-pointer shadow-sm hover:bg-slate-300  hover:scale-105 duration-300">
+                className="flex items-center justify-center rounded-sm border w-40 h-60 sm:w-64 sm:h-96 bg-slate-200 cursor-pointer shadow-sm hover:bg-slate-300  hover:scale-105 duration-300">
                     <Icon icon="ic:baseline-plus" width="50" height="50"
                     className='text-gray-500'/>
                 </div>
@@ -212,11 +213,11 @@ return (
 
 
         <div className='fixed bottom-0 left-0 w-screen h-24 flex justify-between z-30'>
-                <button onClick={()=>setTrade(false)} className='w-20 h-10 border-2 border-red-500 rounded-full ml-20 mt-2 text-white hover:bg-red-500'>ยกเลิก</button>
+                <button onClick={()=>setTrade(false)} className='w-20 h-10 border-2 border-red-500 rounded-full ml-3 sm:ml-20 mt-2 text-red-500 sm:text-white hover:bg-red-500 scale-90 sm:scale-100'>ยกเลิก</button>
                 <button onClick={handleChangeState} 
                 className={bookSelect.length === 0
-                ?'w-40 h-10 border-2 border-gray-500 text-gray-500 rounded-full mr-16 mt-2 flex justify-center items-center gap-2'
-                :'w-40 h-10 bg-dark1 text-white rounded-full mr-16 mt-2 flex justify-center items-center gap-2'}>
+                ?'w-40 h-10 border-2 border-gray-500 text-gray-500 rounded-full mr-3 sm:mr-16 mt-2 flex justify-center items-center gap-2 scale-90 sm:scale-100'
+                :'w-40 h-10 bg-dark1 text-white rounded-full mr-3 sm:mr-16 mt-2 flex justify-center items-center gap-2 scale-90 sm:scale-100'}>
                     ดำเนินการต่อ<Icon icon="icons8:right-round" width="30" height="30" />
                 </button>
         </div>

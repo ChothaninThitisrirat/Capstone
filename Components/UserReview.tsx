@@ -121,10 +121,10 @@ console.log(userId,'bookInfo',bookInfo)
             
             <div 
             style={{borderRadius: "30px"}}
-            className="flex flex-col w-auto h-auto bg-white border border-gray-300 items-center relative px-14 pb-10 pt-10 min-w-80 min-h-80">
+            className="flex flex-col w-auto h-auto bg-white border border-gray-300 items-center relative sm:px-14 sm:pb-10 sm:pt-10 min-w-80 min-h-80 mx-5 ">
                 <div 
                 style={{maxHeight: "700px"}}
-                className="flex flex-col items-center overflow-y-auto css-scrollbar">
+                className="flex flex-col items-center overflow-y-auto css-scrollbar py-10 sm:py-0">
                     <div className="absolute top-0 right-0 translate-x-2 -translate-y-2 rounded-full bg-white w-9 h-9"></div>
                     <Icon 
                     onClick={() => setPopUpReviewUser(false)}
@@ -138,17 +138,17 @@ console.log(userId,'bookInfo',bookInfo)
                     :<div 
                     style={{width:'800px'}}
                     className='flex flex-col'>
-                        <div className="flex mx-auto text-4xl font-bold text-dark1">User Review</div>
-                        <div className="flex">
+                        <div className="flex mx-auto text-3xl sm:text-4xl font-bold text-dark1">User Review</div>
+                        <div className="flex flex-col items-center sm:flex-row sm:justify-center">
                             <div className="flex flex-col items-center">
-                                <div className="flex text-3xl font bold w-72 justify-center h-auto break-words mt-5 mb-5">
+                                <div className="flex text-xl sm:text-3xl font bold w-72 justify-center h-auto break-words mt-5 mb-5">
                                     {bookInfo?.title}
                                 </div>
                                 <div className="flex">
                                     <img
                                     src={bookInfo?.picture}
                                     alt="Profile picture"
-                                    className=' w-56 h-80 object-cover cursor-pointer bg-white'
+                                    className='w-40 h-60 sm:w-56 sm:h-80 object-cover cursor-pointer bg-white '
                                     />
                                 </div>
                                 
@@ -166,7 +166,7 @@ console.log(userId,'bookInfo',bookInfo)
                             </div>
                             <form 
                             onSubmit={(e)=>handleReviewUser(e)}
-                            className="flex flex-col mt-20 w-full">
+                            className="flex flex-col mt-10 sm:mt-20 w-1/2 scale-90 sm:scale-100">
                                 <div 
                                 className="flex relative h-10 px-8 items-center mt-2 w-full">
                                     <Icon

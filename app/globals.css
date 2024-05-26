@@ -79,6 +79,11 @@ body::-webkit-scrollbar {
     justify-content: center;
   }
 }
+@media screen and (max-width: 640px) {
+  .trade-container,.library-container, .post-container{
+    justify-content: space-around;
+  }
+}
 /*                                     */
 
 
@@ -190,12 +195,14 @@ body::-webkit-scrollbar {
 }
 
 @media screen and (max-width: 1000px) {
+  .padt-0{
+    padding-top: 0;
+  }
   .responsive-bookinfo{
     flex-direction: column;
     align-items: center;
     padding-top: 0;
     gap: 50px;
-    padding-right: 50px;
   }
   .responsive-userCard{
     flex-direction: column;

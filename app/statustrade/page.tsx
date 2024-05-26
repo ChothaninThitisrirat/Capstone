@@ -160,12 +160,12 @@ function statustrade() {
         style={{minHeight: "800px"}}
         className="flex justify-center h-auto w-sceen z-10 bg-none">
             <div
-            className="flex w-full h-auto p-10 flex-wrap gap-20 mb-10 mt-5 library-container">
+            className="flex w-full h-auto p-10 flex-wrap justify-between mb-10 mt-5 max-w-[1700px] gap-5 library-container sm:justify-start sm:w-auto sm:gap-20">
                 {book.map((item, index) => (
                     <div key={index} 
                     onClick={() => handleStatusCheck(item)}
                     
-                    className='flex items-center justify-center rounded-sm border w-64 h-96 cursor-pointer shadow-sm hover:scale-105 duration-300 relative'>
+                    className='flex items-center justify-center rounded-sm border w-40 h-60 cursor-pointer shadow-sm hover:scale-105 duration-300 relative sm:w-64 sm:h-96'>
                         <div className="flex absolute bottom-0 translate-y-10 text-base">
                             {item.Book_Trade_book_idToBook.title}
                         </div>
@@ -182,7 +182,7 @@ function statustrade() {
                         {(item.status === 'trading' || item.status === 'pending' || item.status === 'traded' || item.status === 'decline' )&& 
                         <div 
                             style={{backgroundColor:'#57575780'}}
-                            className={"absolute top-0 left-0 w-64 h-96 flex justify-center items-center font-bold text-2xl duration-300"}>
+                            className={"absolute top-0 left-0 w-40 h-60 flex justify-center items-center font-bold text-2xl duration-300 sm:w-64 sm:h-96"}>
                             {item.status === 'trading' && <div className="flex text-green-400">TRADING</div>}
                             {item.status === 'pending' && <div className="flex text-orange-300">PENDING</div>}
                             {item.status === 'traded' && <div className="flex">TRADED</div>}
