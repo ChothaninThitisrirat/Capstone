@@ -7,6 +7,7 @@ import { Icon } from '@iconify/react';
 import { useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import {image} from '@/utils/supabase'
 
 interface User {
   user: {
@@ -36,6 +37,7 @@ const EditPage3: React.FC = (): JSX.Element => {
    const [tempFacebook, setTempFacebook] = useState("");
    const [tempInstagram, setTempInstagram] = useState("");
    const [tempLineID, setTempLineID] = useState("");
+   const line = `${image}line_icon.jpg`
 
   useEffect(() => {
     console.log(session)
@@ -91,6 +93,7 @@ const EditPage3: React.FC = (): JSX.Element => {
                }
             }
          })
+         location.reload()
       } else {
          console.error('Failed to update contact information')
       }
@@ -116,14 +119,14 @@ const EditPage3: React.FC = (): JSX.Element => {
   
   return (
     <>
-            <div className="flex w-full h-full bg-white flex-col items-center ">
+            <div className="flex w-full h-full bg-white flex-col items-center justify-center">
 
                {/* Facebook */}
-               <div className="flex w-1/2 flex-col h-fit justify-center items-start">
+               <div className="flex w-1/2 flex-col h-fit justify-start items-start pb-6">
                   <div className="flex w-4/6">
                      <p className="font-bold text-2xl text-graynamehead">Facebook</p>
                   </div>
-                  <div className="flex w-fit border-b border-gray-400 justify-center items-center">
+                  <div className="flex w-full border-b border-gray-400 justify-start items-center">
                      <Icon icon="logos:facebook" className="flex w-7 h-7  text-gray-400" />
                      <input
                      value={tempFacebook}
@@ -134,11 +137,11 @@ const EditPage3: React.FC = (): JSX.Element => {
                </div>
 
                {/* IG */}
-               <div className="flex w-1/2 flex-col h-fit justify-center items-start">
+               <div className="flex w-1/2 flex-col h-fit justify-center items-start pb-6">
                   <div className="flex w-4/6">
                      <p className="font-bold text-2xl text-graynamehead">Instagram</p>
                   </div>
-                  <div className="flex w-fit border-b border-gray-400 justify-center items-center">
+                  <div className="flex w-full border-b border-gray-400 justify-start items-center">
                      <Icon icon="skill-icons:instagram" className="flex w-7 h-7  text-gray-400" />
                      <input
                      value={tempInstagram}
@@ -149,12 +152,14 @@ const EditPage3: React.FC = (): JSX.Element => {
                </div>
 
                {/* Line */}
-               <div className="flex w-1/2 flex-col h-fit justify-center items-start">
+               <div className="flex w-1/2 flex-col h-fit justify-center items-start pb-6">
                   <div className="flex w-4/6">
                      <p className="font-bold text-2xl text-graynamehead">Line</p>
                   </div>
-                  <div className="flex w-fit border-b border-gray-400 justify-center items-center">
-                     <Icon icon="skill-icons:instagram" className="flex w-7 h-7  text-gray-400" />
+                  <div className="flex w-full border-b border-gray-400 justify-start items-center">
+                     <div 
+                     style={{ backgroundImage: `url(${line})` }}
+                      className="flex w-8 h-8 aspect-square bg-no-repeat bg-cover text-gray-400" />
                      <input
                      value={tempLineID}
                      onChange={(e) => setTempLineID(e.target.value)} 
@@ -162,20 +167,23 @@ const EditPage3: React.FC = (): JSX.Element => {
                      /> 
                   </div>
                </div>
-               <div className="flex">
-                  <button
-                     onClick={handleContactChange}
-                     className="ml-2 text-red-500 hover:underline"
-                  >
-                  Save
-                  </button>
+               <div className="flex mt-8">
 
                   <button
                      onClick={handleCancelUpdateContact}
-                     className="ml-2 text-red-500 hover:underline"
+                     className="ml-2 text-dark1 hover:underline border-2 border-dark1 rounded-full px-4 py-2"
                   >
-                  Cancel
+                     ยกเลิก 
                   </button>
+
+                  <button
+                     onClick={handleContactChange}
+                     className="ml-2 text-white hover:underline border-2 border-dark1 bg-dark1 rounded-full px-4 py-2"
+                  >
+                  บันทึกข้อมูล
+                  </button>
+
+                  
                </div>
             </div>
 

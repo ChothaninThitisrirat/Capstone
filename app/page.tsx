@@ -158,6 +158,7 @@ console.log("Recommended",recommendBook)
         const response = await fetch(`/api/category/allbook/2`);
         const data = await response.json();
         setCategory2(data.allbook);
+        console.log(data.allbook)
       } catch (error) {
         console.error('Error fetching search results:', error);
       }
