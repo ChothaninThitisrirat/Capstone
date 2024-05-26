@@ -158,6 +158,7 @@ console.log("Recommended",recommendBook)
         const response = await fetch(`/api/category/allbook/2`);
         const data = await response.json();
         setCategory2(data.allbook);
+        console.log("cat2",data.allbook)
       } catch (error) {
         console.error('Error fetching search results:', error);
       }
@@ -365,12 +366,12 @@ console.log("Recommended",recommendBook)
               <SlideBookBig data={popBook} Headtitle={"Popular Book"} Subtitle={"หนังสือดี หนังสือดัง คนนิยมอ่าน"}/>
             }
           </div>
-
+{/* 
           <div className='flex justify-center pb-8'>
             {
               session && loading ? Loader() : session && (<SlideBookBig data={recommendBook} Headtitle={"Recommended For You"} Subtitle={"หนังสือที่คุณอาจจะสนใจ"}/>)
             }
-          </div>
+          </div> */}
 
 
             {
@@ -378,7 +379,7 @@ console.log("Recommended",recommendBook)
             }
 
             {
-              category2 && (<SlideBookMiniWithTitle data={category2} Headtitle='สยองขวัญ'/>)
+              <SlideBookMiniWithTitle data={category2} Headtitle='สยองขวัญ'/>
             }
 
             {

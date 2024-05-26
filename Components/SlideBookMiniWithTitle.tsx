@@ -18,9 +18,9 @@ interface BookItem {
     picture: string[];
 }
 
-const SlideBookMini: React.FC<SlideBookMiniwithTitleProps> = ({data, Headtitle}) =>{
+const SlideBookMiniWithTitle: React.FC<SlideBookMiniwithTitleProps> = ({data, Headtitle}) =>{
     const [moreFrom, setMoreFrom] = useState(0)
-
+    console.log(data)
     return (
         <>
             <div className="font-bold text-5xl pt-12 pb-4">
@@ -47,8 +47,8 @@ const SlideBookMini: React.FC<SlideBookMiniwithTitleProps> = ({data, Headtitle})
                     style={{transform: `translateX(${moreFrom * -168}px)`, transition: 'transform 0.6s ease-in-out' }}
                     className="flex w-32 h-48 rounded-s-xs shrink-0 duration-300 bg-white cursor-pointer ">
                     
-                    <img
-                    src={item.picture[0]}
+                    <div
+                    style={{ backgroundImage: `url(${item.picture[0]})` }}
                     className='flex pb-2 object-cover w-full h-full rounded-s-xs shrink-0 duration-300 hover:scale-105'
                     />
                     <div className="flex absolute bottom-0 translate-y-6 text-lg w-full justify-center break-words font-bold ">{item.title}</div>
@@ -79,4 +79,4 @@ const SlideBookMini: React.FC<SlideBookMiniwithTitleProps> = ({data, Headtitle})
     )
 }
 
-export default SlideBookMini
+export default SlideBookMiniWithTitle
