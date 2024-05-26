@@ -119,8 +119,10 @@ const Page: FC<Props> = (): JSX.Element => {
         });
 
         if (response.ok) {
-          const data = await response.json();
-          setRecommendBook(data.recommend[categories]);
+          for (let i = 0; i < categories.length; i++) {
+            const data = await response.json();
+            setRecommendBook(data.recommend[categories[i]]);
+          }
         } else {
           console.error('Failed to fetch data:', response.statusText);
         }
