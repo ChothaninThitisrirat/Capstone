@@ -11,7 +11,9 @@ export async function GET(req: Request) {
                 picture:true,
                 User: {
                     select:{
-                        username:true
+                        id:true,
+                        username:true,
+                        profile_picture:true
                     }
                 }
             },

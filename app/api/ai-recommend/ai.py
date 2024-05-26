@@ -105,9 +105,11 @@ async def process_data(data: dict):
                     "title"  : book.title,
                     "picture" : book.picture,
                     "description" : book.description,
-                    "username": book.User.username,
-                    "user_profile" : book.User.profile_picture,
-                    "user_id" : book.User.id,
+                    "User": {
+                        "username": book.User.username,
+                        "profile_picture" : book.User.profile_picture,
+                        "id" : book.User.id,
+                    }
                 }
                 
                 if recommendation["book_id"] not in id:
@@ -196,10 +198,11 @@ async def process_data(data: dict):
                     "title"  : book.title,
                     "picture" : book.picture,
                     "description" : book.description,
-                    "username": book.User.username,
-                    "user_profile" : book.User.profile_picture,
-                    "user_id" : book.User.id,
-                    "category" : book.category
+                    "User": {
+                        "username": book.User.username,
+                        "profile_picture" : book.User.profile_picture,
+                        "id" : book.User.id,
+                    }
                 }
                 
                 if recommendation["book_id"] not in id:
