@@ -24,7 +24,7 @@ interface BookItems {
 }
     const SlideBookBig: React.FC<SlideBookBigProps> = ({data,Headtitle,Subtitle}) =>{
     const [moreFrom, setMoreFrom] = useState(0)
-
+    console.log(data)
     return (
         <>  
             <div className='flex flex-col w-full h-full'>
@@ -64,7 +64,7 @@ interface BookItems {
                 <div 
                 style={{WebkitOverflowScrolling: 'touch'}}
                 className="flex gap-14 w-full justify-start items-center overflow-x-auto close-scrollbar pb-8">
-                    {data.map((item: BookItems, index:number)=>(
+                    {Array.isArray(data) && data.map((item: BookItems, index:number)=>(
                         <div 
                         key={index}
                         className='flex flex-row justify-start shrink-0 w-5/12 h-96 drop-shadow-xl rounded-2xl duration-300  bg-white min-w-128 mt-8'

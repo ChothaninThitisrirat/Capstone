@@ -15,6 +15,7 @@ import TradeProcess3 from './TradeProcess3'
 import TradeProcess4 from './TradeProcess4'
 import bgExchangebook from '../../public/images/bgExchangebook.png';
 import AddAddress from '@/Components/AddAddress';
+import { useSession } from 'next-auth/react';
 
 interface MainTradeProps {
     bookId:string;
@@ -24,6 +25,7 @@ interface MainTradeProps {
 
 
 const MainTrade: React.FC<MainTradeProps> = ({ bookId, setTrade, bookInfo }) => {
+    const { data: session, status } = useSession()
     const [stateProcess, setStateProcess] = useState(0)
     const [showExchangeInfo1, setShowExchangeInfo1] = useState(false);
     const [showExchangeInfo2, setShowExchangeInfo2] = useState(false);
@@ -37,8 +39,14 @@ const MainTrade: React.FC<MainTradeProps> = ({ bookId, setTrade, bookInfo }) => 
     const [statusAddress, setStatusAddress] = useState(false);
     const [idTrade, setIdTrade] = useState<number>(0);
     const [bookSelect, setBookSelect] = useState<number[]>([]);
+    const router = useRouter();
     
-
+    useEffect(() => {
+        if (status === 'unauthenticated') {
+            router.push('/login')
+        }
+    }, [status, router])
+    
     useEffect(() => {
         if(stateProcess === 0 ){
             showShowExchangeInfo3(false);

@@ -84,7 +84,8 @@ const EditPage2: React.FC = (): JSX.Element => {
             className='flex w-2/3 h-1/6 justify-center items-center bg-dark1 flex-col drop-shadow-lg rounded-2xl min-h-48'  
           >
               <button 
-                onClick={() => setStatusAddress(true)}>
+                onClick={() => setStatusAddress(true)}
+                >
                   เพิ่มที่อยู่
               </button>
           </div>

@@ -101,29 +101,35 @@ const Page: FC<Props> = (): JSX.Element => {
 
   useEffect(() => {
     async function fetchData() {
-      if(!session) {
+      if (!session) {
+        console.log('No session available');
         return;
-    }
-      const response = await fetch(`http://localhost:4000/api/ai`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          user_id: parseInt(session.user.id)
-        })
-      });
+      }
 
-      if (response.ok) {
-        const data = await response.json();
-        setRecommendBook(data.recommendbook);
-    } else {
-      console.error('Failed to update contact information')
-    }
+      try {
+        const response = await fetch(`http://localhost:4000/api/ai`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            user_id: parseInt(session.user.id)
+          })
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setRecommendBook(data.recommend.สยองขวัญ);
+        } else {
+          console.error('Failed to fetch data:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
     }
 
     fetchData();
-  }, []);
+  }, [session]);
 
 console.log("Recommended",recommendBook)
 

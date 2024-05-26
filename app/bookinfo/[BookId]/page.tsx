@@ -31,12 +31,7 @@ const BookInfoMain: React.FC = ( ) => {
   const param = useParams<{ BookId?: string }>();
 
   const { data: session, status } = useSession()
-  useEffect(() => {
-    if (status === 'unauthenticated') {
-        router.push('/login')
-    }
-}, [status, router])
-
+  
   useEffect(() => {
     if(param.BookId){
       setBookId(param.BookId)

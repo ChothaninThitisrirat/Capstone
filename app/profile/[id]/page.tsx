@@ -115,7 +115,7 @@ export default function Profile() {
             {user.user.username}
           </div>
 
-          <div className="flex w-2/5 bg-white rounded-xl drop-shadow-2xl">
+          <div className="flex w-2/5 bg-white rounded-xl drop-shadow-2xl mb-8">
             <div className="flex w-full h-full p-8">
               <div className="flex w-1/2 h-full justify-center items-center flex-col">
                 <p>คะแนนผู้ใช้</p>
