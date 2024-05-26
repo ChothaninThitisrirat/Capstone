@@ -339,7 +339,7 @@ function DropDownResponsive() {
                 <div  className="flex text-center items-center text-sm ml-3 mr-2 text-red-500">Admin Page</div>
             </Link>}
             <button
-            onClick={() => signOut({ callbackUrl: '/', redirect: true })}
+            onClick={() => signOut({ callbackUrl: 'http://superdoggez.trueddns.com:10610/', })}
             className="flex items-center justify-center text-sm text-dark1 font-bold py-2 border-t gap-2 w-10/12 pt-4">
             <Icon icon="ic:sharp-logout" width="20" height="20" />
                 Logout</button>
