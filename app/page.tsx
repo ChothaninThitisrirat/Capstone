@@ -173,21 +173,21 @@ const Page: FC<Props> = (): JSX.Element => {
         <div className='w-5/6 mt-10'>
           <div className='flex justify-center pb-8'>
             {
-              loading ? Loader() : <SlideBookBig data={popBook} Headtitle={"Popular Book"} Subtitle={"หนังสือดี หนังสือดัง คนนิยมอ่าน"}/>
+              session && loading ? Loader() : session && (<SlideBookBig data={popBook} Headtitle={"Popular Book"} Subtitle={"หนังสือดี หนังสือดัง คนนิยมอ่าน"}/>)
             }
           </div>
 
           <div className='flex justify-center pb-8'>
             {
-              loading ? Loader() : <SlideBookBig data={popBook} Headtitle={"Recommend For You"} Subtitle={"หนังสือที่คุณอาจจะสนใจ"}/>
+              session && loading ? Loader() : session && (<SlideBookBig data={popBook} Headtitle={"Recommended For You"} Subtitle={"หนังสือที่คุณอาจจะสนใจ"}/>)
             }
           </div>
 
-          {/* <div className='flex justify-center'>
+          <div className='flex justify-center'>
             {
               loading ? Loader() : <SlideBookMini data={popBook}/>
             }
-          </div> */}
+          </div>
         </div>
 
       </div>

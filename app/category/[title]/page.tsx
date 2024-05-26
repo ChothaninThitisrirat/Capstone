@@ -74,13 +74,20 @@ export default function Profile() {
           BookCategory.map((item, index) => (
             <div
               key={index}
-              className="flex w-max h-max bg-white justify-center "
+              className="flex flex-col items-center w-max h-max bg-white justify-center "
             >
               <Link
-                className="flex w-svw h-1/4 max-w-52 min-h-72 bg-cover bg-center bg-no-repeat"
+                className="flex w-svw h-1/4 max-w-52 min-h-72 bg-cover bg-center bg-no-repeat hover:shadow-2xl transform transition duration-300 ease-in-out hover:scale-105"
                 style={{ backgroundImage: `url(${item.picture[0]})` }}
                 href={`/bookinfo/${item.id}`}
               />
+              <Link 
+                href={`/bookinfo/${item.id}`}
+                className='pt-2 font-bold'
+                >
+                  {item.title}
+                </Link>
+
             </div>
           ))
         )}
