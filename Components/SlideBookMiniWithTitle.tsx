@@ -20,7 +20,6 @@ interface BookItem {
 
 const SlideBookMiniWithTitle: React.FC<SlideBookMiniwithTitleProps> = ({data, Headtitle}) =>{
     const [moreFrom, setMoreFrom] = useState(0)
-    console.log(data)
     return (
         <>
             <div className="font-bold text-5xl pt-12 pb-4">
