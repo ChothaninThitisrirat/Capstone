@@ -378,7 +378,7 @@ console.log("Recommended",recommendBook)
             }
 
             {
-              category2 && <SlideBookMiniWithTitle data={category2} Headtitle='สยองขวัญ'/>
+              category2 && (<SlideBookMiniWithTitle data={category2} Headtitle='สยองขวัญ'/>)
             }
 
             {
