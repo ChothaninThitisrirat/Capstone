@@ -78,8 +78,8 @@ interface BookItems {
 
                                 <div className='flex flex-col items-center w-2/4 h-full min-w-96'>
                                     <div className="flex w-10/12 flex-col h-5/6">
-                                        <div className='flex w-8/12 text-3xl font-bold mt-5'>
-                                            {item.title.length > 100 ? item.title.substring(0,100) + '...' : item.title}
+                                        <div className='flex w-8/12 text-3xl font-bold mt-5 no-wrap'>
+                                            {item.title.length > 25 ? item.title.substring(0,25) + '...' : item.title}
                                         </div>
                                         
                                         <div className='flex w-5/6 text-xl font-thin mt-5 ml-5'>

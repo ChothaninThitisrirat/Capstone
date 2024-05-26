@@ -13,14 +13,23 @@ import Link from 'next/link'
 
 interface UserBook{
     id: number;
-    title  : string;
+    title  : string | undefined;
     picture: string[];
+    newtitle: string;
+    replace: string;
 }
 
 export default function Profile() {
   
   const { title } = useParams();
   const [BookSearch, setBookSearch] = useState<UserBook[]>([])
+  
+  let newtitle = '';
+  if (Array.isArray(title)) {
+    newtitle = title[0].replace(/%20/g, ' ');
+  } else {
+    newtitle = title.replace(/%20/g, ' ');
+  }
 
   useEffect(() => {
     if (title){
@@ -48,7 +57,7 @@ export default function Profile() {
   return (
     <>
       <Navbar backGroundOn withTitle/>
-      <TitleBar textTitle={`ผลการค้นหาของ ${title}`} />
+      <TitleBar textTitle={`ผลการค้นหาของ ${newtitle}`} />
       <div className='flex w-full items-center gap-12 justify-center flex-wrap pt-16'>
         {BookSearch?.length === 0 ? (
           <div
