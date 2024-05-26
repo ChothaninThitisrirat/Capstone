@@ -13,10 +13,21 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.decomposition import PCA
 from datetime import datetime
 import math
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 load_dotenv()
 
+origin = [
+    "http://localhost:3000"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_orifins=origin,
+    allow_methods=["POST"],
+    allow_headers=["*"]
+)
 
 @app.post('/api/ai')
 async def process_data(data: dict):
