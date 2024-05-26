@@ -39,9 +39,7 @@ interface BookInfoShow {
     count_review_book_agg: {
         book_id: number;//
     };
-    avg_review_book_agg: {
-        score: number | null;//
-    };
+    avg_review_book_agg:number | null;
     category: string[];
     user: {
         id: number; 
@@ -49,11 +47,9 @@ interface BookInfoShow {
         profile_picture: string;
     };
     count_user_book: {
-        user_id: number;//
+        user_id: number;
     };
-    avg_user_score: {
-        score: number | null;//
-    };
+    avg_user_score: number | null;
     count_user_review: {
         user_id: number;//
     };
@@ -164,6 +160,7 @@ const BookInfo: React.FC<BookInfoProps> = ({ setTrade, bookInfo }) => {
 
     const router = useRouter();
     const { data: session, status } = useSession()
+    const userId: number | undefined = session?.user.id
 
     useEffect(() => {
         if (bookInfo) {
@@ -176,13 +173,13 @@ const BookInfo: React.FC<BookInfoProps> = ({ setTrade, bookInfo }) => {
     useEffect(() => {
         const datetimeString = bookInfoShow?.bookinfo?.postdate;
         const datetimeObject = datetimeString ? new Date(datetimeString) : null;
-        const avgReviewScore = bookInfoShow?.avg_review_book_agg?.score;
+        const avgReviewScore = bookInfoShow?.avg_review_book_agg;
         if (avgReviewScore !== null && avgReviewScore !== undefined) {
             setAvgScoreBook(avgReviewScore);
         } else {
             setAvgScoreBook(0);
         }
-        const avgReviewScoreUser = bookInfoShow?.avg_user_score?.score;
+        const avgReviewScoreUser = bookInfoShow?.avg_user_score;
         if (avgReviewScoreUser !== null && avgReviewScoreUser !== undefined) {
             setAvgScoreUser(avgReviewScoreUser);
         } else {
@@ -276,7 +273,23 @@ console.log('datePost',datePost)
     }
 
     const handleGoTrade=()=>{
+        const fetchData = async (userId:any)=>{
+            try{
+                const response = await axios.get(`/api/user/${userId}/contact`)
+                if(response.data.contact.line === null && response.data.contact.instagram === null && response.data.contact.facebook === null ){
+                    router.push('/editprofile')
+                    alert('กรุณากรอกข้อมูลการติดต่อก่อนใช้งาน')
+                }
+            }
+            catch(err){
+                console.log(err)
+            }
+        }
+        if (userId !== undefined) {
+            fetchData(userId)
+        }
         setTrade(true)
+
     }
 
     const openCommentForm = () => {

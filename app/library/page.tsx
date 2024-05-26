@@ -32,7 +32,10 @@ function Library() {
         if (status === 'unauthenticated') {
             router.push('/login')
         }
+        
     }, [status, router])
+
+
 
     const [stateAddBook, setStateAddBook] = useState(false)
     const [classAddBookbg, setClassAddBookbg] = useState('fixed h-screen w-screen bg-slate-200 top-0 left-0 z-50 opacity-30 backdrop-blur-2xl hidden')
