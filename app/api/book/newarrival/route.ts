@@ -9,9 +9,17 @@ export async function GET(req: Request) {
                 id:true,
                 title:true,
                 picture:true,
-                postdate:true
+                postdate:true,
+                description:true,
+                User: {
+                    select: {
+                        id:true,
+                        username:true,
+                        profile_picture:true
+                    }
+                }
             },
-            take: 20,
+            take: 17,
             orderBy: [
                 {
                     postdate: 'desc'

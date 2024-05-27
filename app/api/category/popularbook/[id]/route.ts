@@ -12,7 +12,9 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
                 picture:true,
                 User: {
                     select:{
-                        username:true
+                        username:true,
+                        id:true,
+                        profile_picture:true
                     }
                 },
                 category: {

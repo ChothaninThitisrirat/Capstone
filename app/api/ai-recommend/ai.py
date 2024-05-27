@@ -19,16 +19,9 @@ app = FastAPI()
 load_dotenv()
 
 origin = [
-    "http://localhost:3000",
-    "http://localhost:4000",
-    "http://superdoggez.trueddns.com:10610",
-    "http://superdoggez.trueddns.com:10611",
-    "http://192.168.1.48/4000",
-    "http://192.168.1.48/3000",
-    "http://172.19.160.1/4000"
+    
+    "http://superdoggez.trueddns.com:10610"
 ]
-
-
 
 app.add_middleware(
     CORSMiddleware,
@@ -229,5 +222,5 @@ async def process_data(data: dict):
 
 if __name__ == '__main__':
     import uvicorn
-    uvicorn.run(app, host='192.168.1.48', port=4000)
+    uvicorn.run(app, host='localhost', port=4000)
 

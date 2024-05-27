@@ -13,8 +13,9 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { set } from 'mongoose';
-import { DotLoader} from 'react-spinners';
+import { HashLoader,SyncLoader } from 'react-spinners';
 import SlideBookMiniWithTitle from '@/Components/SlideBookMiniWithTitle';
+import { arrayBuffer } from 'node:stream/consumers';
 
 
 interface POPBOOK {
@@ -63,7 +64,7 @@ const Page: FC<Props> = (): JSX.Element => {
         return;
       }
       try {
-        const response = await fetch(`http://superdoggez.trueddns.com:10611/api/ai`, {
+        const response = await fetch(`http://localhost:4000/api/ai`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -143,7 +144,7 @@ console.log("RecommendedAllFinal",allrecommend)
 
   function Loader() {
     return <div className='w-screen h-screen flex items-center justify-center opacity-95'>
-        <DotLoader
+        <SyncLoader
         color='#435585' size={10} aria-label="Loading Spinner" data-testid="loader"/>
       </div>
 
