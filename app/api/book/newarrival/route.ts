@@ -4,18 +4,25 @@ import { prismadb } from "@/lib/db";
 export async function GET(req: Request) {
     try {
         const newarrivalbook = await prismadb.book.findMany({
+            where: { isPost_trade:true },
             select: {
                 id:true,
                 title:true,
                 picture:true,
-                datetime:true
+                postdate:true,
+                description:true,
+                User: {
+                    select: {
+                        id:true,
+                        username:true,
+                        profile_picture:true
+                    }
+                }
             },
-            take: 20,
+            take: 17,
             orderBy: [
                 {
-                    id: 'desc'
-                },{
-                    datetime: 'desc'
+                    postdate: 'desc'
                 }
             ]
         })

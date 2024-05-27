@@ -29,10 +29,11 @@ export async function POST(req: Request) {
                 user: null, message: "Phone number already exist."},{status: 409}
             )
         }
-        
+        const id = Math.floor(10000 * Math.random())
         const hashpassword = await hash(password , 5)
         const newUser = await prismadb.user.create({
             data: {
+                id,
                 username,
                 email,
                 password:hashpassword,
