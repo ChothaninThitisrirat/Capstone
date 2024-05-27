@@ -62,7 +62,7 @@ const Page: FC<Props> = (): JSX.Element => {
         return;
       }
       try {
-        const response = await fetch(`http://localhost:4000/api/ai`, {
+        const response = await fetch(`http://superdoggez.trueddns.com:10611/api/ai`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

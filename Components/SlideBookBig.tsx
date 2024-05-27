@@ -32,7 +32,7 @@ interface BookItems {
 
 
     function Loader() {
-        return <div className='w-full  flex items-center justify-center opacity-95'>
+        return <div className='w-full h-96 flex items-center justify-center opacity-95'>
             <DotLoader
             color='#435585' size={35} aria-label="Loading Spinner" data-testid="loader"/>
           </div>
