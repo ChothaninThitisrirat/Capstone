@@ -68,6 +68,10 @@ interface Category {
     defaultClass: boolean;
     color: string;
 }
+interface Books{
+    id: number;
+    title: string;
+  }
 const BookInfo: React.FC<BookInfoProps> = ({ setTrade, bookInfo }) => {
     const [stateComment, setStateComment] = useState(false)
     const [topicReview, setTopicReview] = useState('')
@@ -90,6 +94,9 @@ const BookInfo: React.FC<BookInfoProps> = ({ setTrade, bookInfo }) => {
     const [ bookInfoShow, setBookInfoShow ] = useState<BookInfoShow>();
     const [ state1, setState1 ] = useState(false)
     const param = useParams();
+
+    const categories = ['นวนิยาย', 'สยองขวัญ', 'การ์ตูน', 'โรแมนติก', 'วิทยาศาสตร์', 'การเงิน - ลงทุน', 'การศึกษา', 'ท่องเที่ยว', 'การพัฒนาตนเอง', 'สุขภาพ'];
+    const [allrecommend, setAllrecommend] = useState<Books[]>([]);
 
     const thaiMonths = [
         "มกราคม",
@@ -350,7 +357,41 @@ console.log('datePost',datePost)
       };
 
 
-
+      useEffect(() => {
+        async function fetchData() {
+          if (!session) {
+            console.log('No session available');
+            return;
+          }
+          try {
+            const response = await fetch(`http://localhost:4000/api/ai/book`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                book_id: parseInt(bookInfoShow?.bookinfo.id),
+              })
+            });
+            
+            if (response.ok) {
+              const data = await response.json();
+      
+              const recommendations = categories.map(category => data.recommend[category] || []);
+              const allRecommendations = recommendations.flat();
+              
+              setAllrecommend(allRecommendations);
+              console.log(allRecommendations, 'all recommendations');
+            } else {
+              console.error('Failed to fetch data:', response.statusText);
+            }
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          }
+        }
+        
+        fetchData();
+      }, [session]);
 
 
 
@@ -659,7 +700,10 @@ console.log('datePost',datePost)
         className="flex bg-dark2 text-white w-28 h-10 justify-center items-center rounded-full text-lg underline scale-75 sm:scale-100">ดูทั้งหมด</Link>
         </div>
         <SlideBookMini data={moreFromUserData}/>
-        {/* <SlideBookBig data={popBook} Headtitle={"Recommend For You"} Subtitle={"หนังสือที่คุณอาจจะสนใจ"}/> */}
+
+        <div className='flex justify-center pb-8'>
+            <SlideBookBig data={allrecommend} Headtitle={"หนังสือที่คล้ายกัน"} Subtitle={"ผู้ใช้ส่วนมากชื่นชอบ"}/>
+        </div>
         </div>
         <Footer/>
         </>

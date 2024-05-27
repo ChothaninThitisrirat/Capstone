@@ -10,6 +10,8 @@ import { Rating } from '@mui/material'
 import {Icon} from '@iconify/react'
 import Link from 'next/link'
 import { set } from 'mongoose'
+import SlideBookBig from '@/Components/SlideBookBig'
+
 
 interface UserBook{
     id: number;
@@ -27,6 +29,7 @@ export default function Profile() {
   const titleID = Array.isArray(title) ? title[0] : title;
   const matchingCategory = BookCategoryName.find(item => item.id == Number(titleID));
   const [loader, setLoader] = useState(true)
+  const [popBook, setPopBook] = useState<UserBook[]>([])
 
 
   useEffect(() => {
@@ -39,23 +42,23 @@ export default function Profile() {
         }
       fetchBookCategory(titleID)
       fetchBookCategoryName()
+      fetchPopularBooks(titleID)
       setLoader(false)
+      console.log(titleID,"titleID")
 
-    }
+    } 
   },[title])
 
     const fetchBookCategory = async (title: string) => {
     const res = await fetch(`/api/category/allbook/${title}`)
     const data = await res.json()
     setBookCategory(data.allbook)
-    console.log(data.allbook)
    }
 
    const fetchBookCategoryName = async () => {
     const res = await fetch(`/api/category`)
     const data = await res.json()
     setBookCategoryName(data.category)
-    console.log(data.category)
    }
 
    if (loader) return <div>
@@ -64,6 +67,16 @@ export default function Profile() {
        color='#435585' size={10} aria-label="Loading Spinner" data-testid="loader"/>
      </div>
   </div>;
+
+  const fetchPopularBooks = async (title:string) => {
+    try {
+        const response = await fetch(`api/category/popularbook/${title}`);
+        const data = await response.json();
+        setPopBook(data.popularbook);
+    } catch (error) {
+      console.error(error);
+    }
+  };
    
   
 
@@ -72,7 +85,14 @@ export default function Profile() {
       <Navbar backGroundOn withTitle/>
       {/* <TitleBar textTitle={{`{}`}} /> */}
       {matchingCategory && <TitleBar textTitle={`${matchingCategory.name}`} />}
-      <div className='flex w-full items-center gap-12 justify-center flex-wrap pt-16'>
+      <div className='flex w-full flex-col items-center gap-12 justify-center flex-wrap pt-16'>
+
+        {/* <div className='flex justify-center pb-8'>
+            {
+              matchingCategory && <SlideBookBig data={popBook} Headtitle={`เล่มยอดนิยมใน ${matchingCategory.name}`} Subtitle={"หนังสือดี หนังสือดัง คนนิยมอ่าน"}/>
+            }
+          </div> */}
+
         {BookCategory?.length === 0 ? (
           <div
             style={{ width: '1250px', WebkitOverflowScrolling: 'touch' }}
