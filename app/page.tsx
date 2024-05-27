@@ -43,7 +43,7 @@ const Page: FC<Props> = (): JSX.Element => {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [popBook, setPopBook] = useState<POPBOOK[]>([]);
-  const [newarrival, setNewarrival] = useState<Books[]>([]);
+  const [newarrival, setNewarrival] = useState<POPBOOK[]>([])
   const [category1, setCategory1] = useState<Books[]>([]);
   const [category2, setCategory2] = useState<Books[]>([]);
   const [category3, setCategory3] = useState<Books[]>([]);
@@ -390,54 +390,60 @@ console.log("RecommendedAllFinal",allrecommend)
             }
           </div>
 
+          <div className="flex justify-center pb-8">
+            {
+              // <SlideBookBig data={newarrival} Headtitle={"New Arrival"} Subtitle={'หนังสือใหม่ล่าสุด'}/>
+            }
+          </div>
+
           <div className='flex justify-center pb-8'>
             {
               session && loading ? Loader() : session && (<SlideBookBig data={allrecommend} Headtitle={"Recommended For You"} Subtitle={"หนังสือที่คุณอาจจะสนใจ"}/>)
             }
           </div>
 
+          
+           
+
+
             {
-              newarrival && <SlideBookMiniWithTitle data={newarrival} Headtitle='New Arrival' />
+              category1 && (<SlideBookMiniWithTitle data={category1} Headtitle='นวนิยาย' num_category={1}/>)
             }
 
             {
-              category1 && (<SlideBookMiniWithTitle data={category1} Headtitle='นวนิยาย' />)
+              category2 && (<SlideBookMiniWithTitle data={category2} Headtitle='สยองขวัญ' num_category={2}/>)
             }
 
             {
-              category2 && <SlideBookMiniWithTitle data={category2} Headtitle='สยองขวัญ'/>
+              category3 &&<SlideBookMiniWithTitle data={category3} Headtitle='การ์ตูน' num_category={3}/>
             }
 
             {
-              category3 &&<SlideBookMiniWithTitle data={category3} Headtitle='การ์ตูน'/>
+              category4 &&<SlideBookMiniWithTitle data={category4} Headtitle='โรแมนติก' num_category={4}/>
             }
 
             {
-              category4 &&<SlideBookMiniWithTitle data={category4} Headtitle='โรแมนติก'/>
+              category5 &&<SlideBookMiniWithTitle data={category5} Headtitle='วิทยาศาสตร์' num_category={5}/>
             }
 
             {
-              category5 &&<SlideBookMiniWithTitle data={category5} Headtitle='วิทยาศาสตร์'/>
-            }
-
-            {
-              category6 &&<SlideBookMiniWithTitle data={category6} Headtitle='การเงิน - ลงทุน'/>
+              category6 &&<SlideBookMiniWithTitle data={category6} Headtitle='การเงิน - ลงทุน' num_category={6}/>
             }
           
             {
-              category7 &&<SlideBookMiniWithTitle data={category7} Headtitle='การศึกษา'/>
+              category7 &&<SlideBookMiniWithTitle data={category7} Headtitle='การศึกษา' num_category={7}/>
             }
 
             {
-              category8 &&<SlideBookMiniWithTitle data={category8} Headtitle='ท่องเที่ยว'/>
+              category8 &&<SlideBookMiniWithTitle data={category8} Headtitle='ท่องเที่ยว' num_category={8}/>
             }
 
             {
-              category9 &&<SlideBookMiniWithTitle data={category9} Headtitle='การพัฒนาตนเอง'/>
+              category9 &&<SlideBookMiniWithTitle data={category9} Headtitle='การพัฒนาตนเอง' num_category={9}/>
             }
 
             {
-              category10 && <SlideBookMiniWithTitle data={category10} Headtitle='สุขภาพ'/>
+              category10 && <SlideBookMiniWithTitle data={category10} Headtitle='สุขภาพ' num_category={10}/>
             }
         </div> 
 
