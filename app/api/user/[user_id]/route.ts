@@ -33,7 +33,7 @@ export async function GET(req: Request,{ params }: { params: { user_id: string }
         })
 
         const book_agg = await prismadb.book.aggregate({
-            where: { id: parseInt(params.user_id) },
+            where: { user_id: parseInt(params.user_id) },
             _count: {
                 id:true
             }
@@ -51,7 +51,7 @@ export async function GET(req: Request,{ params }: { params: { user_id: string }
             user: userinfo,
             review_count: review_agg._count,
             review_avg: avg_user,
-            book_count:book_agg._count,
+            book_count: book_agg._count,
             message: "All information of this user has been sent successfully."
         },{ status: 200 }
     )
