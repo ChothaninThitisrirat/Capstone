@@ -25,3 +25,32 @@ export async function PUT(req: Request) {
 
     }
 }
+
+export async function GET(req: Request , params: { user_id: string }) {
+    try {
+        const user_cat = await prismadb.userlike.findMany({
+            where: { user_id:parseInt(params.user_id) },
+            include: {
+                Category:true
+            }
+        })
+
+        if (user_cat) {
+            return NextResponse.json({
+                category:null,
+                message: "Invalid user id."
+            })
+        }
+
+        return NextResponse.json({
+            category:user_cat,
+            message: "Category that user like have been sent successfully."
+        })
+    } catch (error) {
+        
+        console.log(error);
+        return NextResponse.json(error)   
+
+    }
+    
+}
