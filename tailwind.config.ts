@@ -9,6 +9,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        bitter: ['var(--font-bitter)'],
+      },
       colors: {
         'dark1': '#363062',
         'dark2': '#435585',

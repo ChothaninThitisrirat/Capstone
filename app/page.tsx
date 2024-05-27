@@ -13,8 +13,9 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { set } from 'mongoose';
-import { DotLoader} from 'react-spinners';
+import { HashLoader,SyncLoader } from 'react-spinners';
 import SlideBookMiniWithTitle from '@/Components/SlideBookMiniWithTitle';
+import { arrayBuffer } from 'node:stream/consumers';
 
 
 interface POPBOOK {
@@ -42,6 +43,7 @@ const Page: FC<Props> = (): JSX.Element => {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [popBook, setPopBook] = useState<POPBOOK[]>([]);
+  const [newarrival, setNewarrival] = useState<Books[]>([]);
   const [category1, setCategory1] = useState<Books[]>([]);
   const [category2, setCategory2] = useState<Books[]>([]);
   const [category3, setCategory3] = useState<Books[]>([]);
@@ -62,7 +64,7 @@ const Page: FC<Props> = (): JSX.Element => {
         return;
       }
       try {
-        const response = await fetch(`http://superdoggez.trueddns.com:10611/api/ai`, {
+        const response = await fetch(`http://localhost:4000/api/ai`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -123,14 +125,26 @@ console.log("RecommendedAllFinal",allrecommend)
     }
   };
 
+  const fetchNewArrival = async () => {
+    try {
+        const response = await fetch('api/book/newarrival');
+        const data = await response.json();
+        setNewarrival(data.newarrivalbook);
+        setLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     fetchPopularBooks();
+    fetchNewArrival();
   }, [session, status, router]);
 
 
   function Loader() {
     return <div className='w-screen h-screen flex items-center justify-center opacity-95'>
-        <DotLoader
+        <SyncLoader
         color='#435585' size={10} aria-label="Loading Spinner" data-testid="loader"/>
       </div>
 
@@ -382,13 +396,16 @@ console.log("RecommendedAllFinal",allrecommend)
             }
           </div>
 
+            {
+              newarrival && <SlideBookMiniWithTitle data={newarrival} Headtitle='New Arrival' />
+            }
 
             {
               category1 && (<SlideBookMiniWithTitle data={category1} Headtitle='นวนิยาย' />)
             }
 
             {
-              <SlideBookMiniWithTitle data={category2} Headtitle='สยองขวัญ'/>
+              category2 && <SlideBookMiniWithTitle data={category2} Headtitle='สยองขวัญ'/>
             }
 
             {
