@@ -19,7 +19,10 @@ app = FastAPI()
 load_dotenv()
 
 origin = [
-    "http://localhost:3000"
+    "http://localhost:3000",
+    "http://localhost:4000",
+    "http://superdoggez.trueddns.com:10610",
+    "http://superdoggez.trueddns.com:10611"
 ]
 
 app.add_middleware(
