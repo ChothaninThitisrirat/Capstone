@@ -65,8 +65,8 @@ export default function Profile() {
     const res = await fetch(`/api/category/popularbook/${title}`)
     const data = await res.json()
     console.log(title)
-    console.log(data.popularbook)
-    setPopBook(data.popularbook)
+    console.log(data.popularbook.book)
+    setPopBook(data.popularbook.book)
    }
 
    if (loader) return <div>
