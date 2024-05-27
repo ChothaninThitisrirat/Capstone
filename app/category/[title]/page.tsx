@@ -44,7 +44,7 @@ export default function Profile() {
       fetchBookCategory(titleID)
       fetchBookCategoryName()
       fetchpopularBooks(titleID)
-      setLoader(false)
+      
       
 
     } 
@@ -65,9 +65,9 @@ export default function Profile() {
    const fetchpopularBooks = async (title: string) => {
     const res = await fetch(`/api/category/popularbook/${title}`)
     const data = await res.json()
-    
-    setPopBook(data.popularbook)
-    // setLoader(false)
+    console.log(data.popularbook.book)
+    setPopBook(data.popularbook.book)
+    setLoader(false)
    }
 
    if (loader) return <div>
@@ -87,10 +87,7 @@ export default function Profile() {
       <Navbar backGroundOn withTitle/>
       {/* <TitleBar textTitle={{`{}`}} /> */}
       {matchingCategory && <TitleBar textTitle={`${matchingCategory.name}`} />}
-
-      
-      
-      <div className='flex w-full flex-col items-center gap-12 justify-center flex-wrap pt-16 bg-bg min-h-screen'>
+      <div className='flex w-full flex-col items-center gap-12 justify-center flex-wrap bg-bg min-h-screen'>
 
         <div className='flex w-10/12 justify-center pb-8'>
               {
