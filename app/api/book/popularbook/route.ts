@@ -18,7 +18,6 @@ export async function GET(req: Request) {
                     }
                 }
             },
-            take: 5,
             orderBy: {
                 req_count: 'desc'
             }
