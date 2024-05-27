@@ -392,7 +392,7 @@ console.log("RecommendedAllFinal",allrecommend)
 
           <div className="flex justify-center pb-8">
             {
-              // <SlideBookBig data={newarrival} Headtitle={"New Arrival"} Subtitle={'หนังสือใหม่ล่าสุด'}/>
+              <SlideBookBig data={newarrival} Headtitle={"New Arrival"} Subtitle={'หนังสือใหม่ล่าสุด'}/>
             }
           </div>
 
