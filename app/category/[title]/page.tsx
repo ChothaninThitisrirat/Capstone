@@ -45,6 +45,7 @@ export default function Profile() {
       fetchBookCategoryName()
       fetchpopularBooks(titleID)
       setLoader(false)
+      
 
     } 
   },[title])
@@ -64,9 +65,9 @@ export default function Profile() {
    const fetchpopularBooks = async (title: string) => {
     const res = await fetch(`/api/category/popularbook/${title}`)
     const data = await res.json()
-    console.log(title)
-    console.log(data.popularbook.book)
-    setPopBook(data.popularbook.book)
+    
+    setPopBook(data.popularbook)
+    // setLoader(false)
    }
 
    if (loader) return <div>
