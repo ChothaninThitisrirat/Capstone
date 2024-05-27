@@ -54,7 +54,7 @@ const Page: FC<Props> = (): JSX.Element => {
   const [category8, setCategory8] = useState<Books[]>([]);
   const [category9, setCategory9] = useState<Books[]>([]);
   const [category10, setCategory10] = useState<Books[]>([]);
-  const categories = ['นวนิยาย', 'สยองขวัญ', 'การ์ตูน', 'โรแมนติก', 'วิทยาศาสตร์', 'การเงิน - ลงทุน', 'การศึกษา', 'ท่องเที่ยว', 'การพัฒนาตนเอง', 'สุขภาพ'];
+  const categories = ['นวนิยาย', 'สยองขวัญ', 'การ์ตูน', 'โรแมนติก', 'วิทยาศาสตร์', 'การเงิน - ลงทุน', 'การศึกษา', 'ท่องเที่ยว', 'พัฒนาตนเอง', 'สุขภาพ'];
   const [allrecommend, setAllrecommend] = useState<Books[]>([]);
 
   useEffect(() => {
@@ -386,7 +386,7 @@ console.log("RecommendedAllFinal",allrecommend)
         <div className='w-5/6 mt-10 '>
           <div className='flex justify-center pb-8'>
             {
-              <SlideBookBig data={popBook} Headtitle={"Popular Book"} Subtitle={"หนังสือดี หนังสือดัง คนนิยมอ่าน"}/>
+              <SlideBookBig data={popBook.slice(0,7)} Headtitle={"Popular Book"} Subtitle={"หนังสือดี หนังสือดัง คนนิยมอ่าน"}/>
             }
           </div>
 
@@ -407,43 +407,43 @@ console.log("RecommendedAllFinal",allrecommend)
 
 
             {
-              category1 && (<SlideBookMiniWithTitle data={category1} Headtitle='นวนิยาย' num_category={1}/>)
+              category1 && (<SlideBookMiniWithTitle data={category1.slice(0,10)} Headtitle='นวนิยาย' num_category={1}/>)
             }
 
             {
-              category2 && (<SlideBookMiniWithTitle data={category2} Headtitle='สยองขวัญ' num_category={2}/>)
+              category2 && (<SlideBookMiniWithTitle data={category2.slice(0,10)} Headtitle='สยองขวัญ' num_category={2}/>)
             }
 
             {
-              category3 &&<SlideBookMiniWithTitle data={category3} Headtitle='การ์ตูน' num_category={3}/>
+              category3 &&<SlideBookMiniWithTitle data={category3.slice(0,10)} Headtitle='การ์ตูน' num_category={3}/>
             }
 
             {
-              category4 &&<SlideBookMiniWithTitle data={category4} Headtitle='โรแมนติก' num_category={4}/>
+              category4 &&<SlideBookMiniWithTitle data={category4.slice(0,10)} Headtitle='โรแมนติก' num_category={4}/>
             }
 
             {
-              category5 &&<SlideBookMiniWithTitle data={category5} Headtitle='วิทยาศาสตร์' num_category={5}/>
+              category5 &&<SlideBookMiniWithTitle data={category5.slice(0,10)} Headtitle='วิทยาศาสตร์' num_category={5}/>
             }
 
             {
-              category6 &&<SlideBookMiniWithTitle data={category6} Headtitle='การเงิน - ลงทุน' num_category={6}/>
+              category6 &&<SlideBookMiniWithTitle data={category6.slice(0,10)} Headtitle='การเงิน - ลงทุน' num_category={6}/>
             }
           
             {
-              category7 &&<SlideBookMiniWithTitle data={category7} Headtitle='การศึกษา' num_category={7}/>
+              category7 &&<SlideBookMiniWithTitle data={category7.slice(0,10)} Headtitle='การศึกษา' num_category={7}/>
             }
 
             {
-              category8 &&<SlideBookMiniWithTitle data={category8} Headtitle='ท่องเที่ยว' num_category={8}/>
+              category8 &&<SlideBookMiniWithTitle data={category8.slice(0,10)} Headtitle='ท่องเที่ยว' num_category={8}/>
             }
 
             {
-              category9 &&<SlideBookMiniWithTitle data={category9} Headtitle='การพัฒนาตนเอง' num_category={9}/>
+              category9 &&<SlideBookMiniWithTitle data={category9.slice(0,10)} Headtitle='การพัฒนาตนเอง' num_category={9}/>
             }
 
             {
-              category10 && <SlideBookMiniWithTitle data={category10} Headtitle='สุขภาพ' num_category={10}/>
+              category10 && <SlideBookMiniWithTitle data={category10.slice(0,10)} Headtitle='สุขภาพ' num_category={10}/>
             }
         </div> 
 

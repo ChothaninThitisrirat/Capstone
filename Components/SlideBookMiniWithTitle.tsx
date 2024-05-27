@@ -56,13 +56,15 @@ const SlideBookMiniWithTitle: React.FC<SlideBookMiniwithTitleProps> = ({data, He
                     href={`/bookinfo/${item.id}`}  
                     key={index}
                     style={{transform: `translateX(${moreFrom * -168}px)`, transition: 'transform 0.6s ease-in-out' }}
-                    className="flex w-32 h-48 rounded-s-xs shrink-0 duration-300 bg-white cursor-pointer ">
-                    
-                    <div
-                    style={{ backgroundImage: `url(${item.picture[0]})` }}
-                    className='flex pb-2 object-cover w-full h-full bg-cover bg-no-repeat bg-center rounded-s-xs shrink-0 duration-300 hover:scale-105'
-                    />
-                    <div className="flex absolute bottom-0 translate-y-6 text-lg w-full justify-center break-words font-bold ">{item.title}</div>
+                    className="flex flex-cols w-48 h-56 rounded-s-xs shrink-0  duration-300 bg-white cursor-pointer ">
+                        <div
+                        style={{ backgroundImage: `url(${item.picture[0]})` }}
+                        className=''
+                        />
+                        <div className=" ">
+                            {item.title}
+                        </div>
+
                     </Link>
                 ))}
                 <div 
