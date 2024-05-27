@@ -413,7 +413,7 @@ console.log('datePost',datePost)
         <Navbar backGroundOn={true}  withTitle={false}/>
         <div
         style={{maxWidth: '1700px'}}
-        className="flex w-full h-auto justify-center sm:pt-16 mx-auto pb-40 flex-col padt-0">
+        className="flex w-full h-auto justify-center items-center sm:pt-16 mx-auto pb-40 flex-col padt-0">
             
             <div className="flex mb-36 responsive-bookinfo">
             <div className="flex w-1/2 h-auto justify-end mt-10 sm:mt-14">
@@ -701,9 +701,9 @@ console.log('datePost',datePost)
         </div>
         <SlideBookMini data={moreFromUserData}/>
 
-        <div className='flex justify-center pb-8'>
-            <SlideBookBig data={allrecommend} Headtitle={"หนังสือที่คล้ายกัน"} Subtitle={"ผู้ใช้ส่วนมากชื่นชอบ"}/>
-        </div>
+            <div className='flex justify-center items-center pb-8 w-10/12 mt-12'>
+                <SlideBookBig data={allrecommend} Headtitle={"หนังสือที่คล้ายกัน"} Subtitle={"ผู้ใช้ส่วนมากชื่นชอบ"}/>
+            </div>
         </div>
         <Footer/>
         </>
