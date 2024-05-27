@@ -128,6 +128,7 @@ async def process_data(data: dict):
                     id.append(recommendation["id"])
                     predicted_values.append(book.category)
 
+
             watched_book = user_cat[i]
             recommendations_dict[watched_book] = recommendations
             
