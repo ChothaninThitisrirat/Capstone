@@ -10,6 +10,7 @@ import Link from 'next/link';
 interface SlideBookMiniwithTitleProps {
     data: any;
     Headtitle: string;
+    num_category: number;
 }
 
 interface BookItem {
@@ -18,15 +19,26 @@ interface BookItem {
     picture: string[];
 }
 
-const SlideBookMiniWithTitle: React.FC<SlideBookMiniwithTitleProps> = ({data, Headtitle}) =>{
+const SlideBookMiniWithTitle: React.FC<SlideBookMiniwithTitleProps> = ({data, Headtitle, num_category}) =>{
     const [moreFrom, setMoreFrom] = useState(0)
     return (
         <>
-            <div className="font-bold text-5xl pt-12 pb-4">
-                {Headtitle}
+            <div className="flex flex-cols font-bold w-full text-5xl pt-12 pb-4">
+                <div className="flex w-1/2">
+                    {Headtitle}
+                </div>
+                <Link
+                href={`/category/${num_category}`}
+                className="flex w-1/2 justify-end text-xl items-center">
+                    <p className='rounded-full bg-dark2 py-2 px-4 text-white'>
+                    ดูทั้งหมด
+                    </p>
+                    
+                </Link>
+                
             </div>
             <div
-            className="flex sm:gap-10 justify-start sm:justify-center items-center px-1 w-auto pb-8 relative">
+            className="flex sm:gap-10 justify-start sm:justify-center items-center px-1 w-full pb-8 relative">
             {moreFrom === 0 
             ? <div 
             style={{width: '70px'}}
@@ -44,13 +56,15 @@ const SlideBookMiniWithTitle: React.FC<SlideBookMiniwithTitleProps> = ({data, He
                     href={`/bookinfo/${item.id}`}  
                     key={index}
                     style={{transform: `translateX(${moreFrom * -168}px)`, transition: 'transform 0.6s ease-in-out' }}
-                    className="flex w-32 h-48 rounded-s-xs shrink-0 duration-300 bg-white cursor-pointer ">
-                    
-                    <div
-                    style={{ backgroundImage: `url(${item.picture[0]})` }}
-                    className='flex pb-2 object-cover w-full h-full bg-cover bg-no-repeat bg-center rounded-s-xs shrink-0 duration-300 hover:scale-105'
-                    />
-                    <div className="flex absolute bottom-0 translate-y-6 text-lg w-full justify-center break-words font-bold ">{item.title}</div>
+                    className="flex flex-cols w-48 h-56 rounded-s-xs shrink-0  duration-300 bg-white cursor-pointer ">
+                        <div
+                        style={{ backgroundImage: `url(${item.picture[0]})` }}
+                        className=''
+                        />
+                        <div className=" ">
+                            {item.title}
+                        </div>
+
                     </Link>
                 ))}
                 <div 

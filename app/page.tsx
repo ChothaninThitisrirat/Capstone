@@ -13,8 +13,9 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { set } from 'mongoose';
-import { DotLoader} from 'react-spinners';
+import { HashLoader,SyncLoader } from 'react-spinners';
 import SlideBookMiniWithTitle from '@/Components/SlideBookMiniWithTitle';
+import { arrayBuffer } from 'node:stream/consumers';
 
 
 interface POPBOOK {
@@ -42,6 +43,7 @@ const Page: FC<Props> = (): JSX.Element => {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [popBook, setPopBook] = useState<POPBOOK[]>([]);
+  const [newarrival, setNewarrival] = useState<POPBOOK[]>([])
   const [category1, setCategory1] = useState<Books[]>([]);
   const [category2, setCategory2] = useState<Books[]>([]);
   const [category3, setCategory3] = useState<Books[]>([]);
@@ -52,7 +54,7 @@ const Page: FC<Props> = (): JSX.Element => {
   const [category8, setCategory8] = useState<Books[]>([]);
   const [category9, setCategory9] = useState<Books[]>([]);
   const [category10, setCategory10] = useState<Books[]>([]);
-  const categories = ['นวนิยาย', 'สยองขวัญ', 'การ์ตูน', 'โรแมนติก', 'วิทยาศาสตร์', 'การเงิน - ลงทุน', 'การศึกษา', 'ท่องเที่ยว', 'การพัฒนาตนเอง', 'สุขภาพ'];
+  const categories = ['นวนิยาย', 'สยองขวัญ', 'การ์ตูน', 'โรแมนติก', 'วิทยาศาสตร์', 'การเงิน - ลงทุน', 'การศึกษา', 'ท่องเที่ยว', 'พัฒนาตนเอง', 'สุขภาพ'];
   const [allrecommend, setAllrecommend] = useState<Books[]>([]);
 
   useEffect(() => {
@@ -62,7 +64,7 @@ const Page: FC<Props> = (): JSX.Element => {
         return;
       }
       try {
-        const response = await fetch(`http://localhost:4000/api/ai`, {
+        const response = await fetch(`http://superdoggez.trueddns.com:10611/api/ai`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -123,14 +125,26 @@ console.log("RecommendedAllFinal",allrecommend)
     }
   };
 
+  const fetchNewArrival = async () => {
+    try {
+        const response = await fetch('api/book/newarrival');
+        const data = await response.json();
+        setNewarrival(data.newarrivalbook);
+        setLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     fetchPopularBooks();
+    fetchNewArrival();
   }, [session, status, router]);
 
 
   function Loader() {
     return <div className='w-screen h-screen flex items-center justify-center opacity-95'>
-        <DotLoader
+        <SyncLoader
         color='#435585' size={10} aria-label="Loading Spinner" data-testid="loader"/>
       </div>
 
@@ -372,7 +386,13 @@ console.log("RecommendedAllFinal",allrecommend)
         <div className='w-5/6 mt-10 '>
           <div className='flex justify-center pb-8'>
             {
-              <SlideBookBig data={popBook} Headtitle={"Popular Book"} Subtitle={"หนังสือดี หนังสือดัง คนนิยมอ่าน"}/>
+              <SlideBookBig data={popBook.slice(0,7)} Headtitle={"Popular Book"} Subtitle={"หนังสือดี หนังสือดัง คนนิยมอ่าน"}/>
+            }
+          </div>
+
+          <div className="flex justify-center pb-8">
+            {
+              <SlideBookBig data={newarrival} Headtitle={"New Arrival"} Subtitle={'หนังสือใหม่ล่าสุด'}/>
             }
           </div>
 
@@ -382,45 +402,48 @@ console.log("RecommendedAllFinal",allrecommend)
             }
           </div>
 
+          
+           
+
 
             {
-              category1 && (<SlideBookMiniWithTitle data={category1} Headtitle='นวนิยาย' />)
+              category1 && (<SlideBookMiniWithTitle data={category1.slice(0,10)} Headtitle='นวนิยาย' num_category={1}/>)
             }
 
             {
-              <SlideBookMiniWithTitle data={category2} Headtitle='สยองขวัญ'/>
+              category2 && (<SlideBookMiniWithTitle data={category2.slice(0,10)} Headtitle='สยองขวัญ' num_category={2}/>)
             }
 
             {
-              category3 &&<SlideBookMiniWithTitle data={category3} Headtitle='การ์ตูน'/>
+              category3 &&<SlideBookMiniWithTitle data={category3.slice(0,10)} Headtitle='การ์ตูน' num_category={3}/>
             }
 
             {
-              category4 &&<SlideBookMiniWithTitle data={category4} Headtitle='โรแมนติก'/>
+              category4 &&<SlideBookMiniWithTitle data={category4.slice(0,10)} Headtitle='โรแมนติก' num_category={4}/>
             }
 
             {
-              category5 &&<SlideBookMiniWithTitle data={category5} Headtitle='วิทยาศาสตร์'/>
+              category5 &&<SlideBookMiniWithTitle data={category5.slice(0,10)} Headtitle='วิทยาศาสตร์' num_category={5}/>
             }
 
             {
-              category6 &&<SlideBookMiniWithTitle data={category6} Headtitle='การเงิน - ลงทุน'/>
+              category6 &&<SlideBookMiniWithTitle data={category6.slice(0,10)} Headtitle='การเงิน - ลงทุน' num_category={6}/>
             }
           
             {
-              category7 &&<SlideBookMiniWithTitle data={category7} Headtitle='การศึกษา'/>
+              category7 &&<SlideBookMiniWithTitle data={category7.slice(0,10)} Headtitle='การศึกษา' num_category={7}/>
             }
 
             {
-              category8 &&<SlideBookMiniWithTitle data={category8} Headtitle='ท่องเที่ยว'/>
+              category8 &&<SlideBookMiniWithTitle data={category8.slice(0,10)} Headtitle='ท่องเที่ยว' num_category={8}/>
             }
 
             {
-              category9 &&<SlideBookMiniWithTitle data={category9} Headtitle='การพัฒนาตนเอง'/>
+              category9 &&<SlideBookMiniWithTitle data={category9.slice(0,10)} Headtitle='การพัฒนาตนเอง' num_category={9}/>
             }
 
             {
-              category10 && <SlideBookMiniWithTitle data={category10} Headtitle='สุขภาพ'/>
+              category10 && <SlideBookMiniWithTitle data={category10.slice(0,10)} Headtitle='สุขภาพ' num_category={10}/>
             }
         </div> 
 

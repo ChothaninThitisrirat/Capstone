@@ -14,12 +14,21 @@ from sklearn.decomposition import PCA
 from datetime import datetime
 import math
 from fastapi.middleware.cors import CORSMiddleware
+import matplotlib.pyplot as plt
+from sklearn.metrics import accuracy_score
 
 app = FastAPI()
 load_dotenv()
 
 origin = [
-    "http://localhost:3000"
+    "http://localhost:3000",
+    "http://localhost:4000",
+    "http://superdoggez.trueddns.com:10610",
+    "http://superdoggez.trueddns.com:10611"
+    "http://superdoggez.trueddns.com:10611",
+    "http://192.168.1.48/4000",
+    "http://192.168.1.48/3000",
+    "http://172.19.160.1/4000"
 ]
 
 app.add_middleware(
@@ -62,15 +71,15 @@ async def process_data(data: dict):
         user_cat = [cat.Category.name.strip() for cat in user_data.Userlike]            #Get the categories
         print(user_cat)
         books = await prisma.book.find_many(                                            #Get book in database thai is post trade and not trading
-            # where={
-            #     "status": "available",
-            #     "isPost_trade": True,
-            #     'NOT': [
-            #         {
-            #             "user_id": int(user)
-            #         }
-            #     ]
-            # },
+            where={
+                "status": "available",
+                "isPost_trade": True,
+                'NOT': [
+                    {
+                        "user_id": int(user)
+                    }
+                ]
+            },
             include={
                 "category":True,
                 "User":True
@@ -92,6 +101,8 @@ async def process_data(data: dict):
         cos_sim_data = pd.DataFrame(cosine_similarity(X))                                       #Use cosine similarity to find the closest categories book
         recommendations_dict = {}
         id = []
+        actual_values = []
+        predicted_values = []
 
         for i in range(user_cat_size):
             index_recomm = cos_sim_data.loc[i][user_cat_size:].sort_values(ascending=False).index.tolist()[0:math.ceil(10 / len(user_cat))]      
@@ -101,7 +112,7 @@ async def process_data(data: dict):
             
             for book in cat_data:                                       #Store the closest categories book in dictionary
                 recommendation = {
-                    "book_id" : book.id,
+                    "id" : book.id,
                     "title"  : book.title,
                     "picture" : book.picture,
                     "description" : book.description,
@@ -112,13 +123,23 @@ async def process_data(data: dict):
                     }
                 }
                 
-                if recommendation["book_id"] not in id:
+                if recommendation["id"] not in id:
                     recommendations.append(recommendation)
-                    id.append(recommendation["book_id"])
+                    id.append(recommendation["id"])
+                    predicted_values.append(book.category)
 
             watched_book = user_cat[i]
             recommendations_dict[watched_book] = recommendations
-    
+            
+        actual_values.append(user_cat)
+        plt.figure(figsize=(10, 6))
+        plt.scatter(range(len(actual_values)), actual_values, label='Actual', marker='o')
+        plt.scatter(range(len(predicted_values)), predicted_values, label='Predicted', marker='x')
+        plt.xlabel('Book Index')
+        plt.ylabel('Value')
+        plt.title('Actual vs Predicted Values')
+        plt.legend()
+        plt.show()
         return {                                                        #Return books
             "recommend" : recommendations_dict
         }
@@ -194,7 +215,7 @@ async def process_data(data: dict):
             
             for book in cat_data:
                 recommendation = {
-                    "book_id" : book.id,
+                    "id" : book.id,
                     "title"  : book.title,
                     "picture" : book.picture,
                     "description" : book.description,
@@ -205,9 +226,9 @@ async def process_data(data: dict):
                     }
                 }
                 
-                if recommendation["book_id"] not in id:
+                if recommendation["id"] not in id:
                     recommendations.append(recommendation)
-                    id.append(recommendation["book_id"])
+                    id.append(recommendation["id"])
 
             watched_book = book_cat[i]
             recommendations_dict[watched_book] = recommendations
@@ -221,5 +242,5 @@ async def process_data(data: dict):
 
 if __name__ == '__main__':
     import uvicorn
-    uvicorn.run(app, host='localhost', port=4000)
+    uvicorn.run(app, host='192.168.1.48', port=4000)
 

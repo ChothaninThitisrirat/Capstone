@@ -32,7 +32,7 @@ interface BookItems {
 
 
     function Loader() {
-        return <div className='w-full  flex items-center justify-center opacity-95'>
+        return <div className='w-full h-96 flex items-center justify-center opacity-95'>
             <DotLoader
             color='#435585' size={35} aria-label="Loading Spinner" data-testid="loader"/>
           </div>
@@ -51,6 +51,7 @@ interface BookItems {
                     <p className='text-5xl font-bold'>{Headtitle}</p>
                     <div className='flex text-xl w-full item-center font-bold mt-5'>
                         <p className='flex items-center justify-start w-1/2'>{Subtitle}</p>
+                        { data?.length === 0 ? <div></div> :
                         <div className="flex w-1/2 justify-end" >
                         {moreFrom === 0
                             ? <div 
@@ -76,7 +77,8 @@ interface BookItems {
                             style={{background:'linear-gradient(to right, rgba(255, 255, 255, 0) 20%, #f9f9f9 80%)'}}
                             className="w-32 h-115 mt-20 absolute z-10">
                             </div>
-                        </div>
+                            
+                        </div>}
                         
                     </div>
                 </div>

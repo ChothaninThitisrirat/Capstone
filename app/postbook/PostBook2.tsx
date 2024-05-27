@@ -61,7 +61,7 @@ const PostBook2: React.FC<PostBook2Props> = ({setStatePage, bookSelect, book}) =
         }
         
     }, [addressPost, makeAppointment]);
-
+    console.log('bookSelect',book);
 
 
     useEffect(() => {
@@ -93,7 +93,7 @@ const PostBook2: React.FC<PostBook2Props> = ({setStatePage, bookSelect, book}) =
         <div className="flex z-20 flex-col sm:flex-row">
             <div className="flex h-auto sm:h-screen w-full sm:w-1/3 mt-10 sm:mt-0 sm:items-center justify-center sm:justify-end z-20">
                 <div className="flex flex-col">
-                    <div className='flex mb-5 sm:mb-0 sm:-translate-y-20 justify-center text-2xl font-bold'>Book Name</div>
+                    <div className='flex mb-5 sm:mb-0 sm:-translate-y-20 justify-center text-2xl font-bold'>{bookProp2[0]?.title }</div>
                     <div className={classBook}>
                         <img
                         src={bookProp2[0]?.picture[0]}
