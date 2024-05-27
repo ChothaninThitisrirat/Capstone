@@ -63,6 +63,7 @@ export default function Profile() {
       const response = await fetch(`/api/user/${userID}`)
       const data = await response.json()
       setUser(data)
+      console.log(data,"user")
     }catch(err){
       console.log("Fetch User Data", err)
     }

@@ -10,6 +10,7 @@ import Link from 'next/link';
 interface SlideBookMiniwithTitleProps {
     data: any;
     Headtitle: string;
+    num_category: number;
 }
 
 interface BookItem {
@@ -18,12 +19,20 @@ interface BookItem {
     picture: string[];
 }
 
-const SlideBookMiniWithTitle: React.FC<SlideBookMiniwithTitleProps> = ({data, Headtitle}) =>{
+const SlideBookMiniWithTitle: React.FC<SlideBookMiniwithTitleProps> = ({data, Headtitle, num_category}) =>{
     const [moreFrom, setMoreFrom] = useState(0)
     return (
         <>
-            <div className="font-bold text-5xl pt-12 pb-4">
-                {Headtitle}
+            <div className="flex flex-cols font-bold w-full text-5xl pt-12 pb-4">
+                <div className="flex w-1/2">
+                    {Headtitle}
+                </div>
+                <Link
+                href={`/category/${num_category}`}
+                className="flex w-1/2 justify-end text-xl items-center">
+                    ดูทั้งหมด
+                </Link>
+                
             </div>
             <div
             className="flex sm:gap-10 justify-start sm:justify-center items-center px-1 w-auto pb-8 relative">
