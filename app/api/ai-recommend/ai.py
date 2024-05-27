@@ -70,15 +70,15 @@ async def process_data(data: dict):
         user_cat = [cat.Category.name.strip() for cat in user_data.Userlike]            #Get the categories
         print(user_cat)
         books = await prisma.book.find_many(                                            #Get book in database thai is post trade and not trading
-            # where={
-            #     "status": "available",
-            #     "isPost_trade": True,
-            #     'NOT': [
-            #         {
-            #             "user_id": int(user)
-            #         }
-            #     ]
-            # },
+            where={
+                "status": "available",
+                "isPost_trade": True,
+                'NOT': [
+                    {
+                        "user_id": int(user)
+                    }
+                ]
+            },
             include={
                 "category":True,
                 "User":True
@@ -109,7 +109,7 @@ async def process_data(data: dict):
             
             for book in cat_data:                                       #Store the closest categories book in dictionary
                 recommendation = {
-                    "book_id" : book.id,
+                    "id" : book.id,
                     "title"  : book.title,
                     "picture" : book.picture,
                     "description" : book.description,
@@ -120,9 +120,9 @@ async def process_data(data: dict):
                     }
                 }
                 
-                if recommendation["book_id"] not in id:
+                if recommendation["id"] not in id:
                     recommendations.append(recommendation)
-                    id.append(recommendation["book_id"])
+                    id.append(recommendation["id"])
 
             watched_book = user_cat[i]
             recommendations_dict[watched_book] = recommendations
@@ -202,7 +202,7 @@ async def process_data(data: dict):
             
             for book in cat_data:
                 recommendation = {
-                    "book_id" : book.id,
+                    "id" : book.id,
                     "title"  : book.title,
                     "picture" : book.picture,
                     "description" : book.description,
@@ -213,9 +213,9 @@ async def process_data(data: dict):
                     }
                 }
                 
-                if recommendation["book_id"] not in id:
+                if recommendation["id"] not in id:
                     recommendations.append(recommendation)
-                    id.append(recommendation["book_id"])
+                    id.append(recommendation["id"])
 
             watched_book = book_cat[i]
             recommendations_dict[watched_book] = recommendations
