@@ -38,7 +38,7 @@ const SlideBookMiniWithTitle: React.FC<SlideBookMiniwithTitleProps> = ({data, He
                 
             </div>
             <div
-            className="flex sm:gap-10 justify-start sm:justify-center items-center px-1 w-auto pb-8 relative">
+            className="flex sm:gap-10 justify-start sm:justify-center items-center px-1 w-full pb-8 relative">
             {moreFrom === 0 
             ? <div 
             style={{width: '70px'}}

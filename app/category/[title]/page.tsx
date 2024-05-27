@@ -64,6 +64,7 @@ export default function Profile() {
    const fetchpopularBooks = async (title: string) => {
     const res = await fetch(`/api/category/popularbook/${title}`)
     const data = await res.json()
+    console.log(title)
     console.log(data.popularbook)
     setPopBook(data.popularbook)
    }
@@ -95,7 +96,7 @@ export default function Profile() {
                 matchingCategory && <SlideBookBig data={popBook} Headtitle={`เล่มยอดนิยมในหมวดหมู่ ${matchingCategory.name}`} Subtitle={"หนังสือยอดนิยม"}/>
               }
         </div>
-        <div className="flex w-10/12 justify-center">
+        <div className="flex w-10/12 justify-center gap-12 pt-16 flex-wrap">
           {BookCategory?.length === 0 ? (
             <div
               style={{ width: '1250px', WebkitOverflowScrolling: 'touch' }}

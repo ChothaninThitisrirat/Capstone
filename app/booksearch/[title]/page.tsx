@@ -57,7 +57,7 @@ export default function Profile() {
   return (
     <>
       <Navbar backGroundOn withTitle/>
-      <TitleBar textTitle={`ผลการค้นหาของ ${newtitle}`} />
+      <TitleBar textTitle={`ผลการค้นหา`} />
       <div className='flex w-full items-center gap-12 justify-center flex-wrap pt-16'>
         {BookSearch?.length === 0 ? (
           <div
