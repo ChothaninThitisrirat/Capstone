@@ -122,7 +122,7 @@ const EditPage3: React.FC = (): JSX.Element => {
             <div className="flex w-full h-full bg-white flex-col items-center justify-center">
 
                {/* Facebook */}
-               <div className="flex w-1/2 flex-col h-fit justify-start items-start pb-6">
+               <div className="flex w-11/12 flex-col h-fit justify-start items-start pb-6 pt-6 lg:w-4/12">
                   <div className="flex w-4/6">
                      <p className="font-bold text-2xl text-graynamehead">Facebook</p>
                   </div>
@@ -131,13 +131,13 @@ const EditPage3: React.FC = (): JSX.Element => {
                      <input
                      value={tempFacebook}
                      onChange={(e) => setTempFacebook(e.target.value)}
-                     className="font-bold h-fit py-4 pl-5 text-grayname"
+                     className="font-bold w-full h-fit py-4 pl-5 text-grayname"
                      /> 
                   </div>
                </div>
 
                {/* IG */}
-               <div className="flex w-1/2 flex-col h-fit justify-center items-start pb-6">
+               <div className="flex  w-11/12 flex-col h-fit justify-center items-start pb-6 lg:w-4/12">
                   <div className="flex w-4/6">
                      <p className="font-bold text-2xl text-graynamehead">Instagram</p>
                   </div>
@@ -146,13 +146,13 @@ const EditPage3: React.FC = (): JSX.Element => {
                      <input
                      value={tempInstagram}
                      onChange={(e) => setTempInstagram(e.target.value)} 
-                     className="font-bold h-fit py-4 pl-5 text-grayname"
+                     className="font-bold w-full h-fit py-4 pl-5 text-grayname"
                      /> 
                   </div>
                </div>
 
                {/* Line */}
-               <div className="flex w-1/2 flex-col h-fit justify-center items-start pb-6">
+               <div className="flex  w-11/12 flex-col h-fit justify-center items-start pb-6 lg:w-4/12">
                   <div className="flex w-4/6">
                      <p className="font-bold text-2xl text-graynamehead">Line</p>
                   </div>
@@ -163,11 +163,11 @@ const EditPage3: React.FC = (): JSX.Element => {
                      <input
                      value={tempLineID}
                      onChange={(e) => setTempLineID(e.target.value)} 
-                     className="font-bold h-fit py-4 pl-5 text-grayname"
+                     className="font-bold w-full h-fit py-4 pl-5 text-grayname"
                      /> 
                   </div>
                </div>
-               <div className="flex mt-8">
+               <div className="flex mt-8 pb-8">
 
                   <button
                      onClick={handleCancelUpdateContact}

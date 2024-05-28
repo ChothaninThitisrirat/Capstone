@@ -378,7 +378,221 @@ console.log('useruseruser',category)
 
 
   return (
-    <>
+    <>  
+    {window.innerWidth < 1020 ? 
+      <div className="flex flex-col justify-center items-center pt-8 pb-8">
+        <div className="flex flex-col w-full h-5/6 pb-12 bg-white overflow-hidden">
+            <div className="flex justify-center items-center w-full flex-col bg-white mb-8">
+                <div
+                    className='aspect-square  w-6/12 bg-cover bg-black bg-no-repeat rounded-full'
+                    style={{ backgroundImage: `url(${user.user.profile_picture})` }}
+                  />
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileInputChange}
+                    className="hidden"
+                    id="profilePictureInput"
+                  />
+                  <label
+                    htmlFor="profilePictureInput"
+                    className="flex w-6/12 justify-center items-center bg-dark2 text-white font-bold rounded-3xl mt-8 py-2 cursor-pointer"
+                  >
+                    เปลี่ยนรูปโปรไฟล์
+                  </label>
+                  <button
+                    onClick={handleUploadProfilePicture}
+                    className="flex w-6/12 justify-center items-center bg-dark2 text-white font-bold rounded-3xl mt-4 py-2"
+                  >
+                    Upload
+                  </button>
+              </div>
+              
+
+                
+
+              <div className="flex flex-col justify-center items-center w-2/3  h-full bg-white ">
+                <div className="flex w-10/12 h-full flex-col justify-center items-center">
+                  <div className="flex flex-col w-full justify-around">
+
+                    {/* FirstnameInput */}
+                    <div className="flex w-1/2 flex-col h-fit justify-center items-start">
+                      <div className="flex items-start w-4/6">
+
+                        <p className="font-bold text-2xl text-graynamehead">
+                          ชื่อ
+                        </p>
+
+                      </div>
+                        <div className="flex w-fit border-b border-gray-400 justify-center items-center">
+                            <Icon icon="wpf:name" className="flex w-7 h-7  text-gray-400" />
+                            <input
+                              value={user.user.first_name}
+                              readOnly
+                              className="font-bold h-fit py-4 pl-5 text-grayname"
+                            /> 
+                            <Icon icon="material-symbols:lock-outline" className="flex w-7 h-7  text-gray-400" />
+                        </div>
+                    </div>
+
+                    {/* LastnameInput */}
+                    <div className="flex w-1/2 flex-col h-fit justify-center items-start">
+                      <div className="flex items-start w-4/6">
+                        <p className="font-bold text-2xl text-graynamehead">นามสกุล</p>
+                      </div>
+                        <div className="flex w-fit border-b border-gray-400 justify-center items-center">
+                            <Icon icon="wpf:name" className="flex w-7 h-7  text-gray-400" />
+                            <input
+                              value={user.user.last_name}
+                              readOnly
+                              className="font-bold h-fit py-4 pl-5 text-grayname"
+                            /> 
+                            <Icon icon="material-symbols:lock-outline" className="flex w-7 h-7  text-gray-400" />
+                          </div>
+                    </div>
+                    <div className="flex w-1/2 flex-col h-fit justify-center items-start">
+                      <div className="flex items-start w-4/6">
+                        <p className="font-bold text-2xl text-graynamehead">อีเมล์</p>
+                      </div>
+                        <div className="flex w-fit border-b border-gray-400 justify-center items-center">
+                            <Icon icon="ic:outline-email" className="flex w-7 h-11 text-gray-400" />
+                            <input
+                              value={user.user.email}
+                              readOnly
+                              className="font-bold h-fit py-4 pl-5 text-grayname"
+                            /> 
+                            <div className='flex w-full h-full justify-end items-center'>
+                              <Icon icon="material-symbols:lock-outline" className="flex w-7 h-7  text-gray-400" />
+                            </div>
+                            
+                        </div>
+                  </div>
+                  <div className="flex items-start w-full">
+                        <p className="font-bold text-2xl text-graynamehead">เบอร์โทรศัพท์</p>
+                      </div>
+                        <div className="flex w-full border-b border-gray-400 justify-start items-center">
+                            <Icon icon="mynaui:telephone" className="flex w-7 h-7 text-gray-400" />
+                              <input
+                                type="text"
+                                value={isEditingPhone ? tempPhoneNumber : user.user.phone_number}
+                                readOnly={!isEditingPhone}
+                                onChange={(e) => setTempPhoneNumber(e.target.value)}
+                                className="font-bold h-fit py-4 pl-5 text-grayname bg-transparent border-none focus:outline-none"
+                              /> 
+                              {isEditingPhone ? (
+                                <div className='flex flex-col gap-y-2'>
+                                  <button
+                                    onClick={handleDonePhoneClick}
+                                    className="ml-2 hover:underline  rounded-full bg-dark2 py-1 px-6 text-white font-bold"
+                                  >
+                                    Done
+                                  </button>
+                                  <button
+                                    onClick={handleCancelPhoneClick}
+                                    className="ml-2 hover:underline  rounded-full bg-red-500 p-1 px-6 text-white font-bold"
+                                  >
+                                    Cancel
+                                  </button>
+                                </div>
+                              ) : (
+                                <button
+                                  onClick={handleEditPhoneClick}
+                                  className="ml-2 hover:underline rounded-full bg-dark2 p-2 px-6 text-white font-bold"
+                                >
+                                  Edit
+                                </button>
+                              )}
+                          </div>
+                    
+                  </div>
+
+                 
+
+                  
+                    
+
+                    
+                </div> 
+            </div>
+        </div>
+        <div className="flex w-11/12 flex-col h-fit justify-center items-center mt-8">
+                      <div className="flex items-center justify-between w-full">
+                        <p className="font-bold text-2xl  text-graynamehead">Category หนังสือที่ชื่นชอบ</p>
+                        {stateCatEdit
+                        ?<div className='flex flex-col items-center justify-center gap-y-2 font-bold '>
+
+
+                          <button
+                            onClick={()=>dataCatin.length > 1 ? handleDoneEditCategory():undefined}
+                            className=" bg-dark2 hover:underline text-white p-1 px-7 rounded-full"
+                          >
+                            Done
+                          </button>
+                          <button
+                            onClick={handleCancelEditCategory}
+                            className=" bg-red-500 hover:underline text-white p-1 px-5 rounded-full items-center justify-center"
+                          >
+                            Cancel
+                          </button>
+                         
+                          
+                        </div>
+                        :<button
+                          onClick={handleEditCategory}
+                          className="ml-2 hover:underline rounded-full bg-dark2 p-2 px-6 text-white font-bold"
+                        >
+                          Edit
+                        </button>}
+                      </div>
+                        
+                    </div>
+
+                    
+                    <div className="flex w-11/12 border-b border-gray-400 justify-start items-center" />
+                        <div className="flex w-full justify-center">
+                          <div className="flex flex-cols h-auto w-11/12 flex-wrap mt-3 gap-2">
+                          {stateCatEdit
+                          ?<>
+                            <div className={dataCatin.length > 1
+                              ?"flex w-full mb-2 duration-300 justify-end text-green-400 text-sm gap-1"
+                              :"flex w-full mb-2 duration-300 justify-end text-gray-400 text-sm gap-1"}>
+                                  {dataCatin.length > 1 ? (
+                                      <Icon
+                                      className="mt-1"
+                                      icon="fluent:checkmark-16-filled"
+                                      width="15"
+                                      height="15"
+                                  />
+                              ) : (
+                                  <Icon
+                                      className="mt-2 ml-1"
+                                      icon="material-symbols:circle"
+                                      width="5"
+                                      height="5"
+                                  />
+                              )}
+                              เลือกอย่างน้อย 2 หมวดหมู่
+                              </div>
+                              <div className="flex flex-wrap items-center gap-x-2 gap-y-3">
+                                {category.map((cate, index) => (
+                                    <div
+                                    onClick={() => {handleSelectBookCategory(cate)}}
+                                    key={index} 
+                                    className={classCategory+' cursor-pointer '+ (cate.defaultClass?"bg-gray-300":cate.color )}
+                                    >{cate.name}</div>
+                                ))}
+                            </div>
+                          </>
+                          :(categoryShow.map((cate, index) => (
+                                <div key={index} className={classCategory+' '+cate.color}
+                                >{cate.name}</div>
+                            )))}
+                          </div>
+                        </div>
+
+      </div>
+    
+    :
         <div className="flex w-full h-5/6 pb-12 bg-white overflow-hidden">
             <div className="flex justify-center items-center w-1/3 flex-col bg-white">
                 <div
@@ -484,24 +698,24 @@ console.log('useruseruser',category)
                                 className="font-bold h-fit py-4 pl-5 text-grayname bg-transparent border-none focus:outline-none"
                               /> 
                               {isEditingPhone ? (
-                                <>
+                                <div className=''>
                                   <button
                                     onClick={handleDonePhoneClick}
-                                    className="ml-2 text-blue-500 hover:underline"
+                                    className="bg-dark2 hover:underline text-white p-1 px-7 rounded-full font-bold mr-1"
                                   >
                                     Done
                                   </button>
                                   <button
                                     onClick={handleCancelPhoneClick}
-                                    className="ml-2 text-red-500 hover:underline"
+                                    className="bg-red-500 hover:underline text-white p-1 px-7 rounded-full font-bold"
                                   >
                                     Cancel
                                   </button>
-                                </>
+                                </div>
                               ) : (
                                 <button
                                   onClick={handleEditPhoneClick}
-                                  className="ml-2 text-blue-500 hover:underline"
+                                  className="bg-dark2 hover:underline text-white p-1 px-7 rounded-full font-bold"
                                 >
                                   Edit
                                 </button>
@@ -584,7 +798,7 @@ console.log('useruseruser',category)
                     
                 </div>
             </div>
-        </div>
+        </div>}
     </>
   );
 };
