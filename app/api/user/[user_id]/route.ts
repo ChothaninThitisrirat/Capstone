@@ -33,7 +33,7 @@ export async function GET(req: Request,{ params }: { params: { user_id: string }
         })
 
         const book_agg = await prismadb.book.aggregate({
-            where: { user_id: parseInt(params.user_id) },
+            where: { id: parseInt(params.user_id),isPost_trade:true },
             _count: {
                 id:true
             }
