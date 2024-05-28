@@ -26,7 +26,7 @@ export async function PUT(req: Request) {
     }
 }
 
-export async function GET(req: Request , params: { user_id: string }) {
+export async function GET(req: Request ,{ params }: { params: { user_id: string }}) {
     try {
         const user_cat = await prismadb.userlike.findMany({
             where: { user_id:parseInt(params.user_id) },
@@ -35,7 +35,7 @@ export async function GET(req: Request , params: { user_id: string }) {
             }
         })
 
-        if (user_cat) {
+        if (!user_cat) {
             return NextResponse.json({
                 category:null,
                 message: "Invalid user id."
