@@ -349,37 +349,51 @@ console.log("RecommendedAllFinal",allrecommend)
 
         {/* category */}
         <div className='flex justify-center items-center w-screen bg-white h-fit p-8' id='category'>
-          <div className='grid grid-cols-2 lg:grid-cols-5 gap-4 justify-around w-min-80 bg-white'>
-            <Link
-            href='/category/1'
-            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg  bg-novel hover:shadow-xl rounded-2xl text-black transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>นวนิยาย</Link>
-            <Link
-            href='/category/2'
-            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-horror1 hover:shadow-xl rounded-2xl text-black transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>สยองขวัญ</Link>
+          <div className='grid grid-cols-2 lg:grid-cols-5 gap-4 font-semibold justify-around w-min-80 bg-white'>
+          <Link
+            href='/category/10'
+            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-health hover:shadow-xl rounded-2xl text-neutral-50 transform transition duration-300 ease-in-out text-nowrap hover:scale-105 '>สุขภาพ</Link>
             <Link
             href='/category/3'
-            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-cartoon hover:shadow-xl rounded-2xl text-black transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>การ์ตูน</Link>
-            <Link
-            href='/category/4'
-            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-romantic hover:shadow-xl rounded-2xl text-black transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>โรแมนติก</Link>
-            <Link
-            href='/category/5'
-            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-science hover:shadow-xl rounded-2xl text-black transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>วิทยาศาสตร์</Link>
-            <Link
-            href='/category/6'
-            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-business hover:shadow-xl rounded-2xl text-black transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>การเงิน - ลงทุน</Link>
-            <Link
-            href='/category/7'
-            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg- border-2 border-education hover:shadow-xl rounded-2xl text-black transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>การศึกษา</Link>
-            <Link
-            href='/category/8'
-            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg- border-2 border-travel hover:shadow-xl rounded-2xl text-black transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>ท่องเที่ยว</Link>
+            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-cartoon hover:shadow-xl rounded-2xl text-neutral-100 transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>การ์ตูน</Link>
+            
             <Link
             href='/category/9'
-            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg- border-2 border-develop hover:shadow-xl rounded-2xl text-black transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>พัฒนาตนเอง</Link>
+            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-develop hover:shadow-xl rounded-2xl text-black transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>พัฒนาตนเอง</Link>
+            
             <Link
-            href='/category/10'
-            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg- border-2 border-health hover:shadow-xl rounded-2xl text-black transform transition duration-300 ease-in-out text-nowrap hover:scale-105 '>สุขภาพ</Link>
+            href='/category/7'
+            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-education hover:shadow-xl rounded-2xl text-neutral-100 transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>การศึกษา</Link>
+            
+            <Link
+            href='/category/5'
+            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-science hover:shadow-xl rounded-2xl text-neutral-50 transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>วิทยาศาสตร์</Link>
+            
+        
+            
+            
+           
+               <Link
+            href='/category/4'
+            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-romantic hover:shadow-xl rounded-2xl text-white transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>โรแมนติก</Link>
+           
+            <Link
+            href='/category/1'
+            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg  bg-novel hover:shadow-xl rounded-2xl text-neutral-50 transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>นวนิยาย</Link>
+           <Link
+            href='/category/6'
+            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-business hover:shadow-xl rounded-2xl text-black transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>การเงิน - ลงทุน</Link>
+          
+            
+            <Link
+            href='/category/8'
+            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-travel hover:shadow-xl rounded-2xl text-white transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>ท่องเที่ยว</Link>
+           
+           <Link
+            href='/category/2'
+            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-horror1 hover:shadow-xl rounded-2xl text-neutral-200 transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>สยองขวัญ</Link>
+
+            
           </div>
         </div>
         <div className='flex flex-col w-screen bg-bg justify-center items-center'>

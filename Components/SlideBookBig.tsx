@@ -85,11 +85,11 @@ interface BookItems {
                 { data?.length === 0 ? Loader() :
                 <div 
                 style={{WebkitOverflowScrolling: 'touch'}}
-                className="flex gap-14 w-full justify-start items-center overflow-x-auto close-scrollbar pb-8">
+                className="flex gap-14 w-full justify-start items-center overflow-x-auto  close-scrollbar pb-8">
                     {Array.isArray(data) && data.map((item: BookItems, index:number)=>(
                         <div 
                         key={index}
-                        className='flex flex-row justify-start shrink-0 w-5/12 h-96 drop-shadow-xl rounded-2xl duration-300  bg-white min-w-128 mt-8'
+                        className='flex flex-row justify-start shrink-0 w-5/12 h-96 drop-shadow-xl rounded-2xl duration-300 max-w-128 bg-white min-w-128 mt-8'
                         style={{transform: `translateX(${moreFrom * -694}px)`, transition: 'transform 0.6s ease-in-out' }}>
                             
                             <div className='flex justify-center w-56 bg-cover bg-center bg-no-repeat rounded-l-2xl' style={{backgroundImage: `url(${item.picture[0]})`}} />

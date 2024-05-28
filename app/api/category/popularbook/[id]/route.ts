@@ -8,6 +8,7 @@ export async function GET(req: Request,{ params }: { params: { id: string }}) {
             where: { id:parseInt(params.id) },
             include: {
                 book: {
+                    where: { isPost_trade:true },
                     select: {
                         id:true,
                         title:true,

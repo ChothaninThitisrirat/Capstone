@@ -27,7 +27,7 @@ interface BookItem {
 }
 interface BookInfoShow {
     bookinfo: {
-        id: number;
+        id: any;
         title: string; //
         description: string; //
         picture: string[]; //
@@ -95,7 +95,7 @@ const BookInfo: React.FC<BookInfoProps> = ({ setTrade, bookInfo }) => {
     const [ state1, setState1 ] = useState(false)
     const param = useParams();
 
-    const categories = ['นวนิยาย', 'สยองขวัญ', 'การ์ตูน', 'โรแมนติก', 'วิทยาศาสตร์', 'การเงิน - ลงทุน', 'การศึกษา', 'ท่องเที่ยว', 'การพัฒนาตนเอง', 'สุขภาพ'];
+    const categories = ['นวนิยาย', 'สยองขวัญ', 'การ์ตูน', 'โรแมนติก', 'วิทยาศาสตร์', 'การเงิน - ลงทุน', 'การศึกษา', 'ท่องเที่ยว', 'พัฒนาตนเอง', 'สุขภาพ'];
     const [allrecommend, setAllrecommend] = useState<Books[]>([]);
 
     const thaiMonths = [
@@ -356,22 +356,17 @@ console.log('datePost',datePost)
         }
       };
 
-
       useEffect(() => {
         async function fetchData() {
-          if (!session) {
-            console.log('No session available');
-            return;
-          }
           try {
-            const response = await fetch(`http://superdoggez.trueddns.com:10611/api/ai/book`, {
+            const response = await fetch(`http://superdoggez.trueddns.com:10612/api/ai/book`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
               },
               body: JSON.stringify({
-               book_id: Number(bookInfoShow?.bookinfo.id),
-                })
+                book_id: parseInt(bookInfoShow?.bookinfo.id),
+              })
             });
             
             if (response.ok) {
@@ -393,7 +388,7 @@ console.log('datePost',datePost)
         fetchData();
       }, [session]);
 
-
+      console.log(`${bookInfoShow?.bookinfo.id}`, 'all recommendations');
 
 
 

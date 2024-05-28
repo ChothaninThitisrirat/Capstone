@@ -93,7 +93,8 @@ export default function Profile() {
                 matchingCategory && <SlideBookBig data={popBook} Headtitle={`เล่มยอดนิยมในหมวดหมู่ ${matchingCategory.name}`} Subtitle={"หนังสือยอดนิยม"}/>
               }
         </div>
-        <div className="flex w-10/12 justify-center gap-12 pt-16 flex-wrap">
+        <p className='text-5xl font-bold'>หนังสือทั้งหมด</p>
+        <div className="flex w-10/12 justify-center gap-12 flex-wrap">
           {BookCategory?.length === 0 ? (
             <div
               style={{ width: '1250px', WebkitOverflowScrolling: 'touch' }}

@@ -50,10 +50,10 @@ const SlideBookMiniWithTitle: React.FC<SlideBookMiniwithTitleProps> = ({data, He
 
                 <div 
                 style={{width: '1350px', WebkitOverflowScrolling: 'touch'}}
-                className="flex gap-6 justify-start items-center overflow-x-auto h-fit w-48 close-scrollbar pt-12">
+                className="flex gap-6 justify-start items-start overflow-x-auto h-fit w-48 close-scrollbar pt-12">
                 {data?.map((item: BookItem, index: number) => (
                     <Link 
-                    className='flex flex-col'
+                    className='flex flex-col justify-center items-center '
                     href={`/bookinfo/${item.id}`} 
                     style={{transform: `translateX(${moreFrom * -215}px)`, transition: 'transform 0.6s ease-in-out'}} 
                     >
@@ -61,7 +61,7 @@ const SlideBookMiniWithTitle: React.FC<SlideBookMiniwithTitleProps> = ({data, He
                         key={index}
                         style={{ backgroundImage: `url(${item.picture[0]})` }}
                         className="flex flex-col w-48 h-72 rounded-s-xs shrink-0 duration-300 bg-white cursor-pointer bg-cover bg-no-repeat bg-center" />
-                        <div className="flex w-48 h-12 justify-center items-end break-all font-bold text-lg line-clamp-1">
+                        <div className="flex w-40 h-max  justify-center items-end  font-bold text-lg ">
                         {item.title}
                         </div>
                     </Link>
