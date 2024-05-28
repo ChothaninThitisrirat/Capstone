@@ -141,6 +141,7 @@ const [loadcompo,setLoadcompo] = useState(false)
       fetchData();
     }
   }, [status, router, session, loadcompo])
+
   useEffect(() => {
     const fetchData = async () => {
         try {
@@ -284,17 +285,19 @@ const [loadcompo,setLoadcompo] = useState(false)
   const handleCancelEditCategory =()=>{
     setStateCatEdit(false)
   }
+
   const handleDoneEditCategory =()=>{
+    console.log('nuhkhdawhgdjhafkj')
     const fetchData = async ()=>{
       try{
         const response = await axios.put(`/api/user/${session?.user.id}/category`, {
           user_id:Number(session?.user.id),
           category:dataCatin
         });
+        console.log(response.data)
         setLoadcompo(true)
         setStateCatEdit(false)
       }catch (error) {
-          setLoading(false);
           console.error('Error:', error);
       }
     }
@@ -518,7 +521,7 @@ console.log('useruseruser',category)
                             Cancel
                           </button>
                           <button
-                            onClick={()=>dataCatin.length > 1 ? handleDoneEditCategory:null}
+                            onClick={()=>dataCatin.length > 1 ? handleDoneEditCategory():undefined}
                             className=" text-blue-500 hover:underline"
                           >
                             Done
