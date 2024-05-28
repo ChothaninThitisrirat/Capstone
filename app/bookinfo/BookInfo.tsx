@@ -27,7 +27,7 @@ interface BookItem {
 }
 interface BookInfoShow {
     bookinfo: {
-        id: any;
+        id: number;
         title: string; //
         description: string; //
         picture: string[]; //
@@ -359,13 +359,13 @@ console.log('datePost',datePost)
       useEffect(() => {
         async function fetchData() {
           try {
-            const response = await fetch(`http://superdoggez.trueddns.com:10612/api/ai/book`, {
+            const response = await fetch(`http://superdoggez.trueddns.com:10610/api/ai/book`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
               },
               body: JSON.stringify({
-                book_id: parseInt(bookInfoShow?.bookinfo.id),
+                book_id: bookInfoShow?.bookinfo.id,
               })
             });
             
@@ -386,7 +386,7 @@ console.log('datePost',datePost)
         }
         
         fetchData();
-      }, [session]);
+      }, [bookInfoShow]);
 
       console.log(`${bookInfoShow?.bookinfo.id}`, 'all recommendations');
 

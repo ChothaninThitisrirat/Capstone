@@ -13,7 +13,11 @@ import StatusTrade from '@/Components/StatusTrade';
 import UserReview from '@/Components/UserReview';
 
 interface Book {
-    Book_Trade_book_idToBook:any
+    Book_Trade_book_idToBook:{
+        id: number;
+        title: string;
+        picture: string[];
+    }
     id: number;
     status: string;
 }
@@ -54,7 +58,7 @@ function statustrade() {
     const [book, setBook] = useState<Book[] | null>([]);
     const [tradeId, setTradeId] = useState<number>(0)
 
-
+    
 
     useEffect(() => {
         if (stateOpen) {
@@ -105,6 +109,7 @@ function statustrade() {
                     setBook(null)
                 }
                 setLoading(false);
+            
             } catch (error) {
                 console.error('Error:', error);
                 setLoading(false);
@@ -115,7 +120,7 @@ function statustrade() {
         }
     }, [userId, loadcompo]);
     
-    console.log('book', book);
+
 
     const handleStatusCheck = (trade: any) => {
         

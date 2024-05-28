@@ -116,14 +116,14 @@ export default function Profile() {
             {user.user.username}
           </div>
 
-          <div className="flex w-2/5 bg-white rounded-xl drop-shadow-2xl mb-8">
-            <div className="flex w-full h-full p-8">
-              <div className="flex w-1/2 h-full justify-center items-center flex-col">
+          <div className="flex w-2/5 bg-white rounded-xl justify-center items-center drop-shadow-2xl mb-8 min-w-80">
+            <div className="flex flex-col w-full h-full p-8 lg:flex-row justify-center items-center">
+              <div className="flex w-full h-full justify-center items-center flex-col">
                 <p>คะแนนผู้ใช้</p>
                 <Rating name="read-only" value={user.review_avg} readOnly size="large" />
                 <p>{user.review_avg} คะแนน ({user.review_count.reviewer_id})</p>
               </div>
-              <div className="flex w-1/2 h-full justify-center items-center flex-col">
+              <div className="flex w-full pt-8 h-full justify-center items-center flex-col lg:pt-0">
                 <p>รายการหนังสือทั้งหมด</p>
                 <p>{user.book_count.id}</p>
                 <p>เล่ม </p>

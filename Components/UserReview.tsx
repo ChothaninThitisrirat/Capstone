@@ -25,6 +25,10 @@ interface BookInfo {
         profile_picture:string;
     }
 }
+
+interface BookPicture {
+    picture: any;
+}
 const UserReview: React.FC<UserReviewProp> = ({classReviewUser, setPopUpReviewUser, tradeId}) =>{
 
     const [topicReview, setTopicReview] = useState('')
@@ -35,6 +39,7 @@ const UserReview: React.FC<UserReviewProp> = ({classReviewUser, setPopUpReviewUs
     const [loading, setLoading] = useState(true)// true
     const [loadingRe, setLoadingRe] = useState(false)
     const [bookInfo, setBookInfo] = useState<BookInfo>()
+    const [picture, setPicture] = useState<BookPicture>()
     const { data: session, status } = useSession()
     const userId  = session?.user.id;
 
@@ -63,6 +68,31 @@ const UserReview: React.FC<UserReviewProp> = ({classReviewUser, setPopUpReviewUs
         }
         
     }, [tradeId]);
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if (tradeId) {
+                try {
+                    console.log('tradeId---',tradeId);
+                    const response = await axios.get(`/api/trade/myrequest/${userId}/book/${tradeId}`);
+                    console.log(userId,'response.data',response.data)
+                    setPicture(response.data.mybookrequest.Book_Trade_book_idToBook.picture[0])
+                    setLoading(false)
+                } catch (error) {
+                        setLoading(false)
+                    console.error('Error fetching address data:', error);
+                }
+            }
+        };
+        if(tradeId){
+            fetchData();
+        }
+        
+    }, [tradeId]);
+
+
+
 
 
     useEffect(() => {
@@ -145,10 +175,9 @@ console.log(userId,'bookInfo',bookInfo)
                                     {bookInfo?.title}
                                 </div>
                                 <div className="flex">
-                                    <img
-                                    src={bookInfo?.picture}
-                                    alt="Profile picture"
-                                    className='w-40 h-60 sm:w-56 sm:h-80 object-cover cursor-pointer bg-white '
+                                    <div
+                                    style={{backgroundImage: `url(${picture})`}}
+                                    className='w-40 h-60 sm:w-56 sm:h-80 bg-cover bg-center cursor-pointer  bg-white '
                                     />
                                 </div>
                                 

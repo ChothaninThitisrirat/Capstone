@@ -63,7 +63,7 @@ const Page: FC<Props> = (): JSX.Element => {
         return;
       }
       try {
-        const response = await fetch(`http://superdoggez.trueddns.com:10611/api/ai`, {
+        const response = await fetch(`http://superdoggez.trueddns.com:10610/api/ai`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -398,7 +398,7 @@ console.log("RecommendedAllFinal",allrecommend)
         </div>
         <div className='flex flex-col w-screen bg-bg justify-center items-center'>
         <div className='w-5/6 mt-10 '>
-          <div className='flex justify-center pb-8' id='popular'>
+          <div className='flex justify-center pb-8' >
             {
               <SlideBookBig data={popBook.slice(0,7)} Headtitle={"Popular Book"} Subtitle={"หนังสือดี หนังสือดัง คนนิยมอ่าน"}/>
             }
@@ -410,7 +410,7 @@ console.log("RecommendedAllFinal",allrecommend)
             }
           </div>
 
-          <div className='flex justify-center pb-8'>
+          <div className='flex justify-center pb-8' id='recommend'>
             {
               session && loading ? Loader() : session && (<SlideBookBig data={allrecommend} Headtitle={"Recommended For You"} Subtitle={"หนังสือที่คุณอาจจะสนใจ"}/>)
             }
