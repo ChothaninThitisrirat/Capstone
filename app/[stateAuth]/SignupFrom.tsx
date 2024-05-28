@@ -561,7 +561,7 @@ const Login: React.FC<LoginProps> = ({
             ? <>
             <div
             style={{ width: "500px" }}
-            className="w-auto px-10 pt-10 pb-5 rounded-3xl shadow-md bg-white border border-gray-300 flex-col -translate-x-10 sm:translate-x-40 ">
+            className="w-auto px-10 pt-10 pb-5 rounded-3xl shadow-md bg-white border border-gray-300 flex-col -translate-x-10 sm:translate-x-40 scale-75 sm:scale-100">
                 <div className="max-w-96 w-screen text-4xl font-bold">Sign up</div>
                 <div className=" text-gray-400 mt-4 ml-4">เลือกประเภทหนังที่คุณชื่นชอบ</div>
 
@@ -652,7 +652,7 @@ const Login: React.FC<LoginProps> = ({
             <form
                 onSubmit={handleSubmit}
                 style={{ width: "500px" }}
-                className="w-auto px-10 pt-10 pb-5 rounded-3xl shadow-md bg-white border border-gray-300 flex-col duration-300 -translate-x-10 sm:translate-x-40 "
+                className="w-auto px-10 pt-10 pb-5 rounded-3xl shadow-md bg-white border border-gray-300 flex-col duration-300 -translate-x-10 sm:translate-x-40  scale-75 sm:scale-100"
             >
                 <div className="max-w-96 w-screen text-4xl font-bold mt-2">
                 Sign up

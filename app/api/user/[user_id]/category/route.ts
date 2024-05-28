@@ -10,14 +10,15 @@ export async function PUT(req: Request) {
         })
 
         for (let i = 0;i < category.length; i++) {
+            console.log('sssssssssssssss',user_id,parseInt(category[i]))
             await prismadb.userlike.create({
                 data: {
                     user_id:user_id,
-                    category_id:category[i]
+                    category_id:parseInt(category[i])
                 }
             })
         }
-
+        return NextResponse.json({message : 'Change category successfully.'})
     } catch (error) {
         
         console.log(error);

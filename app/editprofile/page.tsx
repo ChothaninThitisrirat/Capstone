@@ -7,7 +7,6 @@ import { Icon } from '@iconify/react';
 import { useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { set } from 'mongoose';
 import EditPage1 from './EditPage1';
 import EditPage2 from './EditPage2';
 import EditPage3 from './EditPage3';

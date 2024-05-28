@@ -229,6 +229,7 @@ const BookInfo: React.FC<BookInfoProps> = ({ setTrade, bookInfo }) => {
         }
     }
     , [bookInfoShow, category]);
+    
 console.log('datePost',datePost)
 
 
@@ -370,7 +371,7 @@ console.log('datePost',datePost)
                 'Content-Type': 'application/json'
               },
               body: JSON.stringify({
-                book_id: parseInt(bookInfoShow?.bookinfo.id),
+                book_id: Number(bookInfoShow?.bookinfo.id),
               })
             });
             
