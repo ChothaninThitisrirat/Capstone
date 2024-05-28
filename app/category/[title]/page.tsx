@@ -87,7 +87,7 @@ export default function Profile() {
       <Navbar backGroundOn withTitle/>
       {/* <TitleBar textTitle={{`{}`}} /> */}
       {matchingCategory && <TitleBar textTitle={`${matchingCategory.name}`} />}
-      <div className='flex w-full flex-col items-center gap-12 justify-center flex-wrap bg-bg min-h-screen'>
+      <div className='flex w-full flex-col items-center gap-12 justify-center flex-wrap pt-12 bg-bg min-h-screen'>
 
         <div className='flex w-10/12 justify-center pb-8'>
               {

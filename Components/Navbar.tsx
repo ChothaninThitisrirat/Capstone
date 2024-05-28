@@ -219,7 +219,7 @@ function DropDown() {
     const data = [{
         icon: "mdi:user",
         link: "/editprofile",
-        text: "Edit Profile",
+        text: "แก้ไขข้อมูลส่วนตัว",
         size: "30"
     },
     {
@@ -275,7 +275,7 @@ function DropDown() {
             <Icon icon="ic:sharp-logout" 
             style={{color:'#363062'}}
             width="20" height="20" />
-                Logout</button>
+                ออกจากระบบ</button>
             
             
         </div>
@@ -288,7 +288,7 @@ function DropDownResponsive() {
     const { data: session, status } = useSession()
     const data = [{
         icon: "iconamoon:category-light",
-        link: "/",
+        link: "/#category",
         text: "หมวดหมู่",
         size: "30"
     },{
@@ -299,12 +299,12 @@ function DropDownResponsive() {
     },{
         icon: "ph:share",
         link: "/postbook",
-        text: "โพสหนังสือ",
+        text: "โพสต์หนังสือ",
         size: "22"
     },{
         icon: "mdi:user",
         link: "/editprofile",
-        text: "Edit Profile",
+        text: "แก้ไขข้อมูลส่วนตัว",
         size: "30"
     },{
         icon: "cil:list",
@@ -354,7 +354,7 @@ function DropDownResponsive() {
             onClick={() => signOut({ callbackUrl: 'http://superdoggez.trueddns.com:10610', redirect: true})}
             className="flex items-center justify-center text-sm text-dark1 font-bold py-2 border-t gap-2 w-10/12 pt-4">
             <Icon icon="ic:sharp-logout" width="20" height="20" />
-                Logout</button>
+                ออกจากระบบ</button>
             
             
         </div>

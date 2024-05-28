@@ -101,16 +101,16 @@ const Searchbar = <T extends object>({
         tabIndex={1} 
         onKeyDown={handleKeyDown} 
         onBlur={resetSearchComplete}
-        className="relative w-5/12 mt-8 z-40">
+        className="relative w-8/12 mt-8 z-40 xl:w-6/12">
             <input 
                value={defaultValue}
                onChange={handleChange}
                type="search" 
                id="search" 
-               className="block rounded-3xl w-full p-4 ps-4 text-l text-gray-900" placeholder="ระบุหนังสือที่ต้องการค้นหาที่นี่" required />
+               className="block rounded-3xl w-full p-4 text-lg text-gray-900 " placeholder="ระบุหนังสือที่ต้องการค้นหาที่นี่" required />
             <button 
                onClick={SearchSubmit} 
-               className="text-white absolute end-2.5 bottom-1.5 bg-dark1 hover:bg-dark2 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-3xl text-xl px-14 py-2 ">ค้นหา</button>
+               className="text-white end-2.5 bottom-1.5 bg-dark1 hover:bg-dark2 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-3xl text-xl px-14 py-2 lg:absolute mt-6 ml-12">ค้นหา</button>
 
             {/* Search Suggest */}
             {showResults && (
