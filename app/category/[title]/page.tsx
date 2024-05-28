@@ -9,7 +9,6 @@ import { SyncLoader } from 'react-spinners'
 import { Rating } from '@mui/material'
 import {Icon} from '@iconify/react'
 import Link from 'next/link'
-import { set } from 'mongoose'
 import SlideBookBig from '@/Components/SlideBookBig'
 import Footer from '@/Components/Footer'
 
@@ -87,7 +86,7 @@ export default function Profile() {
       <Navbar backGroundOn withTitle/>
       {/* <TitleBar textTitle={{`{}`}} /> */}
       {matchingCategory && <TitleBar textTitle={`${matchingCategory.name}`} />}
-      <div className='flex w-full flex-col items-center gap-12 justify-center flex-wrap pt-12 bg-bg min-h-screen'>
+      <div className='flex w-full flex-col items-center gap-12 justify-center flex-wrap pt-12 bg-bg min-h-screen pb-8'>
 
         <div className='flex w-10/12 justify-center pb-8'>
               {
@@ -106,19 +105,22 @@ export default function Profile() {
             BookCategory.map((item, index) => (
               <div
                 key={index}
-                className="flex flex-col items-center w-max h-max bg-bg justify-center "
+                className="flex flex-col items-center w-52 h-max bg-bg justify-center "
               >
-                <Link
-                  className="flex w-svw h-1/4 max-w-52 min-h-72 bg-cover bg-center bg-no-repeat hover:shadow-2xl transform transition duration-300 ease-in-out hover:scale-105"
-                  style={{ backgroundImage: `url(${item.picture[0]})` }}
-                  href={`/bookinfo/${item.id}`}
-                />
-                <Link 
-                  href={`/bookinfo/${item.id}`}
-                  className='pt-2 font-bold'
-                  >
-                    {item.title}
+                <div className="flex flex-col justify-center items-center">
+                  <Link
+                    className="flex w-svw h-1/4 max-w-52 min-h-72 bg-cover bg-center bg-no-repeat hover:shadow-2xl transform transition duration-300 ease-in-out hover:scale-105"
+                    style={{ backgroundImage: `url(${item.picture[0]})` }}
+                    href={`/bookinfo/${item.id}`}
+                  />
+                  <Link 
+                    href={`/bookinfo/${item.id}`}
+                    className='pt-2 font-bold text-balance justify-center items-center line-clamp-1'
+                    >
+                      {item.title}
                   </Link>
+                </div>
+               
 
               </div>
             ))

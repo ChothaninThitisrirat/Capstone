@@ -106,7 +106,7 @@ export default function Profile() {
   return (
     <>
       <Navbar backGroundOn={false} withTitle={false}/>
-      <div className="flex w-full h-full flex-col mb-8">
+      <div className="flex w-full h-full flex-col pb-8 bg-bg">
         <div className="flex justify-start h-full items-center bg-dark2 flex-col rounded-b-2xl">
           <div
                 className='aspect-square mt-8 w-60 h-60 bg-cover bg-black bg-no-repeat rounded-full'
@@ -154,7 +154,7 @@ export default function Profile() {
               {userReview?.length === 0
                 ?<div
                 style={{width: '1250px', WebkitOverflowScrolling: 'touch'}}
-                className="flex font-bold text-gray-400 text-xl justify-start h-68 pl-20 -translate-y-8">No Review For this User</div> 
+                className="flex font-bold text-gray-400 text-xl justify-center h-68 pt-10 pl-20 -translate-y-8">No Review For this User</div> 
                 :<div 
                 style={{WebkitOverflowScrolling: 'touch'}}
                 className="flex gap-10 w-10/12 justify-start items-center overflow-x-auto h-68 p-2 close-scrollbar">
@@ -202,7 +202,7 @@ export default function Profile() {
               หนังสือทั้งหมดของ {user.user.username}
             </p>
           </div>
-          <div className="flex w-full flex-wrap gap-10 justify-center items-center px-3">
+          <div className="flex w-full flex-wrap gap-10 justify-center items-center px-3 bg-bg">
             
             {userBook?.length === 0 ? (
               <div
@@ -215,7 +215,7 @@ export default function Profile() {
               userBook.map((item, index) => (
                 <div
                   key={index}
-                  className="flex flex-col items-center font-bold w-max h-max bg-transparent justify-center "
+                  className="flex flex-col items-center w-52 h-max bg-bg justify-center "
                 >
                   <Link
                     className="flex w-svw h-1/4 max-w-52 min-h-72 bg-cover bg-center bg-no-repeat hover:shadow-2xl transform transition duration-300 ease-in-out hover:scale-105"
@@ -224,7 +224,7 @@ export default function Profile() {
                   />
                   <Link 
                   href={`/bookinfo/${item.id}`}
-                  className='pt-2'
+                  className='pt-2 line-clamp-1'
                   >
                     {item.title}
                   </Link>

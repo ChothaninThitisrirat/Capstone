@@ -662,6 +662,11 @@ console.log('datePost',datePost)
                 value={item.describe}
                 className="flex w-full h-24 sm:h-36 break-words pt-1 text-gray-500 resize-none css-scrollbar"/>
                 <div className="flex text-sm mt-2 pl-3 justify-between">
+                    {/* <img
+                    src={item.profile_picture}
+                    alt="Profile picture"
+                    className="w-10 h-10 rounded-full object-cover"
+                    /> */}
                     <div className="flex">{item.User.username}</div>
                     <div className="flex mr-2 ">
                         <Icon icon="material-symbols:star" width="20" height="20" 

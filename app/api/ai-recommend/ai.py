@@ -126,21 +126,11 @@ async def process_data(data: dict):
                 if recommendation["id"] not in id:
                     recommendations.append(recommendation)
                     id.append(recommendation["id"])
-                    predicted_values.append(book.category)
-
+                    
 
             watched_book = user_cat[i]
             recommendations_dict[watched_book] = recommendations
-            
-        actual_values.append(user_cat)
-        plt.figure(figsize=(10, 6))
-        plt.scatter(range(len(actual_values)), actual_values, label='Actual', marker='o')
-        plt.scatter(range(len(predicted_values)), predicted_values, label='Predicted', marker='x')
-        plt.xlabel('Book Index')
-        plt.ylabel('Value')
-        plt.title('Actual vs Predicted Values')
-        plt.legend()
-        plt.show()
+        
         return {                                                        #Return books
             "recommend" : recommendations_dict
         }

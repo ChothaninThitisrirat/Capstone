@@ -12,7 +12,6 @@ import Searchbar from '@/Components/Searchbar';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { set } from 'mongoose';
 import { HashLoader,SyncLoader } from 'react-spinners';
 import SlideBookMiniWithTitle from '@/Components/SlideBookMiniWithTitle';
 import { arrayBuffer } from 'node:stream/consumers';
