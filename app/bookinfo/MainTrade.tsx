@@ -205,7 +205,7 @@ const MainTrade: React.FC<MainTradeProps> = ({ bookId, setTrade, bookInfo }) => 
                                                             addressPost={addressPost} setAddressPost={setAddressPost} 
                                                             placeToPic={placeToPic} setPlaceToPic={setPlaceToPic} 
                                                             pickOrSend={pickOrSend} bookInfo={bookInfo}  bookSelect={bookSelect} 
-                                                            setIdTrade={setIdTrade}/>}
+                                                            idTrade={idTrade} setIdTrade={setIdTrade}/>}
                     {stateProcess === 3 && <TradeProcess4  setTrade={setTrade} setStateProcess={setStateProcess}
                                                             bookId={bookId} setStatusAddress={setStatusAddress} 
                                                             addressPost={addressPost} setAddressPost={setAddressPost} 
