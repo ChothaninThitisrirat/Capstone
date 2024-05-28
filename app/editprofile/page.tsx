@@ -143,7 +143,7 @@ export default function EditProfile() {
               {user.review_avg} คะแนน ({user.review_count.reviewer_id})
             </div>
             <div 
-               className='flex justify-center items-center bg-dark2 rounded-full text-white text-lg font-bold  w-3/6  h-10 cursor-pointer transform transition duration-500 ease-in-out hover:scale-105'
+               className='flex justify-center items-center bg-dark2 rounded-full text-white text-xs font-bold  w-3/6  h-10 cursor-pointer transform transition duration-500 ease-in-out hover:scale-10 xl:text-lg'
                onClick={() => setStatePage(0)}>
                อ่านรีวิวของฉัน
             </div>

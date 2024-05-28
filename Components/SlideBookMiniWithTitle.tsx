@@ -23,13 +23,13 @@ const SlideBookMiniWithTitle: React.FC<SlideBookMiniwithTitleProps> = ({data, He
     const [moreFrom, setMoreFrom] = useState(0)
     return (
         <>
-            <div className="flex flex-cols font-bold w-full text-5xl pt-12 pb-4">
+            <div className="flex flex-cols font-bold w-full text-3xl pt-12 pb-4 xl:text-5xl">
                 <div className="flex w-1/2">
                     {Headtitle}
                 </div>
                 <Link
                 href={`/category/${num_category}`}
-                className="flex w-1/2 justify-end text-xl items-center">
+                className="flex w-1/2 justify-end text-xs items-center xl:text-xl">
                     <p className='rounded-full bg-dark2 py-2 px-4 text-white'>
                     ดูทั้งหมด
                     </p>
@@ -61,8 +61,8 @@ const SlideBookMiniWithTitle: React.FC<SlideBookMiniwithTitleProps> = ({data, He
                         key={index}
                         style={{ backgroundImage: `url(${item.picture[0]})` }}
                         className="flex flex-col w-48 h-72 rounded-s-xs shrink-0 duration-300 bg-white cursor-pointer bg-cover bg-no-repeat bg-center" />
-                        <div className="flex w-48 h-12 justify-center items-end break-all font-bold text-lg">
-                        {item.title.length > 25 ? item.title.substring(0,20) + '...' : item.title}
+                        <div className="flex w-48 h-12 justify-center items-end break-all font-bold text-lg line-clamp-1">
+                        {item.title}
                         </div>
                     </Link>
                 ))}

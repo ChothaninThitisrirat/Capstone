@@ -160,7 +160,7 @@ const EditPage1: React.FC = (): JSX.Element => {
 
   return (
     <>
-        <div className="flex w-full h-5/6 pb-12 bg-white">
+        <div className="flex w-full h-5/6 pb-12 bg-white overflow-hidden">
             <div className="flex justify-center items-center w-1/3 flex-col bg-white">
                 <div
                     className='aspect-square mt-8 w-6/12 bg-cover bg-black bg-no-repeat rounded-full'

@@ -313,17 +313,17 @@ console.log("RecommendedAllFinal",allrecommend)
       {/* แถบบน and Search bar */}
       <div className='flex flex-col w-screen h-full max-w-screen'>
         <div className='flex flex-col justify-center items-center w-full h-fit bg-dark2 rounded-b-3xl pb-20'>
-          <h1 className='text-4xl font-bold  text-white pb-8 pt-20 lg:text-6xl xl:text-7xl'>
+          <h1 className='text-5xl font-bold  text-white pb-8 pt-20 lg:text-6xl xl:text-7xl'>
             Trade The Book
           </h1>
-          <h1 className='text-4xl font-bold  text-white mb-8 lg:text-6xl xl:text-7xl'>
+          <h1 className='text-5xl font-bold  text-white mb-8 lg:text-6xl xl:text-7xl'>
             Save The Cost
           </h1>
           {/* เปลี่ยนเป็นจาก Supa */}
           <Image
             src={logoWhite}
             alt="Logo"
-            className='h-20 object-contain ml-5 lg:h-44 xl:h-52'/>
+            className='h-36 object-contain ml-5 mr-8 lg:h-44 xl:h-52'/>
           <div className="flex justify-center items-center w-full">
             <h1 className='flex w-3/4 text-lg font-bold text-white mt-8 justify-center items-center lg:text-2xl' > 
               เว็บไซต์แลกเปลี่ยนหนังสือสำหรับคนรักการอ่าน

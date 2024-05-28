@@ -97,11 +97,13 @@ const Searchbar = <T extends object>({
 
       
     return (
+      <div className="flex w-full justify-center items-center">
         <div 
         tabIndex={1} 
         onKeyDown={handleKeyDown} 
         onBlur={resetSearchComplete}
         className="relative w-8/12 mt-8 z-40 xl:w-6/12">
+         <div className="flex justify-center items-center flex-col">
             <input 
                value={defaultValue}
                onChange={handleChange}
@@ -110,8 +112,8 @@ const Searchbar = <T extends object>({
                className="block rounded-3xl w-full p-4 text-lg text-gray-900 " placeholder="ระบุหนังสือที่ต้องการค้นหาที่นี่" required />
             <button 
                onClick={SearchSubmit} 
-               className="text-white end-2.5 bottom-1.5 bg-dark1 hover:bg-dark2 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-3xl text-xl px-14 py-2 lg:absolute mt-6 ml-12">ค้นหา</button>
-
+               className="flex text-white end-2.5 mt-8 bottom-1.5 bg-dark1 hover:bg-dark2 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-3xl text-xl px-14 py-2 md:absolute">ค้นหา</button>
+         </div>
             {/* Search Suggest */}
             {showResults && (
                <div className="absolute  bg-white w-full mt-1 p-4 rounded-2xl shadow-lg max-h-56 overflow-y-auto">
@@ -133,6 +135,7 @@ const Searchbar = <T extends object>({
             }
             </div>)}
         </div>
+      </div>
     )
 }
 
