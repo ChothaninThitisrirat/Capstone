@@ -23,11 +23,13 @@ interface TradeProcess3Props {
     pickOrSend: number;
     bookInfo: any;
     bookSelect: any;
+    idTrade:number;
     setIdTrade: (state: number) => void;
+
 
 }
 
-const TradeProcess3: React.FC<TradeProcess3Props> = ({ bookId, setStateProcess, setStatusAddress, addressPost, setAddressPost, placeToPic, setPlaceToPic, pickOrSend, bookInfo, bookSelect, setIdTrade }) => {
+const TradeProcess3: React.FC<TradeProcess3Props> = ({ bookId, setStateProcess, setStatusAddress, addressPost, setAddressPost, placeToPic, setPlaceToPic, pickOrSend, bookInfo, bookSelect, idTrade, setIdTrade }) => {
     
     const [ bookSelectTrade, setBookSelectTrade ] = useState<any>(null)
     const [loading, setLoading] = useState(false)
@@ -69,6 +71,11 @@ const TradeProcess3: React.FC<TradeProcess3Props> = ({ bookId, setStateProcess, 
                 });
                 console.log('response.data.message',response.data.trade.id);
                 setIdTrade(response.data.trade.id)
+                
+                await axios.post(`/api/trade/mail`,{
+                    id:response.data.trade.id
+                });
+
                 setTimeout(() => {
                     setLoading(false)
                     setStateProcess(3)
@@ -80,7 +87,6 @@ const TradeProcess3: React.FC<TradeProcess3Props> = ({ bookId, setStateProcess, 
         }
         
     }
-
 
     return (<>
 

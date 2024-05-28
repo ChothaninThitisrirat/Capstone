@@ -229,6 +229,7 @@ const BookInfo: React.FC<BookInfoProps> = ({ setTrade, bookInfo }) => {
         }
     }
     , [bookInfoShow, category]);
+    
 console.log('datePost',datePost)
 
 

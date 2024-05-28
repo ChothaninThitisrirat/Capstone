@@ -7,7 +7,7 @@ import { Icon } from '@iconify/react';
 import { useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-
+import axios from 'axios';
 interface User {
   user: {
     id: number;
@@ -24,6 +24,21 @@ interface User {
     reviewer_id: number;
   };
 }
+interface Category {
+  id: string | number | null;
+  name: string;
+  defaultClass: boolean;
+  color: string;
+}
+interface CatinEdit {
+  Category:{
+    id:number
+    name:string
+  }
+  category_id:number
+  user_id:number
+}
+
 const EditPage1: React.FC = (): JSX.Element => {
   const { data: session, status } = useSession();
   const [user, setUser] = useState<User | null>(null);
@@ -33,10 +48,72 @@ const EditPage1: React.FC = (): JSX.Element => {
   const [isEditingPhone, setIsEditingPhone] = useState(false);
   const [tempPhoneNumber, setTempPhoneNumber] = useState("");
 
-  
+  const [categoryShow, setCategoryShow] = useState<Category[]>([])
+  const [classCategory, setClassCategory] = useState("flex items-center justify-center rounded-lg w-auto text-lg py-0.5 px-3 flex-grow-4 duration-1000 shrink-0")
+  const [catinEdit, setCatinedit] = useState<CatinEdit[]>()
 
   
+const [category, setCategory] = useState<Category[]>([{
+  id:null,
+  name: "",
+  defaultClass: true,
+  color: "bg-gradient-to-tr from-novel to-white"
+},{
+  id:null,
+  name: "",
+  defaultClass: true,
+  color: "bg-gradient-to-tr from-horror1 to-horror2 text-white"
+},{
+  id:null,
+  name: "",
+  defaultClass: true,
+  color: "bg-gradient-to-tr from-cartoon to-white"
+},{
+  id:null,
+  name: "",
+  defaultClass: true,
+  color: "bg-gradient-to-tr from-romantic to-white"
+},{
+  id:null,
+  name: "",
+  defaultClass: true,
+  color: "bg-gradient-to-tr from-science to-white"
+},{
+  id:null,
+  name: "",
+  defaultClass: true,
+  color: "bg-gradient-to-tr from-business to-white"
+},{
+  id:null,
+  name: "",
+  defaultClass: true,
+  color: "bg-gradient-to-tr from-education to-white"
+},{
+  id:null,
+  name: "",
+  defaultClass: true,
+  color: "bg-gradient-to-tr from-travel to-white"
+},{
+  id:null,
+  name: "",
+  defaultClass: true,
+  color: "bg-gradient-to-tr from-develop to-white"
+},{
+  id: null,
+  name: "",
+  defaultClass: true,
+  color: "bg-gradient-to-tr from-health to-white"
+}])
+
+const [stateCatEdit, setStateCatEdit]=useState(false)
+const [dataCatin, setDataCatin] = useState([]) //ประเภทหนังสือ
+const [loadcompo,setLoadcompo] = useState(false)
+
+
+
+
   useEffect(() => {
+    setLoadcompo(false)
     console.log(session)
     if (status === 'unauthenticated') {
       router.push('/login')
@@ -52,8 +129,51 @@ const EditPage1: React.FC = (): JSX.Element => {
           console.error('Error fetching user data:', error)
           setLoading(false)
         })
+        const fetchData = async () => {
+          try {
+            const userCat = await axios.get(`/api/user/${session.user.id}/category`);
+            console.log(userCat.data.category)
+            setCatinedit(userCat.data.category)
+          } catch (error) {
+              console.error('Error:', error);
+          }
+      };
+      fetchData();
     }
-  }, [status, router, session])
+  }, [status, router, session, loadcompo])
+
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const response = await axios.get<{ category: Category[] }>('/api/category');
+                const updatedCategories = response.data.category.map((item, index) => ({
+                    id: item.id !== null ? item.id.toString() : null,
+                    name: item.name,
+                    defaultClass: category[index].defaultClass,
+                    color:category[index].color 
+                }));
+                setCategory(updatedCategories);
+                
+
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+    fetchData();
+  }, []);
+
+  console.log('categoryShow',categoryShow,dataCatin)
+
+  useEffect(() => {
+    if (catinEdit !== undefined) {
+      const matchedCategories = category.filter(categoryItem =>
+        catinEdit.some(editItem => editItem.category_id == categoryItem.id)
+      );
+      console.log('matchedCategories',category)
+      setCategoryShow(matchedCategories);
+    }
+  }, [catinEdit, category]);
+
 
   //เปลี่ยนเบอร์โทร
   const handleDonePhoneClick = async () => {
@@ -139,6 +259,98 @@ const EditPage1: React.FC = (): JSX.Element => {
     setIsEditingPhone(false);
   };
 
+  const handleEditCategory =()=>{
+
+    setStateCatEdit(true)
+    const dataCatinIds:any = categoryShow.map(item => item.id);
+    setDataCatin(dataCatinIds);
+  }
+
+  useEffect(() => {
+    const updatedCategory:any = category.map((cat: Category) => {
+      if (dataCatin.includes(cat.id)) {
+        return {
+          ...cat,
+          defaultClass: false,
+        };
+      }
+      return {
+        ...cat,
+        defaultClass: true,
+      };
+    });
+    setCategory(updatedCategory);
+  }, [dataCatin]);
+
+  const handleCancelEditCategory =()=>{
+    setStateCatEdit(false)
+  }
+
+  const handleDoneEditCategory =()=>{
+    console.log('nuhkhdawhgdjhafkj')
+    const fetchData = async ()=>{
+      try{
+        const response = await axios.put(`/api/user/${session?.user.id}/category`, {
+          user_id:Number(session?.user.id),
+          category:dataCatin
+        });
+        console.log(response.data)
+        setLoadcompo(true)
+        setStateCatEdit(false)
+      }catch (error) {
+          console.error('Error:', error);
+      }
+    }
+    fetchData()
+    
+  }
+  
+
+  const handleSelectBookCategory = (cate: Category) => {
+    
+
+    const newCatin:any = [...dataCatin]
+    const ClassCatin:any = [...category]
+    if(newCatin.includes(cate.id)){
+        ClassCatin.forEach((cat:any) => {
+            if (cat.id === cate.id) {
+                cat.defaultClass = true;
+            }
+        });
+        newCatin.splice(newCatin.indexOf(cate.id),1)
+    }else{
+        ClassCatin.forEach((cat:any) => {
+            if (cat.id === cate.id) {
+                cat.defaultClass = false;
+            }
+        });
+        newCatin.push(cate.id)
+    }
+    setCategory(ClassCatin)
+    setDataCatin(newCatin)
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   if (status === 'loading') {
     return <div>
       <div className='w-screen h-screen flex items-center justify-center opacity-95 bg-gradient-to-tr from-yellow-100 to-blue-100'>
@@ -157,6 +369,13 @@ const EditPage1: React.FC = (): JSX.Element => {
       </div>
   </div>;
   }
+
+
+
+
+console.log('useruseruser',category)
+
+
 
   return (
     <>
@@ -291,12 +510,75 @@ const EditPage1: React.FC = (): JSX.Element => {
                     </div>
 
                     <div className="flex w-full flex-col h-fit justify-center items-center mt-8">
-                      <div className="flex items-start w-full">
+                      <div className="flex items-center justify-between w-full">
                         <p className="font-bold text-2xl text-graynamehead">Category หนังสือที่ชื่นชอบ</p>
+                        {stateCatEdit
+                        ?<div>
+                          <button
+                            onClick={handleCancelEditCategory}
+                            className="mr-5 text-red-500 hover:underline"
+                          >
+                            Cancel
+                          </button>
+                          <button
+                            onClick={()=>dataCatin.length > 1 ? handleDoneEditCategory():undefined}
+                            className=" text-blue-500 hover:underline"
+                          >
+                            Done
+                          </button>
+                          
+                        </div>
+                        :<button
+                          onClick={handleEditCategory}
+                          className="ml-2 text-blue-500 hover:underline"
+                        >
+                          Edit
+                        </button>}
                       </div>
                         <div className="flex w-full border-b border-gray-400 justify-start items-center">
+                        <div className="flex h-auto max-w-80 flex-wrap ml-3 gap-2">
+                        </div>
                             
-                            
+                        </div>
+                        <div className="flex w-full">
+                          <div className="flex h-auto max-w-full flex-wrap mt-3 gap-2">
+                          {stateCatEdit
+                          ?<>
+                            <div className={dataCatin.length > 1
+                              ?"flex w-full mb-2 duration-300 justify-end text-green-400 text-sm gap-1"
+                              :"flex w-full mb-2 duration-300 justify-end text-gray-400 text-sm gap-1"}>
+                                  {dataCatin.length > 1 ? (
+                                      <Icon
+                                      className="mt-1"
+                                      icon="fluent:checkmark-16-filled"
+                                      width="15"
+                                      height="15"
+                                  />
+                              ) : (
+                                  <Icon
+                                      className="mt-2 ml-1"
+                                      icon="material-symbols:circle"
+                                      width="5"
+                                      height="5"
+                                  />
+                              )}
+                              เลือกอย่างน้อย 2 หมวดหมู่
+                              </div>
+                              <div className="flex flex-wrap items-center gap-x-2 gap-y-3">
+                                {category.map((cate, index) => (
+                                    <div
+                                    onClick={() => {handleSelectBookCategory(cate)}}
+                                    key={index} 
+                                    className={classCategory+' cursor-pointer '+ (cate.defaultClass?"bg-gray-300":cate.color )}
+                                    >{cate.name}</div>
+                                ))}
+                            </div>
+                          </>
+                          :(categoryShow.map((cate, index) => (
+                                <div key={index} className={classCategory+' '+cate.color}
+                                >{cate.name}</div>
+                            )))}
+                          </div>
                         </div>
                     </div>
                     
