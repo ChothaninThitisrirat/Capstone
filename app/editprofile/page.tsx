@@ -124,29 +124,28 @@ export default function EditProfile() {
         <div className="absolute">
           <Navbar backGroundOn={true} withTitle={false} />
         </div>
-        <div className="flex justify-center items-center w-full h-full bg-dark2 pt-16">
+        <div className="flex justify-center items-center w-full h-full bg-dark2 pt-16 ">
           <div className="flex flex-col justify-start items-center w-1/5 bg-white h-full drop-shadow-2xl rounded-tr-3xl ">
-            <div
-              className='aspect-square mt-8 w-4/12 bg-cover bg-black bg-no-repeat rounded-full '
-              style={{ backgroundImage: `url(${user.user.profile_picture})` }}
-            />
-            <div className="flex font-normal text-lg mt-8 xl:text-5xl">{session.user.username}</div>
+              <div
+                  className='aspect-square mt-8 w-4/12 bg-cover bg-black bg-no-repeat rounded-full lg:w-6/12 xl:w-10/12 '
+                  style={{ backgroundImage: `url(${user.user.profile_picture})` }}
+                />
+                <div className="flex font-normal text-lg mt-8 xl:text-5xl">{session.user.username}</div>
 
-            <div className="flex mt-10 text-xs xl:text-lg mb-3">
-              คะแนนของฉัน
-            </div>
-            {screen.width < 1100 ? <Rating name="half-rating-read" value={user.review_avg} readOnly size="small" />:
-            <Rating name="half-rating-read" value={user.review_avg} readOnly size="large" />
-             }
-            <div className="flex mt-10 text-lg mb-3">
-              {user.review_avg} คะแนน ({user.review_count.reviewer_id})
-            </div>
-            <div 
-               className='flex justify-center items-center bg-dark2 rounded-full text-white text-xs font-bold  w-3/6  h-10 cursor-pointer transform transition duration-500 ease-in-out hover:scale-10 xl:text-lg'
-               onClick={() => setStatePage(0)}>
-               อ่านรีวิวของฉัน
-            </div>
-
+                <div className="flex mt-10 text-xs xl:text-lg mb-3">
+                  คะแนนของฉัน
+                </div>
+                {screen.width < 1100 ? <Rating name="half-rating-read" value={user.review_avg} readOnly size="small" />:
+                <Rating name="half-rating-read" value={user.review_avg} readOnly size="large" />
+                }
+                <div className="flex mt-10 text-lg mb-3">
+                  {user.review_avg} คะแนน ({user.review_count.reviewer_id})
+                </div>
+                <div 
+                  className='flex justify-center items-center bg-dark2 rounded-full text-white text-xs font-bold  w-3/6  h-10 cursor-pointer transform transition duration-500 ease-in-out hover:scale-10 xl:text-lg'
+                  onClick={() => setStatePage(0)}>
+                  อ่านรีวิวของฉัน
+                </div>
           </div>
           <div className="w-4/5 bg-dark3 h-full ">
             <div className="flex items-center w-full h-1/6 bg-dark2 rounded-br-3xl">
