@@ -120,8 +120,18 @@ const Navbar: React.FC<NavbarProps> = ({backGroundOn, withTitle}) =>{
                             </Link>
                                 <div className="flex gap-14 ml-5  responsive-close">
                                     <Link href='/' className="flex text-center items-center text-white text-base">หน้าแรก</Link>
-                                    <Link href='/' className="flex text-center items-center text-white text-base">หมวดหมู่</Link>
-                                    <Link href='/' className="flex text-center items-center text-white text-base">ยอดนิยม</Link>
+                                    <Link href='/#category' className="flex text-center items-center text-white text-base"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        const categoryElement = document.getElementById('category');
+                                        categoryElement?.scrollIntoView({ behavior: 'smooth' });
+                                      }}>หมวดหมู่</Link>
+                                    <Link href='/#popular' className="flex text-center items-center text-white text-base"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        const categoryElement = document.getElementById('category');
+                                        categoryElement?.scrollIntoView({ behavior: 'smooth' });
+                                      }}>ยอดนิยม</Link>
                                 </div>
                             </div>
                             {status === 'authenticated'?

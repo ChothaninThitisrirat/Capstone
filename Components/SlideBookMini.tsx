@@ -19,7 +19,7 @@ const SlideBookMini: React.FC<SlideBookMiniProps> = ({data}) =>{
     return (
         <>
             <div 
-            className="flex sm:gap-10 justify-start sm:justify-center items-center px-1 w-auto relative">
+            className="flex sm:gap-10 justify-start sm:justify-center items-center px-1 w-full pb-8 relative">
             {moreFrom === 0 
             ? <div 
             style={{width: '70px'}}
@@ -31,24 +31,25 @@ const SlideBookMini: React.FC<SlideBookMiniProps> = ({data}) =>{
 
                 <div 
                 style={{width: '1350px', WebkitOverflowScrolling: 'touch'}}
-                className="flex gap-10 justify-start items-center overflow-x-auto h-64 p-2 close-scrollbar ">
+                className="flex gap-6 justify-start items-center overflow-x-auto h-fit w-48 close-scrollbar pt-12">
                 {data?.map((item: BookItem, index: number) => (
-                    <Link
-                    href={`/bookinfo/${item.id}`}
-                    key={index}
-                    style={{transform: `translateX(${moreFrom * -168}px)`, transition: 'transform 0.6s ease-in-out' }}
-                    className="flex w-32 h-48 rounded-s-xs shrink-0 duration-300 bg-white cursor-pointer ">
-                    
-                    <img
-                    src={item.picture[0]}
-                    className='object-cover w-full h-full rounded-s-xs shrink-0 duration-300 hover:scale-105'
-                    />
-                    <div className="flex absolute bottom-0 translate-y-6 text-sm w-full justify-center break-words">{item.title}</div>
+                    <Link 
+                    className='flex flex-col'
+                    href={`/bookinfo/${item.id}`} 
+                    style={{transform: `translateX(${moreFrom * -215}px)`, transition: 'transform 0.6s ease-in-out'}} 
+                    >
+                        <div
+                        key={index}
+                        style={{ backgroundImage: `url(${item.picture[0]})` }}
+                        className="flex flex-col w-48 h-72 rounded-s-xs shrink-0 duration-300 bg-white cursor-pointer bg-cover bg-no-repeat bg-center" />
+                        <div className="flex w-48 h-12 justify-center items-end break-all font-bold text-lg">
+                        {item.title.length > 25 ? item.title.substring(0,20) + '...' : item.title}
+                        </div>
                     </Link>
                 ))}
                 <div 
                 style={{background:'linear-gradient(to right, rgba(255, 255, 255, 0) 20%, #f9f9f9 80%)'}}
-                className="w-32 h-52 absolute right-10 sm:right-28 top-6 z-0"></div>
+                className="w-32 h-110 absolute right-10 sm:right-28 top-6 z-0"></div>
                 </div>
 
             

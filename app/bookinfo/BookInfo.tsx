@@ -370,8 +370,8 @@ console.log('datePost',datePost)
                 'Content-Type': 'application/json'
               },
               body: JSON.stringify({
-                book_id: parseInt(bookInfoShow?.bookinfo.id),
-              })
+               book_id: Number(bookInfoShow?.bookinfo.id),
+                })
             });
             
             if (response.ok) {
@@ -634,7 +634,7 @@ console.log('datePost',datePost)
                 </div>
             </form>
         </div>
-        <div className="flex sm:gap-10 justify-start sm:justify-center items-center px-1 w-auto">
+        <div className="flex sm:gap-10 justify-start sm:justify-center items-center px-1 w-full">
 
             {reviewComment === 0 
             ? <div style={{width: '70px'}}
@@ -690,16 +690,19 @@ console.log('datePost',datePost)
         </div>
 
         <div className="flex w-11/12 mx-auto sm:mx-0 sm:w-full items-center justify-between sm:pr-32">
-        <div className="flex">
-            <div
-             className="flex text-2xl sm:text-4xl font-bold w-full sm:ml-36 mt-10 mb-10">More From</div>
-            <div className="flex text-2xl sm:text-4xl ml-2 mt-10 mb-10">{bookInfoShow?.user.username}</div>
+            <div className="flex">
+                <div
+                className="flex text-2xl sm:text-4xl font-bold w-full sm:ml-36 mt-10 mb-10">More From</div>
+                <div className="flex text-2xl sm:text-4xl ml-2 mt-10 mb-10">{bookInfoShow?.user.username}</div>
+            </div>
+            <Link 
+            href={`/profile/${bookInfoShow?.user.id}`}
+            className="flex bg-dark2 text-white w-28 h-10 justify-center items-center rounded-full text-lg underline scale-75 sm:scale-100">ดูทั้งหมด</Link>
         </div>
-        <Link 
-        href={`/profile/${bookInfoShow?.user.id}`}
-        className="flex bg-dark2 text-white w-28 h-10 justify-center items-center rounded-full text-lg underline scale-75 sm:scale-100">ดูทั้งหมด</Link>
-        </div>
-        <SlideBookMini data={moreFromUserData}/>
+            
+            <div className="flex w-full">
+                <SlideBookMini data={moreFromUserData}/>
+            </div>
 
             <div className='flex justify-center items-center pb-8 w-10/12 mt-12'>
                 <SlideBookBig data={allrecommend} Headtitle={"หนังสือที่คล้ายกัน"} Subtitle={"ผู้ใช้ส่วนมากชื่นชอบ"}/>

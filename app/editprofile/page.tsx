@@ -82,6 +82,22 @@ export default function EditProfile() {
     }
   }
 
+  useEffect(() => {
+    try{
+      fetch(`api/user/${session?.user.id}/contact`)
+        .then(response => response.json())
+        .then(data => {
+          if (data?.contact?.line === null &&
+            data?.contact?.instagram === null &&
+            data?.contact?.facebook === null) {
+          setStatePage(3);
+        }
+        })
+      }catch{
+      console.log(Error)
+    }
+  })
+
   if (loading === true) {
     return <div className='w-screen h-screen flex items-center justify-center opacity-95 bg-gradient-to-tr from-yellow-100 to-blue-100'>
         <HashLoader
@@ -133,38 +149,60 @@ export default function EditProfile() {
           </div>
           <div className="w-4/5 bg-dark3 h-full ">
             <div className="flex items-center w-full h-1/6 bg-dark2 rounded-br-3xl">
-              <p className="text-6xl font-bold pl-8 text-white"> Edit Profile </p>
+              <p className="text-6xl font-bold pl-8 text-white sm:text-xl"> แก้ไขข้อมูลส่วนตัว </p>
             </div>
 
             <div className="flex flex-row justify-evenly items-center w-full h-16 bg-dark3">
               <div className="flex flex-row min-w-28 text-white text-xl font-bold">
+                {StatePage === 1 ?  <p 
+                   className="flex w-full justify-center items-center underline cursor-pointer drop-shadow-2xl transition-all   duration-300 ease-in-out hover:scale-105"
+                  onClick={() => setStatePage(1)}
+                >
+                  <Icon icon="iconamoon:profile" className='w-8 h-8 mr-4'/>
+                  แก้ไขโปรไฟล์
+                </p> :
                 <p 
-                  className="flex w-full justify-center items-center underline underline-offset-  cursor-pointer "
+                   className="flex w-full justify-center items-center cursor-pointer hover:drop-shadow-2xl transition-all hover:underline-offset-4  duration-300 ease-in-out hover:scale-105"
                   onClick={() => setStatePage(1)}
                 >
                   <Icon icon="iconamoon:profile" className='w-8 h-8 mr-4'/>
                   แก้ไขโปรไฟล์
                 </p>
+                }
               </div>
 
               <div className="flex flex-row min-w-28 text-white text-xl font-bold">
-               <p 
-                     className="flex w-full justify-center items-center underline underline-offset-  cursor-pointer "
-                     onClick={() => setStatePage(2)}
-                  >
+              {StatePage === 2 ?  <p 
+                   className="flex w-full justify-center items-center underline cursor-pointer drop-shadow-2xl transition-all   duration-300 ease-in-out hover:scale-105"
+                  onClick={() => setStatePage(2)}
+                >
                   <Icon icon="material-symbols:local-shipping-outline" className='w-8 h-8 mr-4'/>
                   ข้อมูลการจัดส่ง
-                  </p>
+                </p> :
+                <p 
+                   className="flex w-full justify-center items-center cursor-pointer hover:drop-shadow-2xl transition-all hover:underline-offset-4  duration-300 ease-in-out hover:scale-105"
+                  onClick={() => setStatePage(2)}
+                >
+                  <Icon icon="material-symbols:local-shipping-outline" className='w-8 h-8 mr-4'/>
+                  ข้อมูลการจัดส่ง
+                  </p>}
               </div>
 
               <div className="flex flex-row min-w-28 text-white text-xl font-bold">
-               <p 
-                  className="flex w-full justify-center items-center underline underline-offset-  cursor-pointer "
+              {StatePage === 3 ?  <p 
+                   className="flex w-full justify-center items-center underline cursor-pointer drop-shadow-2xl transition-all   duration-300 ease-in-out hover:scale-105"
                   onClick={() => setStatePage(3)}
                 >
                   <Icon icon="tabler:social" className='w-8 h-8 mr-4'/>
                   ข้อมูลการติดต่อ
-                </p>
+                </p> :
+                <p 
+                   className="flex w-full justify-center items-center cursor-pointer hover:drop-shadow-2xl transition-all hover:underline-offset-4  duration-300 ease-in-out hover:scale-105"
+                  onClick={() => setStatePage(3)}
+                >
+                  <Icon icon="tabler:social" className='w-8 h-8 mr-4'/>
+                  ข้อมูลการติดต่อ
+                </p>}
               </div>
               
             </div>

@@ -41,7 +41,7 @@ console.log(bookSelect,'bookProp2',bookProp2)
 
     return (
         <>
-            <div className='w-screen h-screen flex flex-col items-center mt-10 sm:mt-5 z-30'>
+            <div className='w-screen h-screen flex flex-col items-center mt-10 sm:mt-5 z-30 pb-32 overflow-auto'>
                 <Icon icon="carbon:checkmark-outline" width="80" height="80" 
                 className='text-green-400 z-30 scale-75 sm:scale-100'/>
                 <div className="text-xl sm:text-3xl mt-2 z-30">โพสต์หนังสือเสร็จสิ้น</div>

@@ -7,7 +7,7 @@ import { DotLoader } from 'react-spinners';
 
 
 interface SlideBookBigProps {
-    data: BookItems[];
+    data: any;
     Headtitle: string;
     Subtitle: string;
 }
@@ -90,34 +90,35 @@ interface BookItems {
                         <div 
                         key={index}
                         className='flex flex-row justify-start shrink-0 w-5/12 h-96 drop-shadow-xl rounded-2xl duration-300  bg-white min-w-128 mt-8'
-                        style={{transform: `translateX(${moreFrom * -504}px)`, transition: 'transform 0.6s ease-in-out' }}>
+                        style={{transform: `translateX(${moreFrom * -694}px)`, transition: 'transform 0.6s ease-in-out' }}>
                             
-                            <div className='flex justify-center w-2/4 min-w-56 bg-cover bg-center bg-no-repeat rounded-l-2xl' style={{backgroundImage: `url(${item.picture[0]})`}} />
-
-
-
+                            <div className='flex justify-center w-56 bg-cover bg-center bg-no-repeat rounded-l-2xl' style={{backgroundImage: `url(${item.picture[0]})`}} />
                                 <div className='flex flex-col items-center w-2/4 h-full min-w-96'>
                                     <div className="flex w-10/12 flex-col h-5/6">
-                                        <div className='flex w-8/12 text-3xl font-bold mt-5 no-wrap'>
+                                        <Link
+                                        href={`/bookinfo/${item.id}`}
+                                        className='flex w-8/12 text-3xl font-bold mt-5 no-wrap'>
                                             {item.title.length > 25 ? item.title.substring(0,25) + '...' : item.title}
-                                        </div>
+                                        </Link>
                                         
                                         <div className='flex w-5/6 text-xl font-thin mt-5 ml-5'>
 
                                             {item.description.length > 100 ? item.description.substring(0, 100) + '...' : item.description}
                                         </div>
                                     </div>
-                                    <Link 
-                                    href={`/profile/${item.User.id}`} className="flex w-10/12 h-1/6 justify-between mb-2">
+                                    <div 
+                                    className="flex w-10/12 h-1/6 justify-between mb-2">
                                         <div className='flex items-center '>
-                                            <div 
+                                            <Link
+                                            href={`/profile/${item.User.id}`}
                                             style={{backgroundImage: `url(${item.User.profile_picture})`}}
                                             className="aspect-square w-10 h-10 mr-2 bg-cover bg-black bg-no-repeat rounded-full">
                                                 
-                                            </div>
-                                            <p>
+                                            </Link>
+                                            <Link 
+                                            href={`/profile/${item.User.id}`}>
                                                 {item.User.username}
-                                            </p>
+                                            </Link>
                                         </div>
                                         <div className='flex justify-end items-center cursor-pointer '>
                                             <Link 
@@ -126,7 +127,7 @@ interface BookItems {
                                                 ดูเพิ่มเติม
                                             </Link>
                                         </div>
-                                    </Link>
+                                    </div>
                                 </div>
 
 
