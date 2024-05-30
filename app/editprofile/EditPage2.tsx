@@ -96,11 +96,11 @@ const EditPage2: React.FC = (): JSX.Element => {
             key={index}
             className='flex w-2/3 h-1/6 justify-center items-center bg-dark1 flex-col drop-shadow-lg rounded-2xl min-h-48'  
           >
-            <div className='flex w-full h-1/3 text-white font-bold justify-start items-center pl-8'> 
+            <div className='flex w-full h-1/3 text-white font-bold justify-start items-center pl-8 min-h-12'> 
               Address 
             </div>
 
-            <div className="flex w-full h-2/3 bg-white rounded-b-2xl text-black font-bold justify-start items-center pl-8">
+            <div className="flex w-full h-2/3 bg-white rounded-b-2xl text-black font-bold justify-start items-center pl-8 min-h-36">
               {address}
             </div>
             

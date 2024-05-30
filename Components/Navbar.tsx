@@ -129,9 +129,9 @@ const Navbar: React.FC<NavbarProps> = ({backGroundOn, withTitle}) =>{
                                     <Link href='/#popular' className="flex text-center items-center text-white text-base"
                                     onClick={(e) => {
                                         e.preventDefault();
-                                        const categoryElement = document.getElementById('category');
+                                        const categoryElement = document.getElementById('recommend');
                                         categoryElement?.scrollIntoView({ behavior: 'smooth' });
-                                      }}>ยอดนิยม</Link>
+                                      }}>สำหรับคุณ</Link>
                                 </div>
                             </div>
                             {status === 'authenticated'?
@@ -340,7 +340,7 @@ function DropDownResponsive() {
                 </Link>
             ))}
             {session?.user.isAdmin &&
-            <Link href='/admin' className="flex pl-4 h-12 pr-2 cursor-pointer hover:bg-red-100 w-full items-center justify-start">
+            <Link href='/admin' className="flex pl-4 h-12 pr-2 cursor-pointer hover:bg-red-100 w-full items-center justify-center">
                 <div
                 className="w-9 h-9 rounded-full bg-red-500 flex items-center justify-center">
                     <Icon  

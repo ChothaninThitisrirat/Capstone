@@ -49,19 +49,19 @@ const SlideBookMiniWithTitle: React.FC<SlideBookMiniwithTitleProps> = ({data, He
             icon="icon-park-solid:left-c" width="50" height="50" />}
 
                 <div 
-                style={{width: '1350px', WebkitOverflowScrolling: 'touch'}}
-                className="flex gap-6 justify-start items-start overflow-x-auto h-fit w-48 close-scrollbar pt-12">
+                style={{WebkitOverflowScrolling: 'touch'}}
+                className="flex gap-14 justify-start items-start overflow-x-auto h-fit w-full close-scrollbar pt-12">
                 {data?.map((item: BookItem, index: number) => (
                     <Link 
                     className='flex flex-col justify-center items-center '
                     href={`/bookinfo/${item.id}`} 
-                    style={{transform: `translateX(${moreFrom * -215}px)`, transition: 'transform 0.6s ease-in-out'}} 
+                    style={{transform: `translateX(${moreFrom * -245}px)`, transition: 'transform 0.6s ease-in-out'}} 
                     >
                         <div
                         key={index}
                         style={{ backgroundImage: `url(${item.picture[0]})` }}
-                        className="flex flex-col w-48 h-72 rounded-s-xs shrink-0 duration-300 bg-white cursor-pointer bg-cover bg-no-repeat bg-center" />
-                        <div className="flex w-40 h-max  justify-center items-end  font-bold text-lg ">
+                        className="flex flex-col w-48 h-72 rounded-s-xs shrink-0 duration-300 bg-white cursor-pointer bg-cover bg-no-repeat bg-center shadow-lg hover:scale-105" />
+                        <div className="flex w-40 h-max  justify-center items-end  font-bold text-lg pt-4">
                         {item.title}
                         </div>
                     </Link>

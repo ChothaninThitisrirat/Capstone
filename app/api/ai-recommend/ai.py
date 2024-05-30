@@ -26,9 +26,8 @@ origin = [
     "http://superdoggez.trueddns.com:10610",
     "http://superdoggez.trueddns.com:10611"
     "http://superdoggez.trueddns.com:10611",
-    "http://192.168.1.48/4000",
-    "http://192.168.1.48/3000",
-    "http://172.19.160.1/4000"
+    "http://192.168.1.69/4000",
+    "http://192.168.1.69/3000"
 ]
 
 app.add_middleware(
@@ -38,7 +37,7 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-@app.post('/api/ai')
+@app.post('/api/ai-recommend/')
 async def process_data(data: dict):
     prisma = Prisma()
     await prisma.connect()                                 #Connect to Database with prisma python
@@ -138,7 +137,7 @@ async def process_data(data: dict):
         print(e)
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.post('/api/ai/book')
+@app.post('/api/ai-recommend/book')
 async def process_data(data: dict):
     prisma = Prisma()
     await prisma.connect()
@@ -233,5 +232,5 @@ async def process_data(data: dict):
 
 if __name__ == '__main__':
     import uvicorn
-    uvicorn.run(app, host='192.168.1.48', port=4000)
+    uvicorn.run(app, host='192.168.1.69', port=4000)
 
