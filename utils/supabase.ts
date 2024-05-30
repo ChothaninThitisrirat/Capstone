@@ -74,3 +74,5 @@ export const upLoadPROFILE = async (fileOrBlob: File | Blob | Buffer) => {
 
 
 export const image = `https://dfmtboqfsygnjttfuvgq.supabase.co/storage/v1/object/public/b-trade/web/`
+
+export const idcard = `https://dfmtboqfsygnjttfuvgq.supabase.co/storage/v1/object/public/b-trade/idcard/`
