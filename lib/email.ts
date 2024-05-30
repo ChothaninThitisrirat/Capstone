@@ -21,46 +21,54 @@ export const transport = nodemailer.createTransport({
 })
 
 
-export function acceptedemail(bookname: string, reqbook:string, owner:string, user:string):any {
+export function acceptedemail(bookname: string, reqbook:string, owner:string, user:string, image:string, logo:string) {
     const template = Handlebars.compile(acceptedemailTemplate);
     const htmlbody = template({
         bookname:bookname,
         owner:owner,
         reqbook:reqbook,
-        user:user  
+        user:user,
+        image:image,
+        logo:logo  
     })
     return htmlbody
 }
 
-export function declineemail(bookname: string, reqbook:string, owner:string, user:string) {
+export function declineemail(bookname: string, reqbook:string, owner:string, user:string, image:string, logo:string) {
     const template = Handlebars.compile(declinedemailTemplate)
     const htmlbody = template({
         bookname:bookname,
         owner:owner,
         reqbook:reqbook,
-        user:user  
+        user:user,
+        image:image,
+        logo:logo  
     })
     return htmlbody
 }
 
-export function returnemail(bookname: string, reqbook:string, owner:string, user:string) {
+export function returnemail(bookname: string, reqbook:string, owner:string, user:string, image:string, logo:string) {
     const template = Handlebars.compile(returnemailTemplate)
     const htmlbody = template({
         bookname:bookname,
         owner:owner,
         reqbook:reqbook,
-        user:user  
+        user:user,
+        image:image,
+        logo:logo
     })
     return htmlbody
 }
 
-export function requestemail(bookname: string, reqbook:string, owner:string, user:string) {
+export function requestemail(bookname: string, reqbook:string, owner:string, user:string, image:string, logo:string) {
     const template = Handlebars.compile(requestemailTemplate)
     const htmlbody = template({
         bookname:bookname,
         owner:owner,
         reqbook:reqbook,
-        user:user  
+        user:user,
+        image:image,
+        logo:logo
     })
     return htmlbody
 }

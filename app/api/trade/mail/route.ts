@@ -1,10 +1,13 @@
 import { NextResponse } from "next/server";
 import { prismadb } from "@/lib/db";
 import { transport, email, requestemail } from "@/lib/email";
+import { image } from "@/utils/supabase";
 
 export async function POST(req: Request) {
     try {
         const { id } = await req.json()
+
+        const logo = `${image} + logoblack.jpg`
         
         const tradeinfo = await prismadb.trade.findUnique({
             where: { 
@@ -30,9 +33,10 @@ export async function POST(req: Request) {
                 
         const send = await transport.sendMail({
             from: email.email,
-            to: `${tradeinfo?.User_Trade_owner_idToUser.email}`,
+            // to: `${tradeinfo?.User_Trade_owner_idToUser.email}`,
+            to: "SuperDoggez2004@gmail.com", // for testing purposes
             subject: `Trade: ${tradeinfo?.id}`,
-            html: requestemail(`${tradeinfo?.Book_Trade_book_idToBook.title}`, `${tradeinfo?.Book_Trade_req_book_idToBook.title}`, `${tradeinfo?.User_Trade_owner_idToUser.username}`, `${tradeinfo?.User.username}`)
+            html: requestemail(`${tradeinfo?.Book_Trade_book_idToBook.title}`, `${tradeinfo?.Book_Trade_req_book_idToBook.title}`, `${tradeinfo?.User_Trade_owner_idToUser.username}`, `${tradeinfo?.User.username}`, `${tradeinfo.Book_Trade_req_book_idToBook.picture[0]}`, `${logo}`)
         })
 
         return NextResponse.json({
