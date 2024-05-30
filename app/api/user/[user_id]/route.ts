@@ -14,7 +14,6 @@ export async function GET(req: Request,{ params }: { params: { user_id: string }
                 last_name:true,
                 profile_picture:true,
                 phone_number:true,
-                card_id:true,
                 instagram:true,
                 facebook:true,
                 line:true,
@@ -33,7 +32,7 @@ export async function GET(req: Request,{ params }: { params: { user_id: string }
         })
 
         const book_agg = await prismadb.book.aggregate({
-            where: { id: parseInt(params.user_id),isPost_trade:true },
+            where: { user_id: parseInt(params.user_id),isPost_trade:true },
             _count: {
                 id:true
             }
