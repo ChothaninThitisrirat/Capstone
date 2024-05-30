@@ -240,18 +240,18 @@ const ManageRequest: React.FC<PostNewBookProp> = ({stateOpen, setStateOpen, clas
                                 <div className="flex gap-8 flex-col sm:flex-row w-full sm:w-auto">
                                     <div className="flex items-center mx-5">
                                         <Icon icon="skill-icons:instagram" width="32" height="32" />
-                                        <div className="flex text-xl ml-3">{bookInfo?.Book_Trade_req_book_idToBook.User.instagram === null ? '-' :bookSelectTrade?.Book_Trade_req_book_idToBook.User.instagram}</div>
+                                        <div className="flex text-xl ml-3">{bookInfo?.Book_Trade_req_book_idToBook.User.instagram === null ? '-' :bookInfo?.Book_Trade_req_book_idToBook.User.instagram}</div>
                                     </div>
                                     <div className="flex items-center mx-5">
                                         <Icon icon="logos:facebook" width="32" height="32" />
-                                        <div className="flex text-xl ml-3">{bookInfo?.Book_Trade_req_book_idToBook.User.facebook === null ? '-' :bookSelectTrade?.Book_Trade_req_book_idToBook.User.facebook}</div>
+                                        <div className="flex text-xl ml-3">{bookInfo?.Book_Trade_req_book_idToBook.User.facebook === null ? '-' :bookInfo?.Book_Trade_req_book_idToBook.User.facebook}</div>
                                     </div>
                                     <div className="flex items-center mx-5">
                                         <img
                                         src={`${image}line_icon.jpg`}
                                         className='w-8 h-8 object-cover cursor-pointer bg-dark3 rounded-lg shadow-sm duration-300'
                                         />
-                                        <div className="flex text-xl ml-3">{bookInfo?.Book_Trade_req_book_idToBook.User.line === null ? '-' :bookSelectTrade?.Book_Trade_req_book_idToBook.User.line}</div>
+                                        <div className="flex text-xl ml-3">{bookInfo?.Book_Trade_req_book_idToBook.User.line === null ? '-' :bookInfo?.Book_Trade_req_book_idToBook.User.line}</div>
                                     </div>
                                 </div>
                             </div>}
