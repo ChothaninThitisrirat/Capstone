@@ -12,7 +12,6 @@ export async function GET(req: Request,{ params }: { params: { user_id: string }
                 username:true,
                 first_name:true,
                 last_name:true,
-                card_id:true,
                 address:true,
                 phone_number:true,
                 email:true,
