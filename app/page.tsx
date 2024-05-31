@@ -55,6 +55,7 @@ const Page: FC<Props> = (): JSX.Element => {
   const [category10, setCategory10] = useState<Books[]>([]);
   const categories = ['นวนิยาย', 'สยองขวัญ', 'การ์ตูน', 'โรแมนติก', 'วิทยาศาสตร์', 'การเงิน - ลงทุน', 'การศึกษา', 'ท่องเที่ยว', 'พัฒนาตนเอง', 'สุขภาพ'];
   const [allrecommend, setAllrecommend] = useState<Books[]>([]);
+  const [recommendcollab, setRecommendcollab] = useState<Books[]>([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -81,6 +82,38 @@ const Page: FC<Props> = (): JSX.Element => {
           
           setAllrecommend(allRecommendations);
           console.log(allRecommendations, 'all recommendations');
+        } else {
+          console.error('Failed to fetch data:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+    
+    fetchData();
+  }, [session]);
+
+  useEffect(() => {
+    async function fetchData() {
+      if (!session) {
+        console.log('No session available');
+        return;
+      }
+      try {
+        const response = await fetch(`http://superdoggez.trueddns.com:10610/api/ai/collab`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            user_id: parseInt(session.user.id)
+          })
+        });
+        
+        if (response.ok) {
+          const data = await response.json();         
+          setRecommendcollab(data.recommend.นวนิยาย);
+          console.log(data.recommend.นวนิยาย, 'collab recommendations');
         } else {
           console.error('Failed to fetch data:', response.statusText);
         }
@@ -418,7 +451,7 @@ console.log("RecommendedAllFinal",allrecommend)
 
           <div className='flex justify-center pb-8' id='recommend'>
             {
-              session && loading ? Loader() : session && (<SlideBookBig data={newarrival} Headtitle={"You Might Like This"} Subtitle={"หนังสือที่คุณอาจจะชื่นชอบ"}/>)
+              session && loading ? Loader() : session && (<SlideBookBig data={recommendcollab} Headtitle={"You Might Like This"} Subtitle={"หนังสือที่คุณอาจจะชื่นชอบ"}/>)
             }
           </div>
 

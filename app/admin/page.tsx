@@ -12,7 +12,6 @@ import axios from 'axios';
 import HashLoader from "react-spinners/HashLoader";
 import Router from 'next/router'
 import EditUser from '@/Components/EditUser';
-import { set } from "mongoose";
 
 
 interface UserInfo {
@@ -29,8 +28,12 @@ interface History {
   status: string;
   req_book_id: number;
   req_user_id: number;
+}
 
-
+interface Book {
+  id: number;
+  title: string;
+  picture: string[];
 }
 
 
@@ -51,8 +54,9 @@ export default function Admin(){
     const [userInfo, setUserInfo] = useState<UserInfo[]>([]);
     const [reloadInfo, setReloadInfo] = useState(false) 
     const [notFound, setNotFound] = useState(true)
-
-    const [book, setBook] = useState([])
+    const [historyTrade, setHistoryTrade] = useState<History[]>([])
+    const [book, setBook] = useState<Book[]>([])
+    
 
     const FetchHistory = () => {
       try{
@@ -119,7 +123,7 @@ export default function Admin(){
       visibility: "hidden",
       transitionDuration: '0.3s'
   })
-  const [historyTrade, setHistoryTrade] = useState<History[]>([])
+
 
   useEffect(() => {
       if (stateOpen) {
@@ -247,67 +251,44 @@ export default function Admin(){
             <EditUser setStateOpen={setStateOpen} classAddBook={classAddBook} userIdSelect={userIdSelect} reloadInfo={reloadInfo}/>
             </>
           : (
-            <div className="flex justify-center items-center mt-8">
+            <div className="flex justify-center items-center flex-col w-full h-full mt-12">
               {historyTrade.map((item, index) => (
-                  <div className="flex  flex-col w-10/12 h-52 bg-bg drop-shadow-xl  justify-center items-start rounded-2xl">
-                    <div className="flex w-full h-12 bg-dark1 rounded-t-2xl">
+                <div className="flex h-52 w-screen justify-center mb-12">
+                  <div className="flex  flex-col w-8/12 h-full  bg-bg drop-shadow-xl  justify-center items-start rounded-2xl">
+                    <div className="flex w-full h-1/6 bg-dark1 rounded-t-2xl">
                       <div className="flex font-bold text-white pl-8 justify-center items-center text-2xl">
                       Trade ID: {item.id}
                       </div>
                     </div>
-                    <div className="flex w-full h-full">
-
-
-                      <div className="flex w-1/3 h-full justify-center items-center">
-                        <div className="flex flex-col w-11/12 h-11/12 bg-white rounded-2xl p-4">
-                          <div className="flex w-full h-1/2 justify-center items-center">
-                            <img
-                            src={userInfo.find((user) => user.id === item.owner_id)?.profile_picture}
-                            alt="Profile picture"
-                            className='w-24 h-24 object-cover cursor-pointer bg-white rounded-full'
-                            />
-                          </div>
-                          <div className="flex w-full h-1/2 justify-center items-center">
-                            <div className="flex flex-col w-11/12 h-11/12">
-                              <div className="flex w-full h-1/2 justify-center items-center">
-                                <div className="flex font-bold text-lg">Owner</div>
-                              </div>
-                              <div className="flex w-full h-1/2 justify-center items-center">
-                                <div className="flex font-bold text-lg">{userInfo.find((user) => user.id === item.owner_id)?.username}</div>
-                                <div className="flex font-bold text-lg">
-                                  <img src={book.find((user) => user.user_id === item.owner_id)?.picture} className='w-24 h-24'/>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
+                    <div className="flex w-full h-5/6">
+                      <div className="flex w-2/5 h-full justify-around items-center">
+                        <div className="flex flex-col justify-center items-center">
+                          <img
+                              src={userInfo.find((user) => user.id === item.owner_id)?.profile_picture}
+                              alt="Profile picture"
+                              className='w-24 h-24 object-cover cursor-pointer bg-white rounded-full'
+                              />
+                          <b>{userInfo.find((user) => user.id === item.owner_id)?.username}</b>
+                          <b>ID #{userInfo.find((user) => user.id === item.owner_id)?.id}</b>
                         </div>
+                        <div className="flex">
+                          <img
+                              src={book.find((book) => book.id === item.book_id)?.picture[0]}
+                              alt="Profile picture"
+                              className='w-24 h-24 object-cover cursor-pointer bg-white rounded-full'
+                              />
+                        </div>
+                        
                       </div>
-
-
-                      
-                      <div className="flex w-1/3 h-full justify-center items-center">
-                        <div className="flex flex-col w-11/12 h-11/12 bg-white rounded-2xl p-4">
-                          <div className="flex w-full h-1/2 justify-center items-center">
-                            <img
-                            src={userInfo.find((user) => user.id === item.req_user_id)?.profile_picture}
-                            alt="Profile picture"
-                            className='w-24 h-24 object-cover cursor-pointer bg-white rounded-full'
-                            />
-                          </div>
-                          <div className="flex w-full h-1/2 justify-center items-center">
-                            <div className="flex flex-col w-11/12 h-11/12">
-                              <div className="flex w-full h-1/2 justify-center items-center">
-                                <div className="flex font-bold text-lg">Requester</div>
-                              </div>
-                              <div className="flex w-full h-1/2 justify-center items-center">
-                                <div className="flex font-bold text-lg">{userInfo.find((user) => user.id === item.req_user_id)?.username}</div>
-                              </div>
-                            </div>
-                          </div> 
-                        </div>
+                      <div className="flex w-2/5 h-full justify-center items-center">
+                        
+                      </div>
+                      <div className="flex w-2/5 h-full justify-center items-center">
+                        
                       </div>
                     </div>
                   </div>
+                </div>
                   ))}
 
             </div>)  

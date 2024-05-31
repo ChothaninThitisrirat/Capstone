@@ -366,7 +366,7 @@ console.log('datePost',datePost)
                 'Content-Type': 'application/json'
               },
               body: JSON.stringify({
-                book_id: bookInfoShow?.bookinfo.id,
+                book_id: Number(bookInfoShow?.bookinfo.id),
               })
             });
             

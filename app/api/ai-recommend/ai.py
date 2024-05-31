@@ -185,7 +185,7 @@ async def process_data(data: dict):
         JOIN "BookCategory" bc ON b.id = bc.book_id
         JOIN "Category" c ON bc.category_id = c.id
         WHERE b.status = 'available'
-        AND "b.isPost_trade" = TRUE
+        AND "isPost_trade" = TRUE
         AND b.id <> %s
         ''', (book_id,))
         books = cur.fetchall()
