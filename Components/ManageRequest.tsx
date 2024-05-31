@@ -106,6 +106,7 @@ const ManageRequest: React.FC<PostNewBookProp> = ({stateOpen, setStateOpen, clas
 
 
     const handleTradeCancel = async () => {
+        setStateConfirm(false)
         setLoading(true)
         try {
             await axios.post(`/api/trade/request/decline/email`,{

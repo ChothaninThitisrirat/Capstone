@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
 import { Icon } from "@iconify/react";
 import HashLoader from "react-spinners/HashLoader";
@@ -33,14 +33,15 @@ const Login: React.FC<LoginProps> = ({
     const [confirmPassword, setConfirmPassword] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
-    const [personalId, setPersonalId] = useState("");
+    // const [personalId, setPersonalId] = useState("");
+    const [personalIdImg, setPersonalIdImg] = useState<File | null>(null);//
     const [address, setAddress] = useState("");
     const [telNumber, setTelNumber] = useState("");
-    const [infoPage, setInfoPage] = useState(true);
-    const [categoryLike, setCategoryLike] = useState(true);
+    const [infoPage, setInfoPage] = useState(true); // true
+    const [categoryLike, setCategoryLike] = useState(true); // true
     const [checkSpecialChar, setCheckSpecialChar] = useState(false);
-    const [classCheckPersonalId, setClassCheckPersonalId] = useState(false);
-    const [checkCardIdUse, setCheckCardIdUse] = useState(false);
+    // const [classCheckPersonalId, setClassCheckPersonalId] = useState(false);
+    // const [checkCardIdUse, setCheckCardIdUse] = useState(false);
     const [checkTelUse, setCheckTelUse] = useState(false);
     const [classLeastCharacters, setClassLeastCharacters] = useState(
         "flex gap-1 text-gray-500 text-xs ml-5 mt-2"
@@ -158,15 +159,17 @@ const Login: React.FC<LoginProps> = ({
         }
     };
 
-    const handlePersonalIdChange = (e: any) => {
-        const inputValue = e.target.value;
-        setPersonalId(inputValue);
-        if (inputValue.length === 13) {
-        setClassCheckPersonalId(true);
-        } else {
-        setClassCheckPersonalId(false);
-        }
-    };
+    // const handlePersonalIdChange = (e: any) => {
+    //     const inputValue = e.target.value;
+    //     setPersonalId(inputValue);
+    //     if (inputValue.length === 13) {
+    //     setClassCheckPersonalId(true);
+    //     } else {
+    //     setClassCheckPersonalId(false);
+    //     }
+    // };
+
+    const formData = new FormData();
     const handleSubmit = async (e: any) => {
         setLoadingInfo2Bg(true);
         setTimeout(() => {
@@ -174,73 +177,69 @@ const Login: React.FC<LoginProps> = ({
         }, 100);
         
         e.preventDefault();
-        if (classCheckPersonalId) {
-        
-        try {
-            const response = await fetch("/api/auth/signup/2", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                redirect: false,
-                username,
-                email,
-                password,
-                first_name: firstName,
-                last_name: lastName,
-                card_id: personalId,
-                address: [address],
-                phone_number: telNumber,
-                category: dataCatin,
-            }),
+        if (personalIdImg !== null) {
+            formData.append('username', username);
+            formData.append('email', email);
+            formData.append('password', password);
+            formData.append('first_name', firstName);
+            formData.append('last_name', lastName);
+            formData.append('card_id', personalIdImg); //---------------
+            formData.append('address', address);
+            formData.append('phone_number', telNumber);
+            // formData.append('category', dataCatin);
+            dataCatin.forEach((dataCatin) => {
+                formData.append('category', dataCatin);
             });
-            const responseData = await response.json();
-            console.log(responseData.message);
-            if (responseData.message === "Signup successfully") {
-            setRegisterSccuess(
-                "fixed z-20 w-64 h-12 text-white text-center flex items-center justify-center top-0 left-0 right-0 mx-auto mt-5 rounded-lg drop-shadow-lg duration-500 visible bg-dark1"
-            );
-            setCheckCardIdUse(false);
-            setCheckTelUse(true);
-            handleStyle();
-            setFormSignup();
-            setLoadingInfo2(false);
-            setLoadingInfo2Bg(false);
-            setTimeout(() => {
+
+            try {
+                const response = await axios.post("/api/auth/signup/2", formData );
+                
+                const responseData = response.data
+                console.log(responseData.message);
+                if (responseData.message === "Signup successfully") {
                 setRegisterSccuess(
-                "fixed z-20 w-64 h-12 text-white text-center flex items-center justify-center top-0 left-0 right-0 mx-auto mt-5 rounded-lg drop-shadow-lg duration-500 -translate-y-20 invisible bg-dark1"
+                    "fixed z-20 w-64 h-12 text-white text-center flex items-center justify-center top-0 left-0 right-0 mx-auto mt-5 rounded-lg drop-shadow-lg duration-500 visible bg-dark1"
                 );
-            }, 4000);
-            } else if (
-            responseData.message === "ID Card and Phone number already exist."
-            ) {
-            setCheckCardIdUse(true);
-            setCheckTelUse(true);
-            setTimeout(() => {
+                // setCheckCardIdUse(false);
+                setCheckTelUse(true);
+                handleStyle();
+                setFormSignup();
                 setLoadingInfo2(false);
                 setLoadingInfo2Bg(false);
-            }, 1000);
-            } else if (responseData.message === "ID Card already exist.") {
-            setCheckCardIdUse(true);
-            setCheckTelUse(false);
-            setTimeout(() => {
+                setTimeout(() => {
+                    setRegisterSccuess(
+                    "fixed z-20 w-64 h-12 text-white text-center flex items-center justify-center top-0 left-0 right-0 mx-auto mt-5 rounded-lg drop-shadow-lg duration-500 -translate-y-20 invisible bg-dark1"
+                    );
+                }, 4000);
+                } else if (
+                responseData.message === "ID Card and Phone number already exist."
+                ) {
+                // setCheckCardIdUse(true);
+                setCheckTelUse(true);
+                setTimeout(() => {
+                    setLoadingInfo2(false);
+                    setLoadingInfo2Bg(false);
+                }, 1000);
+                } else if (responseData.message === "ID Card already exist.") {
+                // setCheckCardIdUse(true);
+                setCheckTelUse(false);
+                setTimeout(() => {
+                    setLoadingInfo2(false);
+                    setLoadingInfo2Bg(false);
+                }, 1000);
+                } else if (responseData.message === "Phone number already exist.") {
+                // setCheckCardIdUse(false);
+                setCheckTelUse(true);
+                setTimeout(() => {
+                    setLoadingInfo2(false);
+                    setLoadingInfo2Bg(false);
+                }, 1000);
+                }
+            } catch (error) {
+                console.log("error", error);
                 setLoadingInfo2(false);
                 setLoadingInfo2Bg(false);
-            }, 1000);
-            } else if (responseData.message === "Phone number already exist.") {
-            setCheckCardIdUse(false);
-            setCheckTelUse(true);
-            setTimeout(() => {
-                setLoadingInfo2(false);
-                setLoadingInfo2Bg(false);
-            }, 1000);
             }
-        } catch (error) {
-            console.log("error", error);
-            setLoadingInfo2(false);
-            setLoadingInfo2Bg(false);
-        }
         }else{
             setLoadingInfo2(true);
             setLoadingInfo2Bg(false);
@@ -252,7 +251,7 @@ const Login: React.FC<LoginProps> = ({
         setTypeConfirmPassword("password");
         setStylesingup(false);
         setStylelogin(true);
-        setClassCheckPersonalId(false);
+        // setClassCheckPersonalId(false);
         setTimeout(() => {
             setFormSignup();
         }, 2000);
@@ -266,7 +265,8 @@ const Login: React.FC<LoginProps> = ({
         setConfirmPassword("");
         setFirstName("");
         setLastName("");
-        setPersonalId("");
+        // setPersonalId("");
+        setPersonalIdImg(null);
         setAddress("");
         setTelNumber("");
         setInfoPage(true);
@@ -349,6 +349,20 @@ const Login: React.FC<LoginProps> = ({
 
         fetchData();
     }, []);
+
+    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setPersonalIdImg(file);
+            
+        }
+    };
+console.log(personalIdImg)
+
+
+
+
+
 
     return (
         <>
@@ -461,7 +475,7 @@ const Login: React.FC<LoginProps> = ({
                     />
                     </>
                 )}
-                Password must contain special characters.
+                Password must contain special characters. [ {'!@#$%^&*(),.?":{}|<>'} ]
                 </span>
                 <div className={classLeastCharacters}>
                 {classLeastCharacters ===
@@ -659,7 +673,7 @@ const Login: React.FC<LoginProps> = ({
                 </div>
                 <div className=" text-gray-400 mt-4 ml-2">กรอกข้อมูลส่วนตัว</div>
                 <div className="flex justify-between">
-                <div className="flex relative mb-4 w-44">
+                <div className="flex relative mb-2 w-44">
                     <Icon
                     icon="mingcute:user-3-fill"
                     width="30"
@@ -678,7 +692,7 @@ const Login: React.FC<LoginProps> = ({
                     className="w-44 border-b border-gray-400 pl-12 py-2 mt-5 "
                     />
                 </div>
-                <div className="flex relative mb-4 w-44">
+                <div className="flex relative mb-2 w-44">
                     <Icon
                     icon="mingcute:user-3-fill"
                     width="30"
@@ -698,47 +712,8 @@ const Login: React.FC<LoginProps> = ({
                     />
                 </div>
                 </div>
-                <div className="flex relative mb-4">
-                <Icon
-                    icon="material-symbols-light:id-card-outline"
-                    width="30"
-                    height="30"
-                    style={{ color: "#A7A7A7" }}
-                    className=" absolute bottom-2 left-1"
-                />
-                <input
-                    id="personalId"
-                    type="number"
-                    value={personalId}
-                    placeholder="Thai Personal ID"
-                    onChange={(e) => handlePersonalIdChange(e)}
-                    maxLength={13}
-                    required
-                    className="w-full border-b border-gray-400 pl-12 py-2 mt-5 "
-                />
-                {classCheckPersonalId ? (
-                    <div className=" absolute bottom-1 right-0">
-                    <Icon
-                        icon="ei:check"
-                        width="30"
-                        height="30"
-                        style={{ color: "#07AB07" }}
-                    />
-                    </div>
-                ) : (
-                    <div className=" absolute bottom-1 right-0 text-gray-400">
-                    <Icon icon="ei:check" width="30" height="30" />
-                    </div>
-                )}
-                </div>
-                {checkCardIdUse ? (
-                <div className=" text-red-500 text-xs text-right">
-                    ID Card already exist.
-                </div>
-                ) : (
-                <div></div>
-                )}
-                <div className="flex relative mb-4">
+                
+                <div className="flex relative mb-2">
                 <Icon
                     icon="prime:map-marker"
                     width="30"
@@ -756,7 +731,7 @@ const Login: React.FC<LoginProps> = ({
                     className="w-full border-b border-gray-400 pl-12 py-2 mt-5 "
                 />
                 </div>
-                <div className="flex relative mb-4">
+                <div className="flex relative mb-2">
                 <Icon
                     icon="mynaui:telephone"
                     width="30"
@@ -782,7 +757,69 @@ const Login: React.FC<LoginProps> = ({
                 ) : (
                 <div></div>
                 )}
-                <div className="flex  mt-14 justify-between">
+
+
+                <div className="flex relative">
+                <Icon
+                    icon="material-symbols-light:id-card-outline"
+                    width="30"
+                    height="30"
+                    style={{ color: "#A7A7A7" }}
+                    className=" absolute bottom-2 left-1"
+                />
+                <div className="w-full pl-12 py-2 mt-5 text-gray-400">ID Card</div>
+                {/* <input
+                    id="personalId"
+                    type="number"
+                    value={personalId}
+                    placeholder="Thai Personal ID"
+                    onChange={(e) => handlePersonalIdChange(e)}
+                    maxLength={13}
+                    required
+                    className="w-full border-b border-gray-400 pl-12 py-2 mt-5 "
+                /> */}
+
+                {/* {classCheckPersonalId ? (
+                    <div className=" absolute bottom-1 right-0">
+                    <Icon
+                        icon="ei:check"
+                        width="30"
+                        height="30"
+                        style={{ color: "#07AB07" }}
+                    />
+                    </div>
+                ) : (
+                    <div className=" absolute bottom-1 right-0 text-gray-400">
+                    <Icon icon="ei:check" width="30" height="30" />
+                    </div>
+                )} */}
+                </div>
+                {/* {checkCardIdUse ? (
+                <div className=" text-red-500 text-xs text-right">
+                    ID Card already exist.
+                </div>
+                ) : (
+                <div></div>
+                )} */}
+                <div className="flex w-full justify-center gap-5 mt-0.5 items-center">
+                    <div className="flex border border-gray-400 rounded-3xl w-56 h-10 px-3 items-center text-gray-400 overflow-x-auto close-scrollbar">
+                        {personalIdImg !== null ? personalIdImg.name :'No Flie Selected'}
+                    </div>
+
+                    <div 
+                    className="flex bg-dark2 rounded-3xl w-24 h-8 text-white justify-center items-center relative cursor-pointer">
+                        <input
+                        type='file'
+                        accept="image/*" 
+                        onChange={handleFileChange}
+                        className="bg-none border-none absolute w-24 rounded-3xl opacity-0 cursor-pointer"/>
+                        Upload
+                    </div>
+                </div>
+
+
+                
+                <div className="flex mt-10 justify-between">
                 <button onClick={() => setCategoryLike(true)}>
                     <Icon
                     icon="fluent-mdl2:navigate-back"
