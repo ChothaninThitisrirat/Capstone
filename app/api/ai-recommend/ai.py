@@ -105,7 +105,7 @@ async def process_data(data: dict):
         id = []
 
         for i in range(user_cat_size):
-            index_recomm = cos_sim_data.loc[i][user_cat_size:].sort_values(ascending=False).index.tolist()[0:math.ceil(10 / len(user_cat))]      
+            index_recomm = cos_sim_data.loc[i][user_cat_size:].sort_values(ascending=False).index.tolist()[0:10]      
             recomm = [x - user_cat_size for x in index_recomm]
             cat_data = [books[i] for i in recomm]
             recommendations = []
@@ -219,7 +219,7 @@ async def process_data(data: dict):
         id = []
 
         for i in range(exp_size):
-            index_recomm = cos_sim_data.loc[i][book_cat_size:].sort_values(ascending=False).index.tolist()[0:math.ceil(10 / len(book_cat))]
+            index_recomm = cos_sim_data.loc[i][book_cat_size:].sort_values(ascending=False).index.tolist()[0:10]
             recomm = [x - book_cat_size for x in index_recomm]
             cat_data = [books[i] for i in recomm]
             recommendations = []
