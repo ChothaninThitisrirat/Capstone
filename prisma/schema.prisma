@@ -16,7 +16,7 @@ model Book {
   pickup                        String?
   req_count                     Int?
   id                            Int            @id @unique @default(autoincrement())
-  ispost_trade                  Boolean        @default(false)
+  isPost_trade                  Boolean        @default(false)
   address                       String?
   postdate                      DateTime?      @db.Timestamptz(6)
   User                          User           @relation(fields: [user_id], references: [id], onDelete: NoAction, map: "book_user_id")

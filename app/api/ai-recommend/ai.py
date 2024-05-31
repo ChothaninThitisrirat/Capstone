@@ -58,35 +58,36 @@ async def process_data(data: dict):
         )
         cur = conn.cursor(cursor_factory=RealDictCursor)
 
-        cur.execute("""
+        cur.execute('''
         SELECT c.name
         FROM "User" u
         JOIN "Userlike" ul ON u.id = ul.user_id
         JOIN "Category" c ON ul.category_id = c.id
         WHERE u.id = %s
-        """, (user,))
+        ''', (user,))
         user_cat = [row['name'].strip() for row in cur.fetchall()]         #Get the categories
         print(user_cat)
 
-        cur.execute("""
+        cur.execute('''
         SELECT b.id, b.title, b.picture, b.description, u.username, u.profile_picture, u.id userid
         FROM "Book" b
         JOIN "User" u ON b.user_id = u.id
-        JOIN "bookcategory" bc ON b.id = bc.book_id
+        JOIN "BookCategory" bc ON b.id = bc.book_id
         JOIN "Category" c ON bc.category_id = c.id
         WHERE b.status = 'available'
-        AND b.ispost_trade = TRUE
+        AND "isPost_trade" = TRUE
         AND b.user_id <> %s
-        """, (user,))
+        ''', (user,))
         books = cur.fetchall()
 
         books_category = []
         for book in books:
-            cur.execute("""
+            cur.execute('''
             SELECT c.name
-            FROM "bookcategory" bc
+            FROM "BookCategory" bc
             JOIN "Category" c ON bc.category_id = c.id
-            """, )
+            WHERE bc.book_id = %s
+            ''', (book['id'],))
             books_category.append([row['name'] for row in cur.fetchall()])
 
         print(books_category)
@@ -170,35 +171,36 @@ async def process_data(data: dict):
         )
         cur = conn.cursor(cursor_factory=RealDictCursor)
 
-        cur.execute("""
+        cur.execute('''
             SELECT c.name
             FROM "Book" b
-            JOIN "bookcategory" bc ON b.id = bc.book_id
+            JOIN "BookCategory" bc ON b.id = bc.book_id
             JOIN "Category" c ON bc.category_id = c.id
             WHERE b.id = %s
-        """, (book_id,))
+        ''', (book_id,))
         book_cat = [row['name'] for row in cur.fetchall()]
         print(book_cat)
 
-        cur.execute("""
+        cur.execute('''
         SELECT b.id, b.title, b.picture, b.description, u.username, u.profile_picture, u.id userid
         FROM "Book" b
         JOIN "User" u ON b.user_id = u.id
-        JOIN "bookcategory" bc ON b.id = bc.book_id
+        JOIN "BookCategory" bc ON b.id = bc.book_id
         JOIN "Category" c ON bc.category_id = c.id
         WHERE b.status = 'available'
         AND b.ispost_trade = TRUE
         AND b.id <> %s
-        """, (book_id,))
+        ''', (book_id,))
         books = cur.fetchall()
 
         books_category = []
         for book in books:
-            cur.execute("""
+            cur.execute('''
                 SELECT c.name
-                FROM "bookcategory" bc
+                FROM "BookCategory" bc
                 JOIN "Category" c ON bc.category_id = c.id
-            """, )
+                WHERE bc.book_id = %s
+            ''', (book['id'],))
             books_category.append([row['name'] for row in cur.fetchall()])
 
         print(books_category)
