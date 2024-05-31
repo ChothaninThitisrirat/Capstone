@@ -13,6 +13,7 @@ load_dotenv()
 
 @app.post('/api/ai-collab/')
 async def process_data(data: dict):
+    print('Processing data...')
     try:
         if not data:
             raise HTTPException(status_code=400, detail='No JSON data provided')
@@ -146,6 +147,6 @@ async def process_data(data: dict):
 
 if __name__ == '__main__':
     import uvicorn
-    uvicorn.run(app, host='192.168.1.69', port=4001)
+    uvicorn.run(app, host='192.168.1.33', port=4001)
     
     # uvicorn.run(app, host='localhost', port=4001)
