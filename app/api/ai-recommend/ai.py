@@ -253,5 +253,5 @@ async def process_data(data: dict):
 
 if __name__ == '__main__':
     import uvicorn
-    uvicorn.run(app, host='localhost', port=4000)
+    uvicorn.run(app, host='192.168.1.69', port=4000)
 
