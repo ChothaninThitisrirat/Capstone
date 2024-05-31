@@ -25,9 +25,6 @@ origin = [
     "http://localhost:4000",
     "http://superdoggez.trueddns.com:10610",
     "http://superdoggez.trueddns.com:10611"
-    "http://superdoggez.trueddns.com:10611",
-    "http://192.168.1.69/4000",
-    "http://192.168.1.69/3000"
 ]
 
 app.add_middleware(
@@ -232,5 +229,5 @@ async def process_data(data: dict):
 
 if __name__ == '__main__':
     import uvicorn
-    uvicorn.run(app, host='192.168.1.69', port=4000)
+    uvicorn.run(app, host='192.168.1.33', port=4000)
 
