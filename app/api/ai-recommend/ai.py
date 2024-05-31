@@ -211,7 +211,7 @@ async def process_data(data: dict):
         print(encoded_book_category)
         result = np.concatenate((encoded_book_cat, encoded_book_category), axis=0)
 
-        exp_size = np.size(book_cat)
+        book_cat_size = np.size(book_cat)
         X = np.array(result)
         cos_sim_data = pd.DataFrame(cosine_similarity(X))
         recommendations_dict = {}
@@ -219,8 +219,8 @@ async def process_data(data: dict):
         id = []
 
         for i in range(exp_size):
-            index_recomm = cos_sim_data.loc[i][exp_size:].sort_values(ascending=False).index.tolist()[0:math.ceil(10 / len(book_cat))]
-            recomm = [x - exp_size for x in index_recomm]
+            index_recomm = cos_sim_data.loc[i][book_cat_size:].sort_values(ascending=False).index.tolist()[0:math.ceil(10 / len(book_cat))]
+            recomm = [x - book_cat_size for x in index_recomm]
             cat_data = [books[i] for i in recomm]
             recommendations = []
             
