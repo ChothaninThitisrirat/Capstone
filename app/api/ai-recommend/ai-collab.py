@@ -60,7 +60,7 @@ async def process_data(data: dict):
                 FROM public."Review_Book" rb
                 JOIN public."User" u ON rb.user_id = u.id
                 JOIN public."Book" b ON rb.book_id = b.id
-                JOIN public."bookcategory" bc ON b.id = bc.book_id
+                JOIN public."BookCategory" bc ON b.id = bc.book_id
                 JOIN public."Category" ca ON ca.id = bc.category_id
                 WHERE u.id = %s
                 GROUP BY ca.name, u.id
@@ -100,7 +100,7 @@ async def process_data(data: dict):
                 FROM public."Review_Book" rb
                 JOIN public."User" u ON rb.user_id = u.id
                 JOIN public."Book" b ON rb.book_id = b.id
-                JOIN public."bookcategory" bc ON b.id = bc.book_id
+                JOIN public."BookCategory" bc ON b.id = bc.book_id
                 JOIN public."Category" ca ON ca.id = bc.category_id
                 WHERE u.id <> %s 
                 GROUP BY ca.name, u.id
