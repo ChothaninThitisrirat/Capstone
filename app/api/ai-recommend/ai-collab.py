@@ -66,7 +66,9 @@ async def process_data(data: dict):
             GROUP BY user_id
         ) output;
         ''', (user_id,))
+        print(1)
         user_avg = cur.fetchall()
+
         user_score = np.array([float(score) for score in user_avg[0].values()])
         print(user_score)
 
@@ -145,3 +147,5 @@ async def process_data(data: dict):
 if __name__ == '__main__':
     import uvicorn
     uvicorn.run(app, host='192.168.1.69', port=4001)
+    
+    # uvicorn.run(app, host='localhost', port=4001)
