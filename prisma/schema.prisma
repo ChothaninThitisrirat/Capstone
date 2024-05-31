@@ -65,7 +65,6 @@ model User {
   last_name                                 String        @db.VarChar(20)
   profile_picture                           String?       @default("https://dfmtboqfsygnjttfuvgq.supabase.co/storage/v1/object/public/b-trade/profile/default-user.jpg?t=2024-05-16T10%3A23%3A27.778Z")
   phone_number                              String        @unique @db.VarChar(10)
-  card_id                                   String        @unique @db.VarChar(13)
   instagram                                 String?       @db.VarChar(20)
   facebook                                  String?
   line                                      String?       @db.VarChar(20)

@@ -406,13 +406,19 @@ console.log("RecommendedAllFinal",allrecommend)
 
           <div className="flex justify-center pb-8">
             {
-              <SlideBookBig data={newarrival} Headtitle={"New Arrival"} Subtitle={'หนังสือใหม่ล่าสุด'}/>
+              <SlideBookBig data={newarrival} Headtitle={"New Arrival อันเล็ก"} Subtitle={'หนังสือใหม่ล่าสุด'}/>
             }
           </div>
 
           <div className='flex justify-center pb-8' id='recommend'>
             {
               session && loading ? Loader() : session && (<SlideBookBig data={allrecommend} Headtitle={"Recommended For You"} Subtitle={"หนังสือที่คุณอาจจะสนใจ"}/>)
+            }
+          </div>
+
+          <div className='flex justify-center pb-8' id='recommend'>
+            {
+              session && loading ? Loader() : session && (<SlideBookBig data={newarrival} Headtitle={"You Might Like This"} Subtitle={"หนังสือที่คุณอาจจะชื่นชอบ"}/>)
             }
           </div>
 
