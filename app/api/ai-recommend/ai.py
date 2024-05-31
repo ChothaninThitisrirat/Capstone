@@ -86,7 +86,8 @@ async def process_data(data: dict):
             SELECT c.name
             FROM "BookCategory" bc
             JOIN "Category" c ON bc.category_id = c.id
-            ''', )
+            WHERE bc.book_id = %s
+            ''', (book['id'],))
             books_category.append([row['name'] for row in cur.fetchall()])
 
         print(books_category)
@@ -170,12 +171,13 @@ async def process_data(data: dict):
         )
         cur = conn.cursor(cursor_factory=RealDictCursor)
 
-        cur.execute(''' SELECT c.name
+        cur.execute('''
+            SELECT c.name
             FROM "Book" b
             JOIN "BookCategory" bc ON b.id = bc.book_id
             JOIN "Category" c ON bc.category_id = c.id
-            WHERE b.id = %s'''
-        , (book_id,))
+            WHERE b.id = %s
+        ''', (book_id,))
         book_cat = [row['name'] for row in cur.fetchall()]
         print(book_cat)
 
@@ -197,7 +199,8 @@ async def process_data(data: dict):
                 SELECT c.name
                 FROM "BookCategory" bc
                 JOIN "Category" c ON bc.category_id = c.id
-            ''', )
+                WHERE bc.book_id = %s
+            ''', (book['id'],))
             books_category.append([row['name'] for row in cur.fetchall()])
 
         print(books_category)
