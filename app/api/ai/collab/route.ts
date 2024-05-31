@@ -21,6 +21,17 @@ export async function POST(req: Request) {
     try {
         const { user_id } = await req.json();
 
+        const check_review = await prismadb.review_Book.findMany({
+            where: { user_id: parseInt(user_id) }
+        }) 
+
+        if (check_review.length === 0) {
+            return NextResponse.json({
+                recommend:null,
+                message: "This user has not reviewed any books yet."
+            });
+        }
+
         const response = await fetch(`http://superdoggez.trueddns.com:10612/api/ai-collab`, {
           method: 'POST',
           headers: {
