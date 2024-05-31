@@ -11,20 +11,21 @@ model Book {
   user_id                       Int
   title                         String
   description                   String
-  status                        String?       @db.VarChar(10)
+  status                        String?        @db.VarChar(10)
   picture                       String[]
   pickup                        String?
   req_count                     Int?
-  id                            Int           @id @unique @default(autoincrement())
-  isPost_trade                  Boolean       @default(false)
+  id                            Int            @id @unique @default(autoincrement())
+  isPost_trade                  Boolean        @default(false)
   address                       String?
-  postdate                      DateTime?     @db.Timestamptz(6)
-  User                          User          @relation(fields: [user_id], references: [id], onDelete: NoAction, map: "book_user_id")
+  postdate                      DateTime?      @db.Timestamptz(6)
+  User                          User           @relation(fields: [user_id], references: [id], onDelete: NoAction, map: "book_user_id")
   Review_Book                   Review_Book[]
-  Trade_Trade_book_idToBook     Trade[]       @relation("Trade_book_idToBook")
-  Trade_Trade_req_book_idToBook Trade[]       @relation("Trade_req_book_idToBook")
+  Trade_Trade_book_idToBook     Trade[]        @relation("Trade_book_idToBook")
+  Trade_Trade_req_book_idToBook Trade[]        @relation("Trade_req_book_idToBook")
   Wishlist                      Wishlist[]
-  category                      Category[]    @relation("BookToCategory")
+  bookcategory                  BookCategory[]
+  category                      Category[]     @relation("BookToCategory")
 }
 
 model Review_Book {
@@ -81,10 +82,11 @@ model User {
 }
 
 model Category {
-  id       Int        @id @default(autoincrement())
-  name     String     @db.VarChar(20)
-  Userlike Userlike[]
-  book     Book[]     @relation("BookToCategory")
+  id           Int            @id @default(autoincrement())
+  name         String         @db.VarChar(20)
+  Userlike     Userlike[]
+  bookcategory BookCategory[]
+  book         Book[]         @relation("BookToCategory")
 }
 
 model Review_User {
@@ -117,4 +119,12 @@ model Userlike {
   User        User     @relation(fields: [user_id], references: [id], onDelete: Cascade, map: "Userlike-user_id")
 
   @@id([user_id, category_id])
+}
+
+model BookCategory {
+  id          Int      @id @default(autoincrement())
+  book_id     Int
+  category_id Int
+  Book        Book     @relation(fields: [book_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Bookcategory")
+  Category    Category @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "bookCategory")
 }
