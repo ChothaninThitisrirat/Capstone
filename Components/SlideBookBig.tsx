@@ -101,7 +101,7 @@ interface BookItems {
                                             {item.title.length > 25 ? item.title.substring(0,25) + '...' : item.title}
                                         </Link>
                                         
-                                        <div className='flex w-5/6 text-xl font-thin mt-5 ml-5'>
+                                        <div className='flex w-5/6 text-xl font-base mt-5 ml-5'>
 
                                             {item.description.length > 100 ? item.description.substring(0, 100) + '...' : item.description}
                                         </div>
