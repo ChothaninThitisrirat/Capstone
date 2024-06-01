@@ -99,15 +99,13 @@ function WishList() {
                             <div
                             onClick={()=>handleToBookInfo(item.id)} // ต้องส่งค่าไปหน้า BookInfo
                             key={index} 
-                            className='flex items-center justify-center rounded-sm border w-40 h-60 cursor-pointer shadow-sm hover:scale-105 duration-300 relative sm:w-64 sm:h-96'>
-                                <div className="flex flex-col absolute bottom-0 translate-y-8 text-base w-full sm:translate-y-12">
-                                    <div className="flex w-full justify-center">{item.title}</div>
-                                </div>
+                            className='flex flex-col items-center justify-center rounded-sm  w-40 h-60 cursor-pointer  hover:scale-105 duration-300 relative sm:w-64 sm:h-96'>
                                 <img
                                 src={item.picture[0]}
                                 alt="Profile picture"
-                                className='w-full h-full object-cover cursor-pointer bg-white'
+                                className='w-full h-full object-cover cursor-pointer'
                                 />
+                                <div className="flex w-full h-max  justify-center items-end  font-bold text-lg pt-4">{item.title}</div>
                             </div>
                         ))}
                 </div>}

@@ -118,6 +118,8 @@ export default function EditProfile() {
   </div>;
   }
 
+  
+
   return (
     <>
       
@@ -215,7 +217,7 @@ export default function EditProfile() {
                         {userReview?.length === 0
                           ?<div
                           style={{width: '1250px', WebkitOverflowScrolling: 'touch'}}
-                          className="flex font-bold text-gray-400 text-xl justify-start h-68 pl-20 -translate-y-8">No Review For this User</div> 
+                          className="flex font-bold text-gray-400 text-xl justify-start h-68 pl-20 -translate-y-8">No Review For You</div> 
                           :<div 
                           style={{WebkitOverflowScrolling: 'touch'}}
                           className="flex gap-10 w-full justify-start items-center overflow-y-auto h-68 p-2 flex-col">

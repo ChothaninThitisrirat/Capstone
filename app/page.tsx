@@ -55,7 +55,7 @@ const Page: FC<Props> = (): JSX.Element => {
   const [category10, setCategory10] = useState<Books[]>([]);
   const categories = ['นวนิยาย', 'สยองขวัญ', 'การ์ตูน', 'โรแมนติก', 'วิทยาศาสตร์', 'การเงิน - ลงทุน', 'การศึกษา', 'ท่องเที่ยว', 'พัฒนาตนเอง', 'สุขภาพ'];
   const [allrecommend, setAllrecommend] = useState<Books[]>([]);
-  const [recommendcollab, setRecommendcollab] = useState<Books[]>([]);
+  const [recommendcollab, setRecommendcollab] = useState<Books[] | null>(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -118,7 +118,7 @@ const Page: FC<Props> = (): JSX.Element => {
           console.error('Failed to fetch data:', response.statusText);
         }
       } catch (error) {
-        console.error('Error fetching data:', error);
+        setRecommendcollab(null);
       }
     }
     
@@ -444,17 +444,16 @@ console.log("RecommendedAllFinal",allrecommend)
           </div>
 
           <div className='flex justify-center pb-8' id='recommend'>
-            {
-              session && loading ? Loader() : session && (<SlideBookBig data={recommendcollab} Headtitle={"You Might Like This"} Subtitle={"หนังสือที่คุณอาจจะชื่นชอบ"}/>)
-            }
+            {recommendcollab === null || !session || loading ? null : (
+              <SlideBookBig data={recommendcollab} Headtitle={"You Might Like This"} Subtitle={"หนังสือที่คุณอาจจะชื่นชอบ"} />
+            )}
           </div>
-
           
            
           
 
             {
-              newarrival && (<SlideBookMiniWithTitleNoAll data={newarrival} Headtitle='New Arrival อันเล็ก'/>)
+              newarrival && (<SlideBookMiniWithTitleNoAll data={newarrival} Headtitle='New Arrival'/>)
             }
 
             {

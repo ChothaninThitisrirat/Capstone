@@ -236,7 +236,7 @@ function TradeBookSelect() {
                       onClick={() => handlePopuptrading(tradingBook[0])}
                       className='flex items-center justify-center rounded-sm border w-40 h-60 cursor-pointer shadow-sm hover:scale-105 duration-300 relative mb-5'>
                               <div className="flex flex-col absolute bottom-0 translate-y-12 text-base w-full">
-                                  <div className="flex w-full justify-center">{tradingBook[0].Book_Trade_req_book_idToBook.title}</div>
+                                  <div className="flex w-40 h-max  justify-center items-end  font-bold text-lg pt-4">{tradingBook[0].Book_Trade_req_book_idToBook.title}</div>
                               </div>
                               <img
                               src={tradingBook[0].Book_Trade_req_book_idToBook.picture[0]}
@@ -268,7 +268,7 @@ function TradeBookSelect() {
                                     {item.Book_Trade_req_book_idToBook.status === 'trading' && <div className="flex">UNAVAILABLE</div>}
                                 </div>}
                               <div className="flex flex-col absolute bottom-0 translate-y-12 text-base w-full">
-                                  <div className="flex w-full justify-center">{item.Book_Trade_req_book_idToBook.title}</div>
+                                  <div className="flex w-40 h-max  justify-center items-end  font-bold text-lg pt-4">{item.Book_Trade_req_book_idToBook.title}</div>
                               </div>
                               <img
                               src={item.Book_Trade_req_book_idToBook.picture[0]}
@@ -292,7 +292,7 @@ function TradeBookSelect() {
                             onClick={() => handleToBookInfo(item.req_book_id)}
                             className='flex items-center justify-center rounded-sm border w-40 h-60 cursor-pointer shadow-sm hover:scale-105 duration-300 relative'>
                                 <div className="flex flex-col absolute bottom-0 translate-y-12 text-base w-full">
-                                    <div className="flex w-full justify-center">{item.Book_Trade_req_book_idToBook.title}</div>
+                                    <div className="flex w-40 h-max  justify-center items-end  font-bold text-lg pt-4">{item.Book_Trade_req_book_idToBook.title}</div>
                                 </div>
                                 <img
                                 src={item.Book_Trade_req_book_idToBook.picture[0]}

@@ -202,7 +202,7 @@ export default function Profile() {
               หนังสือทั้งหมดของ {user.user.username}
             </p>
           </div>
-          <div className="flex w-full flex-wrap gap-10 justify-center items-center px-3 bg-bg">
+          <div className="flex w-full flex-wrap gap-10 justify-center items-start px-3 bg-bg">
             
             {userBook?.length === 0 ? (
               <div
@@ -224,7 +224,7 @@ export default function Profile() {
                   />
                   <Link 
                   href={`/bookinfo/${item.id}`}
-                  className='pt-2 line-clamp-1'
+                  className='flex w-40 h-max  justify-center items-end  font-bold text-lg pt-4'
                   >
                     {item.title}
                   </Link>

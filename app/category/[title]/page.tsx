@@ -116,7 +116,7 @@ export default function Profile() {
                   />
                   <Link 
                     href={`/bookinfo/${item.id}`}
-                    className='pt-2 font-bold text-balance justify-center items-center line-clamp-1'
+                    className='flex w-40 h-max  justify-center items-end  font-bold text-lg pt-4'
                     >
                       {item.title}
                   </Link>

@@ -14,6 +14,7 @@ import Router from 'next/router'
 import EditUser from '@/Components/EditUser';
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useCollapse } from "react-collapsed";
+import {idcard} from '@/utils/supabase'
 
 interface UserInfo {
   id: number;
@@ -186,6 +187,7 @@ export default function Admin(){
 
   return (
     <>
+   
       <style>
         {stateOpen
         ?`body {
@@ -350,6 +352,10 @@ export default function Admin(){
                           </div>
                         ))}
                       </div>
+                      <img src={
+                          `idcard${item.req_user_id}.jpg`
+                            ? `${idcard}${item.req_user_id}.jpg` : `${idcard}default-idcard.jpg`}
+                        />
                     </div>
                     <div className="flex w-1/2 flex-col items-start text-2xl pt-4 pl-6">
                       <div>{userInfo.find((user) => user.id === item.req_user_id)?.first_name}{' '}{userInfo.find((user) => user.id === item.req_user_id)?.last_name}</div>
@@ -366,6 +372,10 @@ export default function Admin(){
                           </div>
                         ))}
                       </div>  
+                      <img src={
+                          `idcard${item.req_user_id}.jpg`
+                            ? `${idcard}${item.req_user_id}.jpg` : `${idcard}default-idcard.jpg`}
+                        />
                     </div>
                   </div>
                 </div>

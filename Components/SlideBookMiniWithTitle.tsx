@@ -68,7 +68,7 @@ const SlideBookMiniWithTitle: React.FC<SlideBookMiniwithTitleProps> = ({data, He
                 ))}
                 <div 
                 style={{background:'linear-gradient(to right, rgba(255, 255, 255, 0) 20%, #f9f9f9 80%)'}}
-                className="w-32 h-110 absolute right-10 sm:right-28 top-6 z-0"></div>
+                className="w-32 h-115 absolute right-10 sm:right-28 top-6 z-0"></div>
                 </div>
 
             
