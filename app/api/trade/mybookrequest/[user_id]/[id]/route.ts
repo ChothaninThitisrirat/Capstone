@@ -25,6 +25,7 @@ export async function GET(req: Request,{ params }: { params: { user_id: string ,
                         status:true,
                         pickup_req:true,
                         req_address:true,
+                        isReview:true,
                         Book_Trade_req_book_idToBook: {
                             select: { // book เขาที่มาขอเทรด
                                 id:true,
