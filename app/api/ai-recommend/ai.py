@@ -215,7 +215,7 @@ async def process_data(data: dict):
         print(recommendations_dict)
         id = []
 
-        for i in range(exp_size):
+        for i in range(book_cat):
             index_recomm = cos_sim_data.loc[i][book_cat_size:].sort_values(ascending=False).index.tolist()[0:10]
             recomm = [x - book_cat_size for x in index_recomm]
             cat_data = [books[i] for i in recomm]
