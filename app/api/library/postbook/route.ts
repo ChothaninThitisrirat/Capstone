@@ -18,6 +18,15 @@ export async function POST(req: Request) {
                 }
             });
 
+            for (let i = 0; i < categoryIds.length; i++) {
+                await prismadb.bookCategory.create({
+                    data: {
+                        book_id: id,
+                        category_id: categoryIds[i]
+                    }
+                })
+            }
+
             let image: string[] = [];
 
             const files = formData.getAll('image');
