@@ -13,6 +13,7 @@ load_dotenv()
 
 @app.post('/api/ai-collab/')
 async def process_data(data: dict):
+    print('Processing data...')
     try:
         if not data:
             raise HTTPException(status_code=400, detail='No JSON data provided')
@@ -66,12 +67,10 @@ async def process_data(data: dict):
             GROUP BY user_id
         ) output;
         ''', (user_id,))
-        print(1)
+
         user_avg = cur.fetchall()
 
         user_score = np.array([float(score) for score in user_avg[0].values()])
-        print(user_score)
-
         
         cur.execute('''
         SELECT DISTINCT u.id AS user FROM "Review_Book" rb
@@ -120,11 +119,13 @@ async def process_data(data: dict):
                 ) output;
                 ''', (user,))
             avg = cur.fetchall()
-            user_score = [float(score) for score in avg[0].values()]
-            all_user_score.append(user_score)
+            other_user_score = [float(score) for score in avg[0].values()]
+            all_user_score.append(other_user_score)
         np_all_user = np.array(all_user_score)
-        print(np_all_user)
 
+        print(user_score)
+        print(np_all_user)
+    
         cosine_sim = cosine_similarity([user_score], np_all_user)[0]
         print(cosine_sim)
 
