@@ -12,19 +12,28 @@ import axios from 'axios';
 import HashLoader from "react-spinners/HashLoader";
 import Router from 'next/router'
 import EditUser from '@/Components/EditUser';
-
+import { Icon } from "@iconify/react/dist/iconify.js";
+import { useCollapse } from "react-collapsed";
 
 interface UserInfo {
   id: number;
   username: string;
   profile_picture: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  facebook: string;
+  instagram: string;
+  line: string;
+  owner_id: number;
+  address: string[];
 }
 
 interface History {
   id: number;
   book_id: number;
   owner_id: number;
-  date_time: string;
+  datetime: string;
   status: string;
   req_book_id: number;
   req_user_id: number;
@@ -34,6 +43,7 @@ interface Book {
   id: number;
   title: string;
   picture: string[];
+
 }
 
 
@@ -98,6 +108,7 @@ export default function Admin(){
 
               const sortedUserId = response.data.user.sort((a, b) => b.id - a.id);
               setUserInfo(sortedUserId);
+              
               FetchHistory()
               FetchBook()
               setLoading(false);
@@ -117,6 +128,8 @@ export default function Admin(){
   const [stateOpen, setStateOpen] = useState(false)
   const [userIdSelect, setUserIdSelect] = useState< number | null >(null)
   const [Statepage, setStatePage] = useState(0)
+  const [ isExpanded, setExpanded ] = useState(false);
+  const { getCollapseProps, getToggleProps } = useCollapse({ isExpanded });
   const [classAddBookbg, setClassAddBookbg] = useState('fixed h-screen w-screen bg-slate-200 top-0 left-0 z-50 opacity-30 backdrop-blur-2xl hidden')
   const [classAddBook, setClassAddBook] = useState({
       transform:'translateY(100%)',
@@ -124,6 +137,9 @@ export default function Admin(){
       transitionDuration: '0.3s'
   })
 
+  function handleOnClick() {
+    setExpanded(!isExpanded);
+}
 
   useEffect(() => {
       if (stateOpen) {
@@ -251,18 +267,21 @@ export default function Admin(){
             <EditUser setStateOpen={setStateOpen} classAddBook={classAddBook} userIdSelect={userIdSelect} reloadInfo={reloadInfo}/>
             </>
           : (
-            <div className="flex justify-center items-center flex-col w-full h-full mt-12">
+            <div className="flex justify-center items-center flex-col w-screen h-full mt-12">
               {historyTrade.map((item, index) => (
-                <div className="flex h-52 w-screen justify-center mb-12">
-                  <div className="flex  flex-col w-8/12 h-full  bg-bg drop-shadow-xl  justify-center items-start rounded-2xl">
-                    <div className="flex w-full h-1/6 bg-dark1 rounded-t-2xl">
+                <div className="collapsible flex flex-col h-full w-full max-w-admin justify-center items-center mb-12" {...getToggleProps({onClick: handleOnClick})}>
+                  <div className="flex header flex-col w-full h-52  bg-bg drop-shadow-xl  justify-center items-start rounded-2xl">
+                    <div className="flex w-full h-1/6 bg-dark1 rounded-t-2xl justify-between">
                       <div className="flex font-bold text-white pl-8 justify-center items-center text-2xl">
                       Trade ID: {item.id}
+                      </div>
+                      <div className="flex font-bold text-white pr-8 justify-center items-center text-2xl">
+                      Date {item.datetime}
                       </div>
                     </div>
                     <div className="flex w-full h-5/6">
                       <div className="flex w-2/5 h-full justify-around items-center">
-                        <div className="flex flex-col justify-center items-center">
+                        <div className="flex flex-col justify-center items-center w-1/2 h-full">
                           <img
                               src={userInfo.find((user) => user.id === item.owner_id)?.profile_picture}
                               alt="Profile picture"
@@ -271,21 +290,82 @@ export default function Admin(){
                           <b>{userInfo.find((user) => user.id === item.owner_id)?.username}</b>
                           <b>ID #{userInfo.find((user) => user.id === item.owner_id)?.id}</b>
                         </div>
-                        <div className="flex">
+                        <div className="flex justify-center items-center w-1/2 h-full">
+                          <div className="flex flex-col items-center justify-center mr-6">
+                            <b>{book.find((book) => book.id === item.book_id)?.title}</b>
+                            <b>{book.find((book) => book.id === item.book_id)?.id}</b>
+                          </div>
                           <img
                               src={book.find((book) => book.id === item.book_id)?.picture[0]}
                               alt="Profile picture"
-                              className='w-24 h-24 object-cover cursor-pointer bg-white rounded-full'
+                              className='w-5/12 h-5/6 object-cover cursor-pointer bg-white '
                               />
+                         
                         </div>
                         
                       </div>
-                      <div className="flex w-2/5 h-full justify-center items-center">
-                        
+                      <div className="flex w-1/5 h-full justify-center items-center">
+                        <Icon icon='uil:exchange' className="text-7xl"/>
                       </div>
                       <div className="flex w-2/5 h-full justify-center items-center">
+                        <div className="flex justify-center items-center w-1/2 h-full">
+                          <div className="flex flex-col items-center justify-center mr-6">
+                            <b>{book.find((book) => book.id === item.req_book_id)?.title}</b>
+                            <b>{item.req_book_id}</b>
+                          </div>
+                          <img
+                              src={book.find((book) => book.id === item.req_book_id)?.picture[0]}
+                              alt="Profile picture"
+                              className='w-5/12 h-5/6 object-cover cursor-pointer bg-white '
+                              />
+                         
+                        </div>
+                        <div className="flex flex-col justify-center items-center w-1/2 h-full">
+                          <img
+                              src={userInfo.find((user) => user.id === item.req_user_id)?.profile_picture}
+                              alt="Profile picture"
+                              className='w-24 h-24 object-cover cursor-pointer bg-white rounded-full'
+                              />
+                          <b>{userInfo.find((user) => user.id === item.req_user_id)?.username}</b>
+                          <b>ID #{item.req_user_id}</b>
+                          
+                        </div>
                         
                       </div>
+                    </div>
+                  </div>
+                  <div className="flex content w-11/12 justify-center bg-dark3 drop-shadow-lg rounded-b-2xl text-white"{...getCollapseProps()}>
+                    <div className="flex w-1/2 flex-col items-start text-2xl pt-4 pl-6">
+                      <div>{userInfo.find((user) => user.id === item.owner_id)?.first_name}{' '}{userInfo.find((user) => user.id === item.owner_id)?.last_name}</div>
+                      <div>Email : {userInfo.find((user) => user.id === item.owner_id)?.email}</div>
+                      <div>Facebook : {userInfo.find((user) => user.id === item.owner_id)?.facebook}</div>
+                      <div>Instagram : {userInfo.find((user) => user.id === item.owner_id)?.instagram}</div>
+                      <div className="mb-4">Line : {userInfo.find((user) => user.id === item.owner_id)?.line}</div>
+                      <p className="text-3xl font-bold">All {userInfo.find((user) => user.id === item.owner_id)?.username}'s Address </p>
+                      <div className="overflow-auto w-11/12 h-1/2 bg-dark3 drop-shadow-xl">
+                        
+                        {userInfo.find((user) => user.id === item.owner_id)?.address.map((addressItem, index) => (
+                          <div key={index} className="pb-8">
+                            <div>Address : {addressItem}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="flex w-1/2 flex-col items-start text-2xl pt-4 pl-6">
+                      <div>{userInfo.find((user) => user.id === item.req_user_id)?.first_name}{' '}{userInfo.find((user) => user.id === item.req_user_id)?.last_name}</div>
+                      <div>Email : {userInfo.find((user) => user.id === item.req_user_id)?.email}</div>
+                      <div>Facebook : {userInfo.find((user) => user.id === item.req_user_id)?.facebook}</div>
+                      <div>Instagram : {userInfo.find((user) => user.id === item.req_user_id)?.instagram}</div>
+                      <div className="mb-4">Line : {userInfo.find((user) => user.id === item.req_user_id)?.line}</div>
+                      <p className="text-3xl font-bold">All {userInfo.find((user) => user.id === item.req_user_id)?.username}'s Address </p>
+                      <div className="overflow-auto w-11/12 h-1/2 bg-dark3 drop-shadow-xl">
+                        
+                        {userInfo.find((user) => user.id === item.req_user_id)?.address.map((addressItem, index) => (
+                          <div key={index} className="pb-8">
+                            <div>Address : {addressItem}</div>
+                          </div>
+                        ))}
+                      </div>  
                     </div>
                   </div>
                 </div>

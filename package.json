@@ -26,6 +26,7 @@
     "next-auth": "^4.24.7",
     "nodemailer": "^6.9.13",
     "react": "^17.0.0 || ^18.0.0",
+    "react-collapsed": "^4.1.2",
     "react-dom": "^17.0.0 || ^18.0.0",
     "react-spinners": "^0.13.8",
     "uuid": "^9.0.1"

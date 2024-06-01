@@ -72,7 +72,7 @@ const SlideBookMiniWithTitle: React.FC<SlideBookMiniwithTitleProps> = ({data, He
                 </div>
 
             
-            {moreFrom < (data?.length)-2
+            {moreFrom < (data?.length)-4
             ?<div 
             className=' shrink-0 relative'
             style={{width: '70px'}}>

@@ -55,6 +55,7 @@ const config: Config = {
     },
     maxWidth:{
       '128': '40rem',
+      'admin': '100rem'
     }
     },
   },
