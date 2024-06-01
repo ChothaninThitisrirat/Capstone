@@ -14,7 +14,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { HashLoader,SyncLoader } from 'react-spinners';
 import SlideBookMiniWithTitle from '@/Components/SlideBookMiniWithTitle';
-import { arrayBuffer } from 'node:stream/consumers';
+import SlideBookMiniWithTitleNoAll from '@/Components/SlideBookMiniWithTitleNoAll';
 
 
 interface POPBOOK {
@@ -437,12 +437,6 @@ console.log("RecommendedAllFinal",allrecommend)
             }
           </div>
 
-          <div className="flex justify-center pb-8">
-            {
-              <SlideBookBig data={newarrival} Headtitle={"New Arrival อันเล็ก"} Subtitle={'หนังสือใหม่ล่าสุด'}/>
-            }
-          </div>
-
           <div className='flex justify-center pb-8' id='recommend'>
             {
               session && loading ? Loader() : session && (<SlideBookBig data={allrecommend} Headtitle={"Recommended For You"} Subtitle={"หนังสือที่คุณอาจจะสนใจ"}/>)
@@ -457,7 +451,11 @@ console.log("RecommendedAllFinal",allrecommend)
 
           
            
+          
 
+            {
+              newarrival && (<SlideBookMiniWithTitleNoAll data={newarrival} Headtitle='New Arrival อันเล็ก'/>)
+            }
 
             {
               category1 && (<SlideBookMiniWithTitle data={category1.slice(0,10)} Headtitle='นวนิยาย' num_category={1}/>)
