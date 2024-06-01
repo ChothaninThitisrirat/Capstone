@@ -439,13 +439,13 @@ console.log("RecommendedAllFinal",allrecommend)
 
           <div className='flex justify-center pb-8' id='recommend'>
             {
-              session && loading ? Loader() : session && (<SlideBookBig data={allrecommend} Headtitle={"Recommended For You"} Subtitle={"หนังสือที่คุณอาจจะสนใจ"}/>)
+              session && loading ? Loader() : session && (<SlideBookBig data={allrecommend.slice(0,10)} Headtitle={"Recommended For You"} Subtitle={"หนังสือที่คุณอาจจะสนใจ"}/>)
             }
           </div>
 
           <div className='flex justify-center pb-8' id='recommend'>
             {recommendcollab === null || !session || loading ? null : (
-              <SlideBookBig data={recommendcollab} Headtitle={"You Might Like This"} Subtitle={"หนังสือที่คุณอาจจะชื่นชอบ"} />
+              <SlideBookBig data={recommendcollab.slice(0,10)} Headtitle={"You Might Like This"} Subtitle={"หนังสือที่คุณอาจจะชื่นชอบ"} />
             )}
           </div>
           

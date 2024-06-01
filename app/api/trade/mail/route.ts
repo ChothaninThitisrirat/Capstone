@@ -7,7 +7,7 @@ export async function POST(req: Request) {
     try {
         const { id } = await req.json()
 
-        const logo = `${image} + logoblack.jpg`
+        const logo = `${image}logoblack.jpg`
         
         const tradeinfo = await prismadb.trade.findUnique({
             where: { 
