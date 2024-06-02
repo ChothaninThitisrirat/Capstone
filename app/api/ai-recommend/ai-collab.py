@@ -77,7 +77,7 @@ async def process_data(data: dict):
 	    JOIN "User" u ON rb.user_id = u.id WHERE u.id <> %s
         ''', (user_id,))
         alluser = [row['user'] for row in cur.fetchall()]
-        print(alluser)
+        # print(alluser)
 
         all_user_score = []
         for user in alluser:
@@ -124,16 +124,18 @@ async def process_data(data: dict):
         np_all_user = np.array(all_user_score)
 
         print(user_score)
-        print(np_all_user)
+        
     
         cosine_sim = cosine_similarity([user_score], np_all_user)[0]
-        print(cosine_sim)
+        # print(cosine_sim)
 
         k = 3
         close_user = np.argsort(cosine_sim)[-k:][::-1]
-        print(close_user)
+        # print(close_user)
 
         result = [alluser[idx] for idx in close_user]
+        close_score =  [all_user_score[idx] for idx in close_user]
+        print(close_score)
         print(result)
 
         return {"user" : result}
