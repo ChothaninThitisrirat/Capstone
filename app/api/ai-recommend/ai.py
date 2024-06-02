@@ -62,7 +62,9 @@ async def process_data(data: dict):
         JOIN "Category" c ON ul.category_id = c.id
         WHERE u.id = %s
         ''', (user,))
-        user_cat = [row['name'].strip() for row in cur.fetchall()]         
+        y = cur.fetchall()
+        print(y)
+        user_cat = [row['name'].strip() for row in y]         
         print(user_cat)
 
         cur.execute('''
@@ -215,7 +217,7 @@ async def process_data(data: dict):
         print(recommendations_dict)
         id = []
 
-        for i in range(book_cat):
+        for i in range(book_cat_size):
             index_recomm = cos_sim_data.loc[i][book_cat_size:].sort_values(ascending=False).index.tolist()[0:10]
             recomm = [x - book_cat_size for x in index_recomm]
             cat_data = [books[i] for i in recomm]

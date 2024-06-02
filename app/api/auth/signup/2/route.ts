@@ -92,6 +92,15 @@ export async function POST(req: Request) {
             }
         })
 
+        for (let i = 0; i < categoryIds.length; i++) {
+            await prismadb.userlike.create({
+                data: {
+                    user_id: id,
+                    category_id: categoryIds[i]
+                }
+            })
+        }
+
         return NextResponse.json({
             user:newUser,
             message: "Signup successfully"

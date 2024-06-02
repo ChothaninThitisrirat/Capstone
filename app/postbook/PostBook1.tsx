@@ -126,7 +126,7 @@ const PostBook1: React.FC<PostBook1Props> = ({setStatePage, setBookSelect, bookS
                                 className={'w-full h-full object-cover cursor-pointer bg-white'+' '+(bookSelect === item.id ?' border-4 border-dark2' : '')}
                                 />
                                 <div className="flex flex-col absolute bottom-0 translate-y-8 text-base w-full sm:translate-y-12">
-                                    <div className="flex w-full justify-center ">{item.title}</div>
+                                    <div className="flex w-full justify-center font-bold">{item.title}</div>
                                 </div>
                             </div>
                             
