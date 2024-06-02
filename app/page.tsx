@@ -15,6 +15,7 @@ import { useEffect } from 'react';
 import { HashLoader,SyncLoader } from 'react-spinners';
 import SlideBookMiniWithTitle from '@/Components/SlideBookMiniWithTitle';
 import SlideBookMiniWithTitleNoAll from '@/Components/SlideBookMiniWithTitleNoAll';
+import { all } from 'axios';
 
 
 interface POPBOOK {
@@ -57,6 +58,7 @@ const Page: FC<Props> = (): JSX.Element => {
   const [allrecommend, setAllrecommend] = useState<Books[]>([]);
   const [recommendcollab, setRecommendcollab] = useState<Books[] | null>(null);
   const [shuffleRecCollab, setShuffleRecCollab] = useState<Books[]>([]);
+  const [ShuffleAllRecommend, setShuffleAllRecommend] = useState<Books[]>([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -104,6 +106,18 @@ const Page: FC<Props> = (): JSX.Element => {
       setShuffleRecCollab(array);
     }
   }, [recommendcollab]);
+
+
+  useEffect(() => {
+    if (allrecommend) {
+      let array = [...allrecommend];
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      setShuffleAllRecommend(array);
+    }
+  }, [allrecommend]);
 
   useEffect(() => {
     async function fetchData() {
@@ -451,7 +465,7 @@ console.log("RecommendedAllFinal",allrecommend)
 
           <div className='flex justify-center pb-8' id='recommend'>
             {
-              session && loading ? Loader() : session && (<SlideBookBig data={allrecommend.slice(0,10)} Headtitle={"Recommended For You"} Subtitle={"หนังสือที่คุณอาจจะสนใจ"}/>)
+              session && loading ? Loader() : session && (<SlideBookBig data={ShuffleAllRecommend.slice(0,10)} Headtitle={"Recommended For You"} Subtitle={"หนังสือที่คุณอาจจะสนใจ"}/>)
             }
           </div>
 
