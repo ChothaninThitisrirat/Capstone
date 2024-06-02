@@ -24,9 +24,6 @@ origin = [
     "http://localhost:4000",
     "http://superdoggez.trueddns.com:10610",
     "http://superdoggez.trueddns.com:10611"
-    "http://superdoggez.trueddns.com:10611",
-    "http://192.168.1.69/4000",
-    "http://192.168.1.69/3000"
 ]
 
 app.add_middleware(
@@ -86,7 +83,8 @@ async def process_data(data: dict):
             SELECT c.name
             FROM "BookCategory" bc
             JOIN "Category" c ON bc.category_id = c.id
-            ''', )
+            WHERE bc.book_id = %s
+            ''', (book['id'],))
             books_category.append([row['name'] for row in cur.fetchall()])
 
         print(books_category)
@@ -170,12 +168,13 @@ async def process_data(data: dict):
         )
         cur = conn.cursor(cursor_factory=RealDictCursor)
 
-        cur.execute(''' SELECT c.name
+        cur.execute('''
+            SELECT c.name
             FROM "Book" b
             JOIN "BookCategory" bc ON b.id = bc.book_id
             JOIN "Category" c ON bc.category_id = c.id
-            WHERE b.id = %s'''
-        , (book_id,))
+            WHERE b.id = %s
+        ''', (book_id,))
         book_cat = [row['name'] for row in cur.fetchall()]
         print(book_cat)
 
@@ -197,7 +196,8 @@ async def process_data(data: dict):
                 SELECT c.name
                 FROM "BookCategory" bc
                 JOIN "Category" c ON bc.category_id = c.id
-            ''', )
+                WHERE bc.book_id = %s
+            ''', (book['id'],))
             books_category.append([row['name'] for row in cur.fetchall()])
 
         print(books_category)
@@ -253,5 +253,5 @@ async def process_data(data: dict):
 
 if __name__ == '__main__':
     import uvicorn
-    uvicorn.run(app, host='192.168.1.69', port=4000)
+    uvicorn.run(app, host='192.168.1.33', port=4000)
 

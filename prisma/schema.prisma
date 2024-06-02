@@ -16,15 +16,15 @@ model Book {
   pickup                        String?
   req_count                     Int?
   id                            Int            @id @unique @default(autoincrement())
-  ispost_trade                  Boolean        @default(false)
   address                       String?
   postdate                      DateTime?      @db.Timestamptz(6)
+  isPost_trade                  Boolean        @default(false)
   User                          User           @relation(fields: [user_id], references: [id], onDelete: NoAction, map: "book_user_id")
+  bookcategory                  BookCategory[]
   Review_Book                   Review_Book[]
   Trade_Trade_book_idToBook     Trade[]        @relation("Trade_book_idToBook")
   Trade_Trade_req_book_idToBook Trade[]        @relation("Trade_req_book_idToBook")
   Wishlist                      Wishlist[]
-  bookcategory                  BookCategory[]
   category                      Category[]     @relation("BookToCategory")
 }
 
@@ -51,6 +51,7 @@ model Trade {
   pickup_req                   String?
   req_book_id                  Int
   req_address                  String?
+  isReview                     Boolean  @default(false)
   Book_Trade_book_idToBook     Book     @relation("Trade_book_idToBook", fields: [book_id], references: [id], onDelete: NoAction, map: "trade-book_id")
   User_Trade_owner_idToUser    User     @relation("Trade_owner_idToUser", fields: [owner_id], references: [id], onDelete: NoAction, map: "trade-owner_id")
   Book_Trade_req_book_idToBook Book     @relation("Trade_req_book_idToBook", fields: [req_book_id], references: [id], onDelete: NoAction, map: "trade-req_book_id")
@@ -84,8 +85,8 @@ model User {
 model Category {
   id           Int            @id @default(autoincrement())
   name         String         @db.VarChar(20)
-  Userlike     Userlike[]
   bookcategory BookCategory[]
+  Userlike     Userlike[]
   book         Book[]         @relation("BookToCategory")
 }
 
