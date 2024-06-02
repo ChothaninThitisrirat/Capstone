@@ -40,6 +40,7 @@ interface tradeReQuest {
   pickup_req:string,
   req_address:string,
   Book_Trade_req_book_idToBook:any;
+  isReview:boolean;
 }
 
 
@@ -331,7 +332,10 @@ const [tradeId, setTradeId] = useState<number>(0)
                             onClick={()=>handleHistory(item)}
                             className='flex items-center justify-center rounded-sm border w-40 h-60 cursor-pointer shadow-sm hover:scale-105 duration-300 relative'>
                                 <div className="flex flex-col absolute bottom-0 translate-y-12 text-base w-full">
-                                    <div className="flex w-full justify-center">{item.Book_Trade_req_book_idToBook.title}</div>
+                                    <div className="flex w-full justify-center">
+                                      {!item.isReview && <div className="flex  w-3 h-3 bg-orange-500 rounded-full my-auto mr-2"></div>}
+                                      {item.Book_Trade_req_book_idToBook.title}
+                                    </div>
                                 </div>
                                 <img
                                 src={item.Book_Trade_req_book_idToBook.picture[0]}
