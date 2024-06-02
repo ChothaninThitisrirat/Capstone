@@ -35,7 +35,7 @@ app.add_middleware(
 
 @app.post('/api/ai-recommend/')
 async def process_data(data: dict):
-    model_name = 'distilbert-base-nli-mean-tokens'         #import AI model
+    model_name = 'distilbert-base-nli-mean-tokens'        
     model = SentenceTransformer(model_name)
     print('Processing data...')
     try:
@@ -62,7 +62,7 @@ async def process_data(data: dict):
         JOIN "Category" c ON ul.category_id = c.id
         WHERE u.id = %s
         ''', (user,))
-        user_cat = [row['name'].strip() for row in cur.fetchall()]         #Get the categories
+        user_cat = [row['name'].strip() for row in cur.fetchall()]         
         print(user_cat)
 
         cur.execute('''
@@ -89,25 +89,25 @@ async def process_data(data: dict):
 
         print(books_category)
 
-        encoded_user_cat = model.encode(user_cat, show_progress_bar=True)                       #Tranform user categories into matrix
+        encoded_user_cat = model.encode(user_cat, show_progress_bar=True)                       
         print(encoded_user_cat)
-        encoded_book_category = model.encode(books_category, show_progress_bar=True)            #Tranform book categories into matrix
+        encoded_book_category = model.encode(books_category, show_progress_bar=True)            
         print(encoded_book_category)
-        result =  np.concatenate((encoded_user_cat, encoded_book_category), axis=0)             #Combine the 2 matrix 
+        result =  np.concatenate((encoded_user_cat, encoded_book_category), axis=0)              
 
         user_cat_size = np.size(user_cat)                                        
-        X = np.array(result)                                                                    #Tranfrom into array
-        cos_sim_data = pd.DataFrame(cosine_similarity(X))                                       #Use cosine similarity to find the closest categories book
+        X = np.array(result)                                                                    
+        cos_sim_data = pd.DataFrame(cosine_similarity(X))                                       
         recommendations_dict = {}
         id = []
 
         for i in range(user_cat_size):
-            index_recomm = cos_sim_data.loc[i][user_cat_size:].sort_values(ascending=False).index.tolist()[0:math.ceil(10 / len(user_cat))]      
+            index_recomm = cos_sim_data.loc[i][user_cat_size:].sort_values(ascending=False).index.tolist()[0:10]      
             recomm = [x - user_cat_size for x in index_recomm]
             cat_data = [books[i] for i in recomm]
             recommendations = []
             
-            for book in cat_data:                                       #Store the closest categories book in dictionary
+            for book in cat_data:                                      
                 recommendation = {
                     "id" : book['id'],
                     "title"  : book['title'],
@@ -131,7 +131,7 @@ async def process_data(data: dict):
         cur.close()
         conn.close()
 
-        return {                                                        #Return books
+        return {                                                       
             "recommend" : recommendations_dict
         }
     except Exception as e:
@@ -185,7 +185,7 @@ async def process_data(data: dict):
         JOIN "BookCategory" bc ON b.id = bc.book_id
         JOIN "Category" c ON bc.category_id = c.id
         WHERE b.status = 'available'
-        AND "b.isPost_trade" = TRUE
+        AND "isPost_trade" = TRUE
         AND b.id <> %s
         ''', (book_id,))
         books = cur.fetchall()
@@ -208,7 +208,7 @@ async def process_data(data: dict):
         print(encoded_book_category)
         result = np.concatenate((encoded_book_cat, encoded_book_category), axis=0)
 
-        exp_size = np.size(book_cat)
+        book_cat_size = np.size(book_cat)
         X = np.array(result)
         cos_sim_data = pd.DataFrame(cosine_similarity(X))
         recommendations_dict = {}
@@ -216,8 +216,8 @@ async def process_data(data: dict):
         id = []
 
         for i in range(exp_size):
-            index_recomm = cos_sim_data.loc[i][exp_size:].sort_values(ascending=False).index.tolist()[0:math.ceil(10 / len(book_cat))]
-            recomm = [x - exp_size for x in index_recomm]
+            index_recomm = cos_sim_data.loc[i][book_cat_size:].sort_values(ascending=False).index.tolist()[0:10]
+            recomm = [x - book_cat_size for x in index_recomm]
             cat_data = [books[i] for i in recomm]
             recommendations = []
             
@@ -254,4 +254,3 @@ async def process_data(data: dict):
 if __name__ == '__main__':
     import uvicorn
     uvicorn.run(app, host='192.168.1.33', port=4000)
-

@@ -13,6 +13,7 @@ load_dotenv()
 
 @app.post('/api/ai-collab/')
 async def process_data(data: dict):
+    print('Processing data...')
     try:
         if not data:
             raise HTTPException(status_code=400, detail='No JSON data provided')
@@ -66,19 +67,17 @@ async def process_data(data: dict):
             GROUP BY user_id
         ) output;
         ''', (user_id,))
-        print(1)
+
         user_avg = cur.fetchall()
 
         user_score = np.array([float(score) for score in user_avg[0].values()])
-        print(user_score)
-
         
         cur.execute('''
         SELECT DISTINCT u.id AS user FROM "Review_Book" rb
 	    JOIN "User" u ON rb.user_id = u.id WHERE u.id <> %s
         ''', (user_id,))
         alluser = [row['user'] for row in cur.fetchall()]
-        print(alluser)
+        # print(alluser)
 
         all_user_score = []
         for user in alluser:
@@ -120,19 +119,23 @@ async def process_data(data: dict):
                 ) output;
                 ''', (user,))
             avg = cur.fetchall()
-            user_score = [float(score) for score in avg[0].values()]
-            all_user_score.append(user_score)
+            other_user_score = [float(score) for score in avg[0].values()]
+            all_user_score.append(other_user_score)
         np_all_user = np.array(all_user_score)
-        print(np_all_user)
 
+        print(user_score)
+        
+    
         cosine_sim = cosine_similarity([user_score], np_all_user)[0]
-        print(cosine_sim)
+        # print(cosine_sim)
 
         k = 3
         close_user = np.argsort(cosine_sim)[-k:][::-1]
-        print(close_user)
+        # print(close_user)
 
         result = [alluser[idx] for idx in close_user]
+        close_score =  [all_user_score[idx] for idx in close_user]
+        print(close_score)
         print(result)
 
         return {"user" : result}
