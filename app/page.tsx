@@ -54,7 +54,7 @@ const Page: FC<Props> = (): JSX.Element => {
   const [category8, setCategory8] = useState<Books[]>([]);
   const [category9, setCategory9] = useState<Books[]>([]);
   const [category10, setCategory10] = useState<Books[]>([]);
-  const categories = ['นวนิยาย', 'สยองขวัญ', 'การ์ตูน', 'โรแมนติก', 'วิทยาศาสตร์', 'การเงิน - ลงทุน', 'การศึกษา', 'ท่องเที่ยว', 'พัฒนาตนเอง', 'สุขภาพ'];
+  const categories = ['Novel', 'Horror', 'Cartoon', 'Romantic', 'Science', 'Finance', 'Education', 'Travel', 'Self-development', 'Health'];
   const [allrecommend, setAllrecommend] = useState<Books[]>([]);
   const [recommendcollab, setRecommendcollab] = useState<Books[] | null>(null);
   const [shuffleRecCollab, setShuffleRecCollab] = useState<Books[]>([]);
@@ -138,8 +138,8 @@ const Page: FC<Props> = (): JSX.Element => {
         
         if (response.ok) {
           const data = await response.json();         
-          setRecommendcollab(data.recommend.นวนิยาย);
-          console.log(data.recommend.นวนิยาย, 'collab recommendations');
+          setRecommendcollab(data.recommend.Novel);
+          console.log(data.recommend.Novel, 'collab recommendations');
         } else {
           console.error('Failed to fetch data:', response.statusText);
         }
@@ -411,22 +411,22 @@ console.log("RecommendedAllFinal",allrecommend)
           <div className='grid grid-cols-2 lg:grid-cols-5 gap-4 font-semibold justify-around w-min-80 bg-white'>
           <Link
             href='/category/10'
-            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-health hover:shadow-xl rounded-2xl text-neutral-50 transform transition duration-300 ease-in-out text-nowrap hover:scale-105 '>สุขภาพ</Link>
+            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-health hover:shadow-xl rounded-2xl text-neutral-50 transform transition duration-300 ease-in-out text-nowrap hover:scale-105 '>Health</Link>
             <Link
             href='/category/3'
-            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-cartoon hover:shadow-xl rounded-2xl text-neutral-100 transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>การ์ตูน</Link>
+            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-cartoon hover:shadow-xl rounded-2xl text-neutral-100 transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>Cartoon</Link>
             
             <Link
             href='/category/9'
-            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-develop hover:shadow-xl rounded-2xl text-black transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>พัฒนาตนเอง</Link>
+            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-develop hover:shadow-xl rounded-2xl text-black transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>Self-development</Link>
             
             <Link
             href='/category/7'
-            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-education hover:shadow-xl rounded-2xl text-neutral-100 transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>การศึกษา</Link>
+            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-education hover:shadow-xl rounded-2xl text-neutral-100 transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>Education</Link>
             
             <Link
             href='/category/5'
-            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-science hover:shadow-xl rounded-2xl text-neutral-50 transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>วิทยาศาสตร์</Link>
+            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-science hover:shadow-xl rounded-2xl text-neutral-50 transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>Science</Link>
             
         
             
@@ -434,23 +434,23 @@ console.log("RecommendedAllFinal",allrecommend)
            
                <Link
             href='/category/4'
-            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-romantic hover:shadow-xl rounded-2xl text-white transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>โรแมนติก</Link>
+            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-romantic hover:shadow-xl rounded-2xl text-white transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>Romantic</Link>
            
             <Link
             href='/category/1'
-            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg  bg-novel hover:shadow-xl rounded-2xl text-neutral-50 transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>นวนิยาย</Link>
+            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg  bg-novel hover:shadow-xl rounded-2xl text-neutral-50 transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>Novel</Link>
            <Link
             href='/category/6'
-            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-business hover:shadow-xl rounded-2xl text-black transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>การเงิน - ลงทุน</Link>
+            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-business hover:shadow-xl rounded-2xl text-black transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>Finance</Link>
           
             
             <Link
             href='/category/8'
-            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-travel hover:shadow-xl rounded-2xl text-white transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>ท่องเที่ยว</Link>
+            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-travel hover:shadow-xl rounded-2xl text-white transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>Travel</Link>
            
            <Link
             href='/category/2'
-            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-horror1 hover:shadow-xl rounded-2xl text-neutral-200 transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>สยองขวัญ</Link>
+            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-horror1 hover:shadow-xl rounded-2xl text-neutral-200 transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>Horror</Link>
 
             
           </div>
@@ -483,43 +483,43 @@ console.log("RecommendedAllFinal",allrecommend)
             }
 
             {
-              category1 && (<SlideBookMiniWithTitle data={category1.slice(0,10)} Headtitle='นวนิยาย' num_category={1}/>)
+              category1 && (<SlideBookMiniWithTitle data={category1.slice(0,10)} Headtitle='Novel' num_category={1}/>)
             }
 
             {
-              category2 && (<SlideBookMiniWithTitle data={category2.slice(0,10)} Headtitle='สยองขวัญ' num_category={2}/>)
+              category2 && (<SlideBookMiniWithTitle data={category2.slice(0,10)} Headtitle='Horror' num_category={2}/>)
             }
 
             {
-              category3 &&<SlideBookMiniWithTitle data={category3.slice(0,10)} Headtitle='การ์ตูน' num_category={3}/>
+              category3 &&<SlideBookMiniWithTitle data={category3.slice(0,10)} Headtitle='Cartoon' num_category={3}/>
             }
 
             {
-              category4 &&<SlideBookMiniWithTitle data={category4.slice(0,10)} Headtitle='โรแมนติก' num_category={4}/>
+              category4 &&<SlideBookMiniWithTitle data={category4.slice(0,10)} Headtitle='Romantic' num_category={4}/>
             }
 
             {
-              category5 &&<SlideBookMiniWithTitle data={category5.slice(0,10)} Headtitle='วิทยาศาสตร์' num_category={5}/>
+              category5 &&<SlideBookMiniWithTitle data={category5.slice(0,10)} Headtitle='Science' num_category={5}/>
             }
 
             {
-              category6 &&<SlideBookMiniWithTitle data={category6.slice(0,10)} Headtitle='การเงิน - ลงทุน' num_category={6}/>
+              category6 &&<SlideBookMiniWithTitle data={category6.slice(0,10)} Headtitle='Finance' num_category={6}/>
             }
           
             {
-              category7 &&<SlideBookMiniWithTitle data={category7.slice(0,10)} Headtitle='การศึกษา' num_category={7}/>
+              category7 &&<SlideBookMiniWithTitle data={category7.slice(0,10)} Headtitle='Education' num_category={7}/>
             }
 
             {
-              category8 &&<SlideBookMiniWithTitle data={category8.slice(0,10)} Headtitle='ท่องเที่ยว' num_category={8}/>
+              category8 &&<SlideBookMiniWithTitle data={category8.slice(0,10)} Headtitle='Travel' num_category={8}/>
             }
 
             {
-              category9 &&<SlideBookMiniWithTitle data={category9.slice(0,10)} Headtitle='การพัฒนาตนเอง' num_category={9}/>
+              category9 &&<SlideBookMiniWithTitle data={category9.slice(0,10)} Headtitle='การSelf-development' num_category={9}/>
             }
 
             {
-              category10 && <SlideBookMiniWithTitle data={category10.slice(0,10)} Headtitle='สุขภาพ' num_category={10}/>
+              category10 && <SlideBookMiniWithTitle data={category10.slice(0,10)} Headtitle='Health' num_category={10}/>
             }
         </div> 
 
