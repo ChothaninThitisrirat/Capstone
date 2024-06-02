@@ -95,7 +95,7 @@ const BookInfo: React.FC<BookInfoProps> = ({ setTrade, bookInfo }) => {
     const [ state1, setState1 ] = useState(false)
     const param = useParams();
 
-    const categories = ['นวนิยาย', 'สยองขวัญ', 'การ์ตูน', 'โรแมนติก', 'วิทยาศาสตร์', 'การเงิน - ลงทุน', 'การศึกษา', 'ท่องเที่ยว', 'พัฒนาตนเอง', 'สุขภาพ'];
+    const categories = ['Novel', 'Horror', 'Cartoon', 'Romantic', 'Science', 'Finance', 'Education', 'Travel', 'Self-development', 'Health'];
     const [allrecommend, setAllrecommend] = useState<Books[]>([]);
     const [shuffleReccommend, setShuffleReccommend] = useState<Books[]>([]);
 
