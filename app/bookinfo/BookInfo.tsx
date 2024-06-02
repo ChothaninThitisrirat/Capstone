@@ -97,6 +97,7 @@ const BookInfo: React.FC<BookInfoProps> = ({ setTrade, bookInfo }) => {
 
     const categories = ['นวนิยาย', 'สยองขวัญ', 'การ์ตูน', 'โรแมนติก', 'วิทยาศาสตร์', 'การเงิน - ลงทุน', 'การศึกษา', 'ท่องเที่ยว', 'พัฒนาตนเอง', 'สุขภาพ'];
     const [allrecommend, setAllrecommend] = useState<Books[]>([]);
+    const [shuffleReccommend, setShuffleReccommend] = useState<Books[]>([]);
 
     const thaiMonths = [
         "มกราคม",
@@ -176,6 +177,16 @@ const BookInfo: React.FC<BookInfoProps> = ({ setTrade, bookInfo }) => {
     }
     , [bookInfo]);
 
+    useEffect(() => {
+        if (allrecommend) {
+          let array = [...allrecommend];
+          for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+          }
+          setShuffleReccommend(array);
+        }
+      }, [allrecommend]);
 
     useEffect(() => {
         const datetimeString = bookInfoShow?.bookinfo?.postdate;
@@ -706,7 +717,7 @@ console.log('datePost',datePost)
             </div>
 
             <div className='flex justify-center items-center pb-8 w-10/12 mt-12'>
-                <SlideBookBig data={allrecommend} Headtitle={"หนังสือที่คล้ายกัน"} Subtitle={"ผู้ใช้ส่วนมากชื่นชอบ"}/>
+                <SlideBookBig data={shuffleReccommend} Headtitle={"หนังสือที่คล้ายกัน"} Subtitle={"ผู้ใช้ส่วนมากชื่นชอบ"}/>
             </div>
         </div>
         <Footer/>
