@@ -67,7 +67,7 @@ export async function POST(req: Request) {
                     }
                 })
                 
-                const categoryName = `นวนิยาย`;
+                const categoryName = `Novel`;
                 recommend[categoryName] = books.map((book) => ({
                     id: book.book_id,
                     title: book.Book_Trade_book_idToBook.title,
