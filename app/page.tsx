@@ -56,6 +56,7 @@ const Page: FC<Props> = (): JSX.Element => {
   const categories = ['นวนิยาย', 'สยองขวัญ', 'การ์ตูน', 'โรแมนติก', 'วิทยาศาสตร์', 'การเงิน - ลงทุน', 'การศึกษา', 'ท่องเที่ยว', 'พัฒนาตนเอง', 'สุขภาพ'];
   const [allrecommend, setAllrecommend] = useState<Books[]>([]);
   const [recommendcollab, setRecommendcollab] = useState<Books[] | null>(null);
+  const [shuffleRecCollab, setShuffleRecCollab] = useState<Books[]>([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -92,6 +93,17 @@ const Page: FC<Props> = (): JSX.Element => {
     
     fetchData();
   }, [session]);
+
+  useEffect(() => {
+    if (recommendcollab) {
+      let array = [...recommendcollab];
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      setShuffleRecCollab(array);
+    }
+  }, [recommendcollab]);
 
   useEffect(() => {
     async function fetchData() {
@@ -444,8 +456,8 @@ console.log("RecommendedAllFinal",allrecommend)
           </div>
 
           <div className='flex justify-center pb-8' id='recommend'>
-            {recommendcollab === null || !session || loading ? null : (
-              <SlideBookBig data={recommendcollab.slice(0,10)} Headtitle={"You Might Like This"} Subtitle={"หนังสือที่คุณอาจจะชื่นชอบ"} />
+            {shuffleRecCollab === null || !session || loading ? null : (
+              <SlideBookBig data={shuffleRecCollab.slice(0,10)} Headtitle={"You Might Like This"} Subtitle={"หนังสือที่คุณอาจจะชื่นชอบ"} />
             )}
           </div>
           
