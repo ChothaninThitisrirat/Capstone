@@ -90,7 +90,7 @@ export default function Profile() {
 
         <div className='flex w-10/12 justify-center pb-8'>
               {
-                matchingCategory && <SlideBookBig data={popBook} Headtitle={`เล่มยอดนิยมในหมวดหมู่ ${matchingCategory.name}`} Subtitle={"หนังสือยอดนิยม"}/>
+                matchingCategory && <SlideBookBig data={popBook} Headtitle={`Popular Books In ${matchingCategory.name}`} Subtitle={"หนังสือยอดนิยม"}/>
               }
         </div>
         <p className='text-5xl font-bold'>หนังสือทั้งหมด</p>
