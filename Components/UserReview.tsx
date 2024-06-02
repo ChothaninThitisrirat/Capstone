@@ -14,6 +14,8 @@ interface UserReviewProp {
     classReviewUser: any;
     setPopUpReviewUser: (style: any) => void;
     tradeId: number;
+    tradebook:boolean;
+    setLoadReview: (style: boolean) => void;
 }
 interface BookInfo {
     id:number;
@@ -29,7 +31,7 @@ interface BookInfo {
 interface BookPicture {
     picture: any;
 }
-const UserReview: React.FC<UserReviewProp> = ({classReviewUser, setPopUpReviewUser, tradeId}) =>{
+const UserReview: React.FC<UserReviewProp> = ({classReviewUser, setPopUpReviewUser, tradeId, tradebook, setLoadReview}) =>{
 
     const [topicReview, setTopicReview] = useState('')
     const [detailReview, setDetailReview] = useState('')    
@@ -54,8 +56,14 @@ const UserReview: React.FC<UserReviewProp> = ({classReviewUser, setPopUpReviewUs
                     console.log('tradeId---',tradeId);
                     const response = await axios.get(`/api/trade/myrequest/${userId}/book/${tradeId}`);
                     console.log(userId,'response.data',response.data)
-                    setUserIdTrade(response.data.mybookrequest.Book_Trade_book_idToBook.User.id)
-                    setBookIdTrade(response.data.mybookrequest.Book_Trade_book_idToBook.id)
+                    if(tradebook){
+                        setUserIdTrade(response.data.mybookrequest.Book_Trade_req_book_idToBook.User.id)
+                        setBookIdTrade(response.data.mybookrequest.Book_Trade_req_book_idToBook.id)
+                    }else{
+                        setUserIdTrade(response.data.mybookrequest.Book_Trade_book_idToBook.User.id)
+                        setBookIdTrade(response.data.mybookrequest.Book_Trade_book_idToBook.id)
+                    }
+                    
                     setLoading(false)
                 } catch (error) {
                         setLoading(false)
@@ -77,7 +85,11 @@ const UserReview: React.FC<UserReviewProp> = ({classReviewUser, setPopUpReviewUs
                     console.log('tradeId---',tradeId);
                     const response = await axios.get(`/api/trade/myrequest/${userId}/book/${tradeId}`);
                     console.log(userId,'response.data',response.data)
-                    setPicture(response.data.mybookrequest.Book_Trade_book_idToBook.picture[0])
+                    if(tradebook){
+                        setPicture(response.data.mybookrequest.Book_Trade_req_book_idToBook.picture[0])
+                    }else{
+                        setPicture(response.data.mybookrequest.Book_Trade_book_idToBook.picture[0])
+                    }
                     setLoading(false)
                 } catch (error) {
                         setLoading(false)
@@ -111,7 +123,7 @@ const UserReview: React.FC<UserReviewProp> = ({classReviewUser, setPopUpReviewUs
         }
 
     }, [bookIdTrade])
-console.log(userId,'bookInfo',bookInfo)
+    console.log(userId,'bookInfo',bookInfo)
 
     const handleReviewUser = async (e: any) => {
         e.preventDefault();
@@ -123,6 +135,7 @@ console.log(userId,'bookInfo',bookInfo)
                 title: topicReview,
                 describe: detailReview,
                 score: scoreComment,
+                trade_id: tradebook ? tradeId : null,
             })
             if(response.status === 201){
                 setPopUpReviewUser(false)
@@ -130,6 +143,7 @@ console.log(userId,'bookInfo',bookInfo)
                 setTopicReview('')
                 setDetailReview('')
                 setScoreComment(0)
+                setLoadReview(true)
             }
         }catch(err){
             console.log(err)

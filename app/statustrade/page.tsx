@@ -203,7 +203,7 @@ function statustrade() {
         <Footer/>
         <div className={classAddBookbg}></div>
         <StatusTrade setStateOpen={setStateOpen} classAddBook={classAddBook} tradeId={tradeId} setLoadcompo={setLoadcompo} setPopUpReviewUser={setPopUpReviewUser} reloadInfo={reloadInfo}/>
-        <UserReview classReviewUser={classReviewUser} setPopUpReviewUser={setPopUpReviewUser} tradeId={tradeId}/>
+        <UserReview classReviewUser={classReviewUser} setPopUpReviewUser={setPopUpReviewUser} tradeId={tradeId} tradebook={false}/>
         </>
     )
 }
