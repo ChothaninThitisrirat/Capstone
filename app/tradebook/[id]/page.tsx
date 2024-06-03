@@ -14,6 +14,7 @@ import axios from 'axios';
 import HashLoader from "react-spinners/HashLoader";
 import Router from 'next/router'
 import ManageRequest from '@/Components/ManageRequest';
+import UserReview from '@/Components/UserReview';
 
 interface Book {
     id: number;
@@ -39,6 +40,7 @@ interface tradeReQuest {
   pickup_req:string,
   req_address:string,
   Book_Trade_req_book_idToBook:any;
+  isReview:boolean;
 }
 
 
@@ -46,6 +48,7 @@ function TradeBookSelect() {
     const param = useParams<{ id?: string }>();
     const [loading, setLoading] = useState(true)
     const [ loadcompo, setLoadcompo] = useState(false)
+    const [ loadReview, setLoadReview] = useState(false)
     const [bookId, setBookId] = useState<string | null | undefined>('')
 
     const { data: session, status } = useSession()
@@ -79,6 +82,7 @@ function TradeBookSelect() {
 
     useEffect(() => {
       setLoadcompo(false)
+      setLoadReview(false)
         const fetchData = async () => {
             try {
                 const response = await axios.get(`/api/trade/mybookrequest/${userId}/book/${bookId}`);
@@ -98,7 +102,7 @@ function TradeBookSelect() {
         if (bookId !== undefined && userId !== undefined) {
         fetchData(); 
         }
-    }, [userId,bookId,loadcompo]);
+    }, [userId,bookId,loadcompo,loadReview]);
 
 
 
@@ -133,21 +137,57 @@ function TradeBookSelect() {
             transitionDuration: '0.3s'
         })
     }   
-}, [stateOpen])
+  }, [stateOpen])
+
+
+
+  const [popUpReviewUser, setPopUpReviewUser] = useState(false) //
+  const [classReviewUser, setClassReviewUser] = useState({
+    transform:'translateY(100%)',
+    visibility: "hidden",
+    transitionDuration: '0.3s'
+  })
+
+  useEffect(() => {
+    if (popUpReviewUser) {
+        setClassAddBookbg('visible fixed h-screen w-screen bg-slate-200 top-0 left-0 z-50 opacity-30 backdrop-blur-2xl')
+        setClassReviewUser({
+            transform:'translateY(0%)',
+            visibility: "visible",
+            transitionDuration: '0.3s'
+        })
+    } else {
+        setClassAddBookbg('hidden fixed h-screen w-screen bg-slate-200 top-0 left-0 z-50 opacity-30 backdrop-blur-2xl')
+        setClassReviewUser({
+            transform:'translateY(100%)',
+            visibility: "hidden",
+            transitionDuration: '0.3s'
+        })
+    }   
+}, [popUpReviewUser])
 
 
 
 
 
+console.log('historyTrade',historyTrade)
 
-
-
+const [tradeId, setTradeId] = useState<number>(0)
 
     const handleToBookInfo = (BookId: any) => {
         if (BookId !== null && BookId !== undefined) {
 
             router.push(`/bookinfo/${BookId.toString()}`)
         }
+    }
+
+    const handleHistory =(item:any)=>{
+      if(item.isReview){
+        handleToBookInfo(item.req_book_id)
+      }else{
+        setTradeId(item.id)
+        setPopUpReviewUser(true)
+      }
     }
 
 
@@ -289,10 +329,13 @@ function TradeBookSelect() {
                         {historyTrade?.map((item, index) => (
                             <div
                             key={index}
-                            onClick={() => handleToBookInfo(item.req_book_id)}
+                            onClick={()=>handleHistory(item)}
                             className='flex items-center justify-center rounded-sm border w-40 h-60 cursor-pointer shadow-sm hover:scale-105 duration-300 relative'>
                                 <div className="flex flex-col absolute bottom-0 translate-y-12 text-base w-full">
-                                    <div className="flex w-40 h-max  justify-center items-end  font-bold text-lg pt-4">{item.Book_Trade_req_book_idToBook.title}</div>
+                                    <div className="flex w-full justify-center">
+                                      {!item.isReview && <div className="flex  w-3 h-3 bg-orange-500 rounded-full my-auto mr-2"></div>}
+                                      {item.Book_Trade_req_book_idToBook.title}
+                                    </div>
                                 </div>
                                 <img
                                 src={item.Book_Trade_req_book_idToBook.picture[0]}
@@ -313,7 +356,7 @@ function TradeBookSelect() {
             <Footer/>
             <div className={classAddBookbg}></div>
             <ManageRequest stateOpen={stateOpen} setStateOpen={setStateOpen} classAddBook={classAddBook} setLoadcompo={setLoadcompo} tradeReQuest={tradeReQuest} bookIdSelect={bookIdSelect} tradingBook={tradingBook}/>
-            
+            <UserReview classReviewUser={classReviewUser} setPopUpReviewUser={setPopUpReviewUser} tradeId={tradeId} tradebook={true} setLoadReview={setLoadReview}/>
 
             
         </>

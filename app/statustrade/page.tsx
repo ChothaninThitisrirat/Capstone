@@ -29,6 +29,7 @@ function statustrade() {
 
     const [loading, setLoading] = useState(true)
     const [ loadcompo, setLoadcompo] = useState(false)
+    const [ loadReview, setLoadReview] = useState(false)
     const { data: session, status } = useSession()
     const userId  = session?.user.id;
     const router = useRouter()
@@ -203,7 +204,7 @@ function statustrade() {
         <Footer/>
         <div className={classAddBookbg}></div>
         <StatusTrade setStateOpen={setStateOpen} classAddBook={classAddBook} tradeId={tradeId} setLoadcompo={setLoadcompo} setPopUpReviewUser={setPopUpReviewUser} reloadInfo={reloadInfo}/>
-        <UserReview classReviewUser={classReviewUser} setPopUpReviewUser={setPopUpReviewUser} tradeId={tradeId}/>
+        <UserReview classReviewUser={classReviewUser} setPopUpReviewUser={setPopUpReviewUser} tradeId={tradeId} tradebook={false} setLoadReview={setLoadReview}/>
         </>
     )
 }
