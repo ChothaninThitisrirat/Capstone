@@ -32,7 +32,7 @@ function PostBook() {
         const fetchData = async (userId:any)=>{
             try{
                 const response = await axios.get(`/api/user/${userId}/contact`)
-                if(response.data.contact.line === null && response.data.contact.instagram === null && response.data.contact.facebook === null ){
+                if(response.data.contact.line === null || response.data.contact.line.replace(/\s+/g, '') === '' && response.data.contact.instagram === null || response.data.contact.instagram.replace(/\s+/g, '') === '' && response.data.contact.facebook === null || response.data.contact.facebook.replace(/\s+/g, '') === ''){
                     router.push('/editprofile')
                     alert('กรุณากรอกข้อมูลการติดต่อก่อนใช้งาน')
                 }
