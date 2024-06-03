@@ -50,7 +50,7 @@ interface BookItems {
                 <div className="flex flex-col">
                     <p className='text-5xl font-bold'>{Headtitle}</p>
                     <div className='flex text-xl w-full item-center font-bold mt-5'>
-                        <p className='flex items-center justify-start w-1/2'>{Subtitle}</p>
+                        <p className='flex items-center justify-start font-semibold text-3xl w-1/2'>{Subtitle}</p>
                         { data?.length === 0 ? <div></div> :
                         <div className="flex w-1/2 justify-end" >
                         {moreFrom === 0

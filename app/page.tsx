@@ -418,7 +418,7 @@ console.log("RecommendedAllFinal",allrecommend)
             
             <Link
             href='/category/9'
-            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-develop hover:shadow-xl rounded-2xl text-black transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>Self-development</Link>
+            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-develop hover:shadow-xl rounded-2xl text-gray-600 transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>Self-development</Link>
             
             <Link
             href='/category/7'
@@ -441,7 +441,7 @@ console.log("RecommendedAllFinal",allrecommend)
             className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg  bg-novel hover:shadow-xl rounded-2xl text-neutral-50 transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>Novel</Link>
            <Link
             href='/category/6'
-            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-business hover:shadow-xl rounded-2xl text-black transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>Finance</Link>
+            className='flex justify-center h-fit text-ls lg:text-xl xl:text-2xl py-3 px-9 bg-gradient-to-r shadow-lg bg-business hover:shadow-xl rounded-2xl text-gray-500 transform transition duration-300 ease-in-out text-nowrap hover:scale-105'>Finance</Link>
           
             
             <Link
