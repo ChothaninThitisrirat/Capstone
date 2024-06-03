@@ -333,7 +333,7 @@ const [tradeId, setTradeId] = useState<number>(0)
                             className='flex items-center justify-center rounded-sm border w-40 h-60 cursor-pointer shadow-sm hover:scale-105 duration-300 relative'>
                                 <div className="flex flex-col absolute bottom-0 translate-y-12 text-base w-full">
                                     <div className="flex w-full justify-center">
-                                      {!item.isReview && <div className="flex  w-3 h-3 bg-orange-500 rounded-full my-auto mr-2"></div>}
+                                      {!item.isReview && <div className="flex  w-3 h-3 bg-orange-500 rounded-full my-auto mr-2 shrink-0"></div>}
                                       {item.Book_Trade_req_book_idToBook.title}
                                     </div>
                                 </div>
