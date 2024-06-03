@@ -20,6 +20,8 @@ const SlideBookMiniWithTitle: React.FC<SlideBookMiniwithTitleProps> = ({data, He
     const [moreFrom, setMoreFrom] = useState(0)
     return (
         <>
+
+        
             <div className="flex flex-cols font-bold w-full text-3xl pt-12 pb-4 xl:text-5xl">
                 <div className="flex w-1/2">
                     {Headtitle}

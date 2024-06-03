@@ -4,7 +4,6 @@ import { prismadb } from "@/lib/db";
 export async function GET(req: Request) {
     try {
         const alluser = await prismadb.user.findMany({
-            where: { isAdmin:false }
         })
         
         return NextResponse.json({

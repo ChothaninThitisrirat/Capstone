@@ -5,10 +5,10 @@ export async function GET(req: Request,{ params }: { params: { user_id: string }
     try {
         const user = await prismadb.user.findUnique({
             where: { 
-                id:parseInt(params.user_id),
-                isAdmin: false
+                id:parseInt(params.user_id)
             },
             select: {
+                id: true,
                 username:true,
                 first_name:true,
                 last_name:true,

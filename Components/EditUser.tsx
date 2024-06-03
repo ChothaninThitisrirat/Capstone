@@ -8,7 +8,7 @@ import axios from "axios";
 import HashLoader from "react-spinners/HashLoader";
 import Loadable from 'next/dist/shared/lib/loadable.shared-runtime';
 import { useRouter } from 'next/navigation'
-import { image } from '@/utils/supabase';
+import { idcard } from '@/utils/supabase';
 
 interface PostNewBookProp {
     setStateOpen: (style: boolean) => void;
@@ -36,7 +36,7 @@ const EditUser: React.FC<PostNewBookProp> = ({setStateOpen, classAddBook, userId
     const [loading, setLoading] = useState(true)
     const { data: session, status } = useSession()
     const userId  = session?.user.id;
-
+    console.log('userId---',userInfo);
     useEffect(() => {
         const fetchData = async () => {
             if (userIdSelect) {
@@ -98,7 +98,7 @@ const EditUser: React.FC<PostNewBookProp> = ({setStateOpen, classAddBook, userId
                                 <div className="flex text-3xl font-bold w-full justify-center h-auto break-words mb-10">
                                     ข้อมูลของ {userInfo?.username}
                                 </div>
-                                <div className="flex w-full justify-around gap-16 h-full">
+                                <div className="flex w-full flex-col justify-around gap-16 h-full">
                                     <div className="flex my-auto flex-col">
                                         <img
                                         src={userInfo?.profile_picture}
@@ -108,6 +108,13 @@ const EditUser: React.FC<PostNewBookProp> = ({setStateOpen, classAddBook, userId
                                         <div className="flex text-2xl w-full justify-center h-auto break-words mt-5">
                                             {userInfo?.username}
                                         </div>
+                                    </div>
+                                    <div className="flex my-auto flex-col">
+                                        <img
+                                        src={`${idcard}${userInfo?.id}.jpg`}
+                                        alt="Profile picture"
+                                        className=' object-cover cursor-pointer shadow-lg shrink-0'
+                                        />
                                     </div>
                                     <div className="flex flex-col w-96">
                                         <div className="flex justify-between">
@@ -150,7 +157,7 @@ const EditUser: React.FC<PostNewBookProp> = ({setStateOpen, classAddBook, userId
                                                 />
                                             </div>
                                         </div>
-                                        <div className="flex relative mb-4">
+                                        {/* <div className="flex relative mb-4">
                                             <Icon
                                                 icon="material-symbols-light:id-card-outline"
                                                 width="30"
@@ -168,7 +175,7 @@ const EditUser: React.FC<PostNewBookProp> = ({setStateOpen, classAddBook, userId
                                                 required
                                                 className="w-full border-b border-gray-400 pl-12 py-2 mt-5 "
                                             />
-                                        </div>
+                                        </div> */}
                                         <div className="flex relative mb-4">
                                             <Icon
                                                 icon="carbon:email"

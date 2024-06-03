@@ -515,7 +515,7 @@ console.log("RecommendedAllFinal",allrecommend)
             }
 
             {
-              category9 &&<SlideBookMiniWithTitle data={category9.slice(0,10)} Headtitle='การSelf-development' num_category={9}/>
+              category9 &&<SlideBookMiniWithTitle data={category9.slice(0,10)} Headtitle='Self-development' num_category={9}/>
             }
 
             {

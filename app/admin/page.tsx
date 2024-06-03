@@ -270,6 +270,22 @@ export default function Admin(){
             </>
           : (
             <div className="flex justify-center items-center flex-col w-screen h-full mt-12">
+              <div 
+                style={{ boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px' }}
+                className="flex w-10/12 rounded-3xl justify-around h-32 items-center mt-20">
+                  <div className="flex flex-col text-gray-500 items-center">
+                    <div className="flex">มี Trade Process ทั้งหมด</div>
+                    <div className="flex">{historyTrade.length}</div>
+                    <div className="flex">Process</div>
+                  </div>
+                    <input 
+                    style={{ boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px' }}
+                    placeholder='กรอก Trade ID ที่ท่านต้องการดูข้อมูล'
+                    type="text"
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="flex w-8/12 rounded-full h-14 pl-10 pr-36"/>
+                    
+                </div>
               {historyTrade.map((item, index) => (
                 <div className="collapsible flex flex-col h-full w-full max-w-admin justify-center items-center mb-12" {...getToggleProps({onClick: handleOnClick})}>
                   <div className="flex header flex-col w-full h-52  bg-bg drop-shadow-xl  justify-center items-start rounded-2xl">

@@ -71,10 +71,9 @@ export default function Profile() {
 
   const fetchUserBook = async (userID: number) => {
     try{
-      const response = await fetch(`/api/library/${userID}`)
+      const response = await fetch(`/api/user/${userID}/book`)
       const data = await response.json()
-      setUserBook(data.library || [])  
-      console.log(data)     
+      setUserBook(data.book || [])  
     }catch (err){
       console.log("Fetch User Book", err)
     }

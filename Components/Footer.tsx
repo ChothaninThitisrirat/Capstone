@@ -55,16 +55,10 @@ function Footer() {
                         <Link className='text-sm text-gray-400 mb-2 hover:text-gray-200 cursor-pointer' href="/">Home</Link>
                     </div>
                     <div>
-                        <Link className='text-sm text-gray-400 mb-2 hover:text-gray-200 cursor-pointer' href="/">About Us</Link>
+                        <Link className='text-sm text-gray-400 mb-2 hover:text-gray-200 cursor-pointer' href="/aboutus">About Us</Link>
                     </div>
                     <div>
-                        <Link className='text-sm text-gray-400 mb-2 hover:text-gray-200 cursor-pointer' href="/">How to Trade</Link>
-                    </div>
-                    <div>
-                        <Link className='text-sm text-gray-400 mb-2 hover:text-gray-200 cursor-pointer' href="/">FAQ</Link>
-                    </div>
-                    <div>
-                        <Link className='text-sm text-gray-400 mb-2 hover:text-gray-200 cursor-pointer' href="/">Teams</Link>
+                        <Link className='text-sm text-gray-400 mb-2 hover:text-gray-200 cursor-pointer' href="/howtotrade">How to Trade</Link>
                     </div>
                     
                 </div>

@@ -276,57 +276,57 @@ const Login: React.FC<LoginProps> = ({
 
     const [dataCatin, setDataCatin] = useState([])
     console.log('dataCatin', dataCatin)
-    const [classCategory, setClassCategory] = useState("flex items-center justify-center rounded-lg w-32 h-8 text cursor-pointer py-0.5 px-3 flex-grow-4 duration-1000")
+    const [classCategory, setClassCategory] = useState("flex items-center justify-center rounded-lg w-44 h-8 text-base cursor-pointer py-0.5 px-3 flex-grow-4 duration-1000")
     const [category, setCategory] = useState<Category[]>([{
         id:null,
         name: "",
         defaultClass: true,
-        color: "bg-gradient-to-tr from-novel to-white"
+        color: "bg-novel text-white"
     },{
         id:null,
         name: "",
         defaultClass: true,
-        color: "bg-gradient-to-tr from-horror1 to-horror2 text-white"
+        color: "bg-horror1 text-white"
     },{
         id:null,
         name: "",
         defaultClass: true,
-        color: "bg-gradient-to-tr from-cartoon to-white"
+        color: "bg-cartoon text-white"
     },{
         id:null,
         name: "",
         defaultClass: true,
-        color: "bg-gradient-to-tr from-romantic to-white"
+        color: "bg-romantic text-white"
     },{
         id:null,
         name: "",
         defaultClass: true,
-        color: "bg-gradient-to-tr from-science to-white"
+        color: "bg-science text-white"
     },{
         id:null,
         name: "",
         defaultClass: true,
-        color: "bg-gradient-to-tr from-business to-white"
+        color: "bg-business text-black"
     },{
         id:null,
         name: "",
         defaultClass: true,
-        color: "bg-gradient-to-tr from-education to-white"
+        color: "bg-education text-white"
     },{
         id:null,
         name: "",
         defaultClass: true,
-        color: "bg-gradient-to-tr from-travel to-white"
+        color: "bg-travel text-white"
     },{
         id:null,
         name: "",
         defaultClass: true,
-        color: "bg-gradient-to-tr from-develop to-white"
+        color: "bg-develop text-black"
     },{
         id: null,
         name: "",
         defaultClass: true,
-        color: "bg-gradient-to-tr from-health to-white"
+        color: "bg-health text-white"
     }])
 
     useEffect(() => {
