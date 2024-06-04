@@ -294,7 +294,7 @@ export default function Admin(){
                       Trade ID: {item.id}
                       </div>
                       <div className="flex font-bold text-white pr-8 justify-center items-center text-2xl">
-                      Date {item.datetime}
+                      Date {item.datetime.slice(0,10)}
                       </div>
                     </div>
                     <div className="flex w-full h-5/6">

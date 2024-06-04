@@ -184,7 +184,7 @@ const Status: React.FC<PostNewBookProp> = ({setStateOpen, classAddBook, tradeId,
                                     </div>
                                     <div className="flex ">{bookSelectTrade?.User.username}</div>
                                 </div>
-                                {tradeInfo?.status !== 'traded' &&
+                                {tradeInfo?.status === 'trading'&&
                                 <div className="flex relative w-80 mt-10">
                                     <div className="flex">
                                         <Icon

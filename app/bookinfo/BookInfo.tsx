@@ -493,7 +493,7 @@ console.log('datePost',datePost)
                 </button>}
                 <div 
                 onClick={handleWishlist}
-                className="flex cursor-pointer ml-4 underline text-sm h-10 items-center">{stateWishlist ? 'Remove from Wishlist' : 'Add to Wishlist' }</div>
+                className="flex cursor-pointer ml-4 underline text-sm h-10 items-center">{stateWishlist ? 'ลบออกจากหนังสือที่อยากแลก' : 'เพิ่มลงหนังสือที่อยากแลก' }</div>
                 </div>
                 {bookInfoShow?.bookinfo.status === 'trading' &&<div className="flex w-96 ml-24 text-sm mt-2 pl-3 text-red-500">*หนังสือกำลังถูกเทรดอยู่ในขณะนี้</div>}
                 
@@ -717,7 +717,7 @@ console.log('datePost',datePost)
             </div>
 
             <div className='flex justify-center items-center pb-8 w-10/12 mt-12'>
-                <SlideBookBig data={shuffleReccommend} Headtitle={"หนังสือที่คล้ายกัน"} Subtitle={"ผู้ใช้ส่วนมากชื่นชอบ"}/>
+                <SlideBookBig data={shuffleReccommend} Headtitle={"You Might Also Like"} Subtitle={"ผู้ใช้ส่วนมากชื่นชอบ"}/>
             </div>
         </div>
         <Footer/>

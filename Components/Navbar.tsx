@@ -156,14 +156,14 @@ const Navbar: React.FC<NavbarProps> = ({backGroundOn, withTitle}) =>{
                                     className="text-white"/>}
                                 </div>
                             </div>
-                            :<div className="flex gap-10 mr-20 items-center">
+                            :<div className="flex gap-10  items-center">
                                 <button 
                                 onClick={()=> router.push('/signup')}
-                                className="flex text-white h-10 justify-center items-center rounded-full text-xl">Sign Up</button>
+                                className="flex text-white h-10 justify-center items-center rounded-full text-sm sm:text-xl ">Sign Up</button>
                                 <button 
                                 onClick={()=> router.push('/login')}
                                 style={{backgroundColor:'#F5E8C7'}}
-                                className="flex h-10 w-32 justify-center items-center rounded-full text-xl">Login</button>
+                                className="flex h-10 w-24 justify-center items-center rounded-full text-sm sm:text-xl sm:w-32">Login</button>
                             </div>}
 
                             {status === 'authenticated' &&
@@ -225,7 +225,7 @@ function DropDown() {
     {
         icon: "cil:list",
         link: "/wishlist",
-        text: "Wish List",
+        text: "หนังสือที่อยากแลก",
         size: "24"
     }
 
@@ -296,7 +296,7 @@ function DropDownResponsive() {
     },{
         icon: "cil:list",
         link: "/wishlist",
-        text: "Wish List",
+        text: "หนังสือที่อยากแลก",
         size: "24"
     },{
         icon: "mdi:list-status",
