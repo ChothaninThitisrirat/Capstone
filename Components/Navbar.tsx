@@ -102,7 +102,8 @@ const Navbar: React.FC<NavbarProps> = ({backGroundOn, withTitle}) =>{
             :"flex w-screen h-16 justify-center z-30 bg-dark2")} >
                 <div 
                 className={
-                showDropDownresponsive? "flex flex-col w-screen  rounded-b-3xl relative cursor-pointer items-center nav-z-index bg-white  duration-500 h-[460px] border-b border-white":
+                showDropDownresponsive? (session?.user.isAdmin ?"flex flex-col w-screen  rounded-b-3xl relative cursor-pointer items-center nav-z-index bg-white  duration-500 h-[500px] border-b border-white"
+                                        :"flex flex-col w-screen  rounded-b-3xl relative cursor-pointer items-center nav-z-index bg-white  duration-500 h-[460px] border-b border-white"):
                     (backGroundOn
                 ?"flex w-screen h-16 rounded-b-3xl relative cursor-pointer justify-center z-30 bg-dark2 duration-500"
                 :"flex w-screen h-16 relative cursor-pointer justify-center z-30 bg-dark2 duration-500")} >
