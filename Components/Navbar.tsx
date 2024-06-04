@@ -115,24 +115,10 @@ const Navbar: React.FC<NavbarProps> = ({backGroundOn, withTitle}) =>{
                                 <Image
                                 src={logoWhite}
                                 alt="Logo"
-                                className='w-32 h-12 object-contain ml- sm:ml-5'
+                                className='w-32 h-14 object-contain ml- sm:ml-5'
                                 />
                             </Link>
-                                <div className="flex gap-14 ml-5  responsive-close">
-                                    <Link href='/' className="flex text-center items-center text-white text-base">หน้าแรก</Link>
-                                    <Link href='/#category' className="flex text-center items-center text-white text-base"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        const categoryElement = document.getElementById('category');
-                                        categoryElement?.scrollIntoView({ behavior: 'smooth' });
-                                      }}>หมวดหมู่</Link>
-                                    <Link href='/#popular' className="flex text-center items-center text-white text-base"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        const categoryElement = document.getElementById('recommend');
-                                        categoryElement?.scrollIntoView({ behavior: 'smooth' });
-                                      }}>สำหรับคุณ</Link>
-                                </div>
+                                
                             </div>
                             {status === 'authenticated'?
                             <div className="flex gap-14 mr-20 items-center  responsive-close">

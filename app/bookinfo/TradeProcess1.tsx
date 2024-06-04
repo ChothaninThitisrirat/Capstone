@@ -32,7 +32,7 @@ const TradeProcess: React.FC<TradeProcess1Props> = ({ bookId, setStateProcess, s
 
     
     const [loading, setLoading] = useState(true)
-    const classBook = "flex items-center justify-center rounded-sm border w-40 h-60 sm:w-64 sm:h-96 cursor-pointer shadow-sm duration-300 relative mb-5"
+    const classBook = "flex items-center justify-center flex-col rounded-sm w-40 h-60 sm:w-64 sm:h-96 cursor-pointer shadow-sm duration-300 relative mb-5"
     const [stateAddBook, setStateAddBook] = useState(false)
     const [ loadcompo, setLoadcompo] = useState(false)
     const [classAddBookbg, setClassAddBookbg] = useState('fixed h-screen w-screen bg-slate-200 top-0 left-0 z-50 opacity-30 backdrop-blur-2xl hidden')
@@ -168,34 +168,39 @@ return (
                 </div>
 
                 {book.map((item, index) => (
-                        <div
-                        onClick={()=>handlesetBookSelect(item)} // ต้องส่งค่าไปหน้า BookInfo
-                        key={index} 
-                        className={bookSelect === item.id ? classBook+' '+' scale-105 border-4 border-dark2' : classBook}>
-                            <div className="flex absolute top-0 -translate-y-5 text-base w-full">
-                                <div className="flex w-full justify-start gap-2">
-                                    {item.isPost_trade &&<div className="flex text-xs text-green-600 font-bold">[ POST ]</div>}
+                        <div className='w-40 sm:w-64 cursor-pointer duration-300 relative mb-5'>
+                            <div
+                            onClick={()=>handlesetBookSelect(item)} // ต้องส่งค่าไปหน้า BookInfo
+                            key={index} 
+                            className={bookSelect === item.id ? classBook+' '+' scale-105 border-4 border-dark2' : classBook}>
+                                <div className="flex absolute top-0 -translate-y-5 text-base w-full">
+                                    <div className="flex w-full justify-start gap-2">
+                                        {item.isPost_trade &&<div className="flex text-xs text-green-600 font-bold">[ POST ]</div>}
+                                    </div>
                                 </div>
+                                
+                                <img
+                                src={item.picture[0]}
+                                alt="Profile picture"
+                                className='w-full h-full object-cover cursor-pointer bg-white'
+                                />
+                                
+                                <Image
+                                src={propFooter}
+                                alt="Profile picture"
+                                className={bookSelect === item.id ?'w-20 h-16 object-contain absolute top-0 right-0 -translate-y-3 drop-shadow-md duration-300'
+                                    :'w-20 h-16 object-contain absolute top-0 right-0 -translate-y-8 translate-x-3 drop-shadow-md duration-300 scale-0 '}/>
+                                {item.status === 'trading' && 
+                                <div 
+                                    style={{backgroundColor:'#57575780'}}
+                                    className={"absolute top-0 left-0 w-64 h-96 flex justify-center items-center font-bold text-2xl duration-300"}>
+                                    TRADING
+                                </div>}
+                                
                             </div>
-                            <div className="flex flex-col absolute bottom-0 translate-y-8 text-base w-full">
-                                <div className="flex w-full justify-center">{item.title}</div>
+                            <div className="flex w-40 sm:w-64 h-max  justify-center items-center  font-bold text-lg ">
+                                <div className="flex  w-40 sm:w-64 justify-center">{item.title}</div>
                             </div>
-                            <img
-                            src={item.picture[0]}
-                            alt="Profile picture"
-                            className='w-full h-full object-cover cursor-pointer bg-white'
-                            />
-                            <Image
-                            src={propFooter}
-                            alt="Profile picture"
-                            className={bookSelect === item.id ?'w-20 h-16 object-contain absolute top-0 right-0 -translate-y-3 drop-shadow-md duration-300'
-                                :'w-20 h-16 object-contain absolute top-0 right-0 -translate-y-8 translate-x-3 drop-shadow-md duration-300 scale-0 '}/>
-                            {item.status === 'trading' && 
-                            <div 
-                                style={{backgroundColor:'#57575780'}}
-                                className={"absolute top-0 left-0 w-64 h-96 flex justify-center items-center font-bold text-2xl duration-300"}>
-                                TRADING
-                            </div>}
                         </div>
                         
                     ))}

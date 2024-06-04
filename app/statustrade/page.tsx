@@ -171,7 +171,7 @@ function statustrade() {
                     <div key={index} 
                     onClick={() => handleStatusCheck(item)}
                     
-                    className='flex items-center justify-center rounded-sm border w-40 h-60 cursor-pointer shadow-sm hover:scale-105 duration-300 relative sm:w-64 sm:h-96'>
+                    className='flex items-center mb-7 justify-center rounded-sm border w-40 h-60 cursor-pointer shadow-sm hover:scale-105 duration-300 relative sm:w-64 sm:h-96'>
                         <div className="flex absolute bottom-0 translate-y-16 text-base font-bold">
                             {item.Book_Trade_book_idToBook.title}
                         </div>

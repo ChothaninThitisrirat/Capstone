@@ -71,7 +71,7 @@ const TradeProcess3: React.FC<TradeProcess3Props> = ({ bookId, setStateProcess, 
         <style>
                     {`
                     body {
-                        overflow: hidden;
+                        overflow: auto;
                     }
                     `}
             </style>
@@ -85,9 +85,9 @@ const TradeProcess3: React.FC<TradeProcess3Props> = ({ bookId, setStateProcess, 
                 <Icon icon="carbon:checkmark-outline" width="70" height="70" className='text-green-400 z-30 mt-5 shrink-0'/>
                 <div className="flex z-30  mt-2 text-3xl">ดำเนินการส่งคำขอเสร็จสิ้น</div>
                 <div className="flex z-30  mt-3 text-xl">B-Trade ID #{idTrade}</div>
-                <div className="flex gap-5 sm:gap-20 mt-8 flex-col sm:flex-row h-auto">
-                    <div className="flex flex-col z-30">
-                        <div className="flex text-3xl font-bold mx-auto mb-5">{bookInfo.bookinfo.title}</div>
+                <div className="flex w-full gap-5 sm:gap-20 mt-8 flex-col sm:flex-row h-auto">
+                    <div className="flex w-5/12 flex-col z-30 ">
+                        <div className="flex  text-3xl font-bold mx-auto mb-5 min-h-22">{bookInfo.bookinfo.title}</div>
                         <div className="flex w-full">
                             <img
                             src={bookInfo.bookinfo.picture[0]}
@@ -108,12 +108,18 @@ const TradeProcess3: React.FC<TradeProcess3Props> = ({ bookId, setStateProcess, 
                         </div>
                     </div>
 
-                    <div className="flex flex-col  z-30 sm:mt-40 gap-10">
+
+
+
+                    <div className="flex flex-col w-2/12  z-30 sm:mt-40 gap-10">
                         <Icon icon="fontisto:arrow-h" width="100" height="100" 
                         className='mx-auto text-dark1'/>
                     </div>
-                    <div className="flex flex-col z-30">
-                        <div className="flex text-3xl font-bold mx-auto mb-5">{bookSelectTrade?.bookinfo.title}</div>
+
+
+
+                    <div className="flex flex-col z-30 w-5/12">
+                        <div className="flex text-3xl font-bold mx-auto mb-5 min-h-22">{bookSelectTrade?.bookinfo.title}</div>
                         <div className="flex w-full">
                             <img
                             src={bookSelectTrade?.bookinfo.picture[0]}

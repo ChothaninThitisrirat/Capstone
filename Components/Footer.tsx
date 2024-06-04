@@ -57,9 +57,6 @@ function Footer() {
                     <div>
                         <Link className='text-sm text-gray-400 mb-2 hover:text-gray-200 cursor-pointer' href="/aboutus">About Us</Link>
                     </div>
-                    <div>
-                        <Link className='text-sm text-gray-400 mb-2 hover:text-gray-200 cursor-pointer' href="/howtotrade">How to Trade</Link>
-                    </div>
                     
                 </div>
                 <button 

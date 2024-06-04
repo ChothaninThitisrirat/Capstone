@@ -109,7 +109,7 @@ const PostBook1: React.FC<PostBook1Props> = ({setStatePage, setBookSelect, bookS
                     </div>
 
                     {bookProp.map((item, index) => (
-                        <>
+                        <div className='flex flex-col'>
                             <div 
                             key={index} 
                             onClick={()=>handlesetBookSelect(item.id)}
@@ -125,12 +125,13 @@ const PostBook1: React.FC<PostBook1Props> = ({setStatePage, setBookSelect, bookS
                                 alt="Profile picture"
                                 className={'w-full h-full object-cover cursor-pointer bg-white'+' '+(bookSelect === item.id ?' border-4 border-dark2' : '')}
                                 />
-                                <div className="flex flex-col absolute bottom-0 translate-y-8 text-base w-full sm:translate-y-12">
-                                    <div className="flex w-full justify-center font-bold">{item.title}</div>
-                                </div>
+                            </div>
+
+                            <div className="flex w-40 sm:w-64 h-max  justify-center items-center  font-bold text-lg ">
+                                <div className="flex  w-40 sm:w-64 justify-center">{item.title}</div>
                             </div>
                             
-                        </>
+                        </div>
                     ))}
                 </div>
             </div>}
